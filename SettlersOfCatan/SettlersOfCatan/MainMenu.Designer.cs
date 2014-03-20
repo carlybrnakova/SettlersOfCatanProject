@@ -52,6 +52,7 @@
             this.NewGameButton.TabIndex = 1;
             this.NewGameButton.Text = "New Game";
             this.NewGameButton.UseVisualStyleBackColor = true;
+            this.NewGameButton.Click += new System.EventHandler(this.NewGameButton_Click);
             // 
             // LoadGameButton
             // 
@@ -70,6 +71,7 @@
             this.RulesButton.TabIndex = 3;
             this.RulesButton.Text = "Rules";
             this.RulesButton.UseVisualStyleBackColor = true;
+            this.RulesButton.Click += new System.EventHandler(this.RulesButton_Click);
             // 
             // MainMenu
             // 
