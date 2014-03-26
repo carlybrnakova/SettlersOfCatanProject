@@ -86,5 +86,6 @@ namespace SettlersOfCatan
         {
             this.brick += amount;
         }
+
     }
 }
