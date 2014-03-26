@@ -31,6 +31,8 @@
             this.NewGameLabel = new System.Windows.Forms.Label();
             this.BackButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
+            this.NumPlayersComboBox = new System.Windows.Forms.ComboBox();
+            this.NumComputersComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // NewGameLabel
@@ -64,11 +66,39 @@
             this.StartButton.Text = "Start";
             this.StartButton.UseVisualStyleBackColor = true;
             // 
+            // NumPlayersComboBox
+            // 
+            this.NumPlayersComboBox.FormattingEnabled = true;
+            this.NumPlayersComboBox.Items.AddRange(new object[] {
+            "2",
+            "3",
+            "4"});
+            this.NumPlayersComboBox.Location = new System.Drawing.Point(223, 133);
+            this.NumPlayersComboBox.Name = "NumPlayersComboBox";
+            this.NumPlayersComboBox.Size = new System.Drawing.Size(192, 21);
+            this.NumPlayersComboBox.TabIndex = 3;
+            this.NumPlayersComboBox.Text = "Number of Players";
+            // 
+            // NumComputersComboBox
+            // 
+            this.NumComputersComboBox.FormattingEnabled = true;
+            this.NumComputersComboBox.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3"});
+            this.NumComputersComboBox.Location = new System.Drawing.Point(530, 135);
+            this.NumComputersComboBox.Name = "NumComputersComboBox";
+            this.NumComputersComboBox.Size = new System.Drawing.Size(215, 21);
+            this.NumComputersComboBox.TabIndex = 4;
+            this.NumComputersComboBox.Text = "Number of Computers";
+            // 
             // NewGameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(956, 578);
+            this.Controls.Add(this.NumComputersComboBox);
+            this.Controls.Add(this.NumPlayersComboBox);
             this.Controls.Add(this.StartButton);
             this.Controls.Add(this.BackButton);
             this.Controls.Add(this.NewGameLabel);
@@ -84,5 +114,7 @@
         private System.Windows.Forms.Label NewGameLabel;
         private System.Windows.Forms.Button BackButton;
         private System.Windows.Forms.Button StartButton;
+        private System.Windows.Forms.ComboBox NumPlayersComboBox;
+        private System.Windows.Forms.ComboBox NumComputersComboBox;
     }
 }
