@@ -14,6 +14,7 @@ namespace SettlersOfCatan
         private int grain;
         private int brick;
         private int knights;
+
         private List<DevelopmentCard> devCards;
 
         public Hand()
