@@ -1,16 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Users\hortoncb\Documents\college classes\CSSE\csse376\SettlersOfCatan\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.dll" total="2" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-03-20" time="21:46:35">
-  <environment nunit-version="2.6.3.13283" clr-version="2.0.50727.5477" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Program Files (x86)\NUnit 2.6.3\bin" machine-name="HORTONCB-1" user="hortoncb" user-domain="HORTONCB-1" />
+<test-results name="C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.dll" total="5" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-03-26" time="23:01:28">
+  <environment nunit-version="2.6.3.13283" clr-version="2.0.50727.5477" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Program Files (x86)\NUnit 2.6.3\bin" machine-name="CHEUNGNJ-1" user="cheungnj" user-domain="CHEUNGNJ-1" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="Assembly" name="C:\Users\hortoncb\Documents\college classes\CSSE\csse376\SettlersOfCatan\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.dll" executed="True" result="Success" success="True" time="0.197" asserts="0">
+  <test-suite type="Assembly" name="C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.dll" executed="True" result="Success" success="True" time="0.283" asserts="0">
     <results>
-      <test-suite type="Namespace" name="ClassLibrary1" executed="True" result="Success" success="True" time="0.153" asserts="0">
+      <test-suite type="Namespace" name="ClassLibrary1" executed="True" result="Success" success="True" time="0.236" asserts="0">
         <results>
-          <test-suite type="TestFixture" name="Class1Test" executed="True" result="Success" success="True" time="0.151" asserts="0">
+          <test-suite type="TestFixture" name="BankTest" executed="True" result="Success" success="True" time="0.216" asserts="0">
             <results>
-              <test-case name="ClassLibrary1.Class1Test.TestAdd" executed="True" result="Success" success="True" time="0.097" asserts="1" />
-              <test-case name="ClassLibrary1.Class1Test.TestConstructor" executed="True" result="Success" success="True" time="0.008" asserts="1" />
+              <test-case name="ClassLibrary1.BankTest.TestBankInitializesProperly" executed="True" result="Success" success="True" time="0.113" asserts="1" />
+              <test-case name="ClassLibrary1.BankTest.TestConstructorSetsFieldsCorrectly" executed="True" result="Success" success="True" time="0.044" asserts="6" />
+              <test-case name="ClassLibrary1.BankTest.TestThatGetResourcesThrowsOnBadString" executed="True" result="Success" success="True" time="0.012" asserts="0" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="Class1Test" executed="True" result="Success" success="True" time="0.008" asserts="0">
+            <results>
+              <test-case name="ClassLibrary1.Class1Test.TestAdd" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+              <test-case name="ClassLibrary1.Class1Test.TestConstructor" executed="True" result="Success" success="True" time="0.001" asserts="1" />
             </results>
           </test-suite>
         </results>

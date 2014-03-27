@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SettlersOfCatan
 {
-    class Player
+    public class Player
     {
         private readonly int MAX_CITIES = 4;
         private readonly int MAX_SETTLEMENTS = 5;
