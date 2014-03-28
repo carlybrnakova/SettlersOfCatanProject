@@ -154,10 +154,25 @@ namespace SettlersOfCatan
 
         public void declineTrade()
         {
-            this.toTrade = new int[] {0,0,0,0,0};
-            this.toReceive = new int[] {0,0,0,0,0};
+            this.toTrade = new int[] { 0, 0, 0, 0, 0 };
+            this.toReceive = new int[] { 0, 0, 0, 0, 0 };
             this.playerToTradeWith.declineTrade();
             this.playerToTradeWith = null;
+        }
+
+        public Hand getHand()
+        {
+            return playerHand;
+        }
+
+        public void tradeWithBank(String resource)
+        {
+            //TODO reference bank inside of World class
+        }
+
+        public void tradeAtPort(int portType, String resource)
+        {
+            //TODO reference bank inside of world class
         }
     }
 }

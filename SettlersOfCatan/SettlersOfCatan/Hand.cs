@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SettlersOfCatan
 {
-    class Hand
+    public class Hand
     {
         private int ore;
         private int wool;
