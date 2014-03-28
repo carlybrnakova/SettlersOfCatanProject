@@ -23,6 +23,7 @@ namespace SettlersOfCatan
 
             InitializeComponent();
 
+
             initializeBoardPanel();
 
         }
@@ -107,6 +108,7 @@ namespace SettlersOfCatan
 
 
         }
+
 
         private void IntersectionButton_Click(object sender, EventArgs e)
         {
