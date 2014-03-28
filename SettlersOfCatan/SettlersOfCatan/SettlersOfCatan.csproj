@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bank.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DevelopmentCard.cs" />
     <Compile Include="GameScreen.cs">

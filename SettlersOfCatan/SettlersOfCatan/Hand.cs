@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SettlersOfCatan
 {
-    class Hand
+    public class Hand
     {
         private int ore;
         private int wool;
@@ -14,6 +14,7 @@ namespace SettlersOfCatan
         private int grain;
         private int brick;
         private int knights;
+
         private List<DevelopmentCard> devCards;
 
         public Hand()
@@ -86,5 +87,6 @@ namespace SettlersOfCatan
         {
             this.brick += amount;
         }
+
     }
 }
