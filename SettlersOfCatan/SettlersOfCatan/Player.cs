@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace SettlersOfCatan
 {
-    class Player
+    public class Player
     {
         private readonly int MAX_CITIES = 4;
         private readonly int MAX_SETTLEMENTS = 5;
@@ -23,6 +23,18 @@ namespace SettlersOfCatan
         private int[] toReceive;
         private String name;
         private Color color;
+
+        public Player()
+        {
+            this.points = 0;
+            this.citiesPlayed = 0;
+            this.settlementsPlayed = 0;
+            this.roadsPlayed = 0;
+            this.playerHand = new Hand();
+            this.toTrade = new int[5] { 0, 0, 0, 0, 0 };
+            this.toReceive = new int[5] { 0, 0, 0, 0, 0 };
+            this.playerToTradeWith = null;
+        }
 
         public Player(String playerName, Color playerColor)
         {
@@ -105,14 +117,39 @@ namespace SettlersOfCatan
             player.toTrade = recieve;
         }
 
+        private bool canAcceptTrade()
+        {
+            if (this.playerToTradeWith.playerHand.getOre() >= this.toReceive[0] && 
+                this.playerToTradeWith.playerHand.getWool() >= this.toReceive[1] && 
+                this.playerToTradeWith.playerHand.getLumber() >= this.toReceive[2] && 
+                this.playerToTradeWith.playerHand.getGrain() >= this.toReceive[3] && 
+                this.playerToTradeWith.playerHand.getBrick() >= this.toReceive[4] && 
+                this.playerHand.getOre() >= this.toTrade[0] && 
+                this.playerHand.getWool() >= this.toTrade[1] && 
+                this.playerHand.getLumber() >= this.toTrade[2] && 
+                this.playerHand.getGrain() >= this.toTrade[3] && 
+                this.playerHand.getBrick() >= this.toTrade[4])
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+
         public void acceptTrade()
         {
-            this.playerHand.modifyOre(this.toReceive[0] - this.toTrade[0]);
-            this.playerHand.modifyWool(this.toReceive[1] - this.toTrade[1]);
-            this.playerHand.modifyLumber(this.toReceive[2] - this.toTrade[2]);
-            this.playerHand.modifyGrain(this.toReceive[3] - this.toTrade[3]);
-            this.playerHand.modifyBrick(this.toReceive[4] - this.toTrade[4]);
-            this.playerToTradeWith.acceptTrade();
+            if (this.canAcceptTrade())
+            {
+                this.playerHand.modifyOre(this.toReceive[0] - this.toTrade[0]);
+                this.playerHand.modifyWool(this.toReceive[1] - this.toTrade[1]);
+                this.playerHand.modifyLumber(this.toReceive[2] - this.toTrade[2]);
+                this.playerHand.modifyGrain(this.toReceive[3] - this.toTrade[3]);
+                this.playerHand.modifyBrick(this.toReceive[4] - this.toTrade[4]);
+                this.playerToTradeWith.acceptTrade();
+            }
+            else
+                throw new System.ArgumentException("Player's cards are such that trade cannot be performed");
         }
 
         public void declineTrade()
@@ -120,6 +157,7 @@ namespace SettlersOfCatan
             this.toTrade = new int[] {0,0,0,0,0};
             this.toReceive = new int[] {0,0,0,0,0};
             this.playerToTradeWith.declineTrade();
+            this.playerToTradeWith = null;
         }
     }
 }
