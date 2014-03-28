@@ -21,5 +21,12 @@ namespace SettlersOfCatan
         {
 
         }
+
+        private void StartButton_Click(object sender, EventArgs e)
+        {
+            Form gameScreen = new GameScreen();
+            gameScreen.Show();
+            
+        }
     }
 }
