@@ -17,6 +17,21 @@ namespace SettlersOfCatan
         private int settlementsPlayed;
         private int roadsPlayed;
         private Hand playerHand;
+        private Player playerToTradeWith;
+        private int[] toTrade;
+        private int[] toReceive;
+
+        public Player()
+        {
+            points = 0;
+            citiesPlayed = 0;
+            settlementsPlayed = 0;
+            roadsPlayed = 0;
+            playerHand = new Hand();
+            toTrade = new int[5] { 0, 0, 0, 0, 0 };
+            toReceive = new int[5] { 0, 0, 0, 0, 0 };
+            playerToTradeWith = null;
+        }
 
         public int getCitiesRemaining()
         {
@@ -64,6 +79,21 @@ namespace SettlersOfCatan
             }
             else
                 return false;
+        }
+
+        public Hand getHand()
+        {
+            return playerHand;
+        }
+
+        public void tradeWithBank(String resource)
+        {
+            //TODO reference bank inside of World class
+        }
+
+        public void tradeAtPort(int portType, String resource)
+        {
+            //TODO reference bank inside of world class
         }
     }
 }
