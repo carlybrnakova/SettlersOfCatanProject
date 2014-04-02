@@ -23,6 +23,8 @@ namespace SettlersOfCatan
         private int[] toReceive;
         private String name;
         private Color color;
+        private bool hasWon;
+        private World world;
 
         public Player()
         {
@@ -34,9 +36,11 @@ namespace SettlersOfCatan
             this.toTrade = new int[5] { 0, 0, 0, 0, 0 };
             this.toReceive = new int[5] { 0, 0, 0, 0, 0 };
             this.playerToTradeWith = null;
+            this.hasWon = false;
+            this.world = new World();
         }
 
-        public Player(String playerName, Color playerColor)
+        public Player(String playerName, Color playerColor, World world)
         {
             this.name = playerName;
             this.color = playerColor;
@@ -48,6 +52,8 @@ namespace SettlersOfCatan
             this.toTrade = new int[5] { 0, 0, 0, 0, 0 };
             this.toReceive = new int[5] { 0, 0, 0, 0, 0 };
             this.playerToTradeWith = null;
+            this.hasWon = false;
+            this.world = world;
         }
 
         public String getName()
@@ -165,9 +171,74 @@ namespace SettlersOfCatan
             return playerHand;
         }
 
-        public void tradeWithBank(String resource)
+        public void incrementPoints(int amount)
         {
-            //TODO reference bank inside of World class
+            this.points += amount;
+            if (this.points >= 10)
+                this.hasWon = true;
+        }
+
+        public bool hasWonGame()
+        {
+            return this.hasWon;
+        }
+
+
+        public void tradeWithBank(String tradeIn, String payOut)
+        {
+            if (tradeIn.ToLower().Equals("ore"))
+            {
+                if (getHand().getOre() >= 4)
+                {
+                    this.world.bank.modifyResource(tradeIn, 4);
+                    this.world.bank.modifyResource(payOut, -1);
+                }
+            }
+            else if (tradeIn.ToLower().Equals("wool"))
+            {
+                if (getHand().getWool() >= 4)
+                {
+                    this.world.bank.modifyResource(tradeIn, 4);
+                    this.world.bank.modifyResource(payOut, -1);
+                }
+
+            }
+            else if (tradeIn.ToLower().Equals("lumber"))
+            {
+                if (getHand().getLumber() >= 4)
+                {
+                    this.world.bank.modifyResource(tradeIn, 4);
+                    this.world.bank.modifyResource(payOut, -1);
+                }
+
+            }
+            else if (tradeIn.ToLower().Equals("grain"))
+            {
+                if (getHand().getGrain() >= 4)
+                {
+                    this.world.bank.modifyResource(tradeIn, 4);
+                    this.world.bank.modifyResource(payOut, -1);
+                }
+
+            }
+            else if (tradeIn.ToLower().Equals("brick"))
+            {
+                if (getHand().getBrick() >= 4)
+                {
+                    this.world.bank.modifyResource(tradeIn, 4);
+                    this.world.bank.modifyResource(payOut, -1);
+                }
+            }
+            else if (tradeIn.ToLower().Equals("devcard"))
+            {
+                if (getHand().getOre() >= 1 && getHand().getGrain() >= 1 && getHand().getWool() >= 1)
+                {
+                    this.world.bank.modifyResource("ore", 1);
+                    this.world.bank.modifyResource("wool", 1);
+                    this.world.bank.modifyResource("grain", 1);
+                    this.world.bank.modifyResource(payOut, -1);
+                }
+            }
         }
 
         public void tradeAtPort(int portType, String resource)

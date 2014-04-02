@@ -119,7 +119,7 @@ namespace SettlersOfCatan
             }
         }
 
-        public void tradeFourForOne(Player p, String tradeIn, String payOut)
+        public void tradeFourForOne(String tradeIn, String payOut)
         {
             if (getResourceRemaining(tradeIn) == 0)
             {
@@ -152,7 +152,7 @@ namespace SettlersOfCatan
             }
         }
 
-        public void tradeThreeForOne(Player p, String tradeIn, String payOut)
+        public void tradeThreeForOne(String tradeIn, String payOut)
         {
             if (getResourceRemaining(tradeIn) == 0)
             {
