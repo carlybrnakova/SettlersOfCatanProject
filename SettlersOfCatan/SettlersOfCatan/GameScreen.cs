@@ -359,7 +359,7 @@ namespace SettlersOfCatan
 
             buttonPanel.Location = new Point(0, 0);
             buttonPanel.Size = new Size(1050, 1050);
-            buttonPanel.BackColor = Color.Transparent;
+            buttonPanel.BackColor = Color.FromArgb(0, 100, 100, 100);
             setupRoadGrid();
 
             buttonPanel.BringToFront();
