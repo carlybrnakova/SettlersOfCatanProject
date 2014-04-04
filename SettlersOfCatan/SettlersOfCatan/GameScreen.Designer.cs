@@ -137,7 +137,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1573, 1054);
+            this.ClientSize = new System.Drawing.Size(1573, 912);
             this.Controls.Add(this.PlayerInfoPanel);
             this.Controls.Add(this.CurrentPlayerNameLabel);
             this.Name = "GameScreen";
