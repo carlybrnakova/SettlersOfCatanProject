@@ -31,38 +31,37 @@ namespace SettlersOfCatan
 
         public bool allResourcesMax()
         {
-            return (ore + wool + lumber + grain + brick == 95 && devCards.Count() == 25);
+            return (this.ore + this.wool + this.lumber + this.grain + this.brick == 95 && this.devCards.Count() == 25);
         }
 
-        public int getResourceRemaining(String resource)
+        public int getOreRemaining()
         {
-            if (resource.ToLower().Equals("ore"))
-            {
-                return ore;
-            }
-            else if (resource.ToLower().Equals("wool"))
-            {
-                return wool;
-            }
-            else if (resource.ToLower().Equals("lumber"))
-            {
-                return lumber;
-            }
-            else if (resource.ToLower().Equals("grain"))
-            {
-                return grain;
-            }
-            else if (resource.ToLower().Equals("brick"))
-            {
-                return brick;
-            }
-            else if (resource.ToLower().Equals("devcard"))
-            {
-                return devCards.Count();
-            }
-          
-            throw new ArgumentNullException("Must name a valid resource type");
-            
+            return this.ore;
+        }
+
+        public int getWoolRemaining()
+        {
+            return this.wool;
+        }
+
+        public int getLumberRemaining()
+        {
+            return this.lumber;
+        }
+
+        public int getGrainRemaining()
+        {
+            return this.grain;
+        }
+
+        public int getBrickRemaining()
+        {
+            return this.brick;
+        }
+
+        public int getDevCardRemaining()
+        {
+            return this.devCards.Count();
         }
 
         public void modifyResource(String resource, int amount)
@@ -113,63 +112,6 @@ namespace SettlersOfCatan
             //{
             //devCards.Count();
             //}
-            else
-            {
-                throw new ArgumentNullException("Must name a valid resource type");
-            }
-        }
-
-        public void tradeFourForOne(String tradeIn, String payOut)
-        {
-            if (getResourceRemaining(tradeIn) == 0)
-            {
-                throw new InvalidOperationException("The bank is out of " + payOut);
-            }
-
-            // TODO: increment + decrement cards in player's hand
-            if (tradeIn.ToLower().Equals("ore")) {
-                if (p.getHand().getOre() >= 4) {
-                    p.tradeWithBank("ore");
-                }
-            }
-            else if (tradeIn.ToLower().Equals("wool")) {
-            
-            } 
-            else if (tradeIn.ToLower().Equals("lumber"))
-            {
-                
-            }
-            else if (tradeIn.ToLower().Equals("grain"))
-            {
-                
-            }
-            else if (tradeIn.ToLower().Equals("brick"))
-            {
-                
-            }
-            else if (tradeIn.ToLower().Equals("devcard")) {
-            
-            }
-        }
-
-        public void tradeThreeForOne(String tradeIn, String payOut)
-        {
-            if (getResourceRemaining(tradeIn) == 0)
-            {
-                throw new InvalidOperationException("The bank is out of " + payOut);
-            }
-
-            // TODO: increment + decrement cards in player's hand
-        }
-
-        public void tradeTwoForOne(Player p, String tradeIn, String payOut)
-        {
-            if (getResourceRemaining(tradeIn) == 0)
-            {
-                throw new InvalidOperationException("The bank is out of " + payOut);
-            }
-
-            // TODO: increment + decrement cards in player's hand
         }
     }
 }

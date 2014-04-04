@@ -190,7 +190,7 @@ namespace SettlersOfCatan
             {
                 if (getHand().getOre() >= 4)
                 {
-                    this.world.bank.modifyResource(tradeIn, 4);
+                    this.world.bank.modifyResource("ore",4);
                     this.world.bank.modifyResource(payOut, -1);
                 }
             }
@@ -198,7 +198,7 @@ namespace SettlersOfCatan
             {
                 if (getHand().getWool() >= 4)
                 {
-                    this.world.bank.modifyResource(tradeIn, 4);
+                    this.world.bank.modifyResource("wool", 4);
                     this.world.bank.modifyResource(payOut, -1);
                 }
 
@@ -207,7 +207,7 @@ namespace SettlersOfCatan
             {
                 if (getHand().getLumber() >= 4)
                 {
-                    this.world.bank.modifyResource(tradeIn, 4);
+                    this.world.bank.modifyResource("lumber", 4);
                     this.world.bank.modifyResource(payOut, -1);
                 }
 
@@ -216,7 +216,7 @@ namespace SettlersOfCatan
             {
                 if (getHand().getGrain() >= 4)
                 {
-                    this.world.bank.modifyResource(tradeIn, 4);
+                    this.world.bank.modifyResource("grain", 4);
                     this.world.bank.modifyResource(payOut, -1);
                 }
 
@@ -225,7 +225,7 @@ namespace SettlersOfCatan
             {
                 if (getHand().getBrick() >= 4)
                 {
-                    this.world.bank.modifyResource(tradeIn, 4);
+                    this.world.bank.modifyResource("brick", 4);
                     this.world.bank.modifyResource(payOut, -1);
                 }
             }
@@ -241,9 +241,53 @@ namespace SettlersOfCatan
             }
         }
 
+        // Need to know if port trades 2 or 3 for 1
         public void tradeAtPort(int portType, String resource)
         {
             //TODO reference bank inside of world class
+            if (resource.ToLower().Equals("ore"))
+            {
+                if (getHand().getOre() >= 1)
+                {
+                    this.world.bank.modifyResource("ore", -1);
+                    //this.world.bank.modifyResource(resourcePortTradesIn, -1);
+                }
+            }
+            else if (resource.ToLower().Equals("wool"))
+            {
+                if (getHand().getWool() >= 1)
+                {
+                    this.world.bank.modifyResource("wool", -1);
+                    //this.world.bank.modifyResource(resourcePortTradesIn, -1);
+                }
+
+            }
+            else if (resource.ToLower().Equals("lumber"))
+            {
+                if (getHand().getLumber() >= 1)
+                {
+                    this.world.bank.modifyResource("lumber", -1);
+                    //this.world.bank.modifyResource(resourcePortTradesIn, -1);
+                }
+
+            }
+            else if (resource.ToLower().Equals("grain"))
+            {
+                if (getHand().getGrain() >= 1)
+                {
+                    this.world.bank.modifyResource("grain", -1);
+                    //this.world.bank.modifyResource(resourcePortTradesIn, -1);
+                }
+
+            }
+            else if (resource.ToLower().Equals("brick"))
+            {
+                if (getHand().getBrick() >= 1)
+                {
+                    this.world.bank.modifyResource("brick", 1);
+                    //this.world.bank.modifyResource(resourcePortTradesIn, -1);
+                }
+            }
         }
     }
 }
