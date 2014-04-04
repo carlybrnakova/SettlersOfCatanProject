@@ -28,7 +28,7 @@ namespace SettlersOfCatan
             }
             for (int i = 0; i < computers; i++)
             {
-                players.Add(new Computer());
+                //players.Add(new Computer());
             }
             currentPlayer = 0;
         }

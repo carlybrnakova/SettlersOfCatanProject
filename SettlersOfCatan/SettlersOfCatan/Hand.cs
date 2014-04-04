@@ -65,7 +65,7 @@ namespace SettlersOfCatan
 
         public void modifyOre(int amount)
         {
-            if (this.ore < amount *-1)
+            if (this.ore < amount * -1)
                 throw new System.ArgumentException("player cannot have negetive resources");
             else
                 this.ore += amount;

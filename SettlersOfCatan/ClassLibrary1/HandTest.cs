@@ -9,8 +9,10 @@ namespace ClassLibrary1
     [TestFixture()]
     class HandTest
     {
-
+        Hand hand0 = new Hand();
         Hand hand1 = new Hand();
+        Hand hand2 = new Hand();
+        Hand hand3 = new Hand();
         [Test()]
         public void testConstructor()
         {
@@ -22,31 +24,31 @@ namespace ClassLibrary1
         [Test()]
         public void testOreAt0()
         {
-            Assert.AreEqual(0, hand1.getOre());
+            Assert.AreEqual(0, hand0.getOre());
         }
 
         [Test()]
         public void testWoolAt0()
         {
-            Assert.AreEqual(0, hand1.getWool());
+            Assert.AreEqual(0, hand0.getWool());
         }
 
         [Test()]
         public void testLumberAt0()
         {
-            Assert.AreEqual(0, hand1.getLumber());
+            Assert.AreEqual(0, hand0.getLumber());
         }
 
         [Test()]
         public void testGrainAt0()
         {
-            Assert.AreEqual(0, hand1.getGrain());
+            Assert.AreEqual(0, hand0.getGrain());
         }
 
         [Test()]
         public void testBrickAt0()
         {
-            Assert.AreEqual(0, hand1.getBrick());
+            Assert.AreEqual(0, hand0.getBrick());
         }
 
         //tests for when the resources are modified positively
@@ -60,28 +62,28 @@ namespace ClassLibrary1
         [Test()]
         public void testModifyWoolPos()
         {
-            hand1.modifyOre(5);
+            hand1.modifyWool(5);
             Assert.AreEqual(5, hand1.getWool());
         }
 
         [Test()]
         public void testModifyLumberPos()
         {
-            hand1.modifyOre(5);
+            hand1.modifyLumber(5);
             Assert.AreEqual(5, hand1.getLumber());
         }
 
         [Test()]
         public void testModifyGrainPos()
         {
-            hand1.modifyOre(5);
+            hand1.modifyGrain(5);
             Assert.AreEqual(5, hand1.getGrain());
         }
 
         [Test()]
         public void testModifyBrickPos()
         {
-            hand1.modifyOre(5);
+            hand1.modifyBrick(5);
             Assert.AreEqual(5, hand1.getBrick());
         }
 
@@ -89,36 +91,42 @@ namespace ClassLibrary1
         [Test()]
         public void testModifyOreNeg()
         {
-            hand1.modifyOre(-3);
-            Assert.AreEqual(2, hand1.getOre());
+            hand2.modifyOre(5);
+            Assert.AreEqual(5, hand2.getOre());
+            hand2.modifyOre(-3);
+            Assert.AreEqual(2, hand2.getOre());
         }
 
         [Test()]
         public void testModifyWoolNeg()
         {
-            hand1.modifyOre(-3);
-            Assert.AreEqual(2, hand1.getWool());
+            hand2.modifyWool(5);
+            hand2.modifyWool(-3);
+            Assert.AreEqual(2, hand2.getWool());
         }
 
         [Test()]
         public void testModifyLumberNeg()
         {
-            hand1.modifyOre(-3);
-            Assert.AreEqual(2, hand1.getLumber());
+            hand2.modifyLumber(5);
+            hand2.modifyLumber(-3);
+            Assert.AreEqual(2, hand2.getLumber());
         }
 
         [Test()]
         public void testModifyGrainNeg()
         {
-            hand1.modifyOre(-3);
-            Assert.AreEqual(2, hand1.getGrain());
+            hand2.modifyGrain(5);
+            hand2.modifyGrain(-3);
+            Assert.AreEqual(2, hand2.getGrain());
         }
 
         [Test()]
         public void testModifyBrickNeg()
         {
-            hand1.modifyOre(-3);
-            Assert.AreEqual(2, hand1.getBrick());
+            hand2.modifyBrick(5);
+            hand2.modifyBrick(-3);
+            Assert.AreEqual(2, hand2.getBrick());
         }
 
         //tests for when the resources are modified to go negetive.
@@ -126,35 +134,35 @@ namespace ClassLibrary1
         [ExpectedException(typeof(ArgumentException))]
         public void testModifyOreNegResult()
         {
-            hand1.modifyOre(-5);
+            hand3.modifyOre(-5);
         }
 
         [Test()]
         [ExpectedException(typeof(ArgumentException))]
         public void testModifyWoolNegResult()
         {
-            hand1.modifyOre(-5);
+            hand3.modifyWool(-5);
         }
 
         [Test()]
         [ExpectedException(typeof(ArgumentException))]
         public void testModifyLumberNegResult()
         {
-            hand1.modifyOre(-5);
+            hand3.modifyLumber(-5);
         }
 
         [Test()]
         [ExpectedException(typeof(ArgumentException))]
         public void testModifyGrainNegResult()
         {
-            hand1.modifyOre(-5);
+            hand3.modifyGrain(-5);
         }
 
         [Test()]
         [ExpectedException(typeof(ArgumentException))]
         public void testModifyBrickNegResult()
         {
-            hand1.modifyOre(-5);
+            hand3.modifyBrick(-5);
         }
     }
 }
