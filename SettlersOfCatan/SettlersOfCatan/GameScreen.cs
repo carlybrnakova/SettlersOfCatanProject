@@ -29,7 +29,7 @@ namespace SettlersOfCatan
         private const int X_INCREMENT = 75;
         private const int Y_INCREMENT = 150;
 
-        private World world = World.Instance;
+       
 
         // Intersection Grid
         // 7
