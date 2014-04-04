@@ -52,18 +52,83 @@ namespace ClassLibrary1
 
         [Test()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TestModifyResourceThrowsWhenLessThanZero()
+        public void TestModifyOreThrowsWhenLessThanZero()
         {
             var target = new Bank();
-            target.modifyResource("brick", -20);
+            target.modifyResource("ore", -20);
         }
 
         [Test()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TestModifyResourceThrowsWhenGreaterThan19()
+        public void TestModifyWoolThrowsWhenLessThanZero()
+        {
+            var target = new Bank();
+            target.modifyResource("wool", -30);
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestModifyLumberThrowsWhenLessThanZero()
+        {
+            var target = new Bank();
+            target.modifyResource("lumber", -25);
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestModifyGrainThrowsWhenLessThanZero()
+        {
+            var target = new Bank();
+            target.modifyResource("grain", -55);
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestModifyBrickThrowsWhenLessThanZero()
+        {
+            var target = new Bank();
+            target.modifyResource("brick", -160);
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestModifyOreThrowsWhenGreaterThan19()
         {
             var target = new Bank();
             target.modifyResource("ore", 2);
         }
+       
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestModifyWoolThrowsWhenGreaterThan19()
+        {
+            var target = new Bank();
+            target.modifyResource("wool", 21);
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestModifyLumberThrowsWhenGreaterThan19()
+        {
+            var target = new Bank();
+            target.modifyResource("lumber", 1);
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestModifyGrainThrowsWhenGreaterThan19()
+        {
+            var target = new Bank();
+            target.modifyResource("grain", 7);
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestModifyBrickThrowsWhenGreaterThan19()
+        {
+            var target = new Bank();
+            target.modifyResource("brick", 35);
+        }
+
     }
 }
