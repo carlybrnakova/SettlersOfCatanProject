@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SettlersOfCatan
 {
-    class World
+    public class World
     {
         private int currentPlayer;
         private List<Player> players;

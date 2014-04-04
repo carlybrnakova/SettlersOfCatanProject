@@ -18,7 +18,8 @@ namespace ClassLibrary1
 
             String playerName = "player1";
             Color playerColor = Color.Beige;
-            var player1 = new Player(playerName, playerColor);
+            var world = new World();
+            var player1 = new Player(playerName, playerColor, world);
             Assert.IsTrue(player1.getColor() == playerColor);
             Assert.IsTrue(player1.getName() == playerName);
         }
@@ -80,6 +81,13 @@ namespace ClassLibrary1
             Assert.IsFalse(universal1.incrementSettlements());
         }
 
-
+        Player player1 = new Player();
+        Player player2 = new Player();
+        
+        [Test()]
+        public void testAcceptTrade()
+        {
+            //player1.proposeTrade()
+        }
     }
 }

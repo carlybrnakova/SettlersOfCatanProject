@@ -40,7 +40,7 @@ namespace SettlersOfCatan
             this.world = new World();
         }
 
-        public Player(String playerName, Color playerColor, World world)
+        public Player(String playerName, Color playerColor, World world1)
         {
             this.name = playerName;
             this.color = playerColor;
@@ -53,7 +53,7 @@ namespace SettlersOfCatan
             this.toReceive = new int[5] { 0, 0, 0, 0, 0 };
             this.playerToTradeWith = null;
             this.hasWon = false;
-            this.world = world;
+            this.world = world1;
         }
 
         public String getName()

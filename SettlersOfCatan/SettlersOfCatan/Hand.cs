@@ -65,27 +65,42 @@ namespace SettlersOfCatan
 
         public void modifyOre(int amount)
         {
-            this.ore += amount;
+            if (this.ore < amount *-1)
+                throw new System.ArgumentException("player cannot have negetive resources");
+            else
+                this.ore += amount;
         }
 
         public void modifyWool(int amount)
         {
-            this.wool += amount;
+            if (this.wool < amount * -1)
+                throw new System.ArgumentException("player cannot have negetive resources");
+            else
+                this.wool += amount;
         }
 
         public void modifyLumber(int amount)
         {
-            this.lumber += amount;
+            if (this.lumber < amount * -1)
+                throw new System.ArgumentException("player cannot have negetive resources");
+            else
+                this.lumber += amount;
         }
 
         public void modifyGrain(int amount)
         {
-            this.grain += amount;
+            if (this.grain < amount * -1)
+                throw new System.ArgumentException("player cannot have negetive resources");
+            else
+                this.grain += amount;
         }
 
         public void modifyBrick(int amount)
         {
-            this.brick += amount;
+            if (this.brick < amount * -1)
+                throw new System.ArgumentException("player cannot have negetive resources");
+            else
+                this.brick += amount;
         }
 
     }
