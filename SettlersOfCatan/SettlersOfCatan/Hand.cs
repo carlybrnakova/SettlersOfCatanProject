@@ -65,7 +65,7 @@ namespace SettlersOfCatan
 
         public void modifyOre(int amount)
         {
-            if (this.ore < amount * -1)
+            if (this.ore < Math.Abs(amount) * -1)
                 throw new System.ArgumentException("player cannot have negetive resources");
             else
                 this.ore += amount;
@@ -73,7 +73,7 @@ namespace SettlersOfCatan
 
         public void modifyWool(int amount)
         {
-            if (this.wool < amount * -1)
+            if (this.wool < Math.Abs(amount) * -1)
                 throw new System.ArgumentException("player cannot have negetive resources");
             else
                 this.wool += amount;
@@ -81,7 +81,7 @@ namespace SettlersOfCatan
 
         public void modifyLumber(int amount)
         {
-            if (this.lumber < amount * -1)
+            if (this.lumber < Math.Abs(amount) * -1)
                 throw new System.ArgumentException("player cannot have negetive resources");
             else
                 this.lumber += amount;
@@ -89,7 +89,7 @@ namespace SettlersOfCatan
 
         public void modifyGrain(int amount)
         {
-            if (this.grain < amount * -1)
+            if (this.grain < Math.Abs(amount) * -1)
                 throw new System.ArgumentException("player cannot have negetive resources");
             else
                 this.grain += amount;
@@ -97,7 +97,7 @@ namespace SettlersOfCatan
 
         public void modifyBrick(int amount)
         {
-            if (this.brick < amount * -1)
+            if (this.brick < Math.Abs(amount) * -1)
                 throw new System.ArgumentException("player cannot have negetive resources");
             else
                 this.brick += amount;

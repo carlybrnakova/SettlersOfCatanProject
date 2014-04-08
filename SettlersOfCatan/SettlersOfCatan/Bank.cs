@@ -104,14 +104,19 @@ namespace SettlersOfCatan
                 {
                     throw new ArgumentOutOfRangeException("There would be an invalid amount of brick");
                 }
-                brick = brick + amount;
+                else
+                {
+                    brick = brick + amount;
+                }
             }
-            // Don't know if we need this or not...
-
-            //else if (resource.ToLower().Equals("devcard"))
-            //{
-            //devCards.Count();
-            //}
+            else if (resource.ToLower().Equals("devcard"))
+            {
+                if (devCards.Count() <= 0)
+                {
+                    throw new ArgumentOutOfRangeException("There would be an invalid number of development cards");
+                }
+                devCards.RemoveRange(0, Math.Abs(amount));
+            }
         }
     }
 }

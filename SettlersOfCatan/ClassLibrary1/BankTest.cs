@@ -48,6 +48,8 @@ namespace ClassLibrary1
             target.modifyResource("brick", -19);
             target.modifyResource("brick", 19);
             Assert.AreEqual(target.getBrickRemaining(), 19);
+            target.modifyResource("devcard", -1);
+            Assert.AreEqual(target.getDevCardRemaining(), 24);
         }
 
         [Test()]
@@ -128,6 +130,15 @@ namespace ClassLibrary1
         {
             var target = new Bank();
             target.modifyResource("brick", 35);
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestModifyDevCardThrowsWhenLessThanOrEqualToZero()
+        {
+            var target = new Bank();
+            target.modifyResource("devcard", -25);
+            target.modifyResource("devcard", -1);
         }
 
     }

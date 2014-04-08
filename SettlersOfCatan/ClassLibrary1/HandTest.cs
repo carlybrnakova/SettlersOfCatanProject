@@ -51,6 +51,18 @@ namespace ClassLibrary1
             Assert.AreEqual(0, hand0.getBrick());
         }
 
+        [Test()]
+        public void testGetResourcesAt0()
+        {
+            Assert.AreEqual(0, hand0.getResources());
+        }
+
+        [Test()]
+        public void testGetKnightsAt0()
+        {
+            Assert.AreEqual(0, hand0.getKnights());
+        }
+
         //tests for when the resources are modified positively
         [Test()]
         public void testModifyOrePos()

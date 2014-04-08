@@ -114,55 +114,57 @@ namespace SettlersOfCatan
                 return false;
         }
 
-        public void proposeTrade(Player player, int[] trade, int[] recieve)
+        public void proposeTrade(Player player, int[] trade, int[] receive)
         {
             this.toTrade = trade;
-            this.toReceive = recieve;
+            this.toReceive = receive;
             playerToTradeWith = player;
             player.toReceive = trade;
-            player.toTrade = recieve;
+            player.toTrade = receive;
+            player.playerToTradeWith = this;
         }
 
         private bool canAcceptTrade()
         {
-            if (this.playerToTradeWith.playerHand.getOre() >= this.toReceive[0] && 
-                this.playerToTradeWith.playerHand.getWool() >= this.toReceive[1] && 
-                this.playerToTradeWith.playerHand.getLumber() >= this.toReceive[2] && 
-                this.playerToTradeWith.playerHand.getGrain() >= this.toReceive[3] && 
-                this.playerToTradeWith.playerHand.getBrick() >= this.toReceive[4] && 
-                this.playerHand.getOre() >= this.toTrade[0] && 
-                this.playerHand.getWool() >= this.toTrade[1] && 
-                this.playerHand.getLumber() >= this.toTrade[2] && 
-                this.playerHand.getGrain() >= this.toTrade[3] && 
-                this.playerHand.getBrick() >= this.toTrade[4])
-            {
-                return true;
-            }
-            else
-                return false;
+            return (this.playerToTradeWith.playerHand.getOre() >= this.toReceive[0] &&
+                this.playerToTradeWith.playerHand.getWool() >= this.toReceive[1] &&
+                this.playerToTradeWith.playerHand.getLumber() >= this.toReceive[2] &&
+                this.playerToTradeWith.playerHand.getGrain() >= this.toReceive[3] &&
+                this.playerToTradeWith.playerHand.getBrick() >= this.toReceive[4] &&
+                this.playerHand.getOre() >= this.toTrade[0] &&
+                this.playerHand.getWool() >= this.toTrade[1] &&
+                this.playerHand.getLumber() >= this.toTrade[2] &&
+                this.playerHand.getGrain() >= this.toTrade[3] &&
+                this.playerHand.getBrick() >= this.toTrade[4]);
         }
 
+        public void tradeCards(int[] trade, int[] receive)
+        {
+            this.playerHand.modifyOre(receive[0] - trade[0]);
+            this.playerHand.modifyWool(receive[1] - trade[1]);
+            this.playerHand.modifyLumber(receive[2] - trade[2]);
+            this.playerHand.modifyGrain(receive[3] - trade[3]);
+            this.playerHand.modifyBrick(receive[4] - trade[4]);
+        }
 
-        public void acceptTrade()
+        public void acceptTrade(Player player, int[] trade, int[] receive)
         {
             if (this.canAcceptTrade())
             {
-                this.playerHand.modifyOre(this.toReceive[0] - this.toTrade[0]);
-                this.playerHand.modifyWool(this.toReceive[1] - this.toTrade[1]);
-                this.playerHand.modifyLumber(this.toReceive[2] - this.toTrade[2]);
-                this.playerHand.modifyGrain(this.toReceive[3] - this.toTrade[3]);
-                this.playerHand.modifyBrick(this.toReceive[4] - this.toTrade[4]);
-                this.playerToTradeWith.acceptTrade();
+                tradeCards(trade, receive);
+                player.tradeCards(receive, trade);
             }
             else
-                throw new System.ArgumentException("Player's cards are such that trade cannot be performed");
+            {
+                throw new ArgumentException("Player's cards are such that trade cannot be performed");
+            }
         }
 
         public void declineTrade()
         {
             this.toTrade = new int[] { 0, 0, 0, 0, 0 };
             this.toReceive = new int[] { 0, 0, 0, 0, 0 };
-            this.playerToTradeWith.declineTrade();
+            //this.playerToTradeWith.declineTrade();
             this.playerToTradeWith = null;
         }
 
@@ -178,116 +180,368 @@ namespace SettlersOfCatan
                 this.hasWon = true;
         }
 
+        public int getPoints()
+        {
+            return this.points;
+        }
+
         public bool hasWonGame()
         {
             return this.hasWon;
         }
 
 
-        public void tradeWithBank(String tradeIn, String payOut)
+        public void tradeWithBank(String resourceToTradeIn, String resourceToGain)
         {
-            if (tradeIn.ToLower().Equals("ore"))
+            if (resourceToTradeIn.ToLower().Equals("ore"))
             {
                 if (getHand().getOre() >= 4)
                 {
-                    this.world.bank.modifyResource("ore",4);
-                    this.world.bank.modifyResource(payOut, -1);
+                    try
+                    {
+                        this.world.bank.modifyResource(resourceToGain, -1);
+                        this.world.bank.modifyResource("ore", 4);
+                        this.playerHand.modifyOre(-4);
+                        // TODO increment resourceToGrain in player hand
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        throw;
+                    }
                 }
             }
-            else if (tradeIn.ToLower().Equals("wool"))
+            else if (resourceToTradeIn.ToLower().Equals("wool"))
             {
                 if (getHand().getWool() >= 4)
                 {
-                    this.world.bank.modifyResource("wool", 4);
-                    this.world.bank.modifyResource(payOut, -1);
+                    try
+                    {
+                        this.world.bank.modifyResource(resourceToGain, -1);
+                        this.world.bank.modifyResource("wool", 4);
+                        this.playerHand.modifyWool(-4);
+                        // TODO increment resourceToGrain in player hand
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        throw;
+                    }
                 }
 
             }
-            else if (tradeIn.ToLower().Equals("lumber"))
+            else if (resourceToTradeIn.ToLower().Equals("lumber"))
             {
                 if (getHand().getLumber() >= 4)
                 {
-                    this.world.bank.modifyResource("lumber", 4);
-                    this.world.bank.modifyResource(payOut, -1);
+                    try
+                    {
+                        this.world.bank.modifyResource(resourceToGain, -1);
+                        this.world.bank.modifyResource("lumber", 4);
+                        this.playerHand.modifyLumber(-4);
+                        // TODO increment resourceToGrain in player hand
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        throw;
+                    }
                 }
 
             }
-            else if (tradeIn.ToLower().Equals("grain"))
+            else if (resourceToTradeIn.ToLower().Equals("grain"))
             {
                 if (getHand().getGrain() >= 4)
                 {
-                    this.world.bank.modifyResource("grain", 4);
-                    this.world.bank.modifyResource(payOut, -1);
+                    try
+                    {
+                        this.world.bank.modifyResource(resourceToGain, -1);
+                        this.world.bank.modifyResource("grain", 4);
+                        this.playerHand.modifyGrain(-4);
+                        // TODO increment resourceToGrain in player hand
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        throw;
+                    }
                 }
 
             }
-            else if (tradeIn.ToLower().Equals("brick"))
+            else if (resourceToTradeIn.ToLower().Equals("brick"))
             {
                 if (getHand().getBrick() >= 4)
                 {
-                    this.world.bank.modifyResource("brick", 4);
-                    this.world.bank.modifyResource(payOut, -1);
+                    try
+                    {
+                        this.world.bank.modifyResource(resourceToGain, -1);
+                        this.world.bank.modifyResource("brick", 4);
+                        this.playerHand.modifyBrick(-4);
+                        // TODO increment resourceToGrain in player hand
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        throw;
+                    }
                 }
             }
-            else if (tradeIn.ToLower().Equals("devcard"))
+            else if (resourceToGain.ToLower().Equals("devcard"))
             {
                 if (getHand().getOre() >= 1 && getHand().getGrain() >= 1 && getHand().getWool() >= 1)
                 {
-                    this.world.bank.modifyResource("ore", 1);
-                    this.world.bank.modifyResource("wool", 1);
-                    this.world.bank.modifyResource("grain", 1);
-                    this.world.bank.modifyResource(payOut, -1);
+                    try
+                    {
+                        this.world.bank.modifyResource(resourceToGain, -1);
+                        this.world.bank.modifyResource("ore", 1);
+                        this.world.bank.modifyResource("wool", 1);
+                        this.world.bank.modifyResource("grain", 1);
+                        this.playerHand.modifyOre(-1);
+                        this.playerHand.modifyWool(-1);
+                        this.playerHand.modifyGrain(-1);
+                        // TODO increment devcards in player hand
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        throw;
+                    }
                 }
             }
         }
 
-        // Need to know if port trades 2 or 3 for 1
-        public void tradeAtPort(int portType, String resource)
+        // Need to know if port trades 2 or 3 resources in for something 
+        // but for now, I'm assuming 3 resources
+        public void tradeAtPort(int portType, String resourceToGain, String resourceToTrade)
         {
-            //TODO reference bank inside of world class
-            if (resource.ToLower().Equals("ore"))
+            if (resourceToTrade.ToLower().Equals("ore"))
             {
-                if (getHand().getOre() >= 1)
+                if (getHand().getOre() >= 3)
+                {
+                    try
+                    {
+                        this.world.bank.modifyResource(resourceToGain, -1);
+                        this.world.bank.modifyResource("ore", 3);
+                        this.playerHand.modifyOre(-3);
+                        // TODO increment resource gained in player hand
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        throw;
+                    }
+                }
+            }
+            else if (resourceToTrade.ToLower().Equals("wool"))
+            {
+                if (getHand().getWool() >= 3)
+                {
+                    try
+                    {
+                        this.world.bank.modifyResource(resourceToGain, -1);
+                        this.world.bank.modifyResource("wool", 3);
+                        this.playerHand.modifyWool(-3);
+                        // TODO increment resource gained in player hand
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        throw;
+                    }
+                }
+
+            }
+            else if (resourceToTrade.ToLower().Equals("lumber"))
+            {
+                if (getHand().getLumber() >= 3)
+                {
+                    try
+                    {
+                        this.world.bank.modifyResource(resourceToGain, -1);
+                        this.world.bank.modifyResource("lumber", 3);
+                        this.playerHand.modifyLumber(-3);
+                        // TODO increment resource gained in player hand
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        throw;
+                    }
+                }
+
+            }
+            else if (resourceToTrade.ToLower().Equals("grain"))
+            {
+                if (getHand().getGrain() >= 3)
+                {
+                    try
+                    {
+                        this.world.bank.modifyResource(resourceToGain, -1);
+                        this.world.bank.modifyResource("grain", 3);
+                        this.playerHand.modifyGrain(-3);
+                        // TODO increment resource gained in player hand
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        throw;
+                    }
+                }
+
+            }
+            else if (resourceToTrade.ToLower().Equals("brick"))
+            {
+                if (getHand().getBrick() >= 3)
+                {
+                    try
+                    {
+                        this.world.bank.modifyResource(resourceToGain, -1);
+                        this.world.bank.modifyResource("brick", 3);
+                        this.playerHand.modifyBrick(-3);
+                        // TODO increment resource gained in player hand
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public void generateOre()
+        {
+            for (int i = 0; i < this.citiesPlayed; i++)
+            {
+                try
+                {
+                    this.world.bank.modifyResource("ore", -2);
+                    this.playerHand.modifyOre(2);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw;
+                }
+            }
+            
+            for (int i = 0; i < this.settlementsPlayed; i++)
+            {
+                try
                 {
                     this.world.bank.modifyResource("ore", -1);
-                    //this.world.bank.modifyResource(resourcePortTradesIn, -1);
+                    this.playerHand.modifyOre(1);
                 }
-            }
-            else if (resource.ToLower().Equals("wool"))
-            {
-                if (getHand().getWool() >= 1)
+                catch (ArgumentOutOfRangeException)
                 {
-                    this.world.bank.modifyResource("wool", -1);
-                    //this.world.bank.modifyResource(resourcePortTradesIn, -1);
-                }
-
-            }
-            else if (resource.ToLower().Equals("lumber"))
-            {
-                if (getHand().getLumber() >= 1)
-                {
-                    this.world.bank.modifyResource("lumber", -1);
-                    //this.world.bank.modifyResource(resourcePortTradesIn, -1);
-                }
-
-            }
-            else if (resource.ToLower().Equals("grain"))
-            {
-                if (getHand().getGrain() >= 1)
-                {
-                    this.world.bank.modifyResource("grain", -1);
-                    //this.world.bank.modifyResource(resourcePortTradesIn, -1);
-                }
-
-            }
-            else if (resource.ToLower().Equals("brick"))
-            {
-                if (getHand().getBrick() >= 1)
-                {
-                    this.world.bank.modifyResource("brick", 1);
-                    //this.world.bank.modifyResource(resourcePortTradesIn, -1);
+                    throw;
                 }
             }
         }
+
+        public void generateWool()
+        {
+            for (int i = 0; i < this.citiesPlayed; i++)
+            {
+                try
+                {
+                    this.world.bank.modifyResource("wool", -2);
+                    this.playerHand.modifyWool(2);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw;
+                }
+            }
+
+            for (int i = 0; i < this.settlementsPlayed; i++)
+            {
+                try
+                {
+                    this.world.bank.modifyResource("wool", -1);
+                    this.playerHand.modifyWool(1);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw;
+                }
+            }
+        }
+
+        public void generateLumber()
+        {
+            for (int i = 0; i < this.citiesPlayed; i++)
+            {
+                try
+                {
+                    this.world.bank.modifyResource("lumber", -2);
+                    this.playerHand.modifyLumber(2);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw;
+                }
+            }
+
+            for (int i = 0; i < this.settlementsPlayed; i++)
+            {
+                try
+                {
+                    this.world.bank.modifyResource("lumber", -1);
+                    this.playerHand.modifyLumber(1);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw;
+                }
+            }
+        }
+
+        public void generateGrain()
+        {
+            for (int i = 0; i < this.citiesPlayed; i++)
+            {
+                try
+                {
+                    this.world.bank.modifyResource("grain", -2);
+                    this.playerHand.modifyGrain(2);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw;
+                }
+            }
+
+            for (int i = 0; i < this.settlementsPlayed; i++)
+            {
+                try
+                {
+                    this.world.bank.modifyResource("grain", -1);
+                    this.playerHand.modifyGrain(1);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw;
+                }
+            }
+        }
+        
+        public void generateBrick()
+        {
+            for (int i = 0; i < this.citiesPlayed; i++)
+            {
+                try
+                {
+                    this.world.bank.modifyResource("brick", -2);
+                    this.playerHand.modifyBrick(2);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw;
+                }
+            }
+
+            for (int i = 0; i < this.settlementsPlayed; i++)
+            {
+                try
+                {
+                    this.world.bank.modifyResource("brick", -1);
+                    this.playerHand.modifyBrick(1);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw;
+                }
+            }
+        }
+
     }
 }
