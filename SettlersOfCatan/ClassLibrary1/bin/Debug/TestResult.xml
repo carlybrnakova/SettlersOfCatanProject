@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!--This file represents the results of running a test suite-->
-<test-results name="C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.dll" total="7" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-04-09" time="01:10:50">
+<test-results name="C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.dll" total="9" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-04-09" time="13:49:26">
   <environment nunit-version="2.6.3.13283" clr-version="2.0.50727.5477" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Program Files (x86)\NUnit 2.6.3\bin" machine-name="HEIBELCJ-1" user="heibelcj" user-domain="HEIBELCJ-1" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="Assembly" name="C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.dll" executed="True" result="Success" success="True" time="0.123" asserts="0">
+  <test-suite type="Assembly" name="C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.dll" executed="True" result="Success" success="True" time="0.143" asserts="0">
     <results>
-      <test-suite type="Namespace" name="ClassLibrary1" executed="True" result="Success" success="True" time="0.104" asserts="0">
+      <test-suite type="Namespace" name="ClassLibrary1" executed="True" result="Success" success="True" time="0.142" asserts="0">
         <results>
-          <test-suite type="TestFixture" name="IslandMapTest" executed="True" result="Success" success="True" time="0.101" asserts="0">
+          <test-suite type="TestFixture" name="IslandMapTest" executed="True" result="Success" success="True" time="0.141" asserts="0">
             <results>
-              <test-case name="ClassLibrary1.IslandMapTest.TestThatBottomRowHasCorrectUpAndDownConnections" executed="True" result="Success" success="True" time="0.032" asserts="7" />
-              <test-case name="ClassLibrary1.IslandMapTest.TestThatBottomRowIntersectionsHaveAppropriateLeftAndRightConnections" executed="True" result="Success" success="True" time="0.011" asserts="14" />
-              <test-case name="ClassLibrary1.IslandMapTest.TestThatNewIslandMapHas3NullsInCorners" executed="True" result="Success" success="True" time="0.001" asserts="12" />
+              <test-case name="ClassLibrary1.IslandMapTest.BiggerTestToBuildThreeSettlementsCorrectly" executed="True" result="Success" success="True" time="0.000" asserts="13" />
+              <test-case name="ClassLibrary1.IslandMapTest.TestThatBottomRowHasCorrectUpAndDownConnections" executed="True" result="Success" success="True" time="0.012" asserts="7" />
+              <test-case name="ClassLibrary1.IslandMapTest.TestThatBottomRowIntersectionsHaveAppropriateLeftAndRightConnections" executed="True" result="Success" success="True" time="0.032" asserts="14" />
+              <test-case name="ClassLibrary1.IslandMapTest.TestThatNewIslandMapHas3NullsInCorners" executed="True" result="Success" success="True" time="0.002" asserts="12" />
               <test-case name="ClassLibrary1.IslandMapTest.TestThatNewIslandMapHasNoNullsOtherThanTheFourCorners" executed="True" result="Success" success="True" time="0.001" asserts="22" />
+              <test-case name="ClassLibrary1.IslandMapTest.TestThatSomethingCanBeBuiltAtEmptyIntersectionWithNoSurroundingBuildingsAndThenSurroundingIntersectionsAreLocked" executed="True" result="Success" success="True" time="0.001" asserts="5" />
               <test-case name="ClassLibrary1.IslandMapTest.TestThatThirdRowHasCorrectLeftAndRightConnections" executed="True" result="Success" success="True" time="0.001" asserts="22" />
               <test-case name="ClassLibrary1.IslandMapTest.TestThatThirdRowHasCorrectUpAndDownConnections" executed="True" result="Success" success="True" time="0.001" asserts="11" />
-              <test-case name="ClassLibrary1.IslandMapTest.TestThatTopRowIntersectionsHaveAppropriateLeftAndRightConnections" executed="True" result="Success" success="True" time="0.001" asserts="14" />
+              <test-case name="ClassLibrary1.IslandMapTest.TestThatTopRowIntersectionsHaveAppropriateLeftAndRightConnections" executed="True" result="Success" success="True" time="0.002" asserts="14" />
             </results>
           </test-suite>
         </results>

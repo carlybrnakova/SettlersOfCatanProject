@@ -4,11 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using SettlersOfCatan;
 
 namespace SettlersOfCatan
 {
+    public interface IEnums
+    {
+        public enum GAME_PIECE { NONE, SETTLEMENT, CITY };
+        public enum PLAYER_COLOR { NONE, PLAYER1_COLOR, PLAYER2_COLOR, PLAYER3_COLOR, PLAYER4_COLOR };
+
+
+
+
+    }
+
     public class IslandMap
     {
+
+        
         public Intersection[,] map = new Intersection[6,11];
 
         public IslandMap()
@@ -44,12 +57,15 @@ namespace SettlersOfCatan
                         // Does not have a left connection (connection1)
                         if ( ((r == 0 || r == 5) && (c == 2)) || ((r == 1 || r == 4) && (c == 1)) || ((r == 2 || r == 3) && (c == 0)) )
                         {
+                            
                             map[r, c].connections[0] = new Connection(null);
                             map[r, c].connections[2] = new Connection(map[r, c + 1]);
+                            //map[r, c].connections.RemoveAt(0);
                         }
                         // Does not have a right connection (connection3)
                         else if( ((r == 0 || r == 5) && (c == 8)) || ((r == 1 || r == 4) && (c == 9)) || ((r == 2 || r == 3) && (c == 10)) ){
                             map[r, c].connections[0] = new Connection(map[r, c - 1]);
+                            //map[r, c].connections.RemoveAt(2);
                             map[r, c].connections[2] = new Connection(null);
                         }
                         else{
@@ -62,6 +78,7 @@ namespace SettlersOfCatan
                         if ((r == 0 || r == 5) && c % 2 == 1)
                         {
                             map[r, c].connections[1] = new Connection(null);
+                            //map[r, c].connections.RemoveAt(1);
                         }
                         else
                         {
@@ -84,45 +101,18 @@ namespace SettlersOfCatan
             return i;
         }
 
-        public enum GAME_PIECE { NONE, SETTLEMENT, CITY };
-        public enum PLAYER_COLOR { NONE, PLAYER1_COLOR, PLAYER2_COLOR, PLAYER3_COLOR, PLAYER4_COLOR };
 
 
-        public class Intersection
+        public void buildSettlement(int x, int y)
         {
-            public List<Connection> connections = new List<Connection>(3);
-            private Point coord;
-            private GAME_PIECE currentPiece = GAME_PIECE.NONE;
-            private PLAYER_COLOR color;
-
-            public Intersection(Point p)
-            {
-                coord = p;
-                for (int i = 0; i < 3; i++)
-                {
-                    connections.Add(new Connection(null));
-                }
-            }
-
-           
+            map[x, y].build(IEnums.GAME_PIECE.SETTLEMENT);
         }
+
         
-        public class Connection
-        {
-            public Intersection connectedTo;
-            private PLAYER_COLOR roadColor;
 
-            public Connection(Intersection i)
-            {
-                connectedTo = i;
-            }
+        
+        
 
-            public Intersection getIntersection()
-            {
-                return connectedTo;
-            }
-
-        }
 
     }
 }

@@ -156,7 +156,50 @@ namespace ClassLibrary1
             }
         }
 
+        [Test()]
+        public void TestThatSomethingCanBeBuiltAtEmptyIntersectionWithNoSurroundingBuildingsAndThenSurroundingIntersectionsAreLocked()
+        {
+            // 2, 5
+            int x = 2, y = 5;
+            Assert.True(map.getIntAtIndex(x, y).canBuildAtIntersection());
+            map.buildSettlement(x, y);
 
+            // Make sure none of the surrounding intersections can now be built up
+            Assert.False(map.getIntAtIndex(x, y).canBuildAtIntersection());
+            for(int i = 0; i < 3; i++)
+            {
+                Assert.False(map.getIntAtIndex(x, y).connections[i].getIntersection().canBuildAtIntersection());
+            }
+        }
+
+        [Test()]
+        public void BiggerTestToBuildThreeSettlementsCorrectly()
+        {
+            int x = 5, y = 4;
+
+            Assert.True(map.getIntAtIndex(x, y).canBuildAtIntersection());
+            map.buildSettlement(x, y);
+
+            // Verify all other intersections on hex
+            Assert.False(map.getIntAtIndex(x - 1, y).canBuildAtIntersection());
+            Assert.True(map.getIntAtIndex(x - 2, y).canBuildAtIntersection());
+            Assert.True(map.getIntAtIndex(x - 2, y - 1).canBuildAtIntersection());
+            Assert.True(map.getIntAtIndex(x - 1, y - 1).canBuildAtIntersection());
+            Assert.False(map.getIntAtIndex(x, y - 1).canBuildAtIntersection());
+
+            x = 4; y = 5;
+            Assert.True(map.getIntAtIndex(x, y).canBuildAtIntersection());
+            map.buildSettlement(x, y);
+            map.buildSettlement(x - 1, y + 2); // Build on opposite side of hex so only 2 settlements will be allowed rather than 3
+
+            // Verify all other intersections on hex
+            Assert.False(map.getIntAtIndex(x, y).canBuildAtIntersection());
+            Assert.False(map.getIntAtIndex(x - 1, y).canBuildAtIntersection());
+            Assert.False(map.getIntAtIndex(x - 1, y + 1).canBuildAtIntersection());
+            Assert.False(map.getIntAtIndex(x - 1, y + 2).canBuildAtIntersection());
+            Assert.False(map.getIntAtIndex(x, y + 2).canBuildAtIntersection());
+            Assert.False(map.getIntAtIndex(x, y + 1).canBuildAtIntersection());
+        }
 
     }
 }
