@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
-  <TopNode>[0-1000]ClassLibrary1.BankTest</TopNode>
-  <SelectedNode>[0-1056]C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.dll</SelectedNode>
+  <TopNode>[0-1084]C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.dll</TopNode>
+  <SelectedNode>[0-1017]ClassLibrary1.IslandMapTest.TestThatNewIslandMapHas3NullsInCorners</SelectedNode>
   <ExcludeCategories>false</ExcludeCategories>
   <Nodes>
-    <Node UniqueName="[0-1056]C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.dll" Expanded="true" />
-    <Node UniqueName="[0-1057]ClassLibrary1" Expanded="true" />
+    <Node UniqueName="[0-1084]C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.dll" Expanded="true" />
+    <Node UniqueName="[0-1085]ClassLibrary1" Expanded="true" />
     <Node UniqueName="[0-1000]ClassLibrary1.BankTest" Expanded="true" />
-    <Node UniqueName="[0-1015]ClassLibrary1.ComputerTest" Expanded="true" />
+    <Node UniqueName="[0-1016]ClassLibrary1.IslandMapTest" Expanded="true" />
   </Nodes>
 </VisualState>
