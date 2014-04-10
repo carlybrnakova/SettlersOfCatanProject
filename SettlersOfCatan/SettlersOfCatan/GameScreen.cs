@@ -29,6 +29,8 @@ namespace SettlersOfCatan
         private const int X_INCREMENT = 75;
         private const int Y_INCREMENT = 150;
 
+        private World world;
+
        
 
         // Intersection Grid
@@ -56,6 +58,7 @@ namespace SettlersOfCatan
             initializeAll();
 
             initializeBoardPanel();
+            this.world = new World(3,0);
         }
 
         /** initializeAll()
@@ -412,9 +415,32 @@ namespace SettlersOfCatan
                 theButton.Enabled = false;
             }
 
-            theButton.BackColor = Color.Orange;
+            theButton.BackColor = this.world.currentPlayer.getColor();
+            this.updateResourceLabels();
         }
 
+        private void label1_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void updateResourceLabels()
+        {
+            WoolAmountLabel.Text = this.world.currentPlayer.getHand().getWool().ToString();
+            BrickAmountLabel.Text = this.world.currentPlayer.getHand().getBrick().ToString();
+            LumberAmountLabel.Text = this.world.currentPlayer.getHand().getLumber().ToString();
+            OreAmountLabel.Text = this.world.currentPlayer.getHand().getOre().ToString();
+            GrainAmountLabel.Text = this.world.currentPlayer.getHand().getGrain().ToString();
+        }
+
+        private void EndTurnButton_Click(object sender, EventArgs e)
+        {
+            this.world.endTurn();
+        }
     }
 }

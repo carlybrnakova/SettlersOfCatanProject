@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace SettlersOfCatan
 {
     public class World
     {
-        private int currentPlayer;
+        public Player currentPlayer;
+        private int currentPlayerNumber;
         private List<Player> players;
         public Bank bank;
 
@@ -22,25 +24,33 @@ namespace SettlersOfCatan
         {
             bank = new Bank();
             players = new List<Player>();
+            players.Add(new Player("bob", Color.Red, this));
+            players.Add(new Player("joe", Color.Blue, this));
+            players.Add(new Player("Anne", Color.Green, this));
+
+            /*
             for (int i = 0; i < humans; i++)
             {
+                Player p = new Player
                 players.Add(new Player());
             }
             for (int i = 0; i < computers; i++)
             {
                 //players.Add(new Computer());
             }
-            currentPlayer = 0;
+             */
+            currentPlayer = this.players[0];
         }
 
-        private void endTurn()
+        public void endTurn()
         {
-            if (currentPlayer < this.players.Count())
+            if (currentPlayerNumber < this.players.Count()-1)
             {
-                currentPlayer++;
+                currentPlayerNumber++;
             }
             else
-                currentPlayer = 0;
+                currentPlayerNumber = 0;
+            currentPlayer = this.players[currentPlayerNumber];
         }
 
         private void checkWinner()

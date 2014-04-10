@@ -33,3 +33,4 @@ C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\Settlers
 C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.exe
 C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.pdb
 C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.csprojResolveAssemblyReference.cache
+C:\Users\hortoncb\Documents\college classes\CSSE\csse376\SettlersOfCatan\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.csprojResolveAssemblyReference.cache
