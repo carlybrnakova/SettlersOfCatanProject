@@ -11,6 +11,7 @@ namespace SettlersOfCatan
     public class Intersection
     {
         public List<Connection> connections = new List<Connection>(3);
+        public List<Hex> resourceHexes = new List<Hex>(3);
         private Point coord;
         private IEnums.GAME_PIECE currentPiece = IEnums.GAME_PIECE.NONE;
         public IEnums.PLAYER_COLOR color;
