@@ -281,27 +281,6 @@ namespace SettlersOfCatan
                     }
                 }
             }
-            else if (resourceToGain.ToLower().Equals("devcard"))
-            {
-                if (getHand().getOre() >= 1 && getHand().getGrain() >= 1 && getHand().getWool() >= 1)
-                {
-                    try
-                    {
-                        this.world.bank.modifyResource(resourceToGain, -1);
-                        this.world.bank.modifyResource("ore", 1);
-                        this.world.bank.modifyResource("wool", 1);
-                        this.world.bank.modifyResource("grain", 1);
-                        this.playerHand.modifyOre(-1);
-                        this.playerHand.modifyWool(-1);
-                        this.playerHand.modifyGrain(-1);
-                        this.playerHand.modifyDevCard(1);
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        throw;
-                    }
-                }
-            }
         }
 
         // Need to know if port trades 2 or 3 resources in for something 
@@ -394,6 +373,28 @@ namespace SettlersOfCatan
                     {
                         throw;
                     }
+                }
+            }
+        }
+
+        public void tradeForDevCard()
+        {
+            if (getHand().getOre() >= 1 && getHand().getGrain() >= 1 && getHand().getWool() >= 1)
+            {
+                try
+                {
+                    this.world.bank.modifyResource("devcard", -1);
+                    this.world.bank.modifyResource("ore", 1);
+                    this.world.bank.modifyResource("wool", 1);
+                    this.world.bank.modifyResource("grain", 1);
+                    this.playerHand.modifyOre(-1);
+                    this.playerHand.modifyWool(-1);
+                    this.playerHand.modifyGrain(-1);
+                    this.playerHand.modifyDevCard(1);
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw;
                 }
             }
         }

@@ -798,5 +798,49 @@ namespace ClassLibrary1
             player1.tradeWithBank("grain", "brick");
         }
 
+        [Test()]
+        public void TestTradeForDevCard()
+        {
+            var target = new Player();
+
+            target.incrementSettlements();
+            target.generateWool();
+            target.generateGrain();
+            target.generateOre();
+
+            target.tradeForDevCard();
+            Assert.AreEqual(0, target.getHand().getResources());
+            Assert.AreEqual(1, target.getHand().getDevCards());
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestTradeForDevCardThrowsWhenBankHasNoDevCards()
+        {
+            var target = new Player();
+
+            target.incrementCities();
+            target.incrementCities();
+            target.incrementSettlements();
+
+            for (int i = 0; i < 5; i++)
+            {
+                target.generateGrain();
+                target.generateOre();
+                target.generateWool();
+
+                for (int j = 0; j < 5; j++)
+                {
+                    target.tradeForDevCard();
+                }
+            }
+
+            target.generateGrain();
+            target.generateOre();
+            target.generateWool();
+
+            // should generate an exception
+            target.tradeForDevCard();
+        }
     }
 }
