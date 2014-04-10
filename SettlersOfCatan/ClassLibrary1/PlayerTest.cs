@@ -199,31 +199,6 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        public void TestGenerateResourcesWithBothCitiesAndSettlements()
-        {
-            var target = new Player();
-            target.incrementSettlements();
-            target.incrementSettlements();
-            Assert.AreEqual(3, target.getSettlementsRemaining());
-
-            target.incrementCities();
-            target.incrementCities();
-            Assert.AreEqual(2, target.getCitiesRemaining());
-
-            target.generateBrick();
-            target.generateGrain();
-            target.generateLumber();
-            target.generateOre();
-            target.generateWool();
-
-            Assert.AreEqual(6, target.getHand().getBrick());
-            Assert.AreEqual(6, target.getHand().getGrain());
-            Assert.AreEqual(6, target.getHand().getLumber());
-            Assert.AreEqual(6, target.getHand().getOre());
-            Assert.AreEqual(6, target.getHand().getWool());
-        }
-
-        [Test()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestGenerateBrickWithCitiesThrowsWhenBankHasInsufficientResources()
         {
@@ -494,5 +469,334 @@ namespace ClassLibrary1
             player1.proposeTrade(player2, player1Hand, player2Hand);
             player2.declineTrade();
         }
+
+        [Test()]
+        public void TestTradeAtPort()
+        {
+            var target = new Player();
+            
+            target.incrementCities();
+            target.incrementSettlements();
+            
+            target.generateBrick();
+            target.generateGrain();
+            target.generateLumber();
+            target.generateOre();
+            target.generateWool();
+
+            target.tradeAtPort(3, "grain", "brick");
+            target.tradeAtPort(3, "lumber", "grain");
+            target.tradeAtPort(3, "ore", "lumber");
+            target.tradeAtPort(3, "wool", "ore");
+            target.tradeAtPort(3, "brick", "wool");
+
+            Assert.AreEqual(1, target.getHand().getGrain());
+            Assert.AreEqual(1, target.getHand().getLumber());
+            Assert.AreEqual(1, target.getHand().getOre());
+            Assert.AreEqual(1, target.getHand().getWool());
+            Assert.AreEqual(1, target.getHand().getBrick());
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestTradeForGrainAtPortThrowsWhenBankHasNone()
+        {
+            World world = new World();
+            var player1 = new Player("Bob", Color.Red, world);
+            var player2 = new Player("Jim", Color.Blue, world);
+
+            player1.incrementSettlements();
+
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementSettlements();
+
+            player1.generateGrain();
+            player2.generateGrain();
+            player2.generateGrain();
+            Assert.AreEqual(0, world.bank.getGrainRemaining());
+
+            player1.generateOre();
+            player1.generateOre();
+            player1.generateOre();
+            player1.tradeAtPort(3, "grain", "ore");
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestTradeForOreAtPortThrowsWhenBankHasNone()
+        {
+            World world = new World();
+            var player1 = new Player("Bob", Color.Red, world);
+            var player2 = new Player("Jim", Color.Blue, world);
+
+            player1.incrementSettlements();
+
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementSettlements();
+
+            player1.generateOre();
+            player2.generateOre();
+            player2.generateOre();
+            Assert.AreEqual(0, world.bank.getOreRemaining());
+
+            player1.generateWool();
+            player1.generateWool();
+            player1.generateWool();
+            player1.tradeAtPort(3, "ore", "wool");
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestTradeForWoolAtPortThrowsWhenBankHasNone()
+        {
+            World world = new World();
+            var player1 = new Player("Bob", Color.Red, world);
+            var player2 = new Player("Jim", Color.Blue, world);
+
+            player1.incrementSettlements();
+
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementSettlements();
+
+            player1.generateWool();
+            player2.generateWool();
+            player2.generateWool();
+            Assert.AreEqual(0, world.bank.getWoolRemaining());
+
+            player1.generateLumber();
+            player1.generateLumber();
+            player1.generateLumber();
+            player1.tradeAtPort(3, "wool", "lumber");
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestTradeForLumberAtPortThrowsWhenBankHasNone()
+        {
+            World world = new World();
+            var player1 = new Player("Bob", Color.Red, world);
+            var player2 = new Player("Jim", Color.Blue, world);
+
+            player1.incrementSettlements();
+
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementSettlements();
+
+            player1.generateLumber();
+            player2.generateLumber();
+            player2.generateLumber();
+            Assert.AreEqual(0, world.bank.getLumberRemaining());
+
+            player1.generateBrick();
+            player1.generateBrick();
+            player1.generateBrick();
+            player1.tradeAtPort(3, "lumber", "brick");
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestTradeForBrickAtPortThrowsWhenBankHasNone()
+        {
+            World world = new World();
+            var player1 = new Player("Bob", Color.Red, world);
+            var player2 = new Player("Jim", Color.Blue, world);
+
+            player1.incrementSettlements();
+
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementSettlements();
+
+            player1.generateBrick();
+            player2.generateBrick();
+            player2.generateBrick();
+            Assert.AreEqual(0, world.bank.getBrickRemaining());
+
+            player1.generateGrain();
+            player1.generateGrain();
+            player1.generateGrain();
+            player1.tradeAtPort(3, "brick", "grain");
+        }
+
+        [Test()]
+        public void TestTradeWithBank()
+        {
+            var target = new Player();
+
+            target.incrementCities();
+            target.incrementCities();
+
+            target.generateBrick();
+            target.generateGrain();
+            target.generateLumber();
+            target.generateOre();
+            target.generateWool();
+
+            target.tradeWithBank("grain", "brick");
+            target.tradeWithBank("lumber", "grain");
+            target.tradeWithBank("ore", "lumber");
+            target.tradeWithBank("wool", "ore");
+            target.tradeWithBank("brick", "wool");
+
+            Assert.AreEqual(1, target.getHand().getGrain());
+            Assert.AreEqual(1, target.getHand().getLumber());
+            Assert.AreEqual(1, target.getHand().getOre());
+            Assert.AreEqual(1, target.getHand().getWool());
+            Assert.AreEqual(1, target.getHand().getBrick());
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestTradeWithBankForGrainThrowsWhenBankHasNone()
+        {
+            World world = new World();
+            var player1 = new Player("Bob", Color.Red, world);
+            var player2 = new Player("Jim", Color.Blue, world);
+
+            player1.incrementCities();
+            player1.incrementCities();
+
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementSettlements();
+
+            player2.generateGrain();
+            player2.incrementSettlements();
+            player2.generateGrain();
+
+            Assert.AreEqual(0, world.bank.getGrainRemaining());
+
+            player1.generateOre();
+
+            player1.tradeWithBank("ore", "grain");
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestTradeWithBankForOreThrowsWhenBankHasNone()
+        {
+            World world = new World();
+            var player1 = new Player("Bob", Color.Red, world);
+            var player2 = new Player("Jim", Color.Blue, world);
+
+            player1.incrementCities();
+            player1.incrementCities();
+
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementSettlements();
+
+            player2.generateOre();
+            player2.incrementSettlements();
+            player2.generateOre();
+
+            Assert.AreEqual(0, world.bank.getOreRemaining());
+
+            player1.generateLumber();
+
+            player1.tradeWithBank("lumber", "ore");
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestTradeWithBankForLumberThrowsWhenBankHasNone()
+        {
+            World world = new World();
+            var player1 = new Player("Bob", Color.Red, world);
+            var player2 = new Player("Jim", Color.Blue, world);
+
+            player1.incrementCities();
+            player1.incrementCities();
+
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementSettlements();
+
+            player2.generateLumber();
+            player2.incrementSettlements();
+            player2.generateLumber();
+
+            Assert.AreEqual(0, world.bank.getLumberRemaining());
+
+            player1.generateWool();
+
+            player1.tradeWithBank("wool", "lumber");
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestTradeWithBankForWoolThrowsWhenBankHasNone()
+        {
+            World world = new World();
+            var player1 = new Player("Bob", Color.Red, world);
+            var player2 = new Player("Jim", Color.Blue, world);
+
+            player1.incrementCities();
+            player1.incrementCities();
+
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementSettlements();
+
+            player2.generateWool();
+            player2.incrementSettlements();
+            player2.generateWool();
+
+            Assert.AreEqual(0, world.bank.getWoolRemaining());
+
+            player1.generateBrick();
+
+            player1.tradeWithBank("brick", "wool");
+        }
+        [Test()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestTradeWithBankForBrickThrowsWhenBankHasNone()
+        {
+            World world = new World();
+            var player1 = new Player("Bob", Color.Red, world);
+            var player2 = new Player("Jim", Color.Blue, world);
+
+            player1.incrementCities();
+            player1.incrementCities();
+
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementCities();
+            player2.incrementSettlements();
+
+            player2.generateBrick();
+            player2.incrementSettlements();
+            player2.generateBrick();
+
+            Assert.AreEqual(0, world.bank.getBrickRemaining());
+
+            player1.generateGrain();
+
+            player1.tradeWithBank("grain", "brick");
+        }
+
     }
 }

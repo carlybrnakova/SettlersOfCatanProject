@@ -202,7 +202,7 @@ namespace SettlersOfCatan
                         this.world.bank.modifyResource(resourceToGain, -1);
                         this.world.bank.modifyResource("ore", 4);
                         this.playerHand.modifyOre(-4);
-                        // TODO increment resourceToGrain in player hand
+                        modifyResourceInHand(resourceToGain);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -219,7 +219,7 @@ namespace SettlersOfCatan
                         this.world.bank.modifyResource(resourceToGain, -1);
                         this.world.bank.modifyResource("wool", 4);
                         this.playerHand.modifyWool(-4);
-                        // TODO increment resourceToGrain in player hand
+                        modifyResourceInHand(resourceToGain);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -237,7 +237,7 @@ namespace SettlersOfCatan
                         this.world.bank.modifyResource(resourceToGain, -1);
                         this.world.bank.modifyResource("lumber", 4);
                         this.playerHand.modifyLumber(-4);
-                        // TODO increment resourceToGrain in player hand
+                        modifyResourceInHand(resourceToGain);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -255,7 +255,7 @@ namespace SettlersOfCatan
                         this.world.bank.modifyResource(resourceToGain, -1);
                         this.world.bank.modifyResource("grain", 4);
                         this.playerHand.modifyGrain(-4);
-                        // TODO increment resourceToGrain in player hand
+                        modifyResourceInHand(resourceToGain);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -273,7 +273,7 @@ namespace SettlersOfCatan
                         this.world.bank.modifyResource(resourceToGain, -1);
                         this.world.bank.modifyResource("brick", 4);
                         this.playerHand.modifyBrick(-4);
-                        // TODO increment resourceToGrain in player hand
+                        modifyResourceInHand(resourceToGain);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -294,7 +294,7 @@ namespace SettlersOfCatan
                         this.playerHand.modifyOre(-1);
                         this.playerHand.modifyWool(-1);
                         this.playerHand.modifyGrain(-1);
-                        // TODO increment devcards in player hand
+                        this.playerHand.modifyDevCard(1);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -317,7 +317,7 @@ namespace SettlersOfCatan
                         this.world.bank.modifyResource(resourceToGain, -1);
                         this.world.bank.modifyResource("ore", 3);
                         this.playerHand.modifyOre(-3);
-                        // TODO increment resource gained in player hand
+                        modifyResourceInHand(resourceToGain);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -334,7 +334,7 @@ namespace SettlersOfCatan
                         this.world.bank.modifyResource(resourceToGain, -1);
                         this.world.bank.modifyResource("wool", 3);
                         this.playerHand.modifyWool(-3);
-                        // TODO increment resource gained in player hand
+                        modifyResourceInHand(resourceToGain);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -352,7 +352,7 @@ namespace SettlersOfCatan
                         this.world.bank.modifyResource(resourceToGain, -1);
                         this.world.bank.modifyResource("lumber", 3);
                         this.playerHand.modifyLumber(-3);
-                        // TODO increment resource gained in player hand
+                        modifyResourceInHand(resourceToGain);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -370,7 +370,7 @@ namespace SettlersOfCatan
                         this.world.bank.modifyResource(resourceToGain, -1);
                         this.world.bank.modifyResource("grain", 3);
                         this.playerHand.modifyGrain(-3);
-                        // TODO increment resource gained in player hand
+                        modifyResourceInHand(resourceToGain);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
@@ -388,13 +388,37 @@ namespace SettlersOfCatan
                         this.world.bank.modifyResource(resourceToGain, -1);
                         this.world.bank.modifyResource("brick", 3);
                         this.playerHand.modifyBrick(-3);
-                        // TODO increment resource gained in player hand
+                        modifyResourceInHand(resourceToGain);
                     }
                     catch (ArgumentOutOfRangeException)
                     {
                         throw;
                     }
                 }
+            }
+        }
+
+        private void modifyResourceInHand(String resource)
+        {
+            if (resource.ToLower().Equals("ore"))
+            {
+                this.playerHand.modifyOre(1);
+            }
+            else if (resource.ToLower().Equals("wool"))
+            {
+                this.playerHand.modifyWool(1);
+            } 
+            else if (resource.ToLower().Equals("lumber"))
+            {
+                this.playerHand.modifyLumber(1);
+            }
+            else if (resource.ToLower().Equals("grain"))
+            {
+                this.playerHand.modifyGrain(1);
+            }
+            else if (resource.ToLower().Equals("brick"))
+            {
+                this.playerHand.modifyBrick(1);
             }
         }
 
