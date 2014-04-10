@@ -50,9 +50,9 @@
             this.PlayerInfoPanel.Controls.Add(this.BuyDevCardButton);
             this.PlayerInfoPanel.Controls.Add(this.MaterialsLabel);
             this.PlayerInfoPanel.Controls.Add(this.EndTurnButton);
-            this.PlayerInfoPanel.Location = new System.Drawing.Point(1068, 211);
+            this.PlayerInfoPanel.Location = new System.Drawing.Point(1068, 36);
             this.PlayerInfoPanel.Name = "PlayerInfoPanel";
-            this.PlayerInfoPanel.Size = new System.Drawing.Size(493, 189);
+            this.PlayerInfoPanel.Size = new System.Drawing.Size(493, 864);
             this.PlayerInfoPanel.TabIndex = 1;
             // 
             // VerticalSeparator2
@@ -116,7 +116,7 @@
             // 
             // EndTurnButton
             // 
-            this.EndTurnButton.Location = new System.Drawing.Point(21, 146);
+            this.EndTurnButton.Location = new System.Drawing.Point(6, 540);
             this.EndTurnButton.Name = "EndTurnButton";
             this.EndTurnButton.Size = new System.Drawing.Size(75, 23);
             this.EndTurnButton.TabIndex = 0;
@@ -127,7 +127,7 @@
             // 
             this.CurrentPlayerNameLabel.AutoSize = true;
             this.CurrentPlayerNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CurrentPlayerNameLabel.Location = new System.Drawing.Point(1064, 184);
+            this.CurrentPlayerNameLabel.Location = new System.Drawing.Point(1064, 9);
             this.CurrentPlayerNameLabel.Name = "CurrentPlayerNameLabel";
             this.CurrentPlayerNameLabel.Size = new System.Drawing.Size(77, 24);
             this.CurrentPlayerNameLabel.TabIndex = 1;

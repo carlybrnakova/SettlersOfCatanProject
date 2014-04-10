@@ -17,3 +17,11 @@ C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\Settlers
 C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\ClassLibrary1\bin\Debug\nunit.framework.xml
 C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\ClassLibrary1\obj\Debug\ClassLibrary1.dll
 C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\ClassLibrary1\obj\Debug\ClassLibrary1.pdb
+C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.dll
+C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\ClassLibrary1.pdb
+C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\nunit.framework.dll
+C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\SettlersOfCatan.exe
+C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\SettlersOfCatan.pdb
+C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\bin\Debug\nunit.framework.xml
+C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\obj\Debug\ClassLibrary1.dll
+C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\ClassLibrary1\obj\Debug\ClassLibrary1.pdb

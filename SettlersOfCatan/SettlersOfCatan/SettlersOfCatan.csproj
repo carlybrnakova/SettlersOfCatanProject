@@ -47,6 +47,7 @@
     <Compile Include="Bank.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Computer.cs" />
+    <Compile Include="IslandMap.cs" />
     <Compile Include="World.cs" />
     <Compile Include="DevelopmentCard.cs" />
     <Compile Include="GameScreen.cs">
