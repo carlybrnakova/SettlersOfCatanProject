@@ -29,6 +29,16 @@
         private void InitializeComponent()
         {
             this.PlayerInfoPanel = new System.Windows.Forms.Panel();
+            this.WoolAmountLabel = new System.Windows.Forms.Label();
+            this.BrickAmountLabel = new System.Windows.Forms.Label();
+            this.GrainAmountLabel = new System.Windows.Forms.Label();
+            this.LumberAmountLabel = new System.Windows.Forms.Label();
+            this.OreAmountLabel = new System.Windows.Forms.Label();
+            this.WoolLabel = new System.Windows.Forms.Label();
+            this.BrickLabel = new System.Windows.Forms.Label();
+            this.GrainLabel = new System.Windows.Forms.Label();
+            this.LumberLabel = new System.Windows.Forms.Label();
+            this.OreLabel = new System.Windows.Forms.Label();
             this.VerticalSeparator2 = new System.Windows.Forms.Label();
             this.VerticalSeparator1 = new System.Windows.Forms.Label();
             this.ItemToBuildComboBox = new System.Windows.Forms.ComboBox();
@@ -37,16 +47,6 @@
             this.MaterialsLabel = new System.Windows.Forms.Label();
             this.EndTurnButton = new System.Windows.Forms.Button();
             this.CurrentPlayerNameLabel = new System.Windows.Forms.Label();
-            this.OreLabel = new System.Windows.Forms.Label();
-            this.LumberLabel = new System.Windows.Forms.Label();
-            this.GrainLabel = new System.Windows.Forms.Label();
-            this.BrickLabel = new System.Windows.Forms.Label();
-            this.WoolLabel = new System.Windows.Forms.Label();
-            this.OreAmountLabel = new System.Windows.Forms.Label();
-            this.LumberAmountLabel = new System.Windows.Forms.Label();
-            this.GrainAmountLabel = new System.Windows.Forms.Label();
-            this.BrickAmountLabel = new System.Windows.Forms.Label();
-            this.WoolAmountLabel = new System.Windows.Forms.Label();
             this.PlayerInfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,8 +72,98 @@
             this.PlayerInfoPanel.Controls.Add(this.EndTurnButton);
             this.PlayerInfoPanel.Location = new System.Drawing.Point(1068, 36);
             this.PlayerInfoPanel.Name = "PlayerInfoPanel";
-            this.PlayerInfoPanel.Size = new System.Drawing.Size(493, 864);
+            this.PlayerInfoPanel.Size = new System.Drawing.Size(493, 213);
             this.PlayerInfoPanel.TabIndex = 1;
+            // 
+            // WoolAmountLabel
+            // 
+            this.WoolAmountLabel.AutoSize = true;
+            this.WoolAmountLabel.Location = new System.Drawing.Point(52, 137);
+            this.WoolAmountLabel.Name = "WoolAmountLabel";
+            this.WoolAmountLabel.Size = new System.Drawing.Size(13, 13);
+            this.WoolAmountLabel.TabIndex = 17;
+            this.WoolAmountLabel.Text = "0";
+            // 
+            // BrickAmountLabel
+            // 
+            this.BrickAmountLabel.AutoSize = true;
+            this.BrickAmountLabel.Location = new System.Drawing.Point(52, 112);
+            this.BrickAmountLabel.Name = "BrickAmountLabel";
+            this.BrickAmountLabel.Size = new System.Drawing.Size(13, 13);
+            this.BrickAmountLabel.TabIndex = 16;
+            this.BrickAmountLabel.Text = "0";
+            // 
+            // GrainAmountLabel
+            // 
+            this.GrainAmountLabel.AutoSize = true;
+            this.GrainAmountLabel.Location = new System.Drawing.Point(52, 89);
+            this.GrainAmountLabel.Name = "GrainAmountLabel";
+            this.GrainAmountLabel.Size = new System.Drawing.Size(13, 13);
+            this.GrainAmountLabel.TabIndex = 15;
+            this.GrainAmountLabel.Text = "0";
+            // 
+            // LumberAmountLabel
+            // 
+            this.LumberAmountLabel.AutoSize = true;
+            this.LumberAmountLabel.Location = new System.Drawing.Point(52, 64);
+            this.LumberAmountLabel.Name = "LumberAmountLabel";
+            this.LumberAmountLabel.Size = new System.Drawing.Size(13, 13);
+            this.LumberAmountLabel.TabIndex = 14;
+            this.LumberAmountLabel.Text = "0";
+            // 
+            // OreAmountLabel
+            // 
+            this.OreAmountLabel.AutoSize = true;
+            this.OreAmountLabel.Location = new System.Drawing.Point(52, 39);
+            this.OreAmountLabel.Name = "OreAmountLabel";
+            this.OreAmountLabel.Size = new System.Drawing.Size(13, 13);
+            this.OreAmountLabel.TabIndex = 13;
+            this.OreAmountLabel.Text = "0";
+            // 
+            // WoolLabel
+            // 
+            this.WoolLabel.AutoSize = true;
+            this.WoolLabel.Location = new System.Drawing.Point(11, 137);
+            this.WoolLabel.Name = "WoolLabel";
+            this.WoolLabel.Size = new System.Drawing.Size(35, 13);
+            this.WoolLabel.TabIndex = 12;
+            this.WoolLabel.Text = "Wool:";
+            // 
+            // BrickLabel
+            // 
+            this.BrickLabel.AutoSize = true;
+            this.BrickLabel.Location = new System.Drawing.Point(12, 112);
+            this.BrickLabel.Name = "BrickLabel";
+            this.BrickLabel.Size = new System.Drawing.Size(34, 13);
+            this.BrickLabel.TabIndex = 11;
+            this.BrickLabel.Text = "Brick:";
+            // 
+            // GrainLabel
+            // 
+            this.GrainLabel.AutoSize = true;
+            this.GrainLabel.Location = new System.Drawing.Point(11, 89);
+            this.GrainLabel.Name = "GrainLabel";
+            this.GrainLabel.Size = new System.Drawing.Size(35, 13);
+            this.GrainLabel.TabIndex = 10;
+            this.GrainLabel.Text = "Grain:";
+            // 
+            // LumberLabel
+            // 
+            this.LumberLabel.AutoSize = true;
+            this.LumberLabel.Location = new System.Drawing.Point(3, 61);
+            this.LumberLabel.Name = "LumberLabel";
+            this.LumberLabel.Size = new System.Drawing.Size(45, 13);
+            this.LumberLabel.TabIndex = 9;
+            this.LumberLabel.Text = "Lumber:";
+            // 
+            // OreLabel
+            // 
+            this.OreLabel.AutoSize = true;
+            this.OreLabel.Location = new System.Drawing.Point(19, 39);
+            this.OreLabel.Name = "OreLabel";
+            this.OreLabel.Size = new System.Drawing.Size(27, 13);
+            this.OreLabel.TabIndex = 8;
+            this.OreLabel.Text = "Ore:";
             // 
             // VerticalSeparator2
             // 
@@ -115,6 +205,7 @@
             this.ProposeTradeButton.TabIndex = 4;
             this.ProposeTradeButton.Text = "Propose Trade";
             this.ProposeTradeButton.UseVisualStyleBackColor = true;
+            this.ProposeTradeButton.Click += new System.EventHandler(this.ProposeTradeButton_Click);
             // 
             // BuyDevCardButton
             // 
@@ -137,7 +228,7 @@
             // 
             // EndTurnButton
             // 
-            this.EndTurnButton.Location = new System.Drawing.Point(6, 540);
+            this.EndTurnButton.Location = new System.Drawing.Point(6, 178);
             this.EndTurnButton.Name = "EndTurnButton";
             this.EndTurnButton.Size = new System.Drawing.Size(75, 23);
             this.EndTurnButton.TabIndex = 0;
@@ -151,101 +242,9 @@
             this.CurrentPlayerNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CurrentPlayerNameLabel.Location = new System.Drawing.Point(1064, 9);
             this.CurrentPlayerNameLabel.Name = "CurrentPlayerNameLabel";
-            this.CurrentPlayerNameLabel.Size = new System.Drawing.Size(77, 24);
+            this.CurrentPlayerNameLabel.Size = new System.Drawing.Size(129, 24);
             this.CurrentPlayerNameLabel.TabIndex = 1;
-            this.CurrentPlayerNameLabel.Text = "Player 1";
-            // 
-            // OreLabel
-            // 
-            this.OreLabel.AutoSize = true;
-            this.OreLabel.Location = new System.Drawing.Point(19, 39);
-            this.OreLabel.Name = "OreLabel";
-            this.OreLabel.Size = new System.Drawing.Size(27, 13);
-            this.OreLabel.TabIndex = 8;
-            this.OreLabel.Text = "Ore:";
-            this.OreLabel.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // LumberLabel
-            // 
-            this.LumberLabel.AutoSize = true;
-            this.LumberLabel.Location = new System.Drawing.Point(3, 61);
-            this.LumberLabel.Name = "LumberLabel";
-            this.LumberLabel.Size = new System.Drawing.Size(45, 13);
-            this.LumberLabel.TabIndex = 9;
-            this.LumberLabel.Text = "Lumber:";
-            // 
-            // GrainLabel
-            // 
-            this.GrainLabel.AutoSize = true;
-            this.GrainLabel.Location = new System.Drawing.Point(11, 89);
-            this.GrainLabel.Name = "GrainLabel";
-            this.GrainLabel.Size = new System.Drawing.Size(35, 13);
-            this.GrainLabel.TabIndex = 10;
-            this.GrainLabel.Text = "Grain:";
-            this.GrainLabel.Click += new System.EventHandler(this.label1_Click_1);
-            // 
-            // BrickLabel
-            // 
-            this.BrickLabel.AutoSize = true;
-            this.BrickLabel.Location = new System.Drawing.Point(12, 112);
-            this.BrickLabel.Name = "BrickLabel";
-            this.BrickLabel.Size = new System.Drawing.Size(34, 13);
-            this.BrickLabel.TabIndex = 11;
-            this.BrickLabel.Text = "Brick:";
-            // 
-            // WoolLabel
-            // 
-            this.WoolLabel.AutoSize = true;
-            this.WoolLabel.Location = new System.Drawing.Point(11, 137);
-            this.WoolLabel.Name = "WoolLabel";
-            this.WoolLabel.Size = new System.Drawing.Size(35, 13);
-            this.WoolLabel.TabIndex = 12;
-            this.WoolLabel.Text = "Wool:";
-            // 
-            // OreAmountLabel
-            // 
-            this.OreAmountLabel.AutoSize = true;
-            this.OreAmountLabel.Location = new System.Drawing.Point(52, 39);
-            this.OreAmountLabel.Name = "OreAmountLabel";
-            this.OreAmountLabel.Size = new System.Drawing.Size(13, 13);
-            this.OreAmountLabel.TabIndex = 13;
-            this.OreAmountLabel.Text = "0";
-            // 
-            // LumberAmountLabel
-            // 
-            this.LumberAmountLabel.AutoSize = true;
-            this.LumberAmountLabel.Location = new System.Drawing.Point(52, 64);
-            this.LumberAmountLabel.Name = "LumberAmountLabel";
-            this.LumberAmountLabel.Size = new System.Drawing.Size(13, 13);
-            this.LumberAmountLabel.TabIndex = 14;
-            this.LumberAmountLabel.Text = "0";
-            // 
-            // GrainAmountLabel
-            // 
-            this.GrainAmountLabel.AutoSize = true;
-            this.GrainAmountLabel.Location = new System.Drawing.Point(52, 89);
-            this.GrainAmountLabel.Name = "GrainAmountLabel";
-            this.GrainAmountLabel.Size = new System.Drawing.Size(13, 13);
-            this.GrainAmountLabel.TabIndex = 15;
-            this.GrainAmountLabel.Text = "0";
-            // 
-            // BrickAmountLabel
-            // 
-            this.BrickAmountLabel.AutoSize = true;
-            this.BrickAmountLabel.Location = new System.Drawing.Point(52, 112);
-            this.BrickAmountLabel.Name = "BrickAmountLabel";
-            this.BrickAmountLabel.Size = new System.Drawing.Size(13, 13);
-            this.BrickAmountLabel.TabIndex = 16;
-            this.BrickAmountLabel.Text = "0";
-            // 
-            // WoolAmountLabel
-            // 
-            this.WoolAmountLabel.AutoSize = true;
-            this.WoolAmountLabel.Location = new System.Drawing.Point(52, 137);
-            this.WoolAmountLabel.Name = "WoolAmountLabel";
-            this.WoolAmountLabel.Size = new System.Drawing.Size(13, 13);
-            this.WoolAmountLabel.TabIndex = 17;
-            this.WoolAmountLabel.Text = "0";
+            this.CurrentPlayerNameLabel.Text = "Current Player";
             // 
             // GameScreen
             // 

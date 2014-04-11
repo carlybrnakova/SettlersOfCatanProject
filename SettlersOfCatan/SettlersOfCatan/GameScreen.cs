@@ -59,6 +59,8 @@ namespace SettlersOfCatan
 
             initializeBoardPanel();
             this.world = new World(3,0);
+            this.updateResourceLabels();
+            this.updateCurrentPlayerNameLabel();
         }
 
         /** initializeAll()
@@ -408,25 +410,25 @@ namespace SettlersOfCatan
             Button theButton = (Button)sender;
 
 
-            if (theButton.Width == 30 && theButton.BackColor != System.Drawing.Color.White)
+            if (theButton.Width == 30 && theButton.BackColor != System.Drawing.Color.White && this.world.currentPlayer.canBuildCity())
             {
                 theButton.Text = "*";
                 theButton.ForeColor = Color.White;
                 theButton.Enabled = false;
+                this.world.currentPlayer.buildCity();
             }
-
-            theButton.BackColor = this.world.currentPlayer.getColor();
+            else if (theButton.Width == 30 && theButton.BackColor == System.Drawing.Color.White && this.world.currentPlayer.canBuildSettlement())
+            {
+                theButton.BackColor = this.world.currentPlayer.getColor();
+                this.world.currentPlayer.buildSettlement();
+            }
+            else if (this.world.currentPlayer.canBuildRoad())
+            {
+                theButton.BackColor = this.world.currentPlayer.getColor();
+                this.world.currentPlayer.buildRoad();
+                theButton.Enabled = false;
+            }
             this.updateResourceLabels();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
         }
 
         private void updateResourceLabels()
@@ -441,6 +443,19 @@ namespace SettlersOfCatan
         private void EndTurnButton_Click(object sender, EventArgs e)
         {
             this.world.endTurn();
+            this.updateResourceLabels();
+            this.updateCurrentPlayerNameLabel();
+        }
+
+        private void updateCurrentPlayerNameLabel()
+        {
+            CurrentPlayerNameLabel.Text = this.world.currentPlayer.getName().ToString();
+        }
+
+        private void ProposeTradeButton_Click(object sender, EventArgs e)
+        {
+            //Form myForm = new TradeForm();
+            //myForm.Show();
         }
     }
 }

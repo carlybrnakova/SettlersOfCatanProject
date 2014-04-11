@@ -567,5 +567,48 @@ namespace SettlersOfCatan
             }
         }
 
+        public bool canBuildCity()
+        {
+            if (this.playerHand.getGrain() >= 3 && this.playerHand.getOre() >= 2)
+                return true;
+            else
+                return false;
+        }
+
+        public bool canBuildSettlement()
+        {
+            if (this.playerHand.getBrick() >= 1 && this.playerHand.getGrain() >= 1 && this.playerHand.getLumber() >= 1 && this.playerHand.getWool() >= 1)
+                return true;
+            else
+                return false;
+        }
+
+        public bool canBuildRoad()
+        {
+            if (this.playerHand.getBrick() >=1 && this.playerHand.getLumber() >= 1)
+                return true;
+            else
+                return false;
+        }
+
+        public void buildRoad()
+        {
+            this.playerHand.modifyBrick(-1);
+            this.playerHand.modifyLumber(-1);
+        }
+
+        public void buildCity()
+        {
+            this.playerHand.modifyGrain(-3);
+            this.playerHand.modifyOre(-2);
+        }
+
+        public void buildSettlement()
+        {
+            this.playerHand.modifyGrain(-1);
+            this.playerHand.modifyLumber(-1);
+            this.playerHand.modifyBrick(-1);
+            this.playerHand.modifyWool(-1);
+        }
     }
 }
