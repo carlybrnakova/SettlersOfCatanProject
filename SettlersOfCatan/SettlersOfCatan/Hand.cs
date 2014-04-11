@@ -63,6 +63,11 @@ namespace SettlersOfCatan
             return this.knights;
         }
 
+        public int getDevCards()
+        {
+            return this.devCards.Count();
+        }
+
         public void modifyOre(int amount)
         {
             if (this.ore < amount * -1)

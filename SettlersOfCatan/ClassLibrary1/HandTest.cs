@@ -176,5 +176,12 @@ namespace ClassLibrary1
         {
             hand3.modifyBrick(-5);
         }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestModifyDevCardNegResult()
+        {
+            hand3.modifyDevCard(-1);
+        }
     }
 }
