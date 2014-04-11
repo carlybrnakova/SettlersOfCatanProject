@@ -13,8 +13,8 @@ namespace SettlersOfCatan
         public List<Connection> connections = new List<Connection>(3);
         public List<Hex> resourceHexes = new List<Hex>(3);
         private Point coord;
-        private IEnums.GAME_PIECE currentPiece = IEnums.GAME_PIECE.NONE;
-        public IEnums.PLAYER_COLOR color;
+        private Global_Variables.GAME_PIECE currentPiece = Global_Variables.GAME_PIECE.NONE;
+        public Global_Variables.PLAYER_COLOR color;
 
         public Intersection(Point p)
         {
@@ -25,14 +25,14 @@ namespace SettlersOfCatan
             }
         }
 
-        public void build(IEnums.GAME_PIECE piece)
+        public void build(Global_Variables.GAME_PIECE piece)
         {
             currentPiece = piece;
         }
 
         public bool hasABuilding()
         {
-            if (currentPiece != IEnums.GAME_PIECE.NONE) return true;
+            if (currentPiece != Global_Variables.GAME_PIECE.NONE) return true;
             else return false;
         }
 

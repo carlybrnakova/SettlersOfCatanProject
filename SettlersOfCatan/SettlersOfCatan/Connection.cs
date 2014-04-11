@@ -10,7 +10,7 @@ namespace SettlersOfCatan
     public class Connection
     {
         public Intersection connectedTo;
-        private IEnums.PLAYER_COLOR roadColor;
+        private Global_Variables.PLAYER_COLOR roadColor;
 
         public Connection(Intersection i)
         {

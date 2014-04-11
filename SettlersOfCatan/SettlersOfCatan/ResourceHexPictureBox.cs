@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using SettlersOfCatan;
 
 namespace SettlersOfCatan
 {
@@ -20,7 +21,7 @@ namespace SettlersOfCatan
         {
             resourceType = "None";
             //this.BackColor = Color.FromArgb((byte)r.Next(255), (byte)r.Next(255), (byte)r.Next(255));
-            this.BackColor = GRAIN_COLOR;
+            this.BackColor = Color.Gold;
             this.Size = HEX_SIZE;
         }
 
@@ -28,7 +29,7 @@ namespace SettlersOfCatan
         {
             resourceType = type;
             //this.BackColor = Color.FromArgb((byte)r.Next(255), (byte)r.Next(255), (byte)r.Next(255));
-            this.BackColor = GRAIN_COLOR;
+            this.BackColor = Color.Gold;
             this.Size = HEX_SIZE;
         }
 

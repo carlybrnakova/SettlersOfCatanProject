@@ -8,7 +8,7 @@ using SettlersOfCatan;
 
 namespace SettlersOfCatan
 {
-    public interface IEnums
+    public static class Global_Variables
     {
         public enum GAME_PIECE { NONE, SETTLEMENT, CITY };
         public enum PLAYER_COLOR { NONE, PLAYER1_COLOR, PLAYER2_COLOR, PLAYER3_COLOR, PLAYER4_COLOR };
@@ -105,7 +105,7 @@ namespace SettlersOfCatan
 
         public void buildSettlement(int x, int y)
         {
-            map[x, y].build(IEnums.GAME_PIECE.SETTLEMENT);
+            map[x, y].build(Global_Variables.GAME_PIECE.SETTLEMENT);
         }
 
         
