@@ -17,7 +17,8 @@ namespace SettlersOfCatan
         private int citiesPlayed;
         private int settlementsPlayed;
         private int roadsPlayed;
-        private Hand playerHand;
+        //only public for testing
+        public Hand playerHand;
         private Player playerToTradeWith;
         private int[] toTrade;
         private int[] toReceive;

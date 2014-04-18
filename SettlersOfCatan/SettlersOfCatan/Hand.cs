@@ -19,11 +19,11 @@ namespace SettlersOfCatan
 
         public Hand()
         {
-            this.ore = 5;
-            this.wool = 5;
-            this.lumber = 5;
-            this.grain = 5;
-            this.brick = 5;
+            this.ore = 0;
+            this.wool = 0;
+            this.lumber = 0;
+            this.grain = 0;
+            this.brick = 0;
             this.devCards = new List<DevelopmentCard>();
             this.knights = 0;
         }
