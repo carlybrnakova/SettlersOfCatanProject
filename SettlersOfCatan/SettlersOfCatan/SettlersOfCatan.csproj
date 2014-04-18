@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bank.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="CompleteMap.cs" />
     <Compile Include="Computer.cs" />
     <Compile Include="Connection.cs" />
