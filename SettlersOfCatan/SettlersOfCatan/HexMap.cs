@@ -94,7 +94,7 @@ namespace SettlersOfCatan
 
 
 
-    class HexDeck : List<Hex>
+    public class HexDeck : List<Hex>
     {
         //private List<Hex> allHexes = new List<Hex>(19);
         private Color GRAIN_COLOR = Color.Gold;

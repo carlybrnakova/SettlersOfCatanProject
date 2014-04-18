@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace SettlersOfCatan
 {
-    class IntersectionButton : Button
+    public class IntersectionButton : Button
     {
         public Point coordinates;
 

@@ -99,8 +99,14 @@ namespace SettlersOfCatan
 
         }
 
+        public IslandMap getIslandMap()
+        {
+            return this.theIslandMap;
+        }
 
-
-
+        public HexMap getHexMap()
+        {
+            return this.theHexMap;
+        }
     }
 }
