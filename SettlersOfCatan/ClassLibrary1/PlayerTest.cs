@@ -923,7 +923,7 @@ namespace ClassLibrary1
         public void TestBuildCity()
         {
             var target = new Player();
-           
+
             target.incrementCities();
             target.generateGrain();
             target.generateGrain();
@@ -934,6 +934,5 @@ namespace ClassLibrary1
             Assert.AreEqual(0, target.getHand().getOre());
             Assert.AreEqual(1, target.getHand().getGrain());
         }
-
     }
 }

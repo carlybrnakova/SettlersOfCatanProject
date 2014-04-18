@@ -9,7 +9,7 @@ using SettlersOfCatan;
 
 namespace SettlersOfCatan
 {
-    class ResourceHexPictureBox : PictureBox
+    public class ResourceHexPictureBox : PictureBox
     {
         private String resourceType;
         private readonly Size HEX_SIZE = new Size(150, 150);
