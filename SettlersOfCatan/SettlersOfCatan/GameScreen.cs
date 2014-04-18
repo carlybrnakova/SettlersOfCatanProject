@@ -418,7 +418,7 @@ namespace SettlersOfCatan
             Button theButton = (Button)sender;
 
 
-            if (theButton.Width == 30 && theButton.BackColor != System.Drawing.Color.White && this.world.currentPlayer.canBuildCity())
+            if (theButton.Width == 30 && theButton.BackColor == this.world.currentPlayer.getColor() && this.world.currentPlayer.canBuildCity())
             {
                 IntersectionButton b = (IntersectionButton)theButton;
                 
@@ -428,12 +428,12 @@ namespace SettlersOfCatan
                 theButton.Enabled = false;
                 this.world.currentPlayer.buildCity();
             }
-            else if (theButton.Width == 30 && theButton.BackColor == System.Drawing.Color.White && this.world.currentPlayer.canBuildSettlement())
+            else if (theButton.Width == 30 && theButton.BackColor != this.world.currentPlayer.getColor() && this.world.currentPlayer.canBuildSettlement())
             {
                 theButton.BackColor = this.world.currentPlayer.getColor();
                 this.world.currentPlayer.buildSettlement();
             }
-            else if (this.world.currentPlayer.canBuildRoad())
+            else if (theButton.Width != 30 && this.world.currentPlayer.canBuildRoad())
             {
                 theButton.BackColor = this.world.currentPlayer.getColor();
                 this.world.currentPlayer.buildRoad();
@@ -467,6 +467,16 @@ namespace SettlersOfCatan
         {
             //Form myForm = new TradeForm();
             //myForm.Show();
+        }
+
+        private void generateResourcesTest_Click(object sender, EventArgs e)
+        {
+            this.world.currentPlayer.playerHand.modifyBrick(1);
+            this.world.currentPlayer.playerHand.modifyGrain(1);
+            this.world.currentPlayer.playerHand.modifyWool(1);
+            this.world.currentPlayer.playerHand.modifyOre(1);
+            this.world.currentPlayer.playerHand.modifyLumber(1);
+            this.updateResourceLabels();
         }
     }
 }

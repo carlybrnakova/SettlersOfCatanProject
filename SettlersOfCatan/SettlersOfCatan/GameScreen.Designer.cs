@@ -47,12 +47,14 @@
             this.MaterialsLabel = new System.Windows.Forms.Label();
             this.EndTurnButton = new System.Windows.Forms.Button();
             this.CurrentPlayerNameLabel = new System.Windows.Forms.Label();
+            this.generateResourcesTest = new System.Windows.Forms.Button();
             this.PlayerInfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // PlayerInfoPanel
             // 
             this.PlayerInfoPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.PlayerInfoPanel.Controls.Add(this.generateResourcesTest);
             this.PlayerInfoPanel.Controls.Add(this.WoolAmountLabel);
             this.PlayerInfoPanel.Controls.Add(this.BrickAmountLabel);
             this.PlayerInfoPanel.Controls.Add(this.GrainAmountLabel);
@@ -168,7 +170,7 @@
             // VerticalSeparator2
             // 
             this.VerticalSeparator2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.VerticalSeparator2.Location = new System.Drawing.Point(256, 10);
+            this.VerticalSeparator2.Location = new System.Drawing.Point(256, -2);
             this.VerticalSeparator2.Name = "VerticalSeparator2";
             this.VerticalSeparator2.Size = new System.Drawing.Size(2, 177);
             this.VerticalSeparator2.TabIndex = 7;
@@ -246,6 +248,16 @@
             this.CurrentPlayerNameLabel.TabIndex = 1;
             this.CurrentPlayerNameLabel.Text = "Current Player";
             // 
+            // generateResourcesTest
+            // 
+            this.generateResourcesTest.Location = new System.Drawing.Point(87, 11);
+            this.generateResourcesTest.Name = "generateResourcesTest";
+            this.generateResourcesTest.Size = new System.Drawing.Size(152, 23);
+            this.generateResourcesTest.TabIndex = 18;
+            this.generateResourcesTest.Text = "generate resources (test)";
+            this.generateResourcesTest.UseVisualStyleBackColor = true;
+            this.generateResourcesTest.Click += new System.EventHandler(this.generateResourcesTest_Click);
+            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -283,5 +295,6 @@
         private System.Windows.Forms.Label OreAmountLabel;
         private System.Windows.Forms.Label WoolLabel;
         private System.Windows.Forms.Label BrickLabel;
+        private System.Windows.Forms.Button generateResourcesTest;
     }
 }
