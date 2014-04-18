@@ -119,7 +119,7 @@ namespace SettlersOfCatan
         {
             this.toTrade = trade;
             this.toReceive = receive;
-            playerToTradeWith = player;
+            this.playerToTradeWith = player;
             player.toReceive = trade;
             player.toTrade = receive;
             player.playerToTradeWith = this;
@@ -148,12 +148,13 @@ namespace SettlersOfCatan
             this.playerHand.modifyBrick(receive[4] - trade[4]);
         }
 
-        public void acceptTrade(Player player, int[] trade, int[] receive)
+        public void makeTrade()
         {
             if (this.canAcceptTrade())
             {
-                tradeCards(trade, receive);
-                player.tradeCards(receive, trade);
+                tradeCards(this.toTrade, this.toReceive);
+                this.playerToTradeWith.tradeCards(this.playerToTradeWith.toTrade, this.playerToTradeWith.toReceive);
+                this.declineTrade();
             }
             else
             {
@@ -165,7 +166,9 @@ namespace SettlersOfCatan
         {
             this.toTrade = new int[] { 0, 0, 0, 0, 0 };
             this.toReceive = new int[] { 0, 0, 0, 0, 0 };
-            //this.playerToTradeWith.declineTrade();
+            this.playerToTradeWith.toTrade = new int[] { 0, 0, 0, 0, 0 };
+            this.playerToTradeWith.toReceive = new int[] { 0, 0, 0, 0, 0 };
+            this.playerToTradeWith.playerToTradeWith = null;
             this.playerToTradeWith = null;
         }
 

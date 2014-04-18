@@ -442,7 +442,7 @@ namespace SettlersOfCatan
             this.updateResourceLabels();
         }
 
-        private void updateResourceLabels()
+        public void updateResourceLabels()
         {
             WoolAmountLabel.Text = this.world.currentPlayer.getHand().getWool().ToString();
             BrickAmountLabel.Text = this.world.currentPlayer.getHand().getBrick().ToString();
@@ -465,8 +465,8 @@ namespace SettlersOfCatan
 
         private void ProposeTradeButton_Click(object sender, EventArgs e)
         {
-            //Form myForm = new TradeForm();
-            //myForm.Show();
+            Form myForm = new TradeForm(this.world, this);
+            myForm.Show();
         }
 
         private void generateResourcesTest_Click(object sender, EventArgs e)

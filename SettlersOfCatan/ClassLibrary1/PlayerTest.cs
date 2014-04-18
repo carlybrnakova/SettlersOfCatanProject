@@ -423,7 +423,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        public void TestAcceptTrade()
+        public void TestMakeTrade()
         {
             var player1 = new Player();
             var player2 = new Player();
@@ -434,12 +434,12 @@ namespace ClassLibrary1
             int[] player1Hand = new int[] { 2, 0, 0, 0, 0};
             int[] player2Hand = new int[] { 0, 0, 0, 0, 2 };
             player1.proposeTrade(player2, player1Hand, player2Hand);
-            player2.acceptTrade(player1, player2Hand, player1Hand);
+            player2.makeTrade();
         }
 
         [Test()]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestAcceptTradeThrowsWhenPlayerCannotAcceptTrade()
+        public void TestmakeTradeThrowsWhenPlayerCannotMakeTrade()
         {
             var player1 = new Player();
             var player2 = new Player();
@@ -452,7 +452,7 @@ namespace ClassLibrary1
             player1.proposeTrade(player2, player1Hand, threeBricks);
 
             // should throw because player2 only has 2 bricks
-            player2.acceptTrade(player1, threeBricks, player1Hand);
+            player2.makeTrade();
         }
 
         [Test()]

@@ -44,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcceptTradeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AcceptTradeForm.Designer.cs">
+      <DependentUpon>AcceptTradeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="CompleteMap.cs" />
@@ -55,6 +61,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="IslandMap.cs" />
+    <Compile Include="TradeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TradeForm.Designer.cs">
+      <DependentUpon>TradeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="World.cs" />
     <Compile Include="DevelopmentCard.cs" />
     <Compile Include="GameScreen.cs">
@@ -88,6 +100,9 @@
     <Compile Include="RulesForm.Designer.cs">
       <DependentUpon>RulesForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AcceptTradeForm.resx">
+      <DependentUpon>AcceptTradeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GameScreen.resx">
       <DependentUpon>GameScreen.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -109,6 +124,9 @@
     </Compile>
     <EmbeddedResource Include="RulesForm.resx">
       <DependentUpon>RulesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TradeForm.resx">
+      <DependentUpon>TradeForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

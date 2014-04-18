@@ -10,8 +10,8 @@ namespace SettlersOfCatan
     public class World
     {
         public Player currentPlayer;
-        private int currentPlayerNumber;
-        private List<Player> players;
+        public int currentPlayerNumber;
+        public List<Player> players;
         public Bank bank;
 
         public World()
