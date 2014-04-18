@@ -26,7 +26,6 @@ namespace SettlersOfCatan
         {
             Form gameScreen = new GameScreen();
             gameScreen.Show();
-            
         }
     }
 }

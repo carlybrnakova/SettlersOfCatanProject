@@ -41,9 +41,9 @@ namespace SettlersOfCatan
         // 9
         // 7
 
-        private List<List<Button>> intersectionGrid = new List<List<Button>>();
+        private List<List<IntersectionButton>> intersectionGrid = new List<List<IntersectionButton>>();
         private List<PictureBox> waterHexes = new List<PictureBox>();
-        private List<List<ResourceHex>> hexGrid = new List<List<ResourceHex>>();
+        private List<List<ResourceHexPictureBox>> hexGrid = new List<List<ResourceHexPictureBox>>();
         private Button[,] roadGrid = new Button[MAX_ROAD_ROWS,MAX_ROAD_COLUMNS];
         private Panel boardPanel = new Panel();
         //private List<System.Windows.Forms.Button> intersectionButtons = new List<System.Windows.Forms.Button>();
@@ -85,10 +85,10 @@ namespace SettlersOfCatan
         {
             for (int r = 0; r < MAX_INTERSECTION_ROWS; r++)
             {
-                List<Button> l = new List<Button>(MAX_INTERSECTION_COLUMNS);
+                List<IntersectionButton> l = new List<IntersectionButton>(MAX_INTERSECTION_COLUMNS);
                 for (int c = 0; c < MAX_INTERSECTION_COLUMNS; c++)
                 {
-                    l.Add(new Button());
+                    l.Add(new IntersectionButton(r, c));
                 }
                 intersectionGrid.Add(l);
             }
@@ -116,10 +116,10 @@ namespace SettlersOfCatan
         {
             for (int r = 0; r < MAX_RESOURCE_HEX_ROWS; r++)
             {
-                List<ResourceHex> l = new List<ResourceHex>(MAX_INTERSECTION_COLUMNS);
+                List<ResourceHexPictureBox> l = new List<ResourceHexPictureBox>(MAX_INTERSECTION_COLUMNS);
                 for (int c = 0; c < MAX_RESOURCE_HEX_COLUMNS; c++)
                 {
-                    l.Add(new ResourceHex());
+                    l.Add(new ResourceHexPictureBox());
                 }
                 hexGrid.Add(l);
             }
@@ -200,13 +200,15 @@ namespace SettlersOfCatan
             }
 
 
-
-
-
         }
+
+
+
 
         private void setupHexGrid()
         {
+
+
             // Coordinate variables for plotting buttons in correct locations
             int x = HEX_SIDE_DIMENSION * 2;
             int y = HEX_SIDE_DIMENSION / 2;
@@ -215,7 +217,7 @@ namespace SettlersOfCatan
                 {
                     for (int r = 0; r < MAX_RESOURCE_HEX_ROWS; r++)
                     {
-                        ResourceHex h = new ResourceHex();
+                        ResourceHexPictureBox h = new ResourceHexPictureBox();
                         h.Location = new Point(x, y);
                         if ((r == 0 || r == 4) && (c > 2))
                         {
@@ -225,8 +227,11 @@ namespace SettlersOfCatan
                         {
                             h = null;
                         }
-                        hexGrid[r][c] = h;
-                        boardPanel.Controls.Add(h);
+                        else
+                        {
+                            hexGrid[r][c] = h;
+                            boardPanel.Controls.Add(h);
+                        }
                         x = (r < 2) ? x - HEX_SIDE_DIMENSION / 2: x + HEX_SIDE_DIMENSION / 2;
                         y += HEX_SIDE_DIMENSION;
                     }
@@ -353,7 +358,7 @@ namespace SettlersOfCatan
                 {
                     for (int c = 0; c < MAX_INTERSECTION_COLUMNS; c++)
                     {
-                        Button b = new Button();
+                        IntersectionButton b = new IntersectionButton(r, c);
                         b.BackColor = Color.White;
                         b.Font = new Font("Georgia", 20, FontStyle.Bold | FontStyle.Strikeout);
                         b.Size = new Size(INTERSECTION_BUTTON_SIZE, INTERSECTION_BUTTON_SIZE);
@@ -367,8 +372,11 @@ namespace SettlersOfCatan
                         {
                             b = null;
                         }
+
                         intersectionGrid[r][c] = b;
-                        boardPanel.Controls.Add(b);
+
+                        if(b != null) boardPanel.Controls.Add(b);
+                        
                         x += X_INCREMENT;
                     }
                     x = 150 - INTERSECTION_BUTTON_SIZE/2;
@@ -412,6 +420,9 @@ namespace SettlersOfCatan
 
             if (theButton.Width == 30 && theButton.BackColor != System.Drawing.Color.White && this.world.currentPlayer.canBuildCity())
             {
+                IntersectionButton b = (IntersectionButton)theButton;
+                
+                Point loc = b.Location;
                 theButton.Text = "*";
                 theButton.ForeColor = Color.White;
                 theButton.Enabled = false;
