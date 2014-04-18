@@ -842,5 +842,98 @@ namespace ClassLibrary1
             // should generate an exception
             target.tradeForDevCard();
         }
+
+        [Test()]
+        public void TestCanBuildRoad()
+        {
+            var target = new Player();
+            Assert.IsFalse(target.canBuildRoad());
+
+            target.incrementSettlements();
+            target.generateBrick();
+            target.generateLumber();
+
+            Assert.IsTrue(target.canBuildRoad());
+        }
+
+        [Test()]
+        public void TestCanBuildSettlement()
+        {
+            var target = new Player();
+            Assert.IsFalse(target.canBuildSettlement());
+
+            target.incrementSettlements();
+            target.generateBrick();
+            target.generateLumber();
+            target.generateGrain();
+            target.generateWool();
+
+            Assert.IsTrue(target.canBuildSettlement());
+        }
+
+        [Test()]
+        public void TestCanBuildCity()
+        {
+            var target = new Player();
+            Assert.IsFalse(target.canBuildCity());
+
+            target.incrementCities();
+            target.generateGrain();
+            target.generateGrain();
+            target.generateOre();
+
+            Assert.IsTrue(target.canBuildCity());
+        }
+
+        [Test()]
+        public void TestBuildRoad()
+        {
+            var target = new Player();
+
+            target.incrementSettlements();
+            target.generateBrick();
+            target.generateLumber();
+
+            target.buildRoad();
+
+            Assert.AreEqual(0, target.getHand().getBrick());
+            Assert.AreEqual(0, target.getHand().getLumber());
+        }
+
+        [Test()]
+        public void TestBuildSettlement()
+        {
+            var target = new Player();
+
+            target.incrementSettlements();
+            target.generateBrick();
+            target.generateLumber();
+            target.generateGrain();
+            target.generateWool();
+
+            target.buildSettlement();
+
+            Assert.AreEqual(0, target.getHand().getBrick());
+            Assert.AreEqual(0, target.getHand().getLumber());
+            Assert.AreEqual(0, target.getHand().getWool());
+            Assert.AreEqual(0, target.getHand().getGrain());
+        }
+
+        [Test()]
+        public void TestBuildCity()
+        {
+            var target = new Player();
+           
+            target.incrementCities();
+            target.generateGrain();
+            target.generateGrain();
+            target.generateOre();
+
+            target.buildCity();
+
+            Assert.AreEqual(0, target.getHand().getOre());
+            Assert.AreEqual(1, target.getHand().getGrain());
+        }
+
     }
 }
