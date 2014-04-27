@@ -55,8 +55,9 @@ namespace SettlersOfCatan
                             catch (IndexOutOfRangeException) { }
                             try { theIslandMap.map[r, c].resourceHexes.Add(theHexMap.map[r - 1, c / 2 - 1]); }
                             catch (IndexOutOfRangeException) { }
-                            try { theIslandMap.map[r, c].resourceHexes.Add(theHexMap.map[r, c / 2]); }
-                            catch (IndexOutOfRangeException) { }
+                           // try { theIslandMap.map[r, c].resourceHexes.Add(theHexMap.map[r, c / 2]); }
+                           // catch (IndexOutOfRangeException) { }
+                            theIslandMap.map[r, c].resourceHexes.Add(theHexMap.map[r, c / 2]);
                         }
                     }
                     // IF: row is odd and col is odd (ex: row = 3, col = 7)
@@ -68,8 +69,9 @@ namespace SettlersOfCatan
                     {
                         if (theIslandMap.map[r, c] != null)
                         {
-                            try { theIslandMap.map[r, c].resourceHexes.Add(theHexMap.map[r - 1, c / 2]); }
-                            catch (IndexOutOfRangeException) { }
+                            theIslandMap.map[r, c].resourceHexes.Add(theHexMap.map[r - 1, c / 2]);
+                           // try { theIslandMap.map[r, c].resourceHexes.Add(theHexMap.map[r - 1, c / 2]); }
+                           // catch (IndexOutOfRangeException) { }
                             try { theIslandMap.map[r, c].resourceHexes.Add(theHexMap.map[r, c / 2]); }
                             catch (IndexOutOfRangeException) { }
                             try { theIslandMap.map[r, c].resourceHexes.Add(theHexMap.map[r, c / 2 - 1]); }

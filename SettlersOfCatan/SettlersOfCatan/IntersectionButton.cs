@@ -16,5 +16,27 @@ namespace SettlersOfCatan
         {
             this.coordinates = new Point(x, y);
         }
+
+        public Point getCoords()
+        {
+            return this.coordinates;
+        }
+    }
+
+    public class RoadButton : Button
+    {
+        public Point coordinates;
+
+        public RoadButton(int x, int y)
+        {
+            this.coordinates = new Point(x, y);
+        }
+
+        public Point getCoords()
+        {
+            return this.coordinates;
+        }
+
+
     }
 }

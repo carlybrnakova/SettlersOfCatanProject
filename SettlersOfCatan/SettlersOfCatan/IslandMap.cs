@@ -13,9 +13,6 @@ namespace SettlersOfCatan
         public enum GAME_PIECE { NONE, SETTLEMENT, CITY };
         public enum PLAYER_COLOR { NONE, PLAYER1_COLOR, PLAYER2_COLOR, PLAYER3_COLOR, PLAYER4_COLOR };
 
-
-
-
     }
 
     public class IslandMap
@@ -101,6 +98,19 @@ namespace SettlersOfCatan
             return i;
         }
 
+        public Intersection getIntAtIndex(Point p)
+        {
+            Intersection i = map[p.X, p.Y];
+            return i;
+        }
+
+        /*
+        public Road getRoadAtIndex(Point p)
+        {
+            Road r = roadMap[p.X, p.Y];
+            return r;
+        }
+        */
 
 
         public void buildSettlement(int x, int y)
@@ -108,7 +118,23 @@ namespace SettlersOfCatan
             map[x, y].build(Global_Variables.GAME_PIECE.SETTLEMENT);
         }
 
-        
+        public void buildSettlement(Point p)
+        {
+            map[p.X, p.Y].build(Global_Variables.GAME_PIECE.SETTLEMENT);
+        }
+
+        public bool buildCity(Point p)
+        {
+            if (!map[p.X, p.Y].hasABuilding())
+            {
+                return false;
+            }
+            else
+            {
+                map[p.X, p.Y].build(Global_Variables.GAME_PIECE.CITY);
+                return true;
+            }
+        }
 
         
         

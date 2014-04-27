@@ -14,7 +14,8 @@ namespace SettlersOfCatan
         public List<Hex> resourceHexes = new List<Hex>(3);
         private Point coord;
         private Global_Variables.GAME_PIECE currentPiece = Global_Variables.GAME_PIECE.NONE;
-        public Global_Variables.PLAYER_COLOR color;
+        public System.Drawing.Color color;
+        private Player owner;
 
         public Intersection(Point p)
         {
@@ -23,6 +24,7 @@ namespace SettlersOfCatan
             {
                 connections.Add(new Connection(null));
             }
+            owner = null;
         }
 
         public void build(Global_Variables.GAME_PIECE piece)
@@ -65,14 +67,28 @@ namespace SettlersOfCatan
             return canBuild;
         }
 
+        public Player getPlayer()
+        {
+            return owner;
+        }
+
+        public void setPlayer(Player p)
+        {
+            owner = p;
+        }
 
 
+        public int getNumOfResourcesToGenerate()
+        {
+            if (this.currentPiece == Global_Variables.GAME_PIECE.SETTLEMENT) return 1;
+            else if (this.currentPiece == Global_Variables.GAME_PIECE.CITY) return 2;
+            else return 0;
+        }
 
-
-
-       
-
-
+        public Global_Variables.GAME_PIECE getPieceType()
+        {
+            return this.currentPiece;
+        }
 
     }
 }

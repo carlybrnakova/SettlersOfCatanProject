@@ -13,7 +13,7 @@ namespace ClassLibrary1
         private Color LUMBER_COLOR = Color.ForestGreen;
         private Color ORE_COLOR = Color.Gray;
         private Color WOOL_COLOR = Color.PaleGoldenrod;
-        private Color BRICK_COLOR = Color.Orange;
+        private Color BRICK_COLOR = Color.Chocolate;
 
         [Test()]
         public void TestHexDeckInitializesProperly()

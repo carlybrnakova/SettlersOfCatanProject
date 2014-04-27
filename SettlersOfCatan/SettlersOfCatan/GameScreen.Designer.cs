@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.PlayerInfoPanel = new System.Windows.Forms.Panel();
+            this.generateResourcesTest = new System.Windows.Forms.Button();
             this.WoolAmountLabel = new System.Windows.Forms.Label();
             this.BrickAmountLabel = new System.Windows.Forms.Label();
             this.GrainAmountLabel = new System.Windows.Forms.Label();
@@ -47,7 +48,7 @@
             this.MaterialsLabel = new System.Windows.Forms.Label();
             this.EndTurnButton = new System.Windows.Forms.Button();
             this.CurrentPlayerNameLabel = new System.Windows.Forms.Label();
-            this.generateResourcesTest = new System.Windows.Forms.Button();
+            this.RollDiceButton = new System.Windows.Forms.Button();
             this.PlayerInfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,6 +77,16 @@
             this.PlayerInfoPanel.Name = "PlayerInfoPanel";
             this.PlayerInfoPanel.Size = new System.Drawing.Size(493, 213);
             this.PlayerInfoPanel.TabIndex = 1;
+            // 
+            // generateResourcesTest
+            // 
+            this.generateResourcesTest.Location = new System.Drawing.Point(87, 11);
+            this.generateResourcesTest.Name = "generateResourcesTest";
+            this.generateResourcesTest.Size = new System.Drawing.Size(152, 23);
+            this.generateResourcesTest.TabIndex = 18;
+            this.generateResourcesTest.Text = "generate resources (test)";
+            this.generateResourcesTest.UseVisualStyleBackColor = true;
+            this.generateResourcesTest.Click += new System.EventHandler(this.generateResourcesTest_Click);
             // 
             // WoolAmountLabel
             // 
@@ -248,21 +259,22 @@
             this.CurrentPlayerNameLabel.TabIndex = 1;
             this.CurrentPlayerNameLabel.Text = "Current Player";
             // 
-            // generateResourcesTest
+            // RollDiceButton
             // 
-            this.generateResourcesTest.Location = new System.Drawing.Point(87, 11);
-            this.generateResourcesTest.Name = "generateResourcesTest";
-            this.generateResourcesTest.Size = new System.Drawing.Size(152, 23);
-            this.generateResourcesTest.TabIndex = 18;
-            this.generateResourcesTest.Text = "generate resources (test)";
-            this.generateResourcesTest.UseVisualStyleBackColor = true;
-            this.generateResourcesTest.Click += new System.EventHandler(this.generateResourcesTest_Click);
+            this.RollDiceButton.Location = new System.Drawing.Point(1068, 290);
+            this.RollDiceButton.Name = "RollDiceButton";
+            this.RollDiceButton.Size = new System.Drawing.Size(83, 78);
+            this.RollDiceButton.TabIndex = 2;
+            this.RollDiceButton.Text = "ROLL!";
+            this.RollDiceButton.UseVisualStyleBackColor = true;
+            this.RollDiceButton.Click += new System.EventHandler(this.RollDiceButton_Click);
             // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1573, 912);
+            this.Controls.Add(this.RollDiceButton);
             this.Controls.Add(this.PlayerInfoPanel);
             this.Controls.Add(this.CurrentPlayerNameLabel);
             this.Name = "GameScreen";
@@ -296,5 +308,6 @@
         private System.Windows.Forms.Label WoolLabel;
         private System.Windows.Forms.Label BrickLabel;
         private System.Windows.Forms.Button generateResourcesTest;
+        private System.Windows.Forms.Button RollDiceButton;
     }
 }

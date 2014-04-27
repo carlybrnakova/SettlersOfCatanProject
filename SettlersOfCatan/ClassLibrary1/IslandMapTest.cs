@@ -42,9 +42,10 @@ namespace ClassLibrary1
             {
                 for (int j = 0; j < 11; j++)
                 {
-                    if ((i == 0 || i == 5) && (j < 2 || j > 8)) break;
-                    else if ((i == 1 || i == 4) && (j < 1 || j > 9)) break;
-                    else Assert.NotNull(map.getIntAtIndex(i, j));
+                    Point point = new Point(i, j);
+                    if ((i == 0 || i == 5) && (j < 2 || j > 8)) Assert.Null(map.getIntAtIndex(point));
+                    else if ((i == 1 || i == 4) && (j < 1 || j > 9)) Assert.Null(map.getIntAtIndex(point));
+                    else Assert.NotNull(map.getIntAtIndex(point));
                 }
             }
         }
@@ -162,7 +163,9 @@ namespace ClassLibrary1
             // 2, 5
             int x = 2, y = 5;
             Assert.True(map.getIntAtIndex(x, y).canBuildAtIntersection());
-            map.buildSettlement(x, y);
+            Assert.AreEqual(Global_Variables.GAME_PIECE.NONE, map.getIntAtIndex(x, y).getPieceType());
+            map.buildSettlement(new Point(x, y));
+            Assert.AreEqual(Global_Variables.GAME_PIECE.SETTLEMENT, map.getIntAtIndex(x, y).getPieceType());
 
             // Make sure none of the surrounding intersections can now be built up
             Assert.False(map.getIntAtIndex(x, y).canBuildAtIntersection());
@@ -170,6 +173,25 @@ namespace ClassLibrary1
             {
                 Assert.False(map.getIntAtIndex(x, y).connections[i].getIntersection().canBuildAtIntersection());
             }
+        }
+
+        [Test()]
+        public void TestThatCityCanBeBuiltFromSettlement()
+        {
+            Point p = new Point(3, 6);
+            Assert.AreEqual(Global_Variables.GAME_PIECE.NONE, map.getIntAtIndex(p).getPieceType());
+            map.buildSettlement(p);
+            Assert.AreEqual(Global_Variables.GAME_PIECE.SETTLEMENT, map.getIntAtIndex(p).getPieceType());
+            map.buildCity(p);
+            Assert.AreEqual(Global_Variables.GAME_PIECE.CITY, map.getIntAtIndex(p).getPieceType());
+        }
+
+        [Test()]
+        public void TestThatCityCannotBeBuiltWithoutSettlementFirst()
+        {
+            Point p = new Point(3, 3);
+            Assert.True(map.getIntAtIndex(p).canBuildAtIntersection());
+            Assert.False(map.buildCity(p));
         }
 
         [Test()]
@@ -200,6 +222,7 @@ namespace ClassLibrary1
             Assert.False(map.getIntAtIndex(x, y + 2).canBuildAtIntersection());
             Assert.False(map.getIntAtIndex(x, y + 1).canBuildAtIntersection());
         }
+
 
     }
 }

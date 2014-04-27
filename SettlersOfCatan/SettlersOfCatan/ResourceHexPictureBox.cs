@@ -13,7 +13,7 @@ namespace SettlersOfCatan
     {
         private String resourceType;
         private readonly Size HEX_SIZE = new Size(150, 150);
-        private static readonly Random r = new Random();
+        //private static readonly Random r = new Random();
 
 
 
@@ -33,6 +33,13 @@ namespace SettlersOfCatan
             this.Size = HEX_SIZE;
         }
 
+        public ResourceHexPictureBox(Color color)
+        {
+            resourceType = "None";
+            //this.BackColor = Color.FromArgb((byte)r.Next(255), (byte)r.Next(255), (byte)r.Next(255));
+            this.BackColor = color;
+            this.Size = HEX_SIZE;
+        }
 
     }
 }

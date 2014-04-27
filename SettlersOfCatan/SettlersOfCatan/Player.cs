@@ -97,7 +97,7 @@ namespace SettlersOfCatan
         {
             if (getSettlementsRemaining() > 0)
             {
-                settlementsPlayed++;
+                settlementsPlayed++;                
                 return true;
             }
             else
@@ -574,38 +574,33 @@ namespace SettlersOfCatan
 
         public bool canBuildCity()
         {
-            if (this.playerHand.getGrain() >= 3 && this.playerHand.getOre() >= 2)
-                return true;
-            else
-                return false;
+            return (this.playerHand.hasCityResources());
+
         }
 
         public bool canBuildSettlement()
         {
-            if (this.playerHand.getBrick() >= 1 && this.playerHand.getGrain() >= 1 && this.playerHand.getLumber() >= 1 && this.playerHand.getWool() >= 1)
-                return true;
-            else
-                return false;
+            return (this.playerHand.hasSettlementResources()) ;
         }
 
         public bool canBuildRoad()
         {
-            if (this.playerHand.getBrick() >=1 && this.playerHand.getLumber() >= 1)
-                return true;
-            else
-                return false;
+            return (this.playerHand.hasRoadResources());
         }
 
         public void buildRoad()
         {
             this.playerHand.modifyBrick(-1);
             this.playerHand.modifyLumber(-1);
+            incrementRoads();
         }
 
         public void buildCity()
         {
             this.playerHand.modifyGrain(-3);
             this.playerHand.modifyOre(-2);
+            incrementCities();
+            incrementPoints(1); // One point is already counted for the settlement that was there
         }
 
         public void buildSettlement()
@@ -614,6 +609,8 @@ namespace SettlersOfCatan
             this.playerHand.modifyLumber(-1);
             this.playerHand.modifyBrick(-1);
             this.playerHand.modifyWool(-1);
+            incrementSettlements();
+            incrementPoints(1);
         }
     }
 }

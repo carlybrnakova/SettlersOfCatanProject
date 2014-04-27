@@ -68,6 +68,28 @@ namespace SettlersOfCatan
             return this.devCards.Count();
         }
 
+        public void modifyResources(String resourceType, int amount)
+        {
+            switch (resourceType)
+            {
+                case "ore":
+                    modifyOre(amount);
+                    break;
+                case "wool":
+                    modifyWool(amount);
+                    break;
+                case "lumber":
+                    modifyLumber(amount);
+                    break;
+                case "grain":
+                    modifyGrain(amount);
+                    break;
+                case "brick":
+                    modifyBrick(amount);
+                    break;
+            }
+        }
+
         public void modifyOre(int amount)
         {
             if (this.ore < amount * -1)
@@ -117,6 +139,26 @@ namespace SettlersOfCatan
                 {
                     this.devCards.Add(new DevelopmentCard());
                 }
+        }
+
+        public bool hasRoadResources()
+        {
+            return (brick >= 1) && (lumber >= 1);
+        }
+
+        public bool hasSettlementResources()
+        {
+            return (brick >= 1) && (grain >= 1) && (wool >= 1) && (lumber >= 1);
+        }
+
+        public bool hasCityResources()
+        {
+            return (grain >= 2) && (ore >= 3);
+        }
+
+        public bool hasDevCardResources()
+        {
+            return (wool >= 1) && (grain >= 1) && (ore >= 1);
         }
     }
 }

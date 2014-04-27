@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="AcceptTradeFormTest.cs" />
     <Compile Include="BankTest.cs" />
+    <Compile Include="ConnectionTest.cs" />
+    <Compile Include="IntersectionTest.cs" />
     <Compile Include="CompleteMapTest.cs" />
     <Compile Include="HexDeckTest.cs" />
     <Compile Include="HexMapTest.cs" />

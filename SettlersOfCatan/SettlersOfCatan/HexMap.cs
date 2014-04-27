@@ -81,13 +81,23 @@ namespace SettlersOfCatan
 
     public class Hex
     {
-        private String type;
+        private String resource;
         private Color color;
 
         public Hex(String terrainType, Color c)
         {
-            this.type = terrainType;
+            this.resource = terrainType;
             this.color = c;
+        }
+
+        public String getResourceType()
+        {
+            return resource;
+        }
+
+        public Color getColor()
+        {
+            return this.color;
         }
 
     }
@@ -102,16 +112,12 @@ namespace SettlersOfCatan
         private Color LUMBER_COLOR = Color.ForestGreen;
         private Color ORE_COLOR = Color.Gray;
         private Color WOOL_COLOR = Color.PaleGoldenrod;
-        private Color BRICK_COLOR = Color.Orange;
-
-
+        private Color BRICK_COLOR = Color.Chocolate;
 
         public HexDeck()
         {
             addAllHexes();
         }
-
-
 
         private void addAllHexes()
         {
@@ -127,7 +133,7 @@ namespace SettlersOfCatan
         {
             for (int i = 0; i < 4; i++)
             {
-                this.Add(new Hex("Forest", LUMBER_COLOR));
+                this.Add(new Hex("lumber", LUMBER_COLOR));
             }
         }
 
@@ -135,7 +141,7 @@ namespace SettlersOfCatan
         {
             for (int i = 0; i < 3; i++)
             {
-                this.Add(new Hex("Hills", BRICK_COLOR));
+                this.Add(new Hex("brick", BRICK_COLOR));
             }
         }
 
@@ -143,7 +149,7 @@ namespace SettlersOfCatan
         {
             for (int i = 0; i < 3; i++)
             {
-                this.Add(new Hex("Mountain", ORE_COLOR));
+                this.Add(new Hex("ore", ORE_COLOR));
             }
         }
 
@@ -151,7 +157,7 @@ namespace SettlersOfCatan
         {
             for (int i = 0; i < 4; i++)
             {
-                this.Add(new Hex("Fields", GRAIN_COLOR));
+                this.Add(new Hex("grain", GRAIN_COLOR));
             }
         }
 
@@ -159,7 +165,7 @@ namespace SettlersOfCatan
         {
             for (int i = 0; i < 4; i++)
             {
-                this.Add(new Hex("Pasture", WOOL_COLOR));
+                this.Add(new Hex("wool", WOOL_COLOR));
             }
         }
 

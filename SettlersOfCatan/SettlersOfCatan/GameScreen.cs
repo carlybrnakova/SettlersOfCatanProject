@@ -53,12 +53,15 @@ namespace SettlersOfCatan
 
         public GameScreen()
         {
-
+            
             InitializeComponent();
+
+            this.world = new World(3, 0);
+
             initializeAll();
 
             initializeBoardPanel();
-            this.world = new World(3,0);
+            //this.world = new World(3,0);
             this.updateResourceLabels();
             this.updateCurrentPlayerNameLabel();
         }
@@ -154,11 +157,11 @@ namespace SettlersOfCatan
             {
                 for (col = 0; col < columnMax; col++)
                 {
-                    Button b = new Button();
+                    RoadButton b = new RoadButton(r, col);
                     b.Size = HORIZONTAL_ROAD_SIZE;
                     b.Location = new Point(x, y);
                     b.BackColor = Color.White;
-                    b.Click += intersectionButton_Click;
+                    b.Click += roadButton_Click;
                     boardPanel.Controls.Add(b);
                     
                     x += x_diff;
@@ -185,11 +188,11 @@ namespace SettlersOfCatan
             {
                 for (col = 0; col < columnMax; col++)
                 {
-                    Button b = new Button();
+                    RoadButton b = new RoadButton(r, col);
                     b.Size = VERTICAL_ROAD_SIZE;
                     b.Location = new Point(x, y);
                     b.BackColor = Color.White;
-                    b.Click += intersectionButton_Click;
+                    b.Click += roadButton_Click;
                     boardPanel.Controls.Add(b);
 
                     x += x_diff;
@@ -198,17 +201,10 @@ namespace SettlersOfCatan
                 y = y + y_diff;
                 x = (r <= 4) ? x - x_diff * col - x_diff/2 : x - x_diff * col + x_diff/2;
             }
-
-
         }
-
-
-
 
         private void setupHexGrid()
         {
-
-
             // Coordinate variables for plotting buttons in correct locations
             int x = HEX_SIDE_DIMENSION * 2;
             int y = HEX_SIDE_DIMENSION / 2;
@@ -217,23 +213,34 @@ namespace SettlersOfCatan
                 {
                     for (int r = 0; r < MAX_RESOURCE_HEX_ROWS; r++)
                     {
-                        ResourceHexPictureBox h = new ResourceHexPictureBox();
-                        h.Location = new Point(x, y);
-                        if ((r == 0 || r == 4) && (c > 2))
+                        ResourceHexPictureBox h;
+                        try
                         {
-                            h = null;
-                        }
-                        else if ((r == 1 || r == 3) && (c > 3))
-                        {
-                            h = null;
-                        }
-                        else
-                        {
-                            hexGrid[r][c] = h;
+                            h = new ResourceHexPictureBox(world.getHexAtIndex(r, c).getColor());
+                            if (r == 0 || r == 4) h.Location = new Point(x - HEX_SIDE_DIMENSION, y);
+                            else h.Location = new Point(x, y);
                             boardPanel.Controls.Add(h);
                         }
-                        x = (r < 2) ? x - HEX_SIDE_DIMENSION / 2: x + HEX_SIDE_DIMENSION / 2;
+                        catch (NullReferenceException e)
+                        {
+                            //h = new ResourceHexPictureBox();
+                            h = null;
+                            /*
+                            if ((r == 0 || r == 4) && (c > 2))
+                            {
+                                h = null;
+                            }
+                            else if ((r == 1 || r == 3) && (c > 3))
+                            {
+                                h = null;
+                            }
+                             * */
+                        }
+                        hexGrid[r][c] = h;
+
+                        x = (r < 2) ? x - HEX_SIDE_DIMENSION / 2 : x + HEX_SIDE_DIMENSION / 2;
                         y += HEX_SIDE_DIMENSION;
+                      
                     }
                     y = HEX_SIDE_DIMENSION / 2;
                     x = HEX_SIDE_DIMENSION * (3 + c);
@@ -338,8 +345,6 @@ namespace SettlersOfCatan
             setupIntersectionButtons();
 
 
-            
-
             setupRoadGrid();
             setupWaterHexes();
             setupHexGrid();
@@ -415,30 +420,29 @@ namespace SettlersOfCatan
 
         private void intersectionButton_Click(object sender, EventArgs e)
         {
-            Button theButton = (Button)sender;
+            IntersectionButton theButton = (IntersectionButton)sender;
 
-
-            if (theButton.Width == 30 && theButton.BackColor == this.world.currentPlayer.getColor() && this.world.currentPlayer.canBuildCity())
+            Color buttonColor = world.intersectionButtonClicked(theButton.getCoords());
+            if (buttonColor != Color.White && buttonColor != Color.Black)
             {
-                IntersectionButton b = (IntersectionButton)theButton;
-                
-                Point loc = b.Location;
+                theButton.BackColor = buttonColor;
+            }
+            else if (buttonColor == Color.Black)
+            {
                 theButton.Text = "*";
                 theButton.ForeColor = Color.White;
-                theButton.Enabled = false;
-                this.world.currentPlayer.buildCity();
             }
-            else if (theButton.Width == 30 && theButton.BackColor != this.world.currentPlayer.getColor() && this.world.currentPlayer.canBuildSettlement())
-            {
-                theButton.BackColor = this.world.currentPlayer.getColor();
-                this.world.currentPlayer.buildSettlement();
-            }
-            else if (theButton.Width != 30 && this.world.currentPlayer.canBuildRoad())
-            {
-                theButton.BackColor = this.world.currentPlayer.getColor();
-                this.world.currentPlayer.buildRoad();
-                theButton.Enabled = false;
-            }
+
+            this.updateResourceLabels();
+        }
+
+        private void roadButton_Click(object sender, EventArgs e)
+        {
+            RoadButton theButton = (RoadButton)sender;
+
+            Color buttonColor = world.roadButtonClicked(theButton.getCoords());
+            if (buttonColor != Color.White) theButton.BackColor = buttonColor;
+
             this.updateResourceLabels();
         }
 
@@ -476,6 +480,12 @@ namespace SettlersOfCatan
             this.world.currentPlayer.playerHand.modifyWool(1);
             this.world.currentPlayer.playerHand.modifyOre(1);
             this.world.currentPlayer.playerHand.modifyLumber(1);
+            this.updateResourceLabels();
+        }
+
+        private void RollDiceButton_Click(object sender, EventArgs e)
+        {
+            this.world.rollDice();
             this.updateResourceLabels();
         }
     }
