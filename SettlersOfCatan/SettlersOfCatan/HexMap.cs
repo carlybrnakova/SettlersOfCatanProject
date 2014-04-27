@@ -44,8 +44,10 @@ namespace SettlersOfCatan
              * */
 
             HexDeck hexDeck = new HexDeck();
+            AllTokens tokens = new AllTokens();
             Random rand = new Random();
-            int randomIndex = rand.Next(0, hexDeck.Count);
+            int randomHexIndex = rand.Next(0, hexDeck.Count);
+            int randomTokenIndex = rand.Next(0, tokens.Count);
             for (int r = 0; r < 5; r++)
             {
                 for (int c = 0; c < 5; c++)
@@ -59,11 +61,18 @@ namespace SettlersOfCatan
                     else
                     {
                         Hex theHex;
-                        randomIndex = rand.Next(0, hexDeck.Count);
-                        theHex = hexDeck.ElementAt(randomIndex);
+                        randomHexIndex = rand.Next(0, hexDeck.Count);
+                        theHex = hexDeck.ElementAt(randomHexIndex);
+
+                        if (theHex.getResourceType() != "Desert")
+                        {
+                            randomTokenIndex = rand.Next(0, tokens.Count);
+                            theHex.setToken(tokens.ElementAt(randomTokenIndex));
+                            tokens.RemoveAt(randomTokenIndex);
+                        }
 
                         map[r, c] = theHex;
-                        hexDeck.RemoveAt(randomIndex);
+                        hexDeck.RemoveAt(randomHexIndex);
                     }
                 }
             }
@@ -74,7 +83,37 @@ namespace SettlersOfCatan
     }
 
 
+    public class AllTokens : List<int>
+    {
 
+        public AllTokens()
+        {
+            addAll();
+        }
+
+        private void addAll()
+        {
+            // In alphabetical order
+            this.Add(5);
+            this.Add(2);
+            this.Add(6);
+            this.Add(3);
+            this.Add(8);
+            this.Add(10);
+            this.Add(9);
+            this.Add(12);
+            this.Add(11);
+            this.Add(4);
+            this.Add(8);
+            this.Add(10);
+            this.Add(9);
+            this.Add(4);
+            this.Add(5);
+            this.Add(6);
+            this.Add(3);
+            this.Add(11);
+        }
+    }
 
 
 
@@ -83,6 +122,7 @@ namespace SettlersOfCatan
     {
         private String resource;
         private Color color;
+        private int token;
 
         public Hex(String terrainType, Color c)
         {
@@ -98,6 +138,16 @@ namespace SettlersOfCatan
         public Color getColor()
         {
             return this.color;
+        }
+
+        public void setToken(int t)
+        {
+            this.token = t;
+        }
+
+        public int getToken()
+        {
+            return this.token;
         }
 
     }

@@ -216,7 +216,8 @@ namespace SettlersOfCatan
                         ResourceHexPictureBox h;
                         try
                         {
-                            h = new ResourceHexPictureBox(world.getHexAtIndex(r, c).getColor());
+                            h = new ResourceHexPictureBox(world.getHexAtIndex(r, c));
+                            
                             if (r == 0 || r == 4) h.Location = new Point(x - HEX_SIDE_DIMENSION, y);
                             else h.Location = new Point(x, y);
                             boardPanel.Controls.Add(h);
@@ -487,6 +488,8 @@ namespace SettlersOfCatan
         {
             this.world.rollDice();
             this.updateResourceLabels();
+            this.RollNumberLabel.Text = this.world.getRollNumber().ToString();
+            
         }
     }
 }

@@ -15,11 +15,13 @@ namespace SettlersOfCatan
         public List<Player> players;
         public Bank bank;
         private CompleteMap catanMap;
+        private int currentRoll;
 
         public World()
         {
             bank = new Bank();
             players = new List<Player>();
+            currentRoll = 0;
         }
 
         public World(int humans, int computers)
@@ -32,6 +34,7 @@ namespace SettlersOfCatan
 
             // Generate a new map for the board
             this.catanMap = new CompleteMap();
+            this.currentRoll = 0;
 
             /*
             for (int i = 0; i < humans; i++)
@@ -139,13 +142,21 @@ namespace SettlersOfCatan
 
         public void rollDice()
         {
-            int num = 6;
-            generateMyResources(num);
+            Random die = new Random();
+            int die1Roll = die.Next(1, 7);
+            int die2Roll = die.Next(1, 7);
+            currentRoll = die1Roll + die2Roll;
+            generateMyResources(currentRoll, false);
+        }
+
+        public int getRollNumber()
+        {
+            return currentRoll;
         }
 
         // Goes through the whole array of intersections and awards the respective
         // resources to each player settlement by settlement
-        private void generateMyResources(int num)
+        private void generateMyResources(int num, bool isItBeginningOfTheGame)
         {
             // For now, give all resources which a settlement/city is on
             IslandMap theMap = catanMap.getIslandMap();
@@ -155,14 +166,14 @@ namespace SettlersOfCatan
                 {
                     if (theMap.getIntAtIndex(r, c) != null && theMap.getIntAtIndex(r, c).hasABuilding())
                     {
-                        giveAllResourcesForThisIntersection(theMap.getIntAtIndex(r, c));
+                        giveAllResourcesForThisIntersection(theMap.getIntAtIndex(r, c), isItBeginningOfTheGame);
                     }
                 }
             }
             
         }
 
-        private void giveAllResourcesForThisIntersection(Intersection intersection)
+        private void giveAllResourcesForThisIntersection(Intersection intersection, bool isItBeginningOfTheGame)
         {
             Hand hand = intersection.getPlayer().getHand();
             int amount = intersection.getNumOfResourcesToGenerate();
@@ -171,7 +182,10 @@ namespace SettlersOfCatan
             {
                 try
                 {
-                    hand.modifyResources(h.getResourceType(), amount);
+                    if (isItBeginningOfTheGame || h.getToken() == currentRoll)
+                    {
+                        hand.modifyResources(h.getResourceType(), amount);
+                    }
                 }
                 catch (NullReferenceException)
                 {

@@ -49,6 +49,8 @@
             this.EndTurnButton = new System.Windows.Forms.Button();
             this.CurrentPlayerNameLabel = new System.Windows.Forms.Label();
             this.RollDiceButton = new System.Windows.Forms.Button();
+            this.CurrentRollLabel = new System.Windows.Forms.Label();
+            this.RollNumberLabel = new System.Windows.Forms.Label();
             this.PlayerInfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -269,11 +271,33 @@
             this.RollDiceButton.UseVisualStyleBackColor = true;
             this.RollDiceButton.Click += new System.EventHandler(this.RollDiceButton_Click);
             // 
+            // CurrentRollLabel
+            // 
+            this.CurrentRollLabel.AutoSize = true;
+            this.CurrentRollLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CurrentRollLabel.Location = new System.Drawing.Point(1157, 290);
+            this.CurrentRollLabel.Name = "CurrentRollLabel";
+            this.CurrentRollLabel.Size = new System.Drawing.Size(101, 20);
+            this.CurrentRollLabel.TabIndex = 3;
+            this.CurrentRollLabel.Text = "Current Roll: ";
+            // 
+            // RollNumberLabel
+            // 
+            this.RollNumberLabel.AutoSize = true;
+            this.RollNumberLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RollNumberLabel.Location = new System.Drawing.Point(1185, 323);
+            this.RollNumberLabel.Name = "RollNumberLabel";
+            this.RollNumberLabel.Size = new System.Drawing.Size(29, 31);
+            this.RollNumberLabel.TabIndex = 4;
+            this.RollNumberLabel.Text = "0";
+            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1573, 912);
+            this.Controls.Add(this.RollNumberLabel);
+            this.Controls.Add(this.CurrentRollLabel);
             this.Controls.Add(this.RollDiceButton);
             this.Controls.Add(this.PlayerInfoPanel);
             this.Controls.Add(this.CurrentPlayerNameLabel);
@@ -309,5 +333,7 @@
         private System.Windows.Forms.Label BrickLabel;
         private System.Windows.Forms.Button generateResourcesTest;
         private System.Windows.Forms.Button RollDiceButton;
+        private System.Windows.Forms.Label CurrentRollLabel;
+        private System.Windows.Forms.Label RollNumberLabel;
     }
 }

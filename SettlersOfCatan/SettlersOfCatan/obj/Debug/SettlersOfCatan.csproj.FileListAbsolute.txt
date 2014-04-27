@@ -39,4 +39,3 @@ C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProjec
 C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.csproj.GenerateResource.Cache
 C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.exe
 C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.pdb
-C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.csprojResolveAssemblyReference.cache
