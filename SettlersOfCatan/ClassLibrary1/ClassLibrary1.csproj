@@ -42,7 +42,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AcceptTradeFormTest.cs" />
     <Compile Include="BankTest.cs" />
     <Compile Include="ConnectionTest.cs" />
     <Compile Include="IntersectionTest.cs" />
@@ -50,17 +49,11 @@
     <Compile Include="HexDeckTest.cs" />
     <Compile Include="HexMapTest.cs" />
     <Compile Include="HexTest.cs" />
-    <Compile Include="IntersectionButtonTest.cs" />
     <Compile Include="IslandMapTest.cs" />
     <Compile Include="ComputerTest.cs" />
     <Compile Include="HandTest.cs" />
-    <Compile Include="MainMenuTest.cs" />
-    <Compile Include="NewGameFormTest.cs" />
     <Compile Include="PlayerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceHexPictureBoxTest.cs" />
-    <Compile Include="RulesFormTest.cs" />
-    <Compile Include="TradeFormTest.cs" />
     <Compile Include="WorldTest.cs" />
   </ItemGroup>
   <ItemGroup>

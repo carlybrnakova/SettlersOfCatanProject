@@ -26,6 +26,8 @@ namespace SettlersOfCatan
         private Color color;
         private bool hasWon;
         private World world;
+        public bool hasLongestRoad;
+        public bool hasLargestArmy;
 
         public Player()
         {
@@ -39,6 +41,8 @@ namespace SettlersOfCatan
             this.playerToTradeWith = null;
             this.hasWon = false;
             this.world = new World();
+            this.hasLongestRoad = false;
+            this.hasLargestArmy = false;
         }
 
         public Player(String playerName, Color playerColor, World world1)
@@ -55,6 +59,8 @@ namespace SettlersOfCatan
             this.playerToTradeWith = null;
             this.hasWon = false;
             this.world = world1;
+            this.hasLongestRoad = false;
+            this.hasLargestArmy = false;
         }
 
         public String getName()
@@ -405,26 +411,34 @@ namespace SettlersOfCatan
 
         private void modifyResourceInHand(String resource)
         {
-            if (resource.ToLower().Equals("ore"))
+            switch (resource)
+            {
+                case "ore":
             {
                 this.playerHand.modifyOre(1);
+                break;
             }
-            else if (resource.ToLower().Equals("wool"))
+                case "wool":
             {
                 this.playerHand.modifyWool(1);
+                break;
             } 
-            else if (resource.ToLower().Equals("lumber"))
+                case "lumber":
             {
                 this.playerHand.modifyLumber(1);
+                break;
             }
-            else if (resource.ToLower().Equals("grain"))
+                case "grain":
             {
                 this.playerHand.modifyGrain(1);
+                break;
             }
-            else if (resource.ToLower().Equals("brick"))
+                case "brick":
             {
                 this.playerHand.modifyBrick(1);
+                break;
             }
+        }
         }
 
         public void generateOre()
@@ -611,6 +625,11 @@ namespace SettlersOfCatan
             this.playerHand.modifyWool(-1);
             incrementSettlements();
             incrementPoints(1);
+        }
+
+        public int getRoadsPlayed()
+        {
+            return this.roadsPlayed;
         }
     }
 }

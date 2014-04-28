@@ -16,6 +16,11 @@ namespace SettlersOfCatan
         public Bank bank;
         private CompleteMap catanMap;
         private int currentRoll;
+        // these 4 are public for testing
+        public int largestArmySize;
+        public int largestArmyOwnerIndex;
+        public int longestRoadSize;
+        public int longestRoadOwnerIndex;
 
         public World()
         {
@@ -25,6 +30,10 @@ namespace SettlersOfCatan
             // Generate a new map for the board
             this.catanMap = new CompleteMap();
             this.currentRoll = 0;
+            this.largestArmySize = 0;
+            this.longestRoadSize = 0;
+            this.largestArmyOwnerIndex = -1;
+            this.longestRoadOwnerIndex = -1;
         }
 
         public World(int humans, int computers)
@@ -38,6 +47,10 @@ namespace SettlersOfCatan
             // Generate a new map for the board
             this.catanMap = new CompleteMap();
             this.currentRoll = 0;
+            this.largestArmySize = 0;
+            this.longestRoadSize = 0;
+            this.largestArmyOwnerIndex = -1;
+            this.longestRoadOwnerIndex = -1;
 
             /*
             for (int i = 0; i < humans; i++)
@@ -75,6 +88,8 @@ namespace SettlersOfCatan
 
         public void endTurn()
         {
+            setLongestRoad();
+            setLargestArmy();
             if (currentPlayerNumber < this.players.Count()-1)
             {
                 currentPlayerNumber++;
@@ -82,6 +97,87 @@ namespace SettlersOfCatan
             else
                 currentPlayerNumber = 0;
             currentPlayer = this.players[currentPlayerNumber];
+        }
+
+        private void setLongestRoad()
+        {
+            int numberOfPlayers = this.players.Count()-1;
+            
+            // loop through current player and players at higher indices
+            for (int i = this.currentPlayerNumber; i <= numberOfPlayers; i++)
+            {
+                // if no one has the longest road yet
+                if (this.longestRoadSize == 0)
+                {
+                    if (this.players[i].getRoadsPlayed() == 5)
+                    {
+                        this.longestRoadSize = 5;
+                        this.longestRoadOwnerIndex = i;
+                        this.players[i].hasLongestRoad = true;
+                        this.players[i].incrementPoints(2);
+                    }
+                }
+                // if someone has the longest road already
+                else
+                {
+                    // updates the longest road size
+                    this.longestRoadSize = this.players[this.longestRoadOwnerIndex].getRoadsPlayed();
+
+                    // see if anyone besides the current longest road owner has a longer road
+                    if (this.players[i].getRoadsPlayed() > this.longestRoadSize)
+                    {
+                        // set previous owner's longest road boolean to false and set new owner's boolean to true
+                        // also decrement previous owner's points by 2 and increment new owner's points by 2
+                        this.players[this.longestRoadOwnerIndex].hasLongestRoad = false;
+                        this.players[this.longestRoadOwnerIndex].incrementPoints(-2);
+                        this.longestRoadSize = this.players[i].getRoadsPlayed();
+                        this.longestRoadOwnerIndex = i;
+                        this.players[i].hasLongestRoad = true;
+                        this.players[i].incrementPoints(2);
+                    }
+                }
+            }
+
+        }
+
+        private void setLargestArmy()
+        {
+            int numberOfPlayers = this.players.Count() - 1;
+
+            // loop through current player and players at higher indices
+            for (int i = this.currentPlayerNumber; i <= numberOfPlayers; i++)
+            {
+                // if no one has the largest army yet
+                if (this.largestArmySize == 0)
+                {
+                    if (this.players[i].getHand().getKnights() == 3)
+                    {
+                        this.largestArmySize = 3;
+                        this.largestArmyOwnerIndex = i;
+                        this.players[i].hasLargestArmy = true;
+                        this.players[i].incrementPoints(2);
+                    }
+                }
+                // if someone has the largest army already
+                else
+                {
+                    // updates the largest army size
+                    this.largestArmySize = this.players[this.largestArmyOwnerIndex].getHand().getKnights();
+
+                    // see if anyone besides the current largest army owner has a larger army
+                    if (this.players[i].getHand().getKnights() > this.largestArmySize)
+                    {
+                        // set previous owner's largest army boolean to false and set new owner's boolean to true
+                        // also decrement previous owner's points by 2 and increment new owner's points by 2
+                        this.players[this.largestArmyOwnerIndex].hasLargestArmy = false;
+                        this.players[this.largestArmyOwnerIndex].incrementPoints(-2);
+                        this.largestArmySize = this.players[i].getHand().getKnights();
+                        this.largestArmyOwnerIndex = i;
+                        this.players[i].hasLargestArmy = true;
+                        this.players[i].incrementPoints(2);
+                    }
+                }
+            }
         }
 
         private void checkWinner()
@@ -226,5 +322,6 @@ namespace SettlersOfCatan
         {
             return this.catanMap.getHexMap().map[x, y];
         }
+
     }
 }

@@ -879,7 +879,7 @@ namespace ClassLibrary1
 
             target.incrementCities();
             target.generateGrain();
-            target.generateGrain();
+            target.generateOre();
             target.generateOre();
 
             Assert.IsTrue(target.canBuildCity());
@@ -933,6 +933,20 @@ namespace ClassLibrary1
 
             Assert.AreEqual(0, target.getHand().getOre());
             Assert.AreEqual(1, target.getHand().getGrain());
+        }
+
+        [Test()]
+        public void TestGetRoadsPlayed()
+        {
+            var target = new Player();
+            target.incrementCities();
+            target.generateBrick();
+            target.generateLumber();
+
+            target.buildRoad();
+            target.buildRoad();
+
+            Assert.AreEqual(2, target.getRoadsPlayed());
         }
     }
 }

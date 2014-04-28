@@ -160,5 +160,10 @@ namespace SettlersOfCatan
         {
             return (wool >= 1) && (grain >= 1) && (ore >= 1);
         }
+
+        public void incrementKnightsPlayed()
+        {
+            this.knights++;
+        }
     }
 }

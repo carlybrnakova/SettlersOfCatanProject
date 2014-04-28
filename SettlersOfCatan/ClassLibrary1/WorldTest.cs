@@ -87,6 +87,206 @@ namespace ClassLibrary1
                 world.getMap().getIslandMap().getIntAtIndex(3, 3).getPieceType());
         }
 
+        [Test()]
+        public void TestLargestArmyDoesNotGetSetIfNoOneHasLargestArmy()
+        {
+            var target = new World(3, 0);
+
+            target.currentPlayer.playerHand.incrementKnightsPlayed();
+            target.currentPlayer.playerHand.incrementKnightsPlayed();
+            target.endTurn();
+
+            Assert.AreEqual(0, target.largestArmySize);
+            Assert.AreEqual(-1, target.largestArmyOwnerIndex);
+        }
+
+        [Test()]
+        public void TestLargestArmyGetsSetIfNoOneHasLargestArmy()
+        {
+            var target = new World(3, 0);
+            target.endTurn();
+
+            // player 2
+            for (int i = 0; i < 3; i++)
+            {
+                target.currentPlayer.playerHand.incrementKnightsPlayed();
+            }
+
+            target.endTurn();
+
+            Assert.AreEqual(3, target.largestArmySize);
+            Assert.AreEqual(1, target.largestArmyOwnerIndex);
+            Assert.AreEqual(2, target.players[target.largestArmyOwnerIndex].getPoints());
+            Assert.IsTrue(target.players[target.largestArmyOwnerIndex].hasLargestArmy);
+        }
+
+        [Test()]
+        public void TestLargestArmyDoesNotGetSetWhenArmiesAreEqualSize()
+        {
+            var target = new World(3, 0);
+            target.endTurn();
+
+            // player 2
+            for (int i = 0; i < 3; i++)
+            {
+                target.currentPlayer.playerHand.incrementKnightsPlayed();
+            }
+
+            target.endTurn();
+
+            Assert.AreEqual(3, target.largestArmySize);
+            Assert.AreEqual(1, target.largestArmyOwnerIndex);
+            Assert.AreEqual(2, target.players[target.largestArmyOwnerIndex].getPoints());
+            Assert.IsTrue(target.players[target.largestArmyOwnerIndex].hasLargestArmy);
+
+            // player 3
+            for (int i = 0; i < 3; i++)
+            {
+                target.currentPlayer.playerHand.incrementKnightsPlayed();
+            }
+            target.endTurn();
+
+            Assert.AreEqual(3, target.largestArmySize);
+            Assert.AreEqual(1, target.largestArmyOwnerIndex);
+            Assert.AreEqual(2, target.players[target.largestArmyOwnerIndex].getPoints());
+            Assert.IsTrue(target.players[target.largestArmyOwnerIndex].hasLargestArmy);
+        }
+
+        [Test()]
+        public void TestLargestArmyGetsSetWhenArmyIsLarger()
+        {
+            var target = new World(3, 0);
+            target.endTurn();
+
+            // player 2
+            for (int i = 0; i < 3; i++)
+            {
+                target.currentPlayer.playerHand.incrementKnightsPlayed();
+            }
+
+            target.endTurn();
+
+            Assert.AreEqual(3, target.largestArmySize);
+            Assert.AreEqual(1, target.largestArmyOwnerIndex);
+            Assert.AreEqual(2, target.players[target.largestArmyOwnerIndex].getPoints());
+            Assert.IsTrue(target.players[target.largestArmyOwnerIndex].hasLargestArmy);
+
+            // player 3
+            for (int i = 0; i < 4; i++)
+            {
+                target.currentPlayer.playerHand.incrementKnightsPlayed();
+            }
+            target.endTurn();
+
+            Assert.AreEqual(4, target.largestArmySize);
+            Assert.AreEqual(2, target.largestArmyOwnerIndex);
+            Assert.AreEqual(0, target.players[target.largestArmyOwnerIndex - 1].getPoints());
+            Assert.IsFalse(target.players[target.largestArmyOwnerIndex - 1].hasLargestArmy);
+            Assert.AreEqual(2, target.players[target.largestArmyOwnerIndex].getPoints());
+            Assert.IsTrue(target.players[target.largestArmyOwnerIndex].hasLargestArmy);
+        }
+
+        [Test()]
+        public void TestLongestRoadDoesNotGetSetIfNoOneHasLongestRoad()
+        {
+            var target = new World(3, 0);
+
+            for (int i = 0; i < 4; i++)
+            {
+                target.currentPlayer.incrementRoads();
+            }
+            target.endTurn();
+
+            Assert.AreEqual(0, target.longestRoadSize);
+            Assert.AreEqual(-1, target.longestRoadOwnerIndex);
+        }
+
+        [Test()]
+        public void TestLongestRoadGetsSetIfNoOneHasLongestRoad()
+        {
+            var target = new World(3, 0);
+            target.endTurn();
+
+            // player 2
+            for (int i = 0; i < 5; i++)
+            {
+                target.currentPlayer.incrementRoads();
+            }
+
+            target.endTurn();
+
+            Assert.AreEqual(5, target.longestRoadSize);
+            Assert.AreEqual(1, target.longestRoadOwnerIndex);
+            Assert.AreEqual(2, target.players[target.longestRoadOwnerIndex].getPoints());
+            Assert.IsTrue(target.players[target.longestRoadOwnerIndex].hasLongestRoad);
+        }
+
+        [Test()]
+        public void TestLongestRoadDoesNotGetSetWhenRoadsAreEqualSize()
+        {
+            var target = new World(3, 0);
+            target.endTurn();
+
+            // player 2
+            for (int i = 0; i < 5; i++)
+            {
+                target.currentPlayer.incrementRoads();
+            }
+
+            target.endTurn();
+
+            Assert.AreEqual(5, target.longestRoadSize);
+            Assert.AreEqual(1, target.longestRoadOwnerIndex);
+            Assert.AreEqual(2, target.players[target.longestRoadOwnerIndex].getPoints());
+            Assert.IsTrue(target.players[target.longestRoadOwnerIndex].hasLongestRoad);
+
+            // player 3
+            for (int i = 0; i < 5; i++)
+            {
+                target.currentPlayer.incrementRoads();
+            }
+            target.endTurn();
+
+            Assert.AreEqual(5, target.longestRoadSize);
+            Assert.AreEqual(1, target.longestRoadOwnerIndex);
+            Assert.AreEqual(2, target.players[target.longestRoadOwnerIndex].getPoints());
+            Assert.IsTrue(target.players[target.longestRoadOwnerIndex].hasLongestRoad);
+        }
+
+        [Test()]
+        public void TestLongestRoadGetsSetWhenRoadIsLonger()
+        {
+            var target = new World(3, 0);
+            target.endTurn();
+
+            // player 2
+            for (int i = 0; i < 5; i++)
+            {
+                target.currentPlayer.incrementRoads();
+            }
+
+            target.endTurn();
+
+            Assert.AreEqual(5, target.longestRoadSize);
+            Assert.AreEqual(1, target.longestRoadOwnerIndex);
+            Assert.AreEqual(2, target.players[target.longestRoadOwnerIndex].getPoints());
+            Assert.IsTrue(target.players[target.longestRoadOwnerIndex].hasLongestRoad);
+
+            // player 3
+            for (int i = 0; i < 6; i++)
+            {
+                target.currentPlayer.incrementRoads();
+            }
+            target.endTurn();
+
+            Assert.AreEqual(6, target.longestRoadSize);
+            Assert.AreEqual(2, target.longestRoadOwnerIndex);
+            Assert.AreEqual(0, target.players[target.longestRoadOwnerIndex - 1].getPoints());
+            Assert.IsFalse(target.players[target.longestRoadOwnerIndex - 1].hasLongestRoad);
+            Assert.AreEqual(2, target.players[target.longestRoadOwnerIndex].getPoints());
+            Assert.IsTrue(target.players[target.longestRoadOwnerIndex].hasLongestRoad);
+        }
+
         /*
         [Test()]
         public void TestThatResourcesAreGenerated()

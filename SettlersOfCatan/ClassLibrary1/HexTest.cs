@@ -44,5 +44,21 @@ namespace ClassLibrary1
             var target = new Hex("lumber", LUMBER_COLOR);
             Assert.AreEqual(LUMBER_COLOR, target.getColor());
         }
+
+        [Test()]
+        public void TestHexSetsToken()
+        {
+            var target = new Hex("brick", BRICK_COLOR);
+            target.setToken(5);
+            Assert.NotNull(typeof(Hex).GetField("token", BindingFlags.NonPublic | BindingFlags.Instance));
+        }
+
+        [Test()]
+        public void TestHexSetsTokenCorrectly()
+        {
+            var target = new Hex("brick", BRICK_COLOR);
+            target.setToken(5);
+            Assert.AreEqual(5, target.getToken());
+        }
     }
 }

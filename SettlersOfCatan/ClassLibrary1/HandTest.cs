@@ -224,5 +224,16 @@ namespace ClassLibrary1
             hand.modifyResources("brick", 102);
             Assert.AreEqual(102, hand.getBrick());
         }
+
+        [Test()]
+        public void TestIncrementKnightsPlayed()
+        {
+            var target = new Hand();
+            Assert.AreEqual(0, target.getKnights());
+
+            target.incrementKnightsPlayed();
+            target.incrementKnightsPlayed();
+            Assert.AreEqual(2, target.getKnights());
+        }
     }
 }
