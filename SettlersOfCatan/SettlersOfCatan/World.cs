@@ -21,7 +21,10 @@ namespace SettlersOfCatan
         {
             bank = new Bank();
             players = new List<Player>();
-            currentRoll = 0;
+
+            // Generate a new map for the board
+            this.catanMap = new CompleteMap();
+            this.currentRoll = 0;
         }
 
         public World(int humans, int computers)
@@ -50,6 +53,26 @@ namespace SettlersOfCatan
             currentPlayer = this.players[0];
         }
 
+        public void addPlayer(Player p)
+        {
+            this.players.Add(p);
+        }
+
+        public void setCurrentPlayer(String s)
+        {
+            int i = 0;
+            foreach (Player p in players)
+            {
+                if (p.getName() == s)
+                {
+                    currentPlayer = p;
+                    currentPlayerNumber = i;
+                    break;
+                }
+                i++;
+            }
+        }
+
         public void endTurn()
         {
             if (currentPlayerNumber < this.players.Count()-1)
@@ -72,7 +95,7 @@ namespace SettlersOfCatan
 
        
 
-        public Color intersectionButtonClicked(Point coords)
+        public Color tryToBuildAtIntersection(Point coords)
         {
             // Build a settlement
             if(!catanMap.getIslandMap().getIntAtIndex(coords).hasABuilding())
@@ -132,6 +155,11 @@ namespace SettlersOfCatan
                 }
                   
             }            
+        }
+
+        public CompleteMap getMap()
+        {
+            return this.catanMap;
         }
 
         public Color roadButtonClicked(Point coords)

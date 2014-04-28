@@ -183,5 +183,46 @@ namespace ClassLibrary1
         {
             hand3.modifyDevCard(-1);
         }
+
+        [Test()]
+        public void TestThatHandHasDevelopmentCardResources_Boundary()
+        {
+            Hand hand = new Hand();
+
+            // At first it does not have sufficient resources
+            Assert.False(hand.hasDevCardResources());
+
+            // Now give it the necessary resources
+            hand.modifyWool(1);
+            hand.modifyGrain(1);
+            hand.modifyOre(1);
+            Assert.True(hand.hasDevCardResources());
+        }
+
+        [Test()]
+        public void TestThatHandHasDevelopmentCardResources_Average()
+        {
+            Hand hand = new Hand();
+            hand.modifyWool(5);
+            hand.modifyGrain(5);
+            hand.modifyOre(5);
+            Assert.True(hand.hasDevCardResources());
+        }
+
+        [Test()]
+        public void TestThatResourcesGetModified()
+        {
+            Hand hand = new Hand();
+            hand.modifyResources("ore", 3);
+            Assert.AreEqual(3, hand.getOre());
+            hand.modifyResources("wool", 2);
+            Assert.AreEqual(2, hand.getWool());
+            hand.modifyResources("lumber", 12);
+            Assert.AreEqual(12, hand.getLumber());
+            hand.modifyResources("grain", 33);
+            Assert.AreEqual(33, hand.getGrain());
+            hand.modifyResources("brick", 102);
+            Assert.AreEqual(102, hand.getBrick());
+        }
     }
 }

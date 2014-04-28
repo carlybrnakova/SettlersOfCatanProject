@@ -423,7 +423,7 @@ namespace SettlersOfCatan
         {
             IntersectionButton theButton = (IntersectionButton)sender;
 
-            Color buttonColor = world.intersectionButtonClicked(theButton.getCoords());
+            Color buttonColor = world.tryToBuildAtIntersection(theButton.getCoords());
             if (buttonColor != Color.White && buttonColor != Color.Black)
             {
                 theButton.BackColor = buttonColor;
