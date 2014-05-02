@@ -392,7 +392,7 @@ namespace SettlersOfCatan
 
         public void tradeForDevCard()
         {
-            if (getHand().getOre() >= 1 && getHand().getGrain() >= 1 && getHand().getWool() >= 1)
+            if (this.playerHand.getOre() >= 1 && this.playerHand.getGrain() >= 1 && this.playerHand.getWool() >= 1)
             {
                 try
                 {
@@ -721,7 +721,6 @@ namespace SettlersOfCatan
                     }
             }
         }
-    
     }
 }
 

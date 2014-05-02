@@ -427,14 +427,17 @@ namespace SettlersOfCatan
             if (buttonColor != Color.White && buttonColor != Color.Black)
             {
                 theButton.BackColor = buttonColor;
+                this.world.currentPlayer.incrementPoints(1);
             }
             else if (buttonColor == Color.Black)
             {
                 theButton.Text = "*";
                 theButton.ForeColor = Color.White;
+                this.world.currentPlayer.incrementPoints(2);
             }
 
             this.updateResourceLabels();
+            this.updatePlayerPoints();
         }
 
         private void roadButton_Click(object sender, EventArgs e)
@@ -481,6 +484,11 @@ namespace SettlersOfCatan
             this.world.currentPlayer.playerHand.modifyWool(1);
             this.world.currentPlayer.playerHand.modifyOre(1);
             this.world.currentPlayer.playerHand.modifyLumber(1);
+            this.world.bank.modifyResource("ore", -1);
+            this.world.bank.modifyResource("wool", -1);
+            this.world.bank.modifyResource("grain", -1);
+            this.world.bank.modifyResource("brick", -1);
+            this.world.bank.modifyResource("lumber", -1);
             this.updateResourceLabels();
         }
 
@@ -495,6 +503,72 @@ namespace SettlersOfCatan
         private void BuyDevCardButton_Click(object sender, EventArgs e)
         {
             this.world.currentPlayer.tradeForDevCard();
+            this.updateResourceLabels();
+            this.updateDevelopmentCards();
+        }
+
+        private void updateDevelopmentCards()
+        {
+            if (this.world.currentPlayer.playerHand.devCardsContains("knight"))
+                this.KnightsDevCardLabel.Show();
+            else
+                this.KnightsDevCardLabel.Hide();
+
+            if (this.world.currentPlayer.playerHand.devCardsContains("monopoly"))
+                this.MonopolyDevCardLabel.Show();
+            else
+                this.MonopolyDevCardLabel.Hide();
+
+            if (this.world.currentPlayer.playerHand.devCardsContains("victoryPoint"))
+                this.VictoryPointDevCardLabel.Show();
+            else
+                this.VictoryPointDevCardLabel.Hide();
+
+            if (this.world.currentPlayer.playerHand.devCardsContains("roadBuilder"))
+                this.RoadBuilderDevCardLabel.Show();
+            else
+                this.RoadBuilderDevCardLabel.Hide();
+
+            if (this.world.currentPlayer.playerHand.devCardsContains("yearOfPlenty"))
+                this.YearOfPlentyDevCardLabel.Show();
+            else
+                this.YearOfPlentyDevCardLabel.Hide();
+        }
+
+        private void KnightsDevCardLabel_Click(object sender, EventArgs e)
+        {
+            this.world.currentPlayer.playDevCard("knight", null, null);
+            this.updateDevelopmentCards();
+        }
+
+        private void VictoryPointDevCardLabel_Click(object sender, EventArgs e)
+        {
+            this.world.currentPlayer.playDevCard("victoryPoint", null, null);
+            this.updatePlayerPoints();
+            this.updateDevelopmentCards();
+        }
+
+        private void MonopolyDevCardLabel_Click(object sender, EventArgs e)
+        {
+            this.world.currentPlayer.playDevCard("monopoly", null, null);
+            this.updateDevelopmentCards();
+        }
+
+        private void RoadBuilderDevCardLabel_Click(object sender, EventArgs e)
+        {
+            this.world.currentPlayer.playDevCard("roadBuilder", null, null);
+            this.updateDevelopmentCards();
+        }
+
+        private void YearOfPlentyDevCardLabel_Click(object sender, EventArgs e)
+        {
+            this.world.currentPlayer.playDevCard("yearOfPlenty", null, null);
+            this.updateDevelopmentCards();
+        }
+
+        private void updatePlayerPoints()
+        {
+            this.PointsAmountLabel.Text = this.world.currentPlayer.getPoints().ToString();
         }
     }
 }
