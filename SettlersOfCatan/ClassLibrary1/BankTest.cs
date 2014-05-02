@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using SettlersOfCatan;
 
@@ -37,19 +38,25 @@ namespace ClassLibrary1
         {
             var target = new Bank();
             target.modifyResource("ore", -2);
-            Assert.AreEqual(target.getOreRemaining(), 17);
+            Assert.AreEqual(17, target.getOreRemaining());
             target.modifyResource("wool", -10);
-            Assert.AreEqual(target.getWoolRemaining(), 9);
+            Assert.AreEqual(9, target.getWoolRemaining());
             target.modifyResource("lumber", -19);
-            Assert.AreEqual(target.getLumberRemaining(), 0);
+            Assert.AreEqual(0, target.getLumberRemaining());
             target.modifyResource("grain", -19);
             target.modifyResource("grain", 5);
-            Assert.AreEqual(target.getGrainRemaining(), 5);
+            Assert.AreEqual(5, target.getGrainRemaining());
             target.modifyResource("brick", -19);
             target.modifyResource("brick", 19);
-            Assert.AreEqual(target.getBrickRemaining(), 19);
-            target.modifyResource("devcard", -1);
-            Assert.AreEqual(target.getDevCardRemaining(), 24);
+            Assert.AreEqual(19 , target.getBrickRemaining());
+        }
+
+        [Test()]
+        public void TestDrawDevCard()
+        {
+            var target = new Bank();
+            target.drawDevCard(4);
+            Assert.AreEqual(21, target.getDevCardRemaining());
         }
 
         [Test()]
@@ -134,12 +141,72 @@ namespace ClassLibrary1
 
         [Test()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void TestModifyDevCardThrowsWhenLessThanOrEqualToZero()
+        public void TestDrawDevCardThrowsWhenLessThanOrEqualToZero()
         {
             var target = new Bank();
-            target.modifyResource("devcard", -25);
-            target.modifyResource("devcard", -1);
+            target.drawDevCard(25);
+            target.drawDevCard( 1);
         }
 
+        [Test()]
+        public void TestDevCardsAreShuffled()
+        {
+            var target = new Bank();
+            Stack<DevelopmentCard> stack = target.getDevCards();
+            Assert.IsTrue(checkShuffled(stack));
+        }
+
+
+        private Boolean checkShuffled(Stack<DevelopmentCard> stack)
+        {
+            int knights = 0;
+            int yearOfPlentyCards = 0;
+            int monopolyCards = 0;
+            int victoryPointCards = 0;
+            int roadBuilderCards = 0;
+
+            String cardType = null;
+
+            for (int i = 0; i <= 24; i++)
+            {
+                cardType = stack.Pop().getType();
+
+                switch (cardType)
+                {
+                    case "knight":
+                        {
+                            knights++;
+                            break;
+                        }
+                    case "yearOfPlenty":
+                        {
+                            yearOfPlentyCards++;
+                            break;
+                        }
+                    case "monopoly":
+                        {
+                            monopolyCards++;
+                            break;
+                        }
+                    case "victoryPoint":
+                        {
+                            victoryPointCards++;
+                            break;
+                        }
+                    case "roadBuilder":
+                        {
+                            roadBuilderCards++;
+                            break;
+                        }
+                }
+
+                if (knights == 14 && yearOfPlentyCards == 0 && monopolyCards == 0 && victoryPointCards == 0 && roadBuilderCards == 0)
+                {
+                    return false;
+                }
+            }
+
+            return knights == 14 && yearOfPlentyCards == 2 && monopolyCards == 2 && victoryPointCards == 5 && roadBuilderCards == 2;
+        }
     }
 }

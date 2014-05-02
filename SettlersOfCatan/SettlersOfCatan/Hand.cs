@@ -63,9 +63,27 @@ namespace SettlersOfCatan
             return this.knights;
         }
 
-        public int getDevCards()
+        public int getDevCardCount()
         {
             return this.devCards.Count();
+        }
+
+        public int getResource(String resourceType)
+        {
+            switch (resourceType)
+            {
+                case "ore":
+                    return getOre();
+                case "wool":
+                    return getWool();
+                case "lumber":
+                    return getLumber();
+                case "grain":
+                    return getGrain();
+                case "brick":
+                    return getBrick();
+            }
+            throw new ArgumentException();
         }
 
         public void modifyResources(String resourceType, int amount)
@@ -130,15 +148,147 @@ namespace SettlersOfCatan
                 this.brick += amount;
         }
 
-        public void modifyDevCard(int amount)
+        public void addDevCard(List<DevelopmentCard> cards)
         {
-            if (this.devCards.Count() < amount * -1)
-                throw new System.ArgumentException("player cannot have negative resources");
-            else
-                for (int i = 0; i < amount; i++)
+            this.devCards.AddRange(cards);
+        }
+
+        public void removeDevCard(String cardType)
+        {
+            switch (cardType)
+            {
+                case "knight":
+                    {
+                        if (devCardsContains("knight"))
+                        {
+                            var itemToRemove = this.devCards.First(r => r.getType() == "knight");
+                            this.devCards.Remove(itemToRemove);
+                            break;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("You don't have any to remove");
+                        }
+                    }
+                case "victoryPoint":
+                    {
+                        if (devCardsContains("victoryPoint"))
+                        {
+                            var itemToRemove = this.devCards.First(r => r.getType() == "victoryPoint");
+                            this.devCards.Remove(itemToRemove);
+                            break;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("You don't have any to remove");
+                        }
+                    }
+                case "monopoly":
+                    {
+                        if (devCardsContains("monopoly"))
+                        {
+                            var itemToRemove = this.devCards.First(r => r.getType() == "monopoly");
+                            this.devCards.Remove(itemToRemove);
+                            break;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("You don't have any to remove");
+                        }
+                    }
+                case "roadBuilder":
+                    {
+                        if (devCardsContains("roadBuilder"))
+                        {
+                            var itemToRemove = this.devCards.First(r => r.getType() == "roadBuilder");
+                            this.devCards.Remove(itemToRemove);
+                            break;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("You don't have any to remove");
+                        }
+                    }
+                case "yearOfPlenty":
+                    {
+                        if (devCardsContains("yearOfPlenty"))
+                        {
+                            var itemToRemove = this.devCards.First(r => r.getType() == "yearOfPlenty");
+                            this.devCards.Remove(itemToRemove);
+                            break;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("You don't have any to remove");
+                        }
+                    }
+            }
+        }
+
+        public bool devCardsContains(String cardType)
+        {
+            while (this.devCards.Count > 0)
+            {
+                switch (cardType)
                 {
-                    this.devCards.Add(new DevelopmentCard());
+                    case "knight":
+                        {
+                            foreach (DevelopmentCard card in this.devCards)
+                            {
+                                if (card.getType() == "knight")
+                                {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    case "monopoly":
+                        {
+                            foreach (DevelopmentCard card in this.devCards)
+                            {
+                                if (card.getType() == "monopoly")
+                                {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    case "victoryPoint":
+                        {
+                            foreach (DevelopmentCard card in this.devCards)
+                            {
+                                if (card.getType() == "victoryPoint")
+                                {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    case "roadBuilder":
+                        {
+                            foreach (DevelopmentCard card in this.devCards)
+                            {
+                                if (card.getType() == "roadBuilder")
+                                {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
+                    case "yearOfPlenty":
+                        {
+                            foreach (DevelopmentCard card in this.devCards)
+                            {
+                                if (card.getType() == "yearOfPlenty")
+                                {
+                                    return true;
+                                }
+                            }
+                            return false;
+                        }
                 }
+            }
+           return false;
         }
 
         public bool hasRoadResources()

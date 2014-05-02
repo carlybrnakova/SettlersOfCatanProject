@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using SettlersOfCatan;
 using System.Drawing;
+using System.Collections.Generic;
 
 
 namespace ClassLibrary1
@@ -178,13 +179,6 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestModifyDevCardNegResult()
-        {
-            hand3.modifyDevCard(-1);
-        }
-
-        [Test()]
         public void TestThatHandHasDevelopmentCardResources_Boundary()
         {
             Hand hand = new Hand();
@@ -234,6 +228,176 @@ namespace ClassLibrary1
             target.incrementKnightsPlayed();
             target.incrementKnightsPlayed();
             Assert.AreEqual(2, target.getKnights());
+        }
+
+        [Test()]
+        public void TestAddDevCard() 
+        {
+            var target = new Hand();
+            
+            List<DevelopmentCard> cards = new List<DevelopmentCard>();
+            cards.Add(new Knight());
+            cards.Add(new MonopolyCard());
+            cards.Add(new VictoryPointCard());
+            cards.Add(new RoadBuilderCard());
+            cards.Add(new YearOfPlentyCard());
+
+            target.addDevCard(cards);
+            
+            Assert.AreEqual(5, target.getDevCardCount());
+        }
+
+        [Test()]
+        public void TestRemoveDevCard() 
+        {
+            var target = new Hand();
+
+            List<DevelopmentCard> cards = new List<DevelopmentCard>();
+            cards.Add(new Knight());
+            cards.Add(new MonopolyCard());
+            cards.Add(new VictoryPointCard());
+            cards.Add(new RoadBuilderCard());
+            cards.Add(new YearOfPlentyCard());
+
+            target.addDevCard(cards);
+
+            Assert.AreEqual(5, target.getDevCardCount());
+
+            target.removeDevCard("knight");
+            target.removeDevCard("monopoly");
+            target.removeDevCard("victoryPoint");
+            target.removeDevCard("roadBuilder");
+            target.removeDevCard("yearOfPlenty");
+
+            Assert.AreEqual(0, target.getDevCardCount());
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestRemoveKnightThrowsWhenPlayerHasNoKnights()
+        {
+            var target = new Hand();
+            target.removeDevCard("knight");
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestRemoveMonoplyThrowsWhenPlayerHasNoMonopolyCards()
+        {
+            var target = new Hand();
+            target.removeDevCard("monopoly");
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestRemoveVictoryPointThrowsWhenPlayerHasNoVictoryPointCards()
+        {
+            var target = new Hand();
+            target.removeDevCard("victoryPoint");
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestRemoveYearOfPlentyThrowsWhenPlayerHasNoYearOfPlentyCards()
+        {
+            var target = new Hand();
+            target.removeDevCard("yearOfPlenty");
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestRemoveRoadBuilderThrowsWhenPlayerHasNoRoadBuilderCards()
+        {
+            var target = new Hand();
+            target.removeDevCard("roadBuilder");
+        }
+
+        [Test()]
+        public void TestDevCardsContains()
+        {
+            var target = new Hand();
+
+            List<DevelopmentCard> cards = new List<DevelopmentCard>();
+            cards.Add(new Knight());
+            cards.Add(new MonopolyCard());
+            cards.Add(new VictoryPointCard());
+            cards.Add(new RoadBuilderCard());
+            cards.Add(new YearOfPlentyCard());
+
+            target.addDevCard(cards);
+
+            Assert.AreEqual(5, target.getDevCardCount());
+
+            Assert.IsTrue(target.devCardsContains("knight"));
+            Assert.IsTrue(target.devCardsContains("monopoly"));
+            Assert.IsTrue(target.devCardsContains("victoryPoint"));
+            Assert.IsTrue(target.devCardsContains("roadBuilder"));
+            Assert.IsTrue(target.devCardsContains("yearOfPlenty"));
+        }
+
+        [Test()]
+        public void TestDevCardsContainsReturnsFalseWhenCardIsNotInHand()
+        {
+            var target = new Hand();
+
+            List<DevelopmentCard> knight = new List<DevelopmentCard>();
+            knight.Add(new Knight());
+            target.addDevCard(knight);
+            Assert.IsFalse(target.devCardsContains("monopoly"));
+
+            List<DevelopmentCard> monopoly = new List<DevelopmentCard>();
+            monopoly.Add(new MonopolyCard());
+            target.addDevCard(monopoly);
+            Assert.IsFalse(target.devCardsContains("victoryPoint"));
+
+            List<DevelopmentCard> victoryPoint = new List<DevelopmentCard>();
+            victoryPoint.Add(new VictoryPointCard());
+            target.addDevCard(victoryPoint);
+            Assert.IsFalse(target.devCardsContains("roadBuilder"));
+
+            List<DevelopmentCard> roadBuilder = new List<DevelopmentCard>();
+            roadBuilder.Add(new RoadBuilderCard());
+            target.addDevCard(roadBuilder);
+            Assert.IsFalse(target.devCardsContains("yearOfPlenty"));
+
+            List<DevelopmentCard> yearOfPlenty = new List<DevelopmentCard>();
+            yearOfPlenty.Add(new YearOfPlentyCard());
+            target.addDevCard(yearOfPlenty);
+
+            target.removeDevCard("knight");
+            Assert.IsFalse(target.devCardsContains("knight"));
+        }
+
+        [Test()]
+        public void TestDevCardsContainsReturnsFalseWhenThereAreNoDevCardsInHand()
+        {
+            var target = new Hand();
+            Assert.IsFalse(target.devCardsContains("buffalo"));
+        }
+
+        [Test()]
+        public void TestGetResource()
+        {
+            var target = new Hand();
+            target.modifyBrick(2);
+            target.modifyGrain(3);
+            target.modifyLumber(4);
+            target.modifyOre(5);
+            target.modifyWool(6);
+
+            Assert.AreEqual(2, target.getResource("brick"));
+            Assert.AreEqual(3, target.getResource("grain"));
+            Assert.AreEqual(4, target.getResource("lumber"));
+            Assert.AreEqual(5, target.getResource("ore"));
+            Assert.AreEqual(6, target.getResource("wool"));
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestGetResourceThrowsOnInvalidString()
+        {
+            var target = new Hand();
+            target.getResource("ice");
         }
     }
 }

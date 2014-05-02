@@ -491,5 +491,10 @@ namespace SettlersOfCatan
             this.RollNumberLabel.Text = this.world.getRollNumber().ToString();
             
         }
+
+        private void BuyDevCardButton_Click(object sender, EventArgs e)
+        {
+            this.world.currentPlayer.tradeForDevCard();
+        }
     }
 }
