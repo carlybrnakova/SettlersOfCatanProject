@@ -230,6 +230,7 @@
             this.BuyDevCardButton.TabIndex = 3;
             this.BuyDevCardButton.Text = "Buy Development Card";
             this.BuyDevCardButton.UseVisualStyleBackColor = true;
+            this.BuyDevCardButton.Click += new System.EventHandler(this.BuyDevCardButton_Click);
             // 
             // MaterialsLabel
             // 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Reflection;
 
 namespace SettlersOfCatan
 {
@@ -93,6 +94,7 @@ namespace SettlersOfCatan
             if (getCitiesRemaining() > 0)
             {
                 citiesPlayed++;
+                this.points += 2;
                 return true;
             }
             else
@@ -103,7 +105,8 @@ namespace SettlersOfCatan
         {
             if (getSettlementsRemaining() > 0)
             {
-                settlementsPlayed++;                
+                settlementsPlayed++;
+                this.points += 1;
                 return true;
             }
             else
@@ -393,14 +396,14 @@ namespace SettlersOfCatan
             {
                 try
                 {
-                    this.world.bank.modifyResource("devcard", -1);
+                    List<DevelopmentCard> cards = this.world.bank.drawDevCard(1);
                     this.world.bank.modifyResource("ore", 1);
                     this.world.bank.modifyResource("wool", 1);
                     this.world.bank.modifyResource("grain", 1);
                     this.playerHand.modifyOre(-1);
                     this.playerHand.modifyWool(-1);
                     this.playerHand.modifyGrain(-1);
-                    this.playerHand.modifyDevCard(1);
+                    this.playerHand.addDevCard(cards);
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -414,31 +417,31 @@ namespace SettlersOfCatan
             switch (resource)
             {
                 case "ore":
-            {
-                this.playerHand.modifyOre(1);
-                break;
-            }
+                    {
+                        this.playerHand.modifyOre(1);
+                        break;
+                    }
                 case "wool":
-            {
-                this.playerHand.modifyWool(1);
-                break;
-            } 
+                    {
+                        this.playerHand.modifyWool(1);
+                        break;
+                    }
                 case "lumber":
-            {
-                this.playerHand.modifyLumber(1);
-                break;
-            }
+                    {
+                        this.playerHand.modifyLumber(1);
+                        break;
+                    }
                 case "grain":
-            {
-                this.playerHand.modifyGrain(1);
-                break;
-            }
+                    {
+                        this.playerHand.modifyGrain(1);
+                        break;
+                    }
                 case "brick":
-            {
-                this.playerHand.modifyBrick(1);
-                break;
+                    {
+                        this.playerHand.modifyBrick(1);
+                        break;
+                    }
             }
-        }
         }
 
         public void generateOre()
@@ -455,7 +458,7 @@ namespace SettlersOfCatan
                     throw;
                 }
             }
-            
+
             for (int i = 0; i < this.settlementsPlayed; i++)
             {
                 try
@@ -556,7 +559,7 @@ namespace SettlersOfCatan
                 }
             }
         }
-        
+
         public void generateBrick()
         {
             for (int i = 0; i < this.citiesPlayed; i++)
@@ -594,7 +597,7 @@ namespace SettlersOfCatan
 
         public bool canBuildSettlement()
         {
-            return (this.playerHand.hasSettlementResources()) ;
+            return (this.playerHand.hasSettlementResources());
         }
 
         public bool canBuildRoad()
@@ -631,5 +634,94 @@ namespace SettlersOfCatan
         {
             return this.roadsPlayed;
         }
+
+        public void playDevCard(String cardType, String resourceOne, String resourceTwo)
+        {
+            switch (cardType)
+            {
+                case "knight":
+                    {
+                        if (this.playerHand.devCardsContains("knight"))
+                        {
+                            this.playerHand.incrementKnightsPlayed();
+                            this.playerHand.removeDevCard("knight");
+                            break;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("You don't have any Knights to play");
+                        }
+                    }
+                case "victoryPoint":
+                    {
+                        if (this.playerHand.devCardsContains("victoryPoint"))
+                        {
+                            incrementPoints(1);
+                            this.playerHand.removeDevCard("victoryPoint");
+                            break;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("You don't have any Victory Point cards to play");
+                        }
+                    }
+                case "roadBuilder":
+                    {
+                        if (this.playerHand.devCardsContains("roadBuilder"))
+                        {
+                            incrementRoads();
+                            incrementRoads();
+                            this.playerHand.removeDevCard("roadBuilder");
+                            break;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("You don't have any Road Builder cards to play");
+                        }
+                    }
+                case "monopoly":
+                    {
+                        if (this.playerHand.devCardsContains("monopoly"))
+                        {
+                            int resourceAmount = 0;
+
+                            for (int i = 0; i < this.world.players.Count(); i++)
+                            {
+                                if (i != this.world.currentPlayerNumber)
+                                {
+                                    int amountLost = this.world.players[i].playerHand.getResource(resourceOne);
+                                    resourceAmount += amountLost;
+                                    this.world.players[i].playerHand.modifyResources(resourceOne, -amountLost);
+                                }
+                            }
+                            this.playerHand.modifyResources(resourceOne, resourceAmount);
+                            this.playerHand.removeDevCard("monopoly");
+                            break;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("You don't have any Monopoly cards to play");
+                        }
+                    }
+                case "yearOfPlenty":
+                    {
+                        if (this.playerHand.devCardsContains("yearOfPlenty"))
+                        {
+                            this.playerHand.modifyResources(resourceOne, 1);
+                            this.playerHand.modifyResources(resourceTwo, 1);
+                            this.world.bank.modifyResource(resourceOne, -1);
+                            this.world.bank.modifyResource(resourceTwo, -1);
+                            this.playerHand.removeDevCard("yearOfPlenty");
+                            break;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("You don't have any Year of Plenty cards to play");
+                        }
+                    }
+            }
+        }
+    
     }
 }
+

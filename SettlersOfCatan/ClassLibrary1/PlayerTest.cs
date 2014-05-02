@@ -810,7 +810,7 @@ namespace ClassLibrary1
 
             target.tradeForDevCard();
             Assert.AreEqual(0, target.getHand().getResources());
-            Assert.AreEqual(1, target.getHand().getDevCards());
+            Assert.AreEqual(1, target.getHand().getDevCardCount());
         }
 
         [Test()]
@@ -948,5 +948,110 @@ namespace ClassLibrary1
 
             Assert.AreEqual(2, target.getRoadsPlayed());
         }
+
+        [Test()]
+        public void TestPlayDevCardOfEachType()
+        {
+            var world = new World(3, 0);
+
+            var target = world.players[0];
+            var target2 = world.players[1];
+
+            target2.incrementCities();
+            
+            target.incrementCities();
+            target.incrementCities();
+            target.incrementCities();
+            target.incrementCities();
+            
+            for (int i = 0; i < 2; i++)
+            {
+                target.generateGrain();
+                target.generateOre();
+                target.generateWool();
+            }
+            
+            for (int i = 0; i < 16; i++)
+            {
+                target.tradeForDevCard();
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                target.generateGrain();
+                target.generateOre();
+                target.generateWool();
+            }
+
+            for (int i = 0; i < 9; i++)
+            {
+                target.tradeForDevCard();
+            }
+
+            target2.generateBrick();
+            
+            Assert.AreEqual(2, target2.playerHand.getBrick());
+
+            Assert.AreEqual(25, target.playerHand.getDevCardCount());
+            Assert.AreEqual(0, target.playerHand.getKnights());
+            Assert.AreEqual(8, target.getPoints());
+            Assert.AreEqual(0, target.playerHand.getBrick());
+            Assert.AreEqual(0, target.playerHand.getLumber());
+            Assert.AreEqual(0, target.getRoadsPlayed());
+
+            target.playDevCard("knight", null, null);
+            target.playDevCard("monopoly", "brick", null);
+            target.playDevCard("yearOfPlenty", "brick", "lumber");
+            target.playDevCard("victoryPoint", null, null);
+            target.playDevCard("roadBuilder", null, null);
+
+            Assert.AreEqual(20, target.playerHand.getDevCardCount());
+            Assert.AreEqual(1, target.playerHand.getKnights());
+            Assert.AreEqual(9, target.getPoints());
+            Assert.AreEqual(3, target.playerHand.getBrick());
+            Assert.AreEqual(1, target.playerHand.getLumber());
+            Assert.AreEqual(2, target.getRoadsPlayed());
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestPlayKnightThrowsExceptionWhenPlayerHasNoKnights()
+        {
+            var target = new Player();
+            target.playDevCard("knight", null, null);
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestPlayVictoryPointThrowsExceptionWhenPlayerHasNoVictoryPointCards()
+        {
+            var target = new Player();
+            target.playDevCard("victoryPoint", null, null);
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestPlayMonopolyThrowsExceptionWhenPlayerHasNoMonopolyCards()
+        {
+            var target = new Player();
+            target.playDevCard("monopoly", null, null);
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestPlayYearOfPlentyThrowsExceptionWhenPlayerHasNoYearOfPlentyCards()
+        {
+            var target = new Player();
+            target.playDevCard("yearOfPlenty", null, null);
+        }
+
+        [Test()]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestPlayRoadBuilderThrowsExceptionWhenPlayerHasNoRoadBuilderCards()
+        {
+            var target = new Player();
+            target.playDevCard("roadBuilder", null, null);
+        }
+
     }
 }
