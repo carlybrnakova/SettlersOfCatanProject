@@ -260,8 +260,47 @@ namespace SettlersOfCatan
 
         public Color roadButtonClicked(Point coords)
         {
+            Color theColor;
 
-            return Color.White;
+            if (currentPlayer.getHand().hasRoadResources())
+            {
+
+                bool flag = false;
+                try
+                {
+                    if (coords.X % 2 == 0) // Even row
+                    {
+                        flag = catanMap.getIslandMap().buildHorizontalRoad(coords, this.currentPlayer);
+                    }
+                    else // Odd row
+                    {
+                        flag = catanMap.getIslandMap().buildVerticalRoad(coords, this.currentPlayer);
+                    }
+                    if (flag) theColor = currentPlayer.getColor();
+                    else theColor = Color.Orange;
+
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    theColor = Color.White;
+                }
+                catch (NullReferenceException)
+                {
+                    theColor = Color.Black;
+                }
+            }
+            else
+            {
+                DialogResult num = MessageBox.Show("You do not have enough resources to build a road.",
+                "Insufficient Resources",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation);
+
+                theColor = Color.LemonChiffon;
+            }
+
+            return theColor;
+                
         }
 
         public void rollDice()

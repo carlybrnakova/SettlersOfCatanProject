@@ -12,10 +12,13 @@ namespace SettlersOfCatan
     {
         public Intersection connectedTo;
         private Color roadColor;
+        private bool built;
 
         public Connection(Intersection i)
         {
             connectedTo = i;
+            built = false;
+            roadColor = Color.White;
         }
 
         public Intersection getIntersection()
@@ -31,6 +34,17 @@ namespace SettlersOfCatan
         public Color getRoadColor()
         {
             return roadColor;
+        }
+
+        public void buildRoad(Color c)
+        {
+            this.built = true;
+            this.roadColor = c;
+        }
+
+        public bool isBuilt()
+        {
+            return built;
         }
 
     }
