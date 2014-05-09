@@ -14,6 +14,8 @@ namespace SettlersOfCatan
         private int grain;
         private int brick;
         private int knights;
+        private int freeRoadPoints;
+        private int freeSettlementPoints;
 
         private List<DevelopmentCard> devCards;
 
@@ -302,12 +304,12 @@ namespace SettlersOfCatan
 
         public bool hasRoadResources()
         {
-            return (brick >= 1) && (lumber >= 1);
+            return ((brick >= 1) && (lumber >= 1)) || this.freeRoadPoints >=1;
         }
 
         public bool hasSettlementResources()
         {
-            return (brick >= 1) && (grain >= 1) && (wool >= 1) && (lumber >= 1);
+            return ((brick >= 1) && (grain >= 1) && (wool >= 1) && (lumber >= 1)) || (this.freeSettlementPoints > 0);
         }
 
         public bool hasCityResources()
@@ -323,6 +325,26 @@ namespace SettlersOfCatan
         public void incrementKnightsPlayed()
         {
             this.knights++;
+        }
+
+        public bool hasFreeRoadPoints()
+        {
+            return (this.freeRoadPoints != 0);
+        }
+
+        public void modifyFreeRoadPoints(int i)
+        {
+            this.freeRoadPoints += i;
+        }
+
+        public void modifyFreeSettlementPoints(int i)
+        {
+            this.freeSettlementPoints += i;
+        }
+
+        internal bool hasFreeSettlementPoints()
+        {
+            return (freeSettlementPoints > 0);
         }
     }
 }

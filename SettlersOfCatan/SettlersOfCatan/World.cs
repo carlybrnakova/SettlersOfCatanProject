@@ -22,6 +22,7 @@ namespace SettlersOfCatan
         public int longestRoadSize;
         public int longestRoadOwnerIndex;
         private int numOfCompletedRounds;
+        private int turnCounter;
 
         public World()
         {
@@ -67,6 +68,8 @@ namespace SettlersOfCatan
             }
              */
             currentPlayer = this.players[0];
+            this.currentPlayer.getHand().modifyFreeRoadPoints(1);
+            this.currentPlayer.getHand().modifyFreeSettlementPoints(1);
         }
 
         public void addPlayer(Player p)
@@ -337,18 +340,20 @@ namespace SettlersOfCatan
         private void generateMyResources(int num, bool isItBeginningOfTheGame)
         {
             // For now, give all resources which a settlement/city is on
-            IslandMap theMap = catanMap.getIslandMap();
-            for (int r = 0; r < 6; r++)
+            if (this.getNumberOfRoundsCompleted() >= 2)
             {
-                for (int c = 0; c < 11; c++)
+                IslandMap theMap = catanMap.getIslandMap();
+                for (int r = 0; r < 6; r++)
                 {
-                    if (theMap.getIntAtIndex(r, c) != null && theMap.getIntAtIndex(r, c).hasABuilding())
+                    for (int c = 0; c < 11; c++)
                     {
-                        giveAllResourcesForThisIntersection(theMap.getIntAtIndex(r, c), isItBeginningOfTheGame);
+                        if (theMap.getIntAtIndex(r, c) != null && theMap.getIntAtIndex(r, c).hasABuilding())
+                        {
+                            giveAllResourcesForThisIntersection(theMap.getIntAtIndex(r, c), isItBeginningOfTheGame);
+                        }
                     }
                 }
             }
-            
         }
 
         private void giveAllResourcesForThisIntersection(Intersection intersection, bool isItBeginningOfTheGame)
@@ -375,6 +380,11 @@ namespace SettlersOfCatan
         public Hex getHexAtIndex(int x, int y)
         {
             return this.catanMap.getHexMap().map[x, y];
+        }
+
+        public void incrementTurnCounter()
+        {
+            this.turnCounter++;
         }
 
     }

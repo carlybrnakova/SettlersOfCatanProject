@@ -607,8 +607,13 @@ namespace SettlersOfCatan
 
         public void buildRoad()
         {
-            this.playerHand.modifyBrick(-1);
-            this.playerHand.modifyLumber(-1);
+            if (this.getHand().hasFreeRoadPoints())
+                this.getHand().modifyFreeRoadPoints(-1);
+            else
+            {
+                this.playerHand.modifyBrick(-1);
+                this.playerHand.modifyLumber(-1);
+            }
             incrementRoads();
         }
 
@@ -622,10 +627,15 @@ namespace SettlersOfCatan
 
         public void buildSettlement()
         {
-            this.playerHand.modifyGrain(-1);
-            this.playerHand.modifyLumber(-1);
-            this.playerHand.modifyBrick(-1);
-            this.playerHand.modifyWool(-1);
+            if (this.getHand().hasFreeSettlementPoints())
+                this.getHand().modifyFreeSettlementPoints(-1);
+            else
+            {
+                this.playerHand.modifyGrain(-1);
+                this.playerHand.modifyLumber(-1);
+                this.playerHand.modifyBrick(-1);
+                this.playerHand.modifyWool(-1);
+            }
             incrementSettlements();
             incrementPoints(1);
         }
@@ -669,8 +679,7 @@ namespace SettlersOfCatan
                     {
                         if (this.playerHand.devCardsContains("roadBuilder"))
                         {
-                            incrementRoads();
-                            incrementRoads();
+                            this.getHand().modifyFreeRoadPoints(2);
                             this.playerHand.removeDevCard("roadBuilder");
                             break;
                         }

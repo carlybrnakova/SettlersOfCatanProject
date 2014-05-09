@@ -467,10 +467,25 @@ namespace SettlersOfCatan
 
         private void EndTurnButton_Click(object sender, EventArgs e)
         {
-            this.world.endTurn();
-            this.updateResourceLabels();
-            this.updateCurrentPlayerNameLabel();
-            this.updateRoundLabel();
+            if (this.world.currentPlayer.getHand().hasFreeRoadPoints() || this.world.currentPlayer.getHand().hasFreeSettlementPoints())
+            {
+                Form myForm = new PlaceFreeStuffForm();
+                myForm.Show();
+            }
+            else{
+                this.world.endTurn();
+                this.updateResourceLabels();
+                this.updateCurrentPlayerNameLabel();
+                this.updateRoundLabel();
+                this.updatePlayerPoints();
+                if (this.world.getNumberOfRoundsCompleted() < 2) 
+                {
+                    this.world.currentPlayer.getHand().modifyFreeRoadPoints(1);
+                    this.world.currentPlayer.getHand().modifyFreeSettlementPoints(1);
+                    Form myForm = new FirstFewTurnsForm();
+                    myForm.Show();
+                }
+            }
         }
 
         private void updateRoundLabel()
@@ -570,6 +585,8 @@ namespace SettlersOfCatan
         private void RoadBuilderDevCardLabel_Click(object sender, EventArgs e)
         {
             this.world.currentPlayer.playDevCard("roadBuilder", null, null);
+            Form myForm = new RoadBuilderForm();
+            myForm.Show();
             this.updateDevelopmentCards();
         }
 
