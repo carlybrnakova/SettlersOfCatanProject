@@ -180,13 +180,16 @@ namespace SettlersOfCatan
             }
         }
 
-        private void checkWinner()
+        public bool checkWinner()
         {
-            foreach (Player p in this.players){
-                if (p.hasWonGame() == true){
-                    //declare winner
+            foreach (Player p in this.players)
+            {
+                if (p.hasWonGame() == true)
+                {
+                    return true;
                 }
             }
+            return false;
         }
 
        

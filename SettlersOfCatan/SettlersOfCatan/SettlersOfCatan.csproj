@@ -72,6 +72,12 @@
     <Compile Include="TradeForm.Designer.cs">
       <DependentUpon>TradeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForm.Designer.cs">
+      <DependentUpon>WinForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="World.cs" />
     <Compile Include="DevelopmentCard.cs" />
     <Compile Include="GameScreen.cs">
@@ -141,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TradeForm.resx">
       <DependentUpon>TradeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForm.resx">
+      <DependentUpon>WinForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="YearOfPlentyForm.resx">
       <DependentUpon>YearOfPlentyForm.cs</DependentUpon>

@@ -569,6 +569,16 @@ namespace SettlersOfCatan
         private void updatePlayerPoints()
         {
             this.PointsAmountLabel.Text = this.world.currentPlayer.getPoints().ToString();
+            checkWinner();
+        }
+
+        private void checkWinner()
+        {
+            if (this.world.checkWinner())
+            {
+                WinForm myForm = new WinForm();
+                myForm.Show();
+            }
         }
     }
 }
