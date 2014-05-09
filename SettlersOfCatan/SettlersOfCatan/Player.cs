@@ -94,7 +94,7 @@ namespace SettlersOfCatan
             if (getCitiesRemaining() > 0)
             {
                 citiesPlayed++;
-                this.points += 2;
+                settlementsPlayed--;
                 return true;
             }
             else
@@ -106,7 +106,6 @@ namespace SettlersOfCatan
             if (getSettlementsRemaining() > 0)
             {
                 settlementsPlayed++;
-                this.points += 1;
                 return true;
             }
             else

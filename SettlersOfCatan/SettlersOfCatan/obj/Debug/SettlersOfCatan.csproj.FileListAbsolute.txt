@@ -43,3 +43,10 @@ C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProjec
 C:\Users\hortoncb\Documents\college classes\CSSE\csse376\SettlersOfCatan\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.RoadBuilderForm.resources
 C:\Users\hortoncb\Documents\college classes\CSSE\csse376\SettlersOfCatan\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.FirstFewTurnsForm.resources
 C:\Users\hortoncb\Documents\college classes\CSSE\csse376\SettlersOfCatan\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.PlaceFreeStuffForm.resources
+C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.FirstFewTurnsForm.resources
+C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.Rules.resources
+C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.MonopolyForm.resources
+C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.PlaceFreeStuffForm.resources
+C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.RoadBuilderForm.resources
+C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.WinForm.resources
+C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.YearOfPlentyForm.resources
