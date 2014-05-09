@@ -21,6 +21,7 @@ namespace SettlersOfCatan
         public int largestArmyOwnerIndex;
         public int longestRoadSize;
         public int longestRoadOwnerIndex;
+        private int numOfCompletedRounds;
 
         public World()
         {
@@ -34,6 +35,7 @@ namespace SettlersOfCatan
             this.longestRoadSize = 0;
             this.largestArmyOwnerIndex = -1;
             this.longestRoadOwnerIndex = -1;
+            this.numOfCompletedRounds = 0;
         }
 
         public World(int humans, int computers)
@@ -51,6 +53,7 @@ namespace SettlersOfCatan
             this.longestRoadSize = 0;
             this.largestArmyOwnerIndex = -1;
             this.longestRoadOwnerIndex = -1;
+            this.numOfCompletedRounds = 0;
 
             /*
             for (int i = 0; i < humans; i++)
@@ -90,13 +93,21 @@ namespace SettlersOfCatan
         {
             setLongestRoad();
             setLargestArmy();
-            if (currentPlayerNumber < this.players.Count()-1)
+            if (currentPlayerNumber < this.players.Count() - 1)
             {
                 currentPlayerNumber++;
             }
             else
+            {
                 currentPlayerNumber = 0;
+                numOfCompletedRounds++;
+            }
             currentPlayer = this.players[currentPlayerNumber];
+        }
+
+        public int getNumberOfRoundsCompleted()
+        {
+            return this.numOfCompletedRounds;
         }
 
         private void setLongestRoad()
@@ -196,7 +207,7 @@ namespace SettlersOfCatan
             // Build a settlement
             if(!catanMap.getIslandMap().getIntAtIndex(coords).hasABuilding())
             {
-                if(catanMap.getIslandMap().getIntAtIndex(coords).canBuildAtIntersection())
+                if(catanMap.getIslandMap().getIntAtIndex(coords).canBuildAtIntersection(this.currentPlayer, this.numOfCompletedRounds))
                 {
                     if(currentPlayer.getHand().hasSettlementResources())
                     {
@@ -222,7 +233,7 @@ namespace SettlersOfCatan
                 else
                 {
                     // pop up error message that the surrounding area is not clear
-                    DialogResult num = MessageBox.Show("The surrounding intersections are not all clear.",
+                    DialogResult num = MessageBox.Show("You cannot build there.",
                     "Insufficient Room to Build",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
@@ -277,7 +288,7 @@ namespace SettlersOfCatan
                         flag = catanMap.getIslandMap().buildVerticalRoad(coords, this.currentPlayer);
                     }
                     if (flag) theColor = currentPlayer.getColor();
-                    else theColor = Color.Orange;
+                    else theColor = Color.White;
 
                 }
                 catch (IndexOutOfRangeException)

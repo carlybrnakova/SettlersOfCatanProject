@@ -90,8 +90,6 @@ namespace SettlersOfCatan
                     }
                 }
             }
-
-
         }
 
         public bool buildHorizontalRoad(Point coords, Player player)
@@ -145,6 +143,7 @@ namespace SettlersOfCatan
 
             if (roadHasBuildingOrConnectingRoad(new Point(intRow, intCol), new Point(intRow + 1, intCol), player))
             {
+                
                 map[intRow, intCol].connections[1].buildRoad(player.getColor());
                 map[intRow + 1, intCol].connections[1].buildRoad(player.getColor());
                 return true;
@@ -191,27 +190,32 @@ namespace SettlersOfCatan
                 hasRoad = true;
                 roadIsCorrectPlayer = map[p1.X, p1.Y].connections[0].getRoadColor() == player.getColor();
             }
-            else if (map[p1.X, p1.Y].connections[1].isBuilt())
+            
+            if (map[p1.X, p1.Y].connections[1].isBuilt() && !roadIsCorrectPlayer)
             {
                 hasRoad = true;
                 roadIsCorrectPlayer = map[p1.X, p1.Y].connections[1].getRoadColor() == player.getColor();
             }
-            else if (map[p1.X, p1.Y].connections[2].isBuilt())
+            
+            if (map[p1.X, p1.Y].connections[2].isBuilt() && !roadIsCorrectPlayer)
             {
                 hasRoad = true;
                 roadIsCorrectPlayer = map[p1.X, p1.Y].connections[2].getRoadColor() == player.getColor();
             }
-            else if (map[p2.X, p2.Y].connections[1].isBuilt())
+            
+            if (map[p2.X, p2.Y].connections[1].isBuilt() && !roadIsCorrectPlayer)
             {
                 hasRoad = true;
                 roadIsCorrectPlayer = map[p2.X, p2.Y].connections[1].getRoadColor() == player.getColor();
             }
-            else if (map[p2.X, p2.Y].connections[2].isBuilt())
+            
+            if (map[p2.X, p2.Y].connections[2].isBuilt() && !roadIsCorrectPlayer)
             {
                 hasRoad = true;
                 roadIsCorrectPlayer = map[p2.X, p2.Y].connections[2].getRoadColor() == player.getColor();
             }
-            else if (map[p2.X, p2.Y].connections[0].isBuilt())
+            
+            if (map[p2.X, p2.Y].connections[0].isBuilt() && !roadIsCorrectPlayer)
             {
                 hasRoad = true;
                 roadIsCorrectPlayer = map[p2.X, p2.Y].connections[0].getRoadColor() == player.getColor();
@@ -286,10 +290,6 @@ namespace SettlersOfCatan
                 return true;
             }
         }
-
-        
-        
-
 
     }
 }

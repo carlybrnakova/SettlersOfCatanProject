@@ -63,6 +63,7 @@ namespace SettlersOfCatan
             //this.world = new World(3,0);
             this.updateResourceLabels();
             this.updateCurrentPlayerNameLabel();
+            this.updateRoundLabel();
         }
 
         /** initializeAll()
@@ -446,7 +447,11 @@ namespace SettlersOfCatan
             RoadButton theButton = (RoadButton)sender;
 
             Color buttonColor = world.roadButtonClicked(theButton.getCoords());
-            if (buttonColor != Color.White) theButton.BackColor = buttonColor;
+            if (buttonColor != Color.White)
+            {
+                theButton.BackColor = buttonColor;
+                theButton.Enabled = false;
+            }
 
             this.updateResourceLabels();
         }
@@ -465,11 +470,18 @@ namespace SettlersOfCatan
             this.world.endTurn();
             this.updateResourceLabels();
             this.updateCurrentPlayerNameLabel();
+            this.updateRoundLabel();
+        }
+
+        private void updateRoundLabel()
+        {
+            RoundsLabel.Text = "Round " + (this.world.getNumberOfRoundsCompleted() + 1);
         }
 
         private void updateCurrentPlayerNameLabel()
         {
             CurrentPlayerNameLabel.Text = this.world.currentPlayer.getName().ToString();
+            CurrentPlayerNameLabel.ForeColor = this.world.currentPlayer.getColor();
         }
 
         private void ProposeTradeButton_Click(object sender, EventArgs e)
