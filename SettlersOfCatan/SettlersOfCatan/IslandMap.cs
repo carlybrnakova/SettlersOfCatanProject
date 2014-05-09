@@ -221,8 +221,16 @@ namespace SettlersOfCatan
                 roadIsCorrectPlayer = map[p2.X, p2.Y].connections[0].getRoadColor() == player.getColor();
             }
 
-            flag = hasRoad && roadIsCorrectPlayer;
+            
+
+            flag = hasRoad && roadIsCorrectPlayer && !hasOtherPlayerIntersection(p1, player);
             return flag;
+        }
+
+        private bool hasOtherPlayerIntersection(Point p1, Player player)
+        {
+            return map[p1.X, p1.Y].hasABuilding() && map[p1.X, p1.Y].color != player.getColor();
+        
         }
         /*
         public void setupRoadConnections()

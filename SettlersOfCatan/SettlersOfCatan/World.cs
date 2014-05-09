@@ -287,7 +287,11 @@ namespace SettlersOfCatan
                     {
                         flag = catanMap.getIslandMap().buildVerticalRoad(coords, this.currentPlayer);
                     }
-                    if (flag) theColor = currentPlayer.getColor();
+                    if (flag)
+                    {
+                        theColor = currentPlayer.getColor();
+                        currentPlayer.buildRoad();
+                    }
                     else theColor = Color.White;
 
                 }
@@ -307,7 +311,7 @@ namespace SettlersOfCatan
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Exclamation);
 
-                theColor = Color.LemonChiffon;
+                theColor = Color.White;
             }
 
             return theColor;
