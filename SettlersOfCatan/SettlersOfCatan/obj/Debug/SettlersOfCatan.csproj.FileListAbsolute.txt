@@ -40,3 +40,5 @@ C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProjec
 C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.exe
 C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.pdb
 C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.csprojResolveAssemblyReference.cache
+C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.YearOfPlentyForm.resources
+C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.MonopolyForm.resources

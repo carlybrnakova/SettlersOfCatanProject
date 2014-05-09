@@ -508,7 +508,7 @@ namespace SettlersOfCatan
             this.updateDevelopmentCards();
         }
 
-        private void updateDevelopmentCards()
+        public void updateDevelopmentCards()
         {
             if (this.world.currentPlayer.playerHand.devCardsContains("knight"))
                 this.KnightsDevCardLabel.Show();
@@ -551,9 +551,8 @@ namespace SettlersOfCatan
 
         private void MonopolyDevCardLabel_Click(object sender, EventArgs e)
         {
-            this.world.currentPlayer.playDevCard("monopoly", null, null);
-            this.updateDevelopmentCards();
-        }
+            MonopolyForm myForm = new MonopolyForm(this.world, this);
+            myForm.Show();        }
 
         private void RoadBuilderDevCardLabel_Click(object sender, EventArgs e)
         {
@@ -563,8 +562,8 @@ namespace SettlersOfCatan
 
         private void YearOfPlentyDevCardLabel_Click(object sender, EventArgs e)
         {
-            this.world.currentPlayer.playDevCard("yearOfPlenty", null, null);
-            this.updateDevelopmentCards();
+            YearOfPlentyForm myForm = new YearOfPlentyForm(this.world, this);
+            myForm.Show();
         }
 
         private void updatePlayerPoints()
