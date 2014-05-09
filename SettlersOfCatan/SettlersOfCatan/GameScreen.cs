@@ -428,13 +428,13 @@ namespace SettlersOfCatan
             if (buttonColor != Color.White && buttonColor != Color.Black)
             {
                 theButton.BackColor = buttonColor;
-                this.world.currentPlayer.incrementPoints(1);
+                this.world.currentPlayer.incrementSettlements();
             }
             else if (buttonColor == Color.Black)
             {
                 theButton.Text = "*";
                 theButton.ForeColor = Color.White;
-                this.world.currentPlayer.incrementPoints(2);
+                this.world.currentPlayer.incrementCities();
             }
 
             this.updateResourceLabels();
