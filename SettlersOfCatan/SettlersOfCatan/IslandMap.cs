@@ -13,6 +13,9 @@ namespace SettlersOfCatan
         public enum GAME_PIECE { NONE, SETTLEMENT, CITY };
         public enum PLAYER_COLOR { NONE, PLAYER1_COLOR, PLAYER2_COLOR, PLAYER3_COLOR, PLAYER4_COLOR };
 
+        public const int MAX_ROAD_ROWS = 11;
+        public const int MAX_ROAD_COLUMNS = 10;
+
     }
 
     public class IslandMap
@@ -54,7 +57,6 @@ namespace SettlersOfCatan
                         // Does not have a left connection (connection1)
                         if ( ((r == 0 || r == 5) && (c == 2)) || ((r == 1 || r == 4) && (c == 1)) || ((r == 2 || r == 3) && (c == 0)) )
                         {
-                            
                             map[r, c].connections[0] = new Connection(null);
                             map[r, c].connections[2] = new Connection(map[r, c + 1]);
                             //map[r, c].connections.RemoveAt(0);
@@ -88,10 +90,171 @@ namespace SettlersOfCatan
                     }
                 }
             }
-
-
         }
 
+        public bool buildHorizontalRoad(Point coords, Player player)
+        {
+            int xVal = coords.X;
+            int yVal = coords.Y;
+            int intRow, intCol = 0;
+            intRow = xVal / 2;
+            if (xVal == 0 || xVal == 10)
+            {
+                intCol = yVal + 2;
+            }
+            else if (xVal == 2 || xVal == 8)
+            {
+                intCol = yVal + 1;
+            }
+            else if (xVal == 4 || xVal == 6)
+            {
+                intCol = yVal;
+            }
+            else { } // throw exception?
+
+            if (roadHasBuildingOrConnectingRoad(new Point(intRow, intCol), new Point(intRow, intCol + 1), player))
+            {
+                map[intRow, intCol].connections[2].buildRoad(player.getColor());
+                map[intRow, intCol + 1].connections[0].buildRoad(player.getColor());
+                return true;
+            }
+            else return false;
+        }
+
+        public bool buildVerticalRoad(Point coords, Player player)
+        {
+            int xVal = coords.X;
+            int yVal = coords.Y;
+            int intRow, intCol = 0;
+            intRow = xVal / 2;
+            if (xVal == 1 || xVal == 9)
+            {
+                intCol = yVal * 2 + 2;
+            }
+            else if (xVal == 3 || xVal == 7)
+            {
+                intCol = yVal * 2 + 1;
+            }
+            else if (xVal == 5)
+            {
+                intCol = yVal * 2;
+            }
+            else { } // Throw exception?
+
+            if (roadHasBuildingOrConnectingRoad(new Point(intRow, intCol), new Point(intRow + 1, intCol), player))
+            {
+                
+                map[intRow, intCol].connections[1].buildRoad(player.getColor());
+                map[intRow + 1, intCol].connections[1].buildRoad(player.getColor());
+                return true;
+            }
+            else return false;
+
+            
+        }
+
+        private bool roadHasBuildingOrConnectingRoad(Point p1, Point p2, Player player)
+        {
+            return roadHasPlayerBuilding(p1, p2, player) || roadHasConnectingRoad(p1, p2, player);
+        }
+
+        public bool roadHasPlayerBuilding(Point connection1, Point connection2, Player thePlayer)
+        {
+            bool flag;
+            bool hasBuilding = false;
+            bool buildingIsCorrectPlayer = false;
+
+            if (map[connection1.X, connection1.Y].hasABuilding())
+            {
+                hasBuilding = true;
+                buildingIsCorrectPlayer = map[connection1.X, connection1.Y].getPlayer() == thePlayer;
+            }
+            else if (map[connection2.X, connection2.Y].hasABuilding())
+            {
+                hasBuilding = true;
+                buildingIsCorrectPlayer = map[connection2.X, connection2.Y].getPlayer() == thePlayer;
+            }
+
+            flag = hasBuilding && buildingIsCorrectPlayer;
+            return flag;
+        }
+
+        private bool roadHasConnectingRoad(Point p1, Point p2, Player player)
+        {
+            bool flag;
+            bool hasRoad = false;
+            bool roadIsCorrectPlayer = false;
+
+            if (map[p1.X, p1.Y].connections[0].isBuilt())
+            {
+                hasRoad = true;
+                roadIsCorrectPlayer = map[p1.X, p1.Y].connections[0].getRoadColor() == player.getColor();
+            }
+            
+            if (map[p1.X, p1.Y].connections[1].isBuilt() && !roadIsCorrectPlayer)
+            {
+                hasRoad = true;
+                roadIsCorrectPlayer = map[p1.X, p1.Y].connections[1].getRoadColor() == player.getColor();
+            }
+            
+            if (map[p1.X, p1.Y].connections[2].isBuilt() && !roadIsCorrectPlayer)
+            {
+                hasRoad = true;
+                roadIsCorrectPlayer = map[p1.X, p1.Y].connections[2].getRoadColor() == player.getColor();
+            }
+            
+            if (map[p2.X, p2.Y].connections[1].isBuilt() && !roadIsCorrectPlayer)
+            {
+                hasRoad = true;
+                roadIsCorrectPlayer = map[p2.X, p2.Y].connections[1].getRoadColor() == player.getColor();
+            }
+            
+            if (map[p2.X, p2.Y].connections[2].isBuilt() && !roadIsCorrectPlayer)
+            {
+                hasRoad = true;
+                roadIsCorrectPlayer = map[p2.X, p2.Y].connections[2].getRoadColor() == player.getColor();
+            }
+            
+            if (map[p2.X, p2.Y].connections[0].isBuilt() && !roadIsCorrectPlayer)
+            {
+                hasRoad = true;
+                roadIsCorrectPlayer = map[p2.X, p2.Y].connections[0].getRoadColor() == player.getColor();
+            }
+
+            
+
+            flag = hasRoad && roadIsCorrectPlayer && !hasOtherPlayerIntersection(p1, player);
+            return flag;
+        }
+
+        private bool hasOtherPlayerIntersection(Point p1, Player player)
+        {
+            return map[p1.X, p1.Y].hasABuilding() && map[p1.X, p1.Y].color != player.getColor();
+        
+        }
+        /*
+        public void setupRoadConnections()
+        {
+            int col;
+            int columnMax = 6;
+            // The horizontal roads
+            for (int r = 0; r < Global_Variables.MAX_ROAD_ROWS; r += 2)
+            {
+                for (col = 0; col < columnMax; col++)
+                {
+                    if (r == 0 || r == 10)
+                    {
+                        map[r/2, col + 2].connections
+                    }
+
+                }
+                // Allow more or less buttons for the next row
+                if (r < 4) columnMax += 2;
+                else if (r >= 6) columnMax -= 2;
+            }
+
+        }
+        */
         public Intersection getIntAtIndex(int x, int y)
         {
             Intersection i = map[x, y];
@@ -135,10 +298,6 @@ namespace SettlersOfCatan
                 return true;
             }
         }
-
-        
-        
-
 
     }
 }

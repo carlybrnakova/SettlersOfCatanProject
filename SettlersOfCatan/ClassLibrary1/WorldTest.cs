@@ -311,5 +311,21 @@ namespace ClassLibrary1
 
         }
          * */
+
+        [Test()]
+        public void TestRounds()
+        {
+            World w = new World(3, 0);
+            int rounds = 0;
+            for (int i = 0; i < 9; i++)
+            {
+                w.endTurn();
+                if (i % 3 == 0)
+                {
+                    rounds++;
+                }
+            }
+            Assert.AreEqual(rounds, w.getNumberOfRoundsCompleted());
+        }
     }
 }

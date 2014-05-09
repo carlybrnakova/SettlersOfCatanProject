@@ -17,8 +17,7 @@ namespace SettlersOfCatan
         private const int MAX_INTERSECTION_COLUMNS = 11;
         private const int MAX_INTERSECTION_ROWS = 6;
 
-        private const int MAX_ROAD_ROWS = 11;
-        private const int MAX_ROAD_COLUMNS = 10;
+
         private static Size HORIZONTAL_ROAD_SIZE = new Size(45, 16);
         private static Size VERTICAL_ROAD_SIZE = new Size(16, 120);
 
@@ -44,7 +43,7 @@ namespace SettlersOfCatan
         private List<List<IntersectionButton>> intersectionGrid = new List<List<IntersectionButton>>();
         private List<PictureBox> waterHexes = new List<PictureBox>();
         private List<List<ResourceHexPictureBox>> hexGrid = new List<List<ResourceHexPictureBox>>();
-        private Button[,] roadGrid = new Button[MAX_ROAD_ROWS,MAX_ROAD_COLUMNS];
+        private Button[,] roadGrid = new Button[Global_Variables.MAX_ROAD_ROWS,Global_Variables.MAX_ROAD_COLUMNS];
         private Panel boardPanel = new Panel();
         //private List<System.Windows.Forms.Button> intersectionButtons = new List<System.Windows.Forms.Button>();
 
@@ -64,6 +63,7 @@ namespace SettlersOfCatan
             //this.world = new World(3,0);
             this.updateResourceLabels();
             this.updateCurrentPlayerNameLabel();
+            this.updateRoundLabel();
         }
 
         /** initializeAll()
@@ -135,9 +135,9 @@ namespace SettlersOfCatan
          */
         private void initializeRoadGrid()
         {
-            for (int r = 0; r < MAX_ROAD_ROWS; r++)
+            for (int r = 0; r < Global_Variables.MAX_ROAD_ROWS; r++)
             {
-                for (int c = 0; c < MAX_ROAD_COLUMNS; c++)
+                for (int c = 0; c < Global_Variables.MAX_ROAD_COLUMNS; c++)
                 {
                     roadGrid[r, c] = null;
                 }
@@ -153,13 +153,14 @@ namespace SettlersOfCatan
             int col;
             int columnMax = 6;
             // The horizontal-button rows
-            for (int r = 0; r < MAX_ROAD_ROWS; r+=2)
+            for (int r = 0; r < Global_Variables.MAX_ROAD_ROWS; r += 2)
             {
                 for (col = 0; col < columnMax; col++)
                 {
                     RoadButton b = new RoadButton(r, col);
                     b.Size = HORIZONTAL_ROAD_SIZE;
                     b.Location = new Point(x, y);
+                    b.coordinates = new Point(r, col);
                     b.BackColor = Color.White;
                     b.Click += roadButton_Click;
                     boardPanel.Controls.Add(b);
@@ -184,13 +185,14 @@ namespace SettlersOfCatan
             x_diff = 150;
             y_diff = 150;
             columnMax = 4;
-            for (int r = 1; r < MAX_ROAD_ROWS; r += 2)
+            for (int r = 1; r < Global_Variables.MAX_ROAD_ROWS; r += 2)
             {
                 for (col = 0; col < columnMax; col++)
                 {
                     RoadButton b = new RoadButton(r, col);
                     b.Size = VERTICAL_ROAD_SIZE;
                     b.Location = new Point(x, y);
+                    b.coordinates = new Point(r, col);
                     b.BackColor = Color.White;
                     b.Click += roadButton_Click;
                     boardPanel.Controls.Add(b);
@@ -445,7 +447,11 @@ namespace SettlersOfCatan
             RoadButton theButton = (RoadButton)sender;
 
             Color buttonColor = world.roadButtonClicked(theButton.getCoords());
-            if (buttonColor != Color.White) theButton.BackColor = buttonColor;
+            if (buttonColor != Color.White)
+            {
+                theButton.BackColor = buttonColor;
+                theButton.Enabled = false;
+            }
 
             this.updateResourceLabels();
         }
@@ -464,11 +470,18 @@ namespace SettlersOfCatan
             this.world.endTurn();
             this.updateResourceLabels();
             this.updateCurrentPlayerNameLabel();
+            this.updateRoundLabel();
+        }
+
+        private void updateRoundLabel()
+        {
+            RoundsLabel.Text = "Round " + (this.world.getNumberOfRoundsCompleted() + 1);
         }
 
         private void updateCurrentPlayerNameLabel()
         {
             CurrentPlayerNameLabel.Text = this.world.currentPlayer.getName().ToString();
+            CurrentPlayerNameLabel.ForeColor = this.world.currentPlayer.getColor();
         }
 
         private void ProposeTradeButton_Click(object sender, EventArgs e)

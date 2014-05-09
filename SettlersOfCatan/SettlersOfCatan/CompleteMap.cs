@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SettlersOfCatan;
+using System.Drawing;
 
 namespace SettlersOfCatan
 {
@@ -110,5 +111,18 @@ namespace SettlersOfCatan
         {
             return this.theHexMap;
         }
+
+        /*
+        public void buildHorizontalRoad(Point coords)
+        {
+            this.theIslandMap.buildHorizontalRoad(coords);
+        }
+
+        public void buildVerticalRoad(Point coords)
+        {
+            this.theIslandMap.buildVerticalRoad(coords);
+        }
+         * */
+
     }
 }

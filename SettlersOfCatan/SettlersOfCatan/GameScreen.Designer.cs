@@ -29,6 +29,14 @@
         private void InitializeComponent()
         {
             this.PlayerInfoPanel = new System.Windows.Forms.Panel();
+            this.PointsAmountLabel = new System.Windows.Forms.Label();
+            this.PointsLabel = new System.Windows.Forms.Label();
+            this.YearOfPlentyDevCardLabel = new System.Windows.Forms.Label();
+            this.RoadBuilderDevCardLabel = new System.Windows.Forms.Label();
+            this.MonopolyDevCardLabel = new System.Windows.Forms.Label();
+            this.VictoryPointDevCardLabel = new System.Windows.Forms.Label();
+            this.KnightsDevCardLabel = new System.Windows.Forms.Label();
+            this.DevCardsLabel = new System.Windows.Forms.Label();
             this.generateResourcesTest = new System.Windows.Forms.Button();
             this.WoolAmountLabel = new System.Windows.Forms.Label();
             this.BrickAmountLabel = new System.Windows.Forms.Label();
@@ -51,14 +59,7 @@
             this.RollDiceButton = new System.Windows.Forms.Button();
             this.CurrentRollLabel = new System.Windows.Forms.Label();
             this.RollNumberLabel = new System.Windows.Forms.Label();
-            this.DevCardsLabel = new System.Windows.Forms.Label();
-            this.KnightsDevCardLabel = new System.Windows.Forms.Label();
-            this.VictoryPointDevCardLabel = new System.Windows.Forms.Label();
-            this.MonopolyDevCardLabel = new System.Windows.Forms.Label();
-            this.RoadBuilderDevCardLabel = new System.Windows.Forms.Label();
-            this.YearOfPlentyDevCardLabel = new System.Windows.Forms.Label();
-            this.PointsLabel = new System.Windows.Forms.Label();
-            this.PointsAmountLabel = new System.Windows.Forms.Label();
+            this.RoundsLabel = new System.Windows.Forms.Label();
             this.PlayerInfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -95,6 +96,91 @@
             this.PlayerInfoPanel.Name = "PlayerInfoPanel";
             this.PlayerInfoPanel.Size = new System.Drawing.Size(493, 213);
             this.PlayerInfoPanel.TabIndex = 1;
+            // 
+            // PointsAmountLabel
+            // 
+            this.PointsAmountLabel.AutoSize = true;
+            this.PointsAmountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PointsAmountLabel.Location = new System.Drawing.Point(175, 178);
+            this.PointsAmountLabel.Name = "PointsAmountLabel";
+            this.PointsAmountLabel.Size = new System.Drawing.Size(18, 20);
+            this.PointsAmountLabel.TabIndex = 26;
+            this.PointsAmountLabel.Text = "0";
+            // 
+            // PointsLabel
+            // 
+            this.PointsLabel.AutoSize = true;
+            this.PointsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PointsLabel.Location = new System.Drawing.Point(116, 178);
+            this.PointsLabel.Name = "PointsLabel";
+            this.PointsLabel.Size = new System.Drawing.Size(57, 20);
+            this.PointsLabel.TabIndex = 25;
+            this.PointsLabel.Text = "Points:";
+            // 
+            // YearOfPlentyDevCardLabel
+            // 
+            this.YearOfPlentyDevCardLabel.AutoSize = true;
+            this.YearOfPlentyDevCardLabel.Location = new System.Drawing.Point(118, 137);
+            this.YearOfPlentyDevCardLabel.Name = "YearOfPlentyDevCardLabel";
+            this.YearOfPlentyDevCardLabel.Size = new System.Drawing.Size(75, 13);
+            this.YearOfPlentyDevCardLabel.TabIndex = 24;
+            this.YearOfPlentyDevCardLabel.Text = "Year Of Plenty";
+            this.YearOfPlentyDevCardLabel.Visible = false;
+            this.YearOfPlentyDevCardLabel.Click += new System.EventHandler(this.YearOfPlentyDevCardLabel_Click);
+            // 
+            // RoadBuilderDevCardLabel
+            // 
+            this.RoadBuilderDevCardLabel.AutoSize = true;
+            this.RoadBuilderDevCardLabel.Location = new System.Drawing.Point(117, 112);
+            this.RoadBuilderDevCardLabel.Name = "RoadBuilderDevCardLabel";
+            this.RoadBuilderDevCardLabel.Size = new System.Drawing.Size(68, 13);
+            this.RoadBuilderDevCardLabel.TabIndex = 23;
+            this.RoadBuilderDevCardLabel.Text = "Road Builder";
+            this.RoadBuilderDevCardLabel.Visible = false;
+            this.RoadBuilderDevCardLabel.Click += new System.EventHandler(this.RoadBuilderDevCardLabel_Click);
+            // 
+            // MonopolyDevCardLabel
+            // 
+            this.MonopolyDevCardLabel.AutoSize = true;
+            this.MonopolyDevCardLabel.Location = new System.Drawing.Point(117, 89);
+            this.MonopolyDevCardLabel.Name = "MonopolyDevCardLabel";
+            this.MonopolyDevCardLabel.Size = new System.Drawing.Size(53, 13);
+            this.MonopolyDevCardLabel.TabIndex = 22;
+            this.MonopolyDevCardLabel.Text = "Monopoly";
+            this.MonopolyDevCardLabel.Visible = false;
+            this.MonopolyDevCardLabel.Click += new System.EventHandler(this.MonopolyDevCardLabel_Click);
+            // 
+            // VictoryPointDevCardLabel
+            // 
+            this.VictoryPointDevCardLabel.AutoSize = true;
+            this.VictoryPointDevCardLabel.Location = new System.Drawing.Point(117, 61);
+            this.VictoryPointDevCardLabel.Name = "VictoryPointDevCardLabel";
+            this.VictoryPointDevCardLabel.Size = new System.Drawing.Size(66, 13);
+            this.VictoryPointDevCardLabel.TabIndex = 21;
+            this.VictoryPointDevCardLabel.Text = "Victory Point";
+            this.VictoryPointDevCardLabel.Visible = false;
+            this.VictoryPointDevCardLabel.Click += new System.EventHandler(this.VictoryPointDevCardLabel_Click);
+            // 
+            // KnightsDevCardLabel
+            // 
+            this.KnightsDevCardLabel.AutoSize = true;
+            this.KnightsDevCardLabel.Location = new System.Drawing.Point(118, 39);
+            this.KnightsDevCardLabel.Name = "KnightsDevCardLabel";
+            this.KnightsDevCardLabel.Size = new System.Drawing.Size(42, 13);
+            this.KnightsDevCardLabel.TabIndex = 20;
+            this.KnightsDevCardLabel.Text = "Knights";
+            this.KnightsDevCardLabel.Visible = false;
+            this.KnightsDevCardLabel.Click += new System.EventHandler(this.KnightsDevCardLabel_Click);
+            // 
+            // DevCardsLabel
+            // 
+            this.DevCardsLabel.AutoSize = true;
+            this.DevCardsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DevCardsLabel.Location = new System.Drawing.Point(118, 11);
+            this.DevCardsLabel.Name = "DevCardsLabel";
+            this.DevCardsLabel.Size = new System.Drawing.Size(100, 13);
+            this.DevCardsLabel.TabIndex = 19;
+            this.DevCardsLabel.Text = "Development Cards";
             // 
             // generateResourcesTest
             // 
@@ -308,96 +394,22 @@
             this.RollNumberLabel.TabIndex = 4;
             this.RollNumberLabel.Text = "0";
             // 
-            // DevCardsLabel
+            // RoundsLabel
             // 
-            this.DevCardsLabel.AutoSize = true;
-            this.DevCardsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DevCardsLabel.Location = new System.Drawing.Point(118, 11);
-            this.DevCardsLabel.Name = "DevCardsLabel";
-            this.DevCardsLabel.Size = new System.Drawing.Size(100, 13);
-            this.DevCardsLabel.TabIndex = 19;
-            this.DevCardsLabel.Text = "Development Cards";
-            // 
-            // KnightsDevCardLabel
-            // 
-            this.KnightsDevCardLabel.AutoSize = true;
-            this.KnightsDevCardLabel.Location = new System.Drawing.Point(118, 39);
-            this.KnightsDevCardLabel.Name = "KnightsDevCardLabel";
-            this.KnightsDevCardLabel.Size = new System.Drawing.Size(42, 13);
-            this.KnightsDevCardLabel.TabIndex = 20;
-            this.KnightsDevCardLabel.Text = "Knights";
-            this.KnightsDevCardLabel.Visible = false;
-            this.KnightsDevCardLabel.Click += new System.EventHandler(this.KnightsDevCardLabel_Click);
-            // 
-            // VictoryPointDevCardLabel
-            // 
-            this.VictoryPointDevCardLabel.AutoSize = true;
-            this.VictoryPointDevCardLabel.Location = new System.Drawing.Point(117, 61);
-            this.VictoryPointDevCardLabel.Name = "VictoryPointDevCardLabel";
-            this.VictoryPointDevCardLabel.Size = new System.Drawing.Size(66, 13);
-            this.VictoryPointDevCardLabel.TabIndex = 21;
-            this.VictoryPointDevCardLabel.Text = "Victory Point";
-            this.VictoryPointDevCardLabel.Visible = false;
-            this.VictoryPointDevCardLabel.Click += new System.EventHandler(this.VictoryPointDevCardLabel_Click);
-            // 
-            // MonopolyDevCardLabel
-            // 
-            this.MonopolyDevCardLabel.AutoSize = true;
-            this.MonopolyDevCardLabel.Location = new System.Drawing.Point(117, 89);
-            this.MonopolyDevCardLabel.Name = "MonopolyDevCardLabel";
-            this.MonopolyDevCardLabel.Size = new System.Drawing.Size(53, 13);
-            this.MonopolyDevCardLabel.TabIndex = 22;
-            this.MonopolyDevCardLabel.Text = "Monopoly";
-            this.MonopolyDevCardLabel.Visible = false;
-            this.MonopolyDevCardLabel.Click += new System.EventHandler(this.MonopolyDevCardLabel_Click);
-            // 
-            // RoadBuilderDevCardLabel
-            // 
-            this.RoadBuilderDevCardLabel.AutoSize = true;
-            this.RoadBuilderDevCardLabel.Location = new System.Drawing.Point(117, 112);
-            this.RoadBuilderDevCardLabel.Name = "RoadBuilderDevCardLabel";
-            this.RoadBuilderDevCardLabel.Size = new System.Drawing.Size(68, 13);
-            this.RoadBuilderDevCardLabel.TabIndex = 23;
-            this.RoadBuilderDevCardLabel.Text = "Road Builder";
-            this.RoadBuilderDevCardLabel.Visible = false;
-            this.RoadBuilderDevCardLabel.Click += new System.EventHandler(this.RoadBuilderDevCardLabel_Click);
-            // 
-            // YearOfPlentyDevCardLabel
-            // 
-            this.YearOfPlentyDevCardLabel.AutoSize = true;
-            this.YearOfPlentyDevCardLabel.Location = new System.Drawing.Point(118, 137);
-            this.YearOfPlentyDevCardLabel.Name = "YearOfPlentyDevCardLabel";
-            this.YearOfPlentyDevCardLabel.Size = new System.Drawing.Size(75, 13);
-            this.YearOfPlentyDevCardLabel.TabIndex = 24;
-            this.YearOfPlentyDevCardLabel.Text = "Year Of Plenty";
-            this.YearOfPlentyDevCardLabel.Visible = false;
-            this.YearOfPlentyDevCardLabel.Click += new System.EventHandler(this.YearOfPlentyDevCardLabel_Click);
-            // 
-            // PointsLabel
-            // 
-            this.PointsLabel.AutoSize = true;
-            this.PointsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PointsLabel.Location = new System.Drawing.Point(116, 178);
-            this.PointsLabel.Name = "PointsLabel";
-            this.PointsLabel.Size = new System.Drawing.Size(57, 20);
-            this.PointsLabel.TabIndex = 25;
-            this.PointsLabel.Text = "Points:";
-            // 
-            // PointsAmountLabel
-            // 
-            this.PointsAmountLabel.AutoSize = true;
-            this.PointsAmountLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PointsAmountLabel.Location = new System.Drawing.Point(175, 178);
-            this.PointsAmountLabel.Name = "PointsAmountLabel";
-            this.PointsAmountLabel.Size = new System.Drawing.Size(18, 20);
-            this.PointsAmountLabel.TabIndex = 26;
-            this.PointsAmountLabel.Text = "0";
+            this.RoundsLabel.AutoSize = true;
+            this.RoundsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.RoundsLabel.Location = new System.Drawing.Point(1405, 9);
+            this.RoundsLabel.Name = "RoundsLabel";
+            this.RoundsLabel.Size = new System.Drawing.Size(57, 20);
+            this.RoundsLabel.TabIndex = 5;
+            this.RoundsLabel.Text = "Round";
             // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1573, 912);
+            this.Controls.Add(this.RoundsLabel);
             this.Controls.Add(this.RollNumberLabel);
             this.Controls.Add(this.CurrentRollLabel);
             this.Controls.Add(this.RollDiceButton);
@@ -445,5 +457,6 @@
         private System.Windows.Forms.Label KnightsDevCardLabel;
         private System.Windows.Forms.Label PointsAmountLabel;
         private System.Windows.Forms.Label PointsLabel;
+        private System.Windows.Forms.Label RoundsLabel;
     }
 }

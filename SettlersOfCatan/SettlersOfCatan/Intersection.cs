@@ -38,7 +38,7 @@ namespace SettlersOfCatan
             else return false;
         }
 
-        public bool areAllThreeConnectionsAvailableToBuild()
+        public bool areAllThreeSurroundingIntersectionsAvailableToBuild()
         {
             bool available = true;
             for (int i = 0; i < connections.Count; i++)
@@ -49,16 +49,36 @@ namespace SettlersOfCatan
             return available;
         }
 
-        public bool canBuildAtIntersection()
+        public bool playerHasExistingConnection(Color c)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (this.connections[i].getRoadColor() == c)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool canBuildAtIntersection(Player player, int rounds)
         {
             bool canBuild;
             if (this.hasABuilding()) // Cannot build here if this intersection has a building
             {
                 canBuild = false;
             }
-            else if (this.areAllThreeConnectionsAvailableToBuild()) // We can build here because nobody around already built something!
+            else if (this.areAllThreeSurroundingIntersectionsAvailableToBuild()) // We can build here because nobody around already built something!
             {
-                canBuild = true;
+                // This player must have a road leading here IF it is not the first round
+                if(!playerHasExistingConnection(player.getColor()) && rounds >= 2)
+                {
+                    canBuild = false;
+                }
+                else
+                {
+                    canBuild = true;
+                }
             }
             else // There is a conflict because a surrounding intersection already has a building
             {

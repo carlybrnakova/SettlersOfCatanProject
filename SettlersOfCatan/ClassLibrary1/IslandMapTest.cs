@@ -160,18 +160,20 @@ namespace ClassLibrary1
         [Test()]
         public void TestThatSomethingCanBeBuiltAtEmptyIntersectionWithNoSurroundingBuildingsAndThenSurroundingIntersectionsAreLocked()
         {
+            Player p = new Player();
+            World w = new World();
             // 2, 5
             int x = 2, y = 5;
-            Assert.True(map.getIntAtIndex(x, y).canBuildAtIntersection());
+            Assert.True(map.getIntAtIndex(x, y).canBuildAtIntersection(p, 0));
             Assert.AreEqual(Global_Variables.GAME_PIECE.NONE, map.getIntAtIndex(x, y).getPieceType());
             map.buildSettlement(new Point(x, y));
             Assert.AreEqual(Global_Variables.GAME_PIECE.SETTLEMENT, map.getIntAtIndex(x, y).getPieceType());
 
             // Make sure none of the surrounding intersections can now be built up
-            Assert.False(map.getIntAtIndex(x, y).canBuildAtIntersection());
+            Assert.False(map.getIntAtIndex(x, y).canBuildAtIntersection(p, 0));
             for(int i = 0; i < 3; i++)
             {
-                Assert.False(map.getIntAtIndex(x, y).connections[i].getIntersection().canBuildAtIntersection());
+                Assert.False(map.getIntAtIndex(x, y).connections[i].getIntersection().canBuildAtIntersection(p, 0));
             }
         }
 
@@ -190,7 +192,7 @@ namespace ClassLibrary1
         public void TestThatCityCannotBeBuiltWithoutSettlementFirst()
         {
             Point p = new Point(3, 3);
-            Assert.True(map.getIntAtIndex(p).canBuildAtIntersection());
+            Assert.True(map.getIntAtIndex(p).canBuildAtIntersection(new Player(), 0));
             Assert.False(map.buildCity(p));
         }
 
@@ -198,31 +200,106 @@ namespace ClassLibrary1
         public void BiggerTestToBuildThreeSettlementsCorrectly()
         {
             int x = 5, y = 4;
+            Player p = new Player();
 
-            Assert.True(map.getIntAtIndex(x, y).canBuildAtIntersection());
+            Assert.True(map.getIntAtIndex(x, y).canBuildAtIntersection(p, 0));
             map.buildSettlement(x, y);
 
             // Verify all other intersections on hex
-            Assert.False(map.getIntAtIndex(x - 1, y).canBuildAtIntersection());
-            Assert.True(map.getIntAtIndex(x - 2, y).canBuildAtIntersection());
-            Assert.True(map.getIntAtIndex(x - 2, y - 1).canBuildAtIntersection());
-            Assert.True(map.getIntAtIndex(x - 1, y - 1).canBuildAtIntersection());
-            Assert.False(map.getIntAtIndex(x, y - 1).canBuildAtIntersection());
+            Assert.False(map.getIntAtIndex(x - 1, y).canBuildAtIntersection(p, 0));
+            Assert.True(map.getIntAtIndex(x - 2, y).canBuildAtIntersection(p, 0));
+            Assert.True(map.getIntAtIndex(x - 2, y - 1).canBuildAtIntersection(p, 0));
+            Assert.True(map.getIntAtIndex(x - 1, y - 1).canBuildAtIntersection(p, 0));
+            Assert.False(map.getIntAtIndex(x, y - 1).canBuildAtIntersection(p, 0));
 
             x = 4; y = 5;
-            Assert.True(map.getIntAtIndex(x, y).canBuildAtIntersection());
+            Assert.True(map.getIntAtIndex(x, y).canBuildAtIntersection(p, 0));
             map.buildSettlement(x, y);
             map.buildSettlement(x - 1, y + 2); // Build on opposite side of hex so only 2 settlements will be allowed rather than 3
 
             // Verify all other intersections on hex
-            Assert.False(map.getIntAtIndex(x, y).canBuildAtIntersection());
-            Assert.False(map.getIntAtIndex(x - 1, y).canBuildAtIntersection());
-            Assert.False(map.getIntAtIndex(x - 1, y + 1).canBuildAtIntersection());
-            Assert.False(map.getIntAtIndex(x - 1, y + 2).canBuildAtIntersection());
-            Assert.False(map.getIntAtIndex(x, y + 2).canBuildAtIntersection());
-            Assert.False(map.getIntAtIndex(x, y + 1).canBuildAtIntersection());
+            Assert.False(map.getIntAtIndex(x, y).canBuildAtIntersection(p, 0));
+            Assert.False(map.getIntAtIndex(x - 1, y).canBuildAtIntersection(p, 0));
+            Assert.False(map.getIntAtIndex(x - 1, y + 1).canBuildAtIntersection(p, 0));
+            Assert.False(map.getIntAtIndex(x - 1, y + 2).canBuildAtIntersection(p, 0));
+            Assert.False(map.getIntAtIndex(x, y + 2).canBuildAtIntersection(p, 0));
+            Assert.False(map.getIntAtIndex(x, y + 1).canBuildAtIntersection(p, 0));
         }
 
+        [Test()]
+        public void TestRoadHasPlayerBuildingAtFirstIntersection()
+        {
+            // IslandMap newMap = new IslandMap();
+            World w = new World(3, 0);
+            w.currentPlayer.getHand().incrementAllResources();
+            w.tryToBuildAtIntersection(new Point(0, 2));
 
+            bool flag = w.getMap().getIslandMap().roadHasPlayerBuilding(new Point(0, 2), new Point(0, 3), w.currentPlayer);
+            Assert.True(flag);
+        }
+
+        [Test()]
+        public void TestRoadHasPlayerBuildingAtSecondIntersection()
+        {
+            // IslandMap newMap = new IslandMap();
+            World w = new World(3, 0);
+            w.currentPlayer.getHand().incrementAllResources();
+            w.tryToBuildAtIntersection(new Point(0, 3));
+
+            bool flag = w.getMap().getIslandMap().roadHasPlayerBuilding(new Point(0, 2), new Point(0, 3), w.currentPlayer);
+            Assert.True(flag);
+        }
+
+        [Test()]
+        public void TestBuildHorizontalRoad()
+        {
+            World w = new World(3, 0);
+            w.currentPlayer.getHand().incrementAllResources();
+            w.tryToBuildAtIntersection(new Point(0, 3));
+            bool flag = w.getMap().getIslandMap().buildHorizontalRoad(new Point(0, 0), w.currentPlayer);
+            Assert.True(flag);
+
+            w.currentPlayer.getHand().incrementAllResources();
+            w.tryToBuildAtIntersection(new Point(1, 4));
+            flag = w.getMap().getIslandMap().buildHorizontalRoad(new Point(2, 2), w.currentPlayer);
+            Assert.True(flag);
+
+            w.currentPlayer.getHand().incrementAllResources();
+            w.tryToBuildAtIntersection(new Point(3, 5));
+            flag = w.getMap().getIslandMap().buildHorizontalRoad(new Point(6, 4), w.currentPlayer);
+
+            flag = w.getMap().getIslandMap().buildHorizontalRoad(new Point(8, 6), w.currentPlayer);
+            Assert.False(flag);
+        }
+
+        [Test()]
+        public void TestBuildVerticalRoad()
+        {
+            World w = new World(3, 0);
+            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources();
+            w.tryToBuildAtIntersection(new Point(1, 5));
+            bool flag = w.getMap().getIslandMap().buildVerticalRoad(new Point(3, 2), w.currentPlayer);
+            Assert.True(flag);
+
+            flag = w.getMap().getIslandMap().buildHorizontalRoad(new Point(4, 4), w.currentPlayer);
+            Assert.True(flag);
+
+            flag = w.getMap().getIslandMap().buildVerticalRoad(new Point(5, 2), w.currentPlayer);
+            Assert.True(flag);
+
+            flag = w.getMap().getIslandMap().buildVerticalRoad(new Point(9, 3), w.currentPlayer);
+            Assert.False(flag);
+
+            // for testing private method roadHasConnectingRoad
+            flag = w.getMap().getIslandMap().buildHorizontalRoad(new Point(4, 5), w.currentPlayer);
+            Assert.True(flag);
+
+            flag = w.getMap().getIslandMap().buildHorizontalRoad(new Point(4, 3), w.currentPlayer);
+            Assert.True(flag);
+
+
+        }
     }
 }
