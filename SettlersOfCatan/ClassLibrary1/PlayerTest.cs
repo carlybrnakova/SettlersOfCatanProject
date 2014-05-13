@@ -36,6 +36,8 @@ namespace ClassLibrary1
         [Test()]
         public void TestCities2()
         {
+            universal1.incrementSettlements();
+            universal1.incrementSettlements();
             universal1.incrementCities();
             universal1.incrementCities();
             Assert.AreEqual(2, universal1.getCitiesRemaining());
@@ -994,10 +996,8 @@ namespace ClassLibrary1
 
             Assert.AreEqual(25, target.playerHand.getDevCardCount());
             Assert.AreEqual(0, target.playerHand.getKnights());
-            Assert.AreEqual(8, target.getPoints());
             Assert.AreEqual(0, target.playerHand.getBrick());
             Assert.AreEqual(0, target.playerHand.getLumber());
-            Assert.AreEqual(0, target.getRoadsPlayed());
 
             target.playDevCard("knight", null, null);
             target.playDevCard("monopoly", "brick", null);
@@ -1007,10 +1007,9 @@ namespace ClassLibrary1
 
             Assert.AreEqual(20, target.playerHand.getDevCardCount());
             Assert.AreEqual(1, target.playerHand.getKnights());
-            Assert.AreEqual(9, target.getPoints());
+            Assert.AreEqual(1, target.getPoints());
             Assert.AreEqual(3, target.playerHand.getBrick());
             Assert.AreEqual(1, target.playerHand.getLumber());
-            Assert.AreEqual(2, target.getRoadsPlayed());
         }
 
         [Test()]

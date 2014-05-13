@@ -94,7 +94,10 @@ namespace SettlersOfCatan
             if (getCitiesRemaining() > 0)
             {
                 citiesPlayed++;
-                settlementsPlayed--;
+                if (settlementsPlayed > 0)
+                {
+                    settlementsPlayed--;
+                }
                 return true;
             }
             else
