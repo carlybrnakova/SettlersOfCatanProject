@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using SettlersOfCatan;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace ClassLibrary1
 {
@@ -1050,6 +1051,36 @@ namespace ClassLibrary1
         {
             var target = new Player();
             target.playDevCard("roadBuilder", null, null);
+        }
+
+        [Test()]
+        public void TestThatPlayerHasFreeTradePort()
+        {
+            var target = new Player();
+            target.addPort(new Port("Anything", 3));
+            Assert.True(target.hasAFreePort());
+        }
+
+        [Test()]
+        public void TestThatPlayerHasResourcePort()
+        {
+            var target = new Player();
+            target.addPort(new Port("Wool", 2));
+            Assert.True(target.hasAResourcePort());
+        }
+
+        [Test()]
+        public void TestThatResourcesListedCorrectlyForPlayerPorts()
+        {
+            var target = new Player();
+            target.addPort(new Port("Wool", 2));
+            target.addPort(new Port("Anything", 3));
+            target.addPort(new Port("Grain", 2));
+
+            List<String> resources = new List<String>();
+            resources.Add("wool");
+            resources.Add("grain");
+            Assert.AreEqual(resources, target.listAllResourcePortsForThisPlayer());
         }
 
     }
