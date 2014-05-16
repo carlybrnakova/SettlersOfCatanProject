@@ -137,12 +137,14 @@ namespace SettlersOfCatan
 				{
 					if (this.ore + amount < 0 || this.ore + amount > 19)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There would be an invalid number of ore.",
 							"Invalid Number of Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
+						 */
 
-						//throw new ArgumentOutOfRangeException("There would be an invalid amount of ore");
+						throw new ArgumentException("There would be an invalid amount of ore.");
 					}
 					this.ore = this.ore + amount;
 					break;
@@ -151,12 +153,14 @@ namespace SettlersOfCatan
 				{
 					if (this.wool + amount < 0 || this.wool + amount > 19)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There would be an invalid number of wool.",
 							"Invalid Number of Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
+						 */
 
-						//throw new ArgumentOutOfRangeException("There would be an invalid amount of wool");
+						throw new ArgumentException("There would be an invalid amount of wool.");
 					}
 					this.wool = this.wool + amount;
 					break;
@@ -165,11 +169,14 @@ namespace SettlersOfCatan
 				{
 					if (this.lumber + amount < 0 || this.lumber + amount > 19)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There would be an invalid number of lumber.",
 							"Invalid Number of Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
-						//throw new ArgumentOutOfRangeException("There would be an invalid amount of lumber");
+						 */
+						
+						throw new ArgumentException("There would be an invalid amount of lumber.");
 					}
 					this.lumber = this.lumber + amount;
 					break;
@@ -178,11 +185,14 @@ namespace SettlersOfCatan
 				{
 					if (this.grain + amount < 0 || this.grain + amount > 19)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There would be an invalid number of grain.",
 							"Invalid Number of Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
-						//throw new ArgumentOutOfRangeException("There would be an invalid amount of grain");
+						 */
+
+						throw new ArgumentException("There would be an invalid amount of grain.");
 					}
 					this.grain = this.grain + amount;
 					break;
@@ -191,27 +201,18 @@ namespace SettlersOfCatan
 				{
 					if (this.brick + amount < 0 || this.brick + amount > 19)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There would be an invalid number of brick.",
 							"Invalid Number of Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
-						//throw new ArgumentOutOfRangeException("There would be an invalid amount of brick");
+						*/
+						
+						throw new ArgumentException("There would be an invalid amount of brick.");
 					}
 					this.brick = brick + amount;
 					break;
 				}
-					//case "devcard":
-					//  {
-					//    if (this.devCards.Count() <= 0)
-					//  {
-					//    throw new ArgumentOutOfRangeException("There would be an invalid number of development cards");
-					//}
-					//for (int i = 0; i < Math.Abs(amount); i++)
-					//{
-					//  this.devCards.Pop();
-					// }
-					//break;
-					//}
 			}
 		}
 
@@ -219,11 +220,13 @@ namespace SettlersOfCatan
 		{
 			if (this.devCards.Count() <= 0)
 			{
+				/*
 				DialogResult num = MessageBox.Show("There would be an invalid number of development cards.",
 					"Invalid Number of Resources",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
-				//throw new ArgumentOutOfRangeException("There would be an invalid number of development cards");
+				 */
+				throw new ArgumentException("There would be an invalid number of development cards.");
 			}
 
 			List<DevelopmentCard> cards = new List<DevelopmentCard>();

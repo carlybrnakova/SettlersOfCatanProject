@@ -56,11 +56,11 @@
 			// RobberFormButton
 			// 
 			this.RobberFormButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F);
-			this.RobberFormButton.Location = new System.Drawing.Point(109, 122);
+			this.RobberFormButton.Location = new System.Drawing.Point(119, 122);
 			this.RobberFormButton.Name = "RobberFormButton";
-			this.RobberFormButton.Size = new System.Drawing.Size(85, 23);
+			this.RobberFormButton.Size = new System.Drawing.Size(63, 23);
 			this.RobberFormButton.TabIndex = 2;
-			this.RobberFormButton.Text = "Understood";
+			this.RobberFormButton.Text = "Close";
 			this.RobberFormButton.UseVisualStyleBackColor = true;
 			this.RobberFormButton.Click += new System.EventHandler(this.RobberFormButton_Click);
 			// 

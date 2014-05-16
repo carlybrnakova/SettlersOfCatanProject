@@ -60,7 +60,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestModifyOreThrowsWhenLessThanZero()
         {
             var target = new Bank();
@@ -68,7 +68,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestModifyWoolThrowsWhenLessThanZero()
         {
             var target = new Bank();
@@ -76,7 +76,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestModifyLumberThrowsWhenLessThanZero()
         {
             var target = new Bank();
@@ -84,7 +84,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestModifyGrainThrowsWhenLessThanZero()
         {
             var target = new Bank();
@@ -92,7 +92,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestModifyBrickThrowsWhenLessThanZero()
         {
             var target = new Bank();
@@ -100,7 +100,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestModifyOreThrowsWhenGreaterThan19()
         {
             var target = new Bank();
@@ -108,7 +108,7 @@ namespace ClassLibrary1
         }
        
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestModifyWoolThrowsWhenGreaterThan19()
         {
             var target = new Bank();
@@ -116,7 +116,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestModifyLumberThrowsWhenGreaterThan19()
         {
             var target = new Bank();
@@ -124,7 +124,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestModifyGrainThrowsWhenGreaterThan19()
         {
             var target = new Bank();
@@ -132,7 +132,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestModifyBrickThrowsWhenGreaterThan19()
         {
             var target = new Bank();
@@ -140,7 +140,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestDrawDevCardThrowsWhenLessThanOrEqualToZero()
         {
             var target = new Bank();
@@ -198,11 +198,6 @@ namespace ClassLibrary1
                             roadBuilderCards++;
                             break;
                         }
-                }
-
-                if (knights == 14 && yearOfPlentyCards == 0 && monopolyCards == 0 && victoryPointCards == 0 && roadBuilderCards == 0)
-                {
-                    return false;
                 }
             }
 

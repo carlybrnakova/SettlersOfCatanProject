@@ -606,6 +606,7 @@ namespace SettlersOfCatan
 			button.coordinates = new Point(x, y);
 		}
 
+
         private void ItemToBuildComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox myComboBox = (ComboBox)sender;
@@ -721,17 +722,27 @@ namespace SettlersOfCatan
 
         private void generateResourcesTest_Click(object sender, EventArgs e)
         {
-            this.world.currentPlayer.playerHand.modifyBrick(1);
-            this.world.currentPlayer.playerHand.modifyGrain(1);
-            this.world.currentPlayer.playerHand.modifyWool(1);
-            this.world.currentPlayer.playerHand.modifyOre(1);
-            this.world.currentPlayer.playerHand.modifyLumber(1);
-            this.world.bank.modifyResource("ore", -1);
-            this.world.bank.modifyResource("wool", -1);
-            this.world.bank.modifyResource("grain", -1);
-            this.world.bank.modifyResource("brick", -1);
-            this.world.bank.modifyResource("lumber", -1);
-            this.updateResourceLabels();
+	        try
+	        {
+		        this.world.currentPlayer.playerHand.modifyBrick(1);
+		        this.world.currentPlayer.playerHand.modifyGrain(1);
+		        this.world.currentPlayer.playerHand.modifyWool(1);
+		        this.world.currentPlayer.playerHand.modifyOre(1);
+		        this.world.currentPlayer.playerHand.modifyLumber(1);
+		        this.world.bank.modifyResource("ore", -1);
+		        this.world.bank.modifyResource("wool", -1);
+		        this.world.bank.modifyResource("grain", -1);
+		        this.world.bank.modifyResource("brick", -1);
+		        this.world.bank.modifyResource("lumber", -1);
+		        this.updateResourceLabels();
+	        }
+	        catch (ArgumentException ex)
+	        {
+		        	DialogResult num = MessageBox.Show(ex.Message,
+					"Insufficient Resources",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
+			}
         }
 
         private void RollDiceButton_Click(object sender, EventArgs e)

@@ -201,7 +201,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestGenerateBrickWithCitiesThrowsWhenBankHasInsufficientResources()
         {
             var target = new Player();
@@ -220,7 +220,7 @@ namespace ClassLibrary1
         }
         
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestGenerateGrainWithCitiesThrowsWhenBankHasInsufficientResources()
         {
             var target = new Player();
@@ -239,7 +239,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestGenerateLumberWithCitiesThrowsWhenBankHasInsufficientResources()
         {
             var target = new Player();
@@ -258,7 +258,7 @@ namespace ClassLibrary1
         }
         
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestGenerateOreWithCitiesThrowsWhenBankHasInsufficientResources()
         {
             var target = new Player();
@@ -277,7 +277,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestGenerateWoolWithCitiesThrowsWhenBankHasInsufficientResources()
         {
             var target = new Player();
@@ -296,7 +296,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestGenerateBrickWithSettlementsThrowsWhenBankHasInsufficientResources()
         {
             var target = new Player();
@@ -317,7 +317,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestGenerateGrainWithSettlementsThrowsWhenBankHasInsufficientResources()
         {
             var target = new Player();
@@ -338,7 +338,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestGenerateLumberWithSettlementsThrowsWhenBankHasInsufficientResources()
         {
             var target = new Player();
@@ -359,7 +359,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestGenerateOreWithSettlementsThrowsWhenBankHasInsufficientResources()
         {
             var target = new Player();
@@ -380,7 +380,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestGenerateWoolWithSettlementsThrowsWhenBankHasInsufficientResources()
         {
             var target = new Player();
@@ -500,7 +500,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestTradeForGrainAtPortThrowsWhenBankHasNone()
         {
             World world = new World();
@@ -527,7 +527,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestTradeForOreAtPortThrowsWhenBankHasNone()
         {
             World world = new World();
@@ -554,7 +554,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestTradeForWoolAtPortThrowsWhenBankHasNone()
         {
             World world = new World();
@@ -581,7 +581,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestTradeForLumberAtPortThrowsWhenBankHasNone()
         {
             World world = new World();
@@ -608,7 +608,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestTradeForBrickAtPortThrowsWhenBankHasNone()
         {
             World world = new World();
@@ -662,7 +662,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestTradeWithBankForGrainThrowsWhenBankHasNone()
         {
             World world = new World();
@@ -690,7 +690,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestTradeWithBankForOreThrowsWhenBankHasNone()
         {
             World world = new World();
@@ -718,7 +718,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestTradeWithBankForLumberThrowsWhenBankHasNone()
         {
             World world = new World();
@@ -746,7 +746,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestTradeWithBankForWoolThrowsWhenBankHasNone()
         {
             World world = new World();
@@ -773,7 +773,7 @@ namespace ClassLibrary1
             player1.tradeWithBank("brick", "wool");
         }
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestTradeWithBankForBrickThrowsWhenBankHasNone()
         {
             World world = new World();
@@ -816,7 +816,7 @@ namespace ClassLibrary1
         }
 
         [Test()]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void TestTradeForDevCardThrowsWhenBankHasNoDevCards()
         {
             var target = new Player();

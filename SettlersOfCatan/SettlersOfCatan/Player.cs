@@ -171,12 +171,14 @@ namespace SettlersOfCatan
 			}
 			else
 			{
+				/*
 				DialogResult num = MessageBox.Show("You do not have enough resources to make that trade.",
 					"Insufficient Resources",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
+				 */
 
-				//throw new ArgumentException("Player's cards are such that trade cannot be performed");
+				throw new ArgumentException("Player's cards are such that trade cannot be performed");
 			}
 		}
 
@@ -228,21 +230,26 @@ namespace SettlersOfCatan
 					}
 					catch (ArgumentOutOfRangeException)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There isn't enough ore to make that trade.",
 							"Insufficient Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
+						 */
 
 						//return Color.White;
-						//throw;
+						throw;
 					}
 				}
 				else
 				{
+					/*
 					DialogResult num = MessageBox.Show("You don't have enough ore to make that trade.",
 							"Insufficient Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
+					 * */
+					throw new ArgumentOutOfRangeException("You don't have enough ore.");
 				}
 			}
 			else if (resourceToTradeIn.ToLower().Equals("wool"))
@@ -258,19 +265,24 @@ namespace SettlersOfCatan
 					}
 					catch (ArgumentOutOfRangeException)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There isn't enough wool to make that trade.",
 							"Insufficient Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
-						//throw;
+						 */
+						throw;
 					}
 				}
 				else
 				{
+					/*
 					DialogResult num = MessageBox.Show("You don't have enough wool to make that trade.",
 							"Insufficient Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
+					 */
+					throw new ArgumentOutOfRangeException("You don't have enough wool.");
 				}
 			}
 			else if (resourceToTradeIn.ToLower().Equals("lumber"))
@@ -286,19 +298,24 @@ namespace SettlersOfCatan
 					}
 					catch (ArgumentOutOfRangeException)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There isn't enough lumber to make that trade.",
 							"Insufficient Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
-						//throw;
+						 * */
+						throw;
 					}
 				}
 				else
 				{
+					/*
 					DialogResult num = MessageBox.Show("You don't have enough lumber to make that trade.",
 							"Insufficient Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
+					 */
+					throw new ArgumentOutOfRangeException("You don't have enough lumber.");
 				}
 			}
 			else if (resourceToTradeIn.ToLower().Equals("grain"))
@@ -314,19 +331,24 @@ namespace SettlersOfCatan
 					}
 					catch (ArgumentOutOfRangeException)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There isn't enough grain to make that trade.",
 							"Insufficient Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
-						//throw;
+						 */
+						throw;
 					}
 				}
 				else
 				{
+					/*
 					DialogResult num = MessageBox.Show("You don't have enough grain to make that trade.",
 						"Insufficient Resources",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
+					 */
+					throw new ArgumentOutOfRangeException("You don't have enough grain.");
 				}
 			}
 			else if (resourceToTradeIn.ToLower().Equals("brick"))
@@ -342,19 +364,24 @@ namespace SettlersOfCatan
 					}
 					catch (ArgumentOutOfRangeException)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There isn't enough brick to make that trade.",
 							"Insufficient Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
-						//throw;
+						 */
+						throw;
 					}
 				}
 				else
 				{
+					/*
 					DialogResult num = MessageBox.Show("You don't have enough brick to make that trade.",
 						"Insufficient Resources",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
+					 */
+					throw new ArgumentOutOfRangeException("You don't have enough brick.");
 				}
 			}
 		}
@@ -376,11 +403,13 @@ namespace SettlersOfCatan
 					}
 					catch (ArgumentOutOfRangeException)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There isn't enough ore to make that trade.",
 							"Insufficient Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
-						//throw;
+						 */
+						throw;
 					}
 				}
 			}
@@ -397,11 +426,13 @@ namespace SettlersOfCatan
 					}
 					catch (ArgumentOutOfRangeException)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There isn't enough wool to make that trade.",
 							"Insufficient Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
-						//throw;
+						 */
+						throw;
 					}
 				}
 			}
@@ -418,11 +449,13 @@ namespace SettlersOfCatan
 					}
 					catch (ArgumentOutOfRangeException)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There isn't enough lumber to make that trade.",
 							"Insufficient Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
-						//throw;
+						*/
+						throw;
 					}
 				}
 			}
@@ -439,11 +472,13 @@ namespace SettlersOfCatan
 					}
 					catch (ArgumentOutOfRangeException)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There isn't enough grain to make that trade.",
 							"Insufficient Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
-						//throw;
+						 */
+						throw;
 					}
 				}
 			}
@@ -460,11 +495,13 @@ namespace SettlersOfCatan
 					}
 					catch (ArgumentOutOfRangeException)
 					{
+						/*
 						DialogResult num = MessageBox.Show("There isn't enough brick to make that trade.",
 							"Insufficient Resources",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
-						//throw;
+						*/
+						throw;
 					}
 				}
 			}
@@ -487,10 +524,12 @@ namespace SettlersOfCatan
 				}
 				catch (ArgumentOutOfRangeException)
 				{
+					/*
 					DialogResult num = MessageBox.Show("There aren't any more development cards.",
 						"Can't Get Development Cards",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
+					 */
 					throw;
 				}
 			}
@@ -539,11 +578,13 @@ namespace SettlersOfCatan
 				}
 				catch (ArgumentOutOfRangeException)
 				{
+					/*
 					DialogResult num = MessageBox.Show("There isn't enough ore to generate more",
 						"Insufficient Resources",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
-					//throw;
+					*/
+					throw;
 				}
 			}
 
@@ -556,11 +597,13 @@ namespace SettlersOfCatan
 				}
 				catch (ArgumentOutOfRangeException)
 				{
+					/*
 					DialogResult num = MessageBox.Show("There isn't enough ore to generate more",
 						"Insufficient Resources",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
-					//throw;
+					*/
+					throw;
 				}
 			}
 		}
@@ -576,11 +619,13 @@ namespace SettlersOfCatan
 				}
 				catch (ArgumentOutOfRangeException)
 				{
+					/*
 					DialogResult num = MessageBox.Show("There isn't enough wool to generate more",
 						"Insufficient Resources",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
-					//throw;
+					*/
+					throw;
 				}
 			}
 
@@ -593,11 +638,13 @@ namespace SettlersOfCatan
 				}
 				catch (ArgumentOutOfRangeException)
 				{
+					/*
 					DialogResult num = MessageBox.Show("There isn't enough wool to generate more",
 						"Insufficient Resources",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
-					//throw;
+					*/
+					throw;
 				}
 			}
 		}
@@ -613,11 +660,13 @@ namespace SettlersOfCatan
 				}
 				catch (ArgumentOutOfRangeException)
 				{
+					/*
 					DialogResult num = MessageBox.Show("There isn't enough lumber to generate more",
 						"Insufficient Resources",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
-					//throw;
+					*/
+					throw;
 				}
 			}
 
@@ -630,11 +679,13 @@ namespace SettlersOfCatan
 				}
 				catch (ArgumentOutOfRangeException)
 				{
+					/*
 					DialogResult num = MessageBox.Show("There isn't enough lumber to generate more",
 						"Insufficient Resources",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
-					//throw;
+					*/
+					throw;
 				}
 			}
 		}
@@ -650,11 +701,13 @@ namespace SettlersOfCatan
 				}
 				catch (ArgumentOutOfRangeException)
 				{
+					/*
 					DialogResult num = MessageBox.Show("There isn't enough grain to generate more",
 						"Insufficient Resources",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
-					//throw;
+					*/
+					throw;
 				}
 			}
 
@@ -667,11 +720,13 @@ namespace SettlersOfCatan
 				}
 				catch (ArgumentOutOfRangeException)
 				{
+					/*
 					DialogResult num = MessageBox.Show("There isn't enough grain to generate more",
 						"Insufficient Resources",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
-					//throw;
+					*/
+					throw;
 				}
 			}
 		}
@@ -687,11 +742,13 @@ namespace SettlersOfCatan
 				}
 				catch (ArgumentOutOfRangeException)
 				{
+					/*
 					DialogResult num = MessageBox.Show("There isn't enough brick to generate more",
 						"Insufficient Resources",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
-					//throw;
+					*/
+					throw;
 				}
 			}
 
@@ -704,11 +761,13 @@ namespace SettlersOfCatan
 				}
 				catch (ArgumentOutOfRangeException)
 				{
+					/*
 					DialogResult num = MessageBox.Show("There isn't enough brick to generate more",
 						"Insufficient Resources",
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
-					//throw;
+					*/
+					throw;
 				}
 			}
 		}
@@ -782,12 +841,14 @@ namespace SettlersOfCatan
 					}
 					else
 					{
+						/*
 						DialogResult num = MessageBox.Show("You don't have any knights to play.",
 							"No Knights to Play",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
+						*/
+						throw new ArgumentException("You don't have any Knights to play.");
 						break;
-						//throw new ArgumentException("You don't have any Knights to play");
 					}
 				}
 				case "victoryPoint":
@@ -800,12 +861,14 @@ namespace SettlersOfCatan
 					}
 					else
 					{
+						/*
 						DialogResult num = MessageBox.Show("You don't have any victory point cards to play.",
 							"No Points Gained",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
+						*/
+						throw new ArgumentException("You don't have any Victory Point cards to play.");
 						break;
-						//throw new ArgumentException("You don't have any Victory Point cards to play");
 					}
 				}
 				case "roadBuilder":
@@ -818,12 +881,13 @@ namespace SettlersOfCatan
 					}
 					else
 					{
+						/*
 						DialogResult num = MessageBox.Show("You don't have any year of road builder cards to play.",
 							"Construction Halted",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
-						break;
-						//throw new ArgumentException("You don't have any Road Builder cards to play");
+						 */
+						throw new ArgumentException("You don't have any Road Builder cards to play.");
 					}
 				}
 				case "monopoly":
@@ -847,12 +911,14 @@ namespace SettlersOfCatan
 					}
 					else
 					{
+						/*
 						DialogResult num = MessageBox.Show("You don't have any monopoly cards to play.",
 							"No Monopolizing",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
+						 */
+						throw new ArgumentException("You don't have any Monopoly cards to play.");
 						break;
-						//throw new ArgumentException("You don't have any Monopoly cards to play");
 					}
 				}
 				case "yearOfPlenty":
@@ -868,12 +934,14 @@ namespace SettlersOfCatan
 					}
 					else
 					{
+						/*
 						DialogResult num = MessageBox.Show("You don't have any year of plenty cards to play.",
 							"Year of Scarcity",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
+						 */
+						throw new ArgumentException("You don't have any Year of Plenty cards to play");
 						break;
-						//throw new ArgumentException("You don't have any Year of Plenty cards to play");
 					}
 				}
 			}
