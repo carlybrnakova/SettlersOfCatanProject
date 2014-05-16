@@ -10,23 +10,23 @@ using System.Windows.Forms;
 
 namespace SettlersOfCatan
 {
-    public partial class MainMenu : Form
-    {
-        public MainMenu()
-        {
-            InitializeComponent();
-        }
+	public partial class MainMenu : Form
+	{
+		public MainMenu()
+		{
+			InitializeComponent();
+		}
 
-        private void NewGameButton_Click(object sender, EventArgs e)
-        {
-            Form myForm = new NewGameForm();
-            myForm.Show();
-        }
+		private void NewGameButton_Click(object sender, EventArgs e)
+		{
+			Form myForm = new NewGameForm();
+			myForm.Show();
+		}
 
-        private void RulesButton_Click(object sender, EventArgs e)
-        {
-            Form myForm = new RulesForm();
-            myForm.Show();
-        }
-    }
+		private void RulesButton_Click(object sender, EventArgs e)
+		{
+			Form myForm = new RulesForm();
+			myForm.Show();
+		}
+	}
 }

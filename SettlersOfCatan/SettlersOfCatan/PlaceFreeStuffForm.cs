@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace SettlersOfCatan
 {
-    public partial class PlaceFreeStuffForm : Form
-    {
-        public PlaceFreeStuffForm()
-        {
-            InitializeComponent();
-        }
+	public partial class PlaceFreeStuffForm : Form
+	{
+		public PlaceFreeStuffForm()
+		{
+			InitializeComponent();
+		}
 
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-    }
+		private void CloseButton_Click(object sender, EventArgs e)
+		{
+			this.Close();
+		}
+	}
 }
