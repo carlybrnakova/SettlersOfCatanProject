@@ -21,59 +21,48 @@ namespace SettlersOfCatan
 		private bool isDoubleClick = false;
 		private bool clickable = false;
 		private int milliseconds = 0;
-		
+		private World world;
 
 		public ResourceHexPictureBox()
 		{
 			resourceType = "None";
 			this.hasRobber = false;
-			//this.BackColor = Color.FromArgb((byte)r.Next(255), (byte)r.Next(255), (byte)r.Next(255));
 			this.BackColor = Color.Gold;
 			this.Size = HEX_SIZE;
 			this.Paint += pictureBox_Paint;
 		}
 
-		public ResourceHexPictureBox(String type)
+		public ResourceHexPictureBox(String type) : this()
 		{
 			resourceType = type;
-			//this.BackColor = Color.FromArgb((byte)r.Next(255), (byte)r.Next(255), (byte)r.Next(255));
-			this.BackColor = Color.Gold;
-			this.Size = HEX_SIZE;
-			this.Paint += pictureBox_Paint;
 
 			doubleClickTimer.Interval = 100;
-
-			if (resourceType == "Desert")
-			{
-				setHasRobber(true);
-			}
-			else
-			{
-				setHasRobber(false);
-			}
+			checkDesert();
 		}
 
-		public ResourceHexPictureBox(Color color)
+		public ResourceHexPictureBox(Color color) : this()
 		{
-			resourceType = "None";
-			this.hasRobber = false;
-			//this.BackColor = Color.FromArgb((byte)r.Next(255), (byte)r.Next(255), (byte)r.Next(255));
 			this.BackColor = color;
-			this.Size = HEX_SIZE;
-			this.Paint += pictureBox_Paint;
 		}
 
-		public ResourceHexPictureBox(Hex hex)
+		public ResourceHexPictureBox(Hex hex, World world) : this()
 		{
 			resourceType = hex.getResourceType();
-			//this.BackColor = Color.FromArgb((byte)r.Next(255), (byte)r.Next(255), (byte)r.Next(255));
 			this.BackColor = hex.getColor();
 			this.token = hex.getToken();
-			this.Size = HEX_SIZE;
-			this.Paint += pictureBox_Paint;
+			this.world = world;
 
 			doubleClickTimer.Interval = 100;
+			checkDesert();
+		}
 
+		public ResourceHexPictureBox(World world) : this()
+		{
+			this.world = world;
+		}
+
+		private void checkDesert()
+		{
 			if (resourceType == "Desert")
 			{
 				setHasRobber(true);
@@ -87,6 +76,7 @@ namespace SettlersOfCatan
 		public void setHasRobber(bool condition)
 		{
 			this.hasRobber = condition;
+			//removePaint();
 			if (condition == true)
 			{
 				this.Paint += paintRobber;
@@ -99,6 +89,13 @@ namespace SettlersOfCatan
 				this.isDoubleClick = false;
 				this.isFirstClick = true;
 			}
+		}
+
+		public void paintBlack()
+		{
+			this.Paint -= paintRobber;
+			this.Paint -= pictureBox_Paint;
+			this.Paint += pictureBox_Paint;
 		}
 
 		public bool getHasRobber()
@@ -123,27 +120,20 @@ namespace SettlersOfCatan
 			}
 		}
 
-		private void pictureBox_Paint(object sender, PaintEventArgs e)
+		public void pictureBox_Paint(object sender, PaintEventArgs e)
 		{
 			this.Paint -= paintRobber;
 			Font myFont;
 			if (this.token == 6 || this.token == 8)
 			{
 				myFont = new Font("Arial", 30);
-				e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Black, new Point(55, 55));
-			}
-			else if (this.token >= 10)
-			{
-				myFont = new Font("Arial", 15);
-				e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Black, new Point(61, 59));
 			}
 			else
 			{
 				myFont = new Font("Arial", 15);
-				e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Black, new Point(67, 59));
 			}
 
-			//e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Black, new Point(60, 55));
+			e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Black, new Point(60, 55));
 		}
 
 		public void paintRobber(object sender, PaintEventArgs e)
@@ -153,42 +143,38 @@ namespace SettlersOfCatan
 			if (this.token == 6 || this.token == 8)
 			{
 				myFont = new Font("Arial", 30);
-				e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Red, new Point(55, 55));
-			}
-			else if (this.token >= 10)
-			{
-				myFont = new Font("Arial", 15);
-				e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Red, new Point(61, 59));
 			}
 			else
 			{
 				myFont = new Font("Arial", 15);
-				e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Red, new Point(67, 59));
 			}
 
-			//e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Red, new Point(60, 55));
+			e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Red, new Point(60, 55));
 		}
 
 		// Detect a valid single click or double click. 
-		void ResourceHex_MouseDown(object sender, MouseEventArgs e)
+		private void ResourceHex_MouseDown(object sender, MouseEventArgs e)
 		{
-			// This is the first mouse click. 
-			if (isFirstClick)
+			if (this.world.getPlaceRobber())
 			{
-				isFirstClick = false;
+				// This is the first mouse click. 
+				if (isFirstClick)
+				{
+					isFirstClick = false;
 
-				// Start the double click timer.
-				doubleClickTimer.Start();
-			}
+					// Start the double click timer.
+					doubleClickTimer.Start();
+				}
 
-			// This is the second mouse click. 
-			else
-			{
-				this.Paint += paintRobber;
-				Invalidate();
-				isDoubleClick = true;
+					// This is the second mouse click. 
+				else
+				{
+					Invalidate();
+					this.setHasRobber(true);
+					this.world.setPlaceRobber(false);
 				}
 			}
+		}
 
 		void doubleClickTimer_Tick(object sender, EventArgs e)
 		{

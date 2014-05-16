@@ -129,7 +129,7 @@ namespace SettlersOfCatan
 				List<ResourceHexPictureBox> l = new List<ResourceHexPictureBox>(MAX_INTERSECTION_COLUMNS);
 				for (int c = 0; c < MAX_RESOURCE_HEX_COLUMNS; c++)
 				{
-					l.Add(new ResourceHexPictureBox());
+					l.Add(new ResourceHexPictureBox(this.world));
 				}
 				hexGrid.Add(l);
 			}
@@ -220,7 +220,7 @@ namespace SettlersOfCatan
 					ResourceHexPictureBox h;
 					try
 					{
-						h = new ResourceHexPictureBox(world.getHexAtIndex(r, c));
+						h = new ResourceHexPictureBox(world.getHexAtIndex(r, c), this.world);
 
 						if (r == 0 || r == 4) h.Location = new Point(x - HEX_SIDE_DIMENSION, y);
 						else h.Location = new Point(x, y);
@@ -738,8 +738,15 @@ namespace SettlersOfCatan
         {
             this.world.rollDice();
             this.updateResourceLabels();
-            this.RollNumberLabel.Text = this.world.getRollNumber().ToString();
-            
+	        int roll = this.world.getRollNumber();
+            this.RollNumberLabel.Text = roll.ToString();
+	        if (roll == 7)
+	        {
+				removeRobberText();
+				this.world.setPlaceRobber(true);
+		        RobberForm myForm = new RobberForm(this.world, this);
+				myForm.Show();
+	        }
         }
 
         private void BuyDevCardButton_Click(object sender, EventArgs e)
@@ -748,6 +755,34 @@ namespace SettlersOfCatan
             this.updateResourceLabels();
             this.updateDevelopmentCards();
         }
+
+		private void removeRobberText()
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				for (int j = 1; j < 4; j++)
+				{
+					if (this.hexGrid[i][j].getHasRobber())
+					{
+						this.hexGrid[i][j].paintBlack();
+					}
+				}
+			}
+
+			// check outliers: [1][0], [2][0], [3][0], [2][4]
+			for (int i = 1; i < 4; i++)
+			{
+				if (this.hexGrid[i][0].getHasRobber())
+				{
+					this.hexGrid[i][0].paintBlack();
+				}
+			}
+
+			if (this.hexGrid[2][4].getHasRobber())
+			{
+				this.hexGrid[2][4].paintBlack();
+			}
+		}
 
         public void updateDevelopmentCards()
         {
@@ -780,6 +815,8 @@ namespace SettlersOfCatan
 		private void KnightsDevCardLabel_Click(object sender, EventArgs e)
 		{
 			this.world.currentPlayer.playDevCard("knight", null, null);
+			removeRobberText();
+			this.world.setPlaceRobber(true);
 			RobberForm myForm = new RobberForm(this.world, this);
 			myForm.Show();
 			this.updateDevelopmentCards();

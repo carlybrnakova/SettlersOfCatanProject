@@ -23,6 +23,7 @@ namespace SettlersOfCatan
 		public int longestRoadOwnerIndex;
 		private int numOfCompletedRounds;
 		private int turnCounter;
+		private bool placeRobber = false;
 
 		public World()
 		{
@@ -384,6 +385,16 @@ namespace SettlersOfCatan
 		public void incrementTurnCounter()
 		{
 			this.turnCounter++;
+		}
+
+		public bool getPlaceRobber()
+		{
+			return this.placeRobber;
+		}
+
+		public void setPlaceRobber(bool condition)
+		{
+			this.placeRobber = condition;
 		}
 	}
 }

@@ -21,6 +21,11 @@ namespace SettlersOfCatan
 			this.world = world;
 			this.gameScreen = gs;
 
+			makeAllHexesClickable();
+		}
+
+		public void makeAllHexesClickable()
+		{
 			for (int i = 0; i < 5; i++)
 			{
 				for (int j = 1; j < 4; j++)

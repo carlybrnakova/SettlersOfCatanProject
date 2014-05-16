@@ -29,9 +29,6 @@ namespace SettlersOfCatan
 			;
 		}
 
-		public void move()
-		{
-		}
 	}
 
 	public class VictoryPointCard : DevelopmentCard
