@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace SettlersOfCatan
 {
-    public partial class WinForm : Form
-    {
-        public WinForm()
-        {
-            InitializeComponent();
-        }
-    }
+	public partial class WinForm : Form
+	{
+		public WinForm()
+		{
+			InitializeComponent();
+		}
+	}
 }

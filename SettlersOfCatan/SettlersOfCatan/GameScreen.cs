@@ -4,231 +4,233 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SettlersOfCatan
 {
-    public partial class GameScreen : Form
-    {
-        //private const int NUM_OF_INTERSECTION_BUTTONS = 54;
-        private const int INTERSECTION_BUTTON_SIZE = 30;
-        private const int MAX_INTERSECTION_COLUMNS = 11;
-        private const int MAX_INTERSECTION_ROWS = 6;
+	public partial class GameScreen : Form
+	{
+		//private const int NUM_OF_INTERSECTION_BUTTONS = 54;
+		private const int INTERSECTION_BUTTON_SIZE = 30;
+		private const int MAX_INTERSECTION_COLUMNS = 11;
+		private const int MAX_INTERSECTION_ROWS = 6;
 
 
-        private static Size HORIZONTAL_ROAD_SIZE = new Size(45, 16);
-        private static Size VERTICAL_ROAD_SIZE = new Size(16, 120);
+		private static Size HORIZONTAL_ROAD_SIZE = new Size(45, 16);
+		private static Size VERTICAL_ROAD_SIZE = new Size(16, 120);
 
-        private const int MAX_RESOURCE_HEX_ROWS = 5;
-        private const int MAX_RESOURCE_HEX_COLUMNS = 5;
-        private const int HEX_SIDE_DIMENSION = 150;
+		private const int MAX_RESOURCE_HEX_ROWS = 5;
+		private const int MAX_RESOURCE_HEX_COLUMNS = 5;
+		private const int HEX_SIDE_DIMENSION = 150;
 
-        private const int X_INCREMENT = 75;
-        private const int Y_INCREMENT = 150;
+		private const int X_INCREMENT = 75;
+		private const int Y_INCREMENT = 150;
 
-        private World world;
+		private World world;
 
-       
 
-        // Intersection Grid
-        // 7
-        // 9
-        // 11
-        // 11
-        // 9
-        // 7
+		// Intersection Grid
+		// 7
+		// 9
+		// 11
+		// 11
+		// 9
+		// 7
 
-        private List<List<IntersectionButton>> intersectionGrid = new List<List<IntersectionButton>>();
-        private List<PictureBox> waterHexes = new List<PictureBox>();
-        private List<List<ResourceHexPictureBox>> hexGrid = new List<List<ResourceHexPictureBox>>();
-        private Button[,] roadGrid = new Button[Global_Variables.MAX_ROAD_ROWS,Global_Variables.MAX_ROAD_COLUMNS];
-        private Panel boardPanel = new Panel();
-        //private List<System.Windows.Forms.Button> intersectionButtons = new List<System.Windows.Forms.Button>();
+		private List<List<IntersectionButton>> intersectionGrid = new List<List<IntersectionButton>>();
+		private List<PictureBox> waterHexes = new List<PictureBox>();
+		public List<List<ResourceHexPictureBox>> hexGrid = new List<List<ResourceHexPictureBox>>();
+		private Button[,] roadGrid = new Button[Global_Variables.MAX_ROAD_ROWS, Global_Variables.MAX_ROAD_COLUMNS];
+		private Panel boardPanel = new Panel();
+		//private List<System.Windows.Forms.Button> intersectionButtons = new List<System.Windows.Forms.Button>();
 
-        /** Utility function to determine if a number is even */
-        private bool isEven(int n) { return (n % 2 == 0); }
+		/** Utility function to determine if a number is even */
 
-        public GameScreen()
-        {
-            
-            InitializeComponent();
+		private bool isEven(int n)
+		{
+			return (n%2 == 0);
+		}
 
-            this.world = new World(3, 0);
+		public GameScreen()
+		{
+			InitializeComponent();
 
-            initializeAll();
+			this.world = new World(3, 0);
 
-            initializeBoardPanel();
-            //this.world = new World(3,0);
-            this.updateResourceLabels();
-            this.updateCurrentPlayerNameLabel();
-            this.updateRoundLabel();
-        }
+			initializeAll();
 
-        /** initializeAll()
+			initializeBoardPanel();
+			//this.world = new World(3,0);
+			this.updateResourceLabels();
+			this.updateCurrentPlayerNameLabel();
+			this.updateRoundLabel();
+		}
+
+		/** initializeAll()
          * 
          * Initializes all private fields with empty structures to give them
          * the correct dimensions
          */
-        private void initializeAll()
-        {
-            initializeWaterHexes();
-            initializeIntersectionGrid();
-            initializeHexGrid();
-            initializeRoadGrid();
-        }
 
-        /** initializeIntersectionGrid()
+		private void initializeAll()
+		{
+			initializeWaterHexes();
+			initializeIntersectionGrid();
+			initializeHexGrid();
+			initializeRoadGrid();
+		}
+
+		/** initializeIntersectionGrid()
          * 
          * Initializes the private field intersectionGrid to hold a double array
          * made of Lists containing Buttons
          */
-        private void initializeIntersectionGrid()
-        {
-            for (int r = 0; r < MAX_INTERSECTION_ROWS; r++)
-            {
-                List<IntersectionButton> l = new List<IntersectionButton>(MAX_INTERSECTION_COLUMNS);
-                for (int c = 0; c < MAX_INTERSECTION_COLUMNS; c++)
-                {
-                    l.Add(new IntersectionButton(r, c));
-                }
-                intersectionGrid.Add(l);
-            }
-        }
 
-        /** initializeWaterHexes()
+		private void initializeIntersectionGrid()
+		{
+			for (int r = 0; r < MAX_INTERSECTION_ROWS; r++)
+			{
+				List<IntersectionButton> l = new List<IntersectionButton>(MAX_INTERSECTION_COLUMNS);
+				for (int c = 0; c < MAX_INTERSECTION_COLUMNS; c++)
+				{
+					l.Add(new IntersectionButton(r, c));
+				}
+				intersectionGrid.Add(l);
+			}
+		}
+
+		/** initializeWaterHexes()
          * 
          * Initializes the waterHexes private field to prepare it for holding
          * all the water hexes that are generated 
          */
-        private void initializeWaterHexes()
-        {
-            for (int i = 0; i < 18; i++)
-            {
-                waterHexes.Add(new PictureBox());
-            }
-        }
 
-        /** initializeHexGrid()
+		private void initializeWaterHexes()
+		{
+			for (int i = 0; i < 18; i++)
+			{
+				waterHexes.Add(new PictureBox());
+			}
+		}
+
+		/** initializeHexGrid()
          * 
          * Initializes the private field hexGrid just like the intersection buttons
          * to prepare them for actually holding the randomized hexes
          */
-        private void initializeHexGrid()
-        {
-            for (int r = 0; r < MAX_RESOURCE_HEX_ROWS; r++)
-            {
-                List<ResourceHexPictureBox> l = new List<ResourceHexPictureBox>(MAX_INTERSECTION_COLUMNS);
-                for (int c = 0; c < MAX_RESOURCE_HEX_COLUMNS; c++)
-                {
-                    l.Add(new ResourceHexPictureBox());
-                }
-                hexGrid.Add(l);
-            }
-        }
 
-        /** initializeRoadGrid()
+		private void initializeHexGrid()
+		{
+			for (int r = 0; r < MAX_RESOURCE_HEX_ROWS; r++)
+			{
+				List<ResourceHexPictureBox> l = new List<ResourceHexPictureBox>(MAX_INTERSECTION_COLUMNS);
+				for (int c = 0; c < MAX_RESOURCE_HEX_COLUMNS; c++)
+				{
+					l.Add(new ResourceHexPictureBox());
+				}
+				hexGrid.Add(l);
+			}
+		}
+
+		/** initializeRoadGrid()
          * 
-         * Initializes the private fiels roadGrid so that it can be filled
+         * Initializes the private fields roadGrid so that it can be filled
          * with the road buttons
          */
-        private void initializeRoadGrid()
-        {
-            for (int r = 0; r < Global_Variables.MAX_ROAD_ROWS; r++)
-            {
-                for (int c = 0; c < Global_Variables.MAX_ROAD_COLUMNS; c++)
-                {
-                    roadGrid[r, c] = null;
-                }
-            }
-        }
 
-        private void setupRoadGrid()
-        {
-            int x = 315;
-            int y = 70;
-            int x_diff = 75;
-            int y_diff = 150;
-            int col;
-            int columnMax = 6;
-            // The horizontal-button rows
-            for (int r = 0; r < Global_Variables.MAX_ROAD_ROWS; r += 2)
-            {
-                for (col = 0; col < columnMax; col++)
-                {
-                    RoadButton b = new RoadButton(r, col);
-                    b.Size = HORIZONTAL_ROAD_SIZE;
-                    b.Location = new Point(x, y);
-                    b.coordinates = new Point(r, col);
-                    b.BackColor = Color.White;
-                    b.Click += roadButton_Click;
-                    boardPanel.Controls.Add(b);
-                    
-                    x += x_diff;
-                }
-                // Allow more or less buttons for the next row
-                if (r < 4) columnMax += 2; 
-                else if (r >= 6) columnMax -= 2;
+		private void initializeRoadGrid()
+		{
+			for (int r = 0; r < Global_Variables.MAX_ROAD_ROWS; r++)
+			{
+				for (int c = 0; c < Global_Variables.MAX_ROAD_COLUMNS; c++)
+				{
+					roadGrid[r, c] = null;
+				}
+			}
+		}
 
-                // Find the correct start positions for the next row
-                if (r < 4) x = x - x_diff * (col + 1);
-                else if (r >= 6) x = x - x_diff * (col - 1);
-                else x = x - x_diff * col;
+		private void setupRoadGrid()
+		{
+			int x = 315;
+			int y = 70;
+			int x_diff = 75;
+			int y_diff = 150;
+			int col;
+			int columnMax = 6;
+			// The horizontal-button rows
+			for (int r = 0; r < Global_Variables.MAX_ROAD_ROWS; r += 2)
+			{
+				for (col = 0; col < columnMax; col++)
+				{
+					RoadButton b = new RoadButton(r, col);
+					setLocationAndColorButton(b, Color.White, x, y);
+					setRoadButtonSizeCoordinatesAndClick(b, HORIZONTAL_ROAD_SIZE, r, col);
+					boardPanel.Controls.Add(b);
 
-                y += y_diff;
-            }
+					x += x_diff;
+				}
+				// Allow more or less buttons for the next row
+				if (r < 4) columnMax += 2;
+				else if (r >= 6) columnMax -= 2;
 
-            // The vertical-button rows
-            x = 292;
-            y = 90;
-            x_diff = 150;
-            y_diff = 150;
-            columnMax = 4;
-            for (int r = 1; r < Global_Variables.MAX_ROAD_ROWS; r += 2)
-            {
-                for (col = 0; col < columnMax; col++)
-                {
-                    RoadButton b = new RoadButton(r, col);
-                    b.Size = VERTICAL_ROAD_SIZE;
-                    b.Location = new Point(x, y);
-                    b.coordinates = new Point(r, col);
-                    b.BackColor = Color.White;
-                    b.Click += roadButton_Click;
-                    boardPanel.Controls.Add(b);
+				// Find the correct start positions for the next row
+				if (r < 4) x = x - x_diff*(col + 1);
+				else if (r >= 6) x = x - x_diff*(col - 1);
+				else x = x - x_diff*col;
 
-                    x += x_diff;
-                }
-                columnMax = (r < 5) ? columnMax + 1 : columnMax - 1;
-                y = y + y_diff;
-                x = (r <= 4) ? x - x_diff * col - x_diff/2 : x - x_diff * col + x_diff/2;
-            }
-        }
+				y += y_diff;
+			}
 
-        private void setupHexGrid()
-        {
-            // Coordinate variables for plotting buttons in correct locations
-            int x = HEX_SIDE_DIMENSION * 2;
-            int y = HEX_SIDE_DIMENSION / 2;
-            
-                for (int c = 0; c < MAX_RESOURCE_HEX_COLUMNS; c++)
-                {
-                    for (int r = 0; r < MAX_RESOURCE_HEX_ROWS; r++)
-                    {
-                        ResourceHexPictureBox h;
-                        try
-                        {
-                            h = new ResourceHexPictureBox(world.getHexAtIndex(r, c));
-                            
-                            if (r == 0 || r == 4) h.Location = new Point(x - HEX_SIDE_DIMENSION, y);
-                            else h.Location = new Point(x, y);
-                            boardPanel.Controls.Add(h);
-                        }
-                        catch (NullReferenceException e)
-                        {
-                            //h = new ResourceHexPictureBox();
-                            h = null;
-                            /*
+			// The vertical-button rows
+			x = 292;
+			y = 90;
+			x_diff = 150;
+			y_diff = 150;
+			columnMax = 4;
+			for (int r = 1; r < Global_Variables.MAX_ROAD_ROWS; r += 2)
+			{
+				for (col = 0; col < columnMax; col++)
+				{
+					RoadButton b = new RoadButton(r, col);
+					setLocationAndColorButton(b, Color.White, x, y);
+					setRoadButtonSizeCoordinatesAndClick(b, VERTICAL_ROAD_SIZE, r, col);
+					boardPanel.Controls.Add(b);
+
+					x += x_diff;
+				}
+				columnMax = (r < 5) ? columnMax + 1 : columnMax - 1;
+				y = y + y_diff;
+				x = (r <= 4) ? x - x_diff*col - x_diff/2 : x - x_diff*col + x_diff/2;
+			}
+		}
+
+		private void setupHexGrid()
+		{
+			// Coordinate variables for plotting buttons in correct locations
+			int x = HEX_SIDE_DIMENSION*2;
+			int y = HEX_SIDE_DIMENSION/2;
+
+			for (int c = 0; c < MAX_RESOURCE_HEX_COLUMNS; c++)
+			{
+				for (int r = 0; r < MAX_RESOURCE_HEX_ROWS; r++)
+				{
+					ResourceHexPictureBox h;
+					try
+					{
+						h = new ResourceHexPictureBox(world.getHexAtIndex(r, c));
+
+						if (r == 0 || r == 4) h.Location = new Point(x - HEX_SIDE_DIMENSION, y);
+						else h.Location = new Point(x, y);
+						boardPanel.Controls.Add(h);
+					}
+					catch (NullReferenceException e)
+					{
+						//h = new ResourceHexPictureBox();
+						h = null;
+						/*
                             if ((r == 0 || r == 4) && (c > 2))
                             {
                                 h = null;
@@ -288,25 +290,31 @@ namespace SettlersOfCatan
                 x += x_diff;
             }
              * */
-            // Set up top
+            
+			// Set up top
             PictureBox PB = new PictureBox();
-            PB.BackColor = Color.Blue;
-            PB.Size = new Size(600, 75);
-            PB.Location = new Point(225, 0);
+			setPictureBoxColorLocationAndSize(PB, Color.Blue, 225, 0, new Size(600, 75));
+            //PB.BackColor = Color.Blue;
+            //PB.Size = new Size(600, 75);
+            //PB.Location = new Point(225, 0);
             waterHexes[waterCount] = PB;
 
             // Add ports for top
             Label portLabel1 = new Label();
-            portLabel1.ForeColor = Color.White;
-            portLabel1.Text = "v   Anything 3:1   v";
-            portLabel1.Location = new Point(70, 40);
+			string topText = "v   Anything 3:1   v";
+			setLabel(portLabel1, 70, 40, false, topText);
+            //portLabel1.ForeColor = Color.White;
+            //portLabel1.Text = "v   Anything 3:1   v";
+            //portLabel1.Location = new Point(70, 40);
             PB.Controls.Add(portLabel1);
 
             // Add second port for top
             Label portLabel2 = new Label();
-            portLabel2.ForeColor = Color.White;
-            portLabel2.Text = "v   Wool 2:1   v";
-            portLabel2.Location = new Point(300, 40);
+			topText = "v   Wool 2:1   v";
+			setLabel(portLabel2, 300, 40, false, topText);
+            //portLabel2.ForeColor = Color.White;
+            //portLabel2.Text = "v   Wool 2:1   v";
+            //portLabel2.Location = new Point(300, 40);
             PB.Controls.Add(portLabel2);
 
             waterCount++;
@@ -314,23 +322,28 @@ namespace SettlersOfCatan
 
             // Set up bottom
             PictureBox PB2 = new PictureBox();
-            PB2.BackColor = Color.Blue;
-            PB2.Size = new Size(600, 75);
-            PB2.Location = new Point(225, 825);
+			setPictureBoxColorLocationAndSize(PB2, Color.Blue, 225, 825, new Size(600, 75));
+            //PB2.BackColor = Color.Blue;
+            //PB2.Size = new Size(600, 75);
+            //PB2.Location = new Point(225, 825);
             waterHexes[waterCount] = PB;
 
             // Add ports for bottom
             Label portLabel3 = new Label();
-            portLabel3.ForeColor = Color.White;
-            portLabel3.Text = "^   Anything 3:1   ^";
-            portLabel3.Location = new Point(70, 25);
+			topText = "^   Anything 3:1   ^";
+			setLabel(portLabel2, 70, 25, false, topText);
+            //portLabel3.ForeColor = Color.White;
+            //portLabel3.Text = "^   Anything 3:1   ^";
+            //portLabel3.Location = new Point(70, 25);
             PB2.Controls.Add(portLabel3);
 
             // Add second port for bottom
             Label portLabel4 = new Label();
-            portLabel4.ForeColor = Color.White;
-            portLabel4.Text = "^   Lumber 2:1   ^";
-            portLabel4.Location = new Point(295, 25);
+			topText = "^   Lumber 2:1   ^";
+			setLabel(portLabel2, 295, 25, false, topText);
+            //portLabel4.ForeColor = Color.White;
+            //portLabel4.Text = "^   Lumber 2:1   ^";
+            //portLabel4.Location = new Point(295, 25);
             PB2.Controls.Add(portLabel4);
 
             waterCount++;
@@ -344,17 +357,21 @@ namespace SettlersOfCatan
             for (int i = 0; i < 3; i++)
             {
                 PictureBox pb = new PictureBox();
-                pb.BackColor = Color.Blue;
-                pb.Size = new Size(150, 150);
-                pb.Location = new Point(x, y);
-                // Add port if relevant
+				setPictureBoxColorLocationAndSize(pb, Color.Blue, x, y, new Size(150, 150));
+                //pb.BackColor = Color.Blue;
+                //pb.Size = new Size(150, 150);
+                //pb.Location = new Point(x, y);
+                
+				// Add port if relevant
                 if (waterCount == 4)
                 {
                     Label portLabel5 = new Label();
-                    portLabel5.Size = new Size(150, 150);
-                    portLabel5.ForeColor = Color.White;
-                    portLabel5.Text = "    -->\n\n\n\nOre 2:1 \n\n\n\n\n    -->";
-                    portLabel5.Location = new Point(100, 10);
+					string text = "    -->\n\n\n\nOre 2:1 \n\n\n\n\n    -->";
+					setLabel(portLabel5, 100, 10, true, text);
+                    //portLabel5.Size = new Size(150, 150);
+                    //portLabel5.ForeColor = Color.White;
+                    //portLabel5.Text = "    -->\n\n\n\nOre 2:1 \n\n\n\n\n    -->";
+                    //portLabel5.Location = new Point(100, 10);
                     pb.Controls.Add(portLabel5);
                 }
 
@@ -365,17 +382,22 @@ namespace SettlersOfCatan
                 if (i == 2) break;
 
                 PictureBox pb2 = new PictureBox();
-                pb2.BackColor = Color.Blue;
-                pb2.Size = new Size(150, 150);
-                pb2.Location = new Point(x, y + y_diff);
-                // Add port if relevant
+				setPictureBoxColorLocationAndSize(pb2, Color.Blue, x, y + y_diff, new Size(150, 150));
+                
+				//pb2.BackColor = Color.Blue;
+                //pb2.Size = new Size(150, 150);
+                //pb2.Location = new Point(x, y + y_diff);
+                
+				// Add port if relevant
                 if (waterCount == 5)
                 {
                     Label portLabel5 = new Label();
-                    portLabel5.Size = new Size(150, 150);
-                    portLabel5.ForeColor = Color.White;
-                    portLabel5.Text = "      -->\n\n\n\nGrain 2:1\n\n\n\n\n      -->";
-                    portLabel5.Location = new Point(90, 10);
+					string text = "      -->\n\n\n\nGrain 2:1\n\n\n\n\n      -->";
+					setLabel(portLabel5, 90, 10, true, text);
+                    //portLabel5.Size = new Size(150, 150);
+                    //portLabel5.ForeColor = Color.White;
+                    //portLabel5.Text = "      -->\n\n\n\nGrain 2:1\n\n\n\n\n      -->";
+                    //portLabel5.Location = new Point(90, 10);
                     pb2.Controls.Add(portLabel5);
                 }
                 waterHexes[waterCount] = pb2;
@@ -395,26 +417,33 @@ namespace SettlersOfCatan
             for (int i = 0; i < 3; i++)
             {
                 PictureBox pb = new PictureBox();
-                pb.BackColor = Color.Blue;
-                pb.Size = new Size(150, 150);
-                pb.Location = new Point(x, y);
-                // Add port if relevant
+				setPictureBoxColorLocationAndSize(pb, Color.Blue, x, y, new Size(150, 150));
+                
+				//pb.BackColor = Color.Blue;
+                //pb.Size = new Size(150, 150);
+                //pb.Location = new Point(x, y);
+                
+				// Add port if relevant
                 if (waterCount == 7)
                 {
                     Label portLabel5 = new Label();
-                    portLabel5.Size = new Size(150, 150);
-                    portLabel5.ForeColor = Color.White;
-                    portLabel5.Text = "v  Anything 3:1  v";
-                    portLabel5.Location = new Point(10, 110);
+					string text = "v  Anything 3:1  v";
+					setLabel(portLabel5, 10, 110, true, text);
+                    //portLabel5.Size = new Size(150, 150);
+                    //portLabel5.ForeColor = Color.White;
+                    //portLabel5.Text = "v  Anything 3:1  v";
+                    //portLabel5.Location = new Point(10, 110);
                     pb.Controls.Add(portLabel5);
                 }
                 else if (waterCount == 11)
                 {
                     Label portLabel5 = new Label();
-                    portLabel5.Size = new Size(150, 150);
-                    portLabel5.ForeColor = Color.White;
-                    portLabel5.Text = "    <--\n\n\n\n Anything 3:1\n\n\n\n\n    <--";
-                    portLabel5.Location = new Point(10, 10);
+					string text = "    <--\n\n\n\n Anything 3:1\n\n\n\n\n    <--";
+					setLabel(portLabel5, 10, 10, true, text);
+                    //portLabel5.Size = new Size(150, 150);
+                    //portLabel5.ForeColor = Color.White;
+                    //portLabel5.Text = "    <--\n\n\n\n Anything 3:1\n\n\n\n\n    <--";
+                    //portLabel5.Location = new Point(10, 10);
                     pb.Controls.Add(portLabel5);
                 }
                 waterHexes[waterCount] = pb;
@@ -424,17 +453,22 @@ namespace SettlersOfCatan
                 if (i == 2) break;
 
                 PictureBox pb2 = new PictureBox();
-                pb2.BackColor = Color.Blue;
-                pb2.Size = new Size(150, 150);
-                pb2.Location = new Point(x, y + y_diff);
-                // Add port if relevant
+				setPictureBoxColorLocationAndSize(pb2, Color.Blue, x, y + y_diff, new Size(150, 150));
+                
+				//pb2.BackColor = Color.Blue;
+                //pb2.Size = new Size(150, 150);
+                //pb2.Location = new Point(x, y + y_diff);
+                
+				// Add port if relevant
                 if (waterCount == 8)
                 {
                     Label portLabel5 = new Label();
-                    portLabel5.Size = new Size(150, 150);
-                    portLabel5.ForeColor = Color.White;
-                    portLabel5.Text = "^  Brick 2:1  ^";
-                    portLabel5.Location = new Point(10, 20);
+					string text = "^  Brick 2:1  ^";
+					setLabel(portLabel5, 10, 20, true, text);
+                    //portLabel5.Size = new Size(150, 150);
+                    //portLabel5.ForeColor = Color.White;
+                    //portLabel5.Text = "^  Brick 2:1  ^";
+                    //portLabel5.Location = new Point(10, 20);
                     pb2.Controls.Add(portLabel5);
                 }
                 waterHexes[waterCount] = pb2;
@@ -447,7 +481,62 @@ namespace SettlersOfCatan
             }
         }
 
-        private void initializeBoardPanel()
+		private void setLabel(Label label, int x, int y, bool setSize, string text)
+		{
+			if (setSize == true)
+			{
+				label.Size = new Size(150, 150);
+			}
+
+			label.ForeColor = Color.White;
+			label.Text = text;
+			label.Location = new Point(x, y);
+		}
+
+		private void addPictureBox(int waterCount, int[] coords, bool top, bool diff)
+		{
+			int x = coords[0];
+			int x_diff = coords[1];
+			int y = coords[2];
+			int y_diff = coords[3];
+
+			PictureBox pb = new PictureBox();
+
+			if (top == true)
+			{
+				if (diff == true)
+				{
+					setPictureBoxColorLocationAndSize(pb, Color.Blue, x, y + y_diff, new Size(150, 75));
+				}
+				else
+				{
+					setPictureBoxColorLocationAndSize(pb, Color.Blue, x, y, new Size(150, 75));
+				}
+			}
+			else
+			{
+				if (diff == true)
+				{
+
+					setPictureBoxColorLocationAndSize(pb, Color.Blue, x, y + y_diff, new Size(150, 150));
+				}
+				else
+				{
+					setPictureBoxColorLocationAndSize(pb, Color.Blue, x, y, new Size(150, 150));
+				}
+			}
+			waterHexes[waterCount] = pb;
+			boardPanel.Controls.Add(pb);
+		}
+
+		private void setPictureBoxColorLocationAndSize(PictureBox pb, Color color, int x, int y, Size size)
+		{
+			pb.BackColor = color;
+			pb.Location = new Point(x, y);
+			pb.Size = size;
+		}
+
+		private void initializeBoardPanel()
         {
             boardPanel.Location = new Point(0, 0);
             boardPanel.Size = new Size(1050, 1050);
@@ -463,41 +552,59 @@ namespace SettlersOfCatan
             
         }
 
-        private void setupIntersectionButtons(){
+		private void setupIntersectionButtons()
+		{
+			// Coordinate variables for plotting buttons in correct locations
+			int x = 150 - INTERSECTION_BUTTON_SIZE / 2;
+			int y = 75 - INTERSECTION_BUTTON_SIZE / 2;
 
-            // Coordinate variables for plotting buttons in correct locations
-            int x = 150 - INTERSECTION_BUTTON_SIZE/2;
-            int y = 75 - INTERSECTION_BUTTON_SIZE/2;
+			for (int r = 0; r < MAX_INTERSECTION_ROWS; r++)
+			{
+				for (int c = 0; c < MAX_INTERSECTION_COLUMNS; c++)
+				{
+					IntersectionButton b = new IntersectionButton(r, c);
+					setLocationAndColorButton(b, Color.White, x, y);
+					setIntersectionFontClickAndSize(b);
 
-                for (int r = 0; r < MAX_INTERSECTION_ROWS; r++)
-                {
-                    for (int c = 0; c < MAX_INTERSECTION_COLUMNS; c++)
-                    {
-                        IntersectionButton b = new IntersectionButton(r, c);
-                        b.BackColor = Color.White;
-                        b.Font = new Font("Georgia", 20, FontStyle.Bold | FontStyle.Strikeout);
-                        b.Size = new Size(INTERSECTION_BUTTON_SIZE, INTERSECTION_BUTTON_SIZE);
-                        b.Location = new Point(x, y);
-                        b.Click += intersectionButton_Click;
-                        if ((r == 0 || r == 5) && (c < 2 || c > 8))
-                        {
-                            b = null;
-                        }
-                        else if ((r == 1 || r == 4) && (c < 1 || c > 9))
-                        {
-                            b = null;
-                        }
+					if ((r == 0 || r == 5) && (c < 2 || c > 8))
+					{
+						b = null;
+					}
+					else if ((r == 1 || r == 4) && (c < 1 || c > 9))
+					{
+						b = null;
+					}
 
-                        intersectionGrid[r][c] = b;
+					intersectionGrid[r][c] = b;
 
-                        if(b != null) boardPanel.Controls.Add(b);
-                        
-                        x += X_INCREMENT;
-                    }
-                    x = 150 - INTERSECTION_BUTTON_SIZE/2;
-                    y += Y_INCREMENT;
-                }
-        }
+					if (b != null) boardPanel.Controls.Add(b);
+
+					x += X_INCREMENT;
+				}
+				x = 150 - INTERSECTION_BUTTON_SIZE / 2;
+				y += Y_INCREMENT;
+			}
+		}
+
+		private void setLocationAndColorButton(Button button, Color color, int x, int y)
+		{
+			button.BackColor = color;
+			button.Location = new Point(x, y);
+		}
+
+		private void setIntersectionFontClickAndSize(Button button)
+		{
+			button.Font = new Font("Georgia", 20, FontStyle.Bold | FontStyle.Strikeout);
+			button.Size = new Size(INTERSECTION_BUTTON_SIZE, INTERSECTION_BUTTON_SIZE);
+			button.Click += intersectionButton_Click;
+		}
+
+		private void setRoadButtonSizeCoordinatesAndClick(RoadButton button, Size size, int x, int y)
+		{
+			button.Size = size;
+			button.Click += roadButton_Click;
+			button.coordinates = new Point(x, y);
+		}
 
         private void ItemToBuildComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -670,11 +777,13 @@ namespace SettlersOfCatan
                 this.YearOfPlentyDevCardLabel.Hide();
         }
 
-        private void KnightsDevCardLabel_Click(object sender, EventArgs e)
-        {
-            this.world.currentPlayer.playDevCard("knight", null, null);
-            this.updateDevelopmentCards();
-        }
+		private void KnightsDevCardLabel_Click(object sender, EventArgs e)
+		{
+			this.world.currentPlayer.playDevCard("knight", null, null);
+			RobberForm myForm = new RobberForm(this.world, this);
+			myForm.Show();
+			this.updateDevelopmentCards();
+		}
 
         private void VictoryPointDevCardLabel_Click(object sender, EventArgs e)
         {
@@ -717,5 +826,11 @@ namespace SettlersOfCatan
                 myForm.Show();
             }
         }
-    }
+
+		private void BankTradeButton_Click(object sender, EventArgs e)
+		{
+			BankTradeForm myForm = new BankTradeForm(this.world, this);
+			myForm.Show();
+		}
+	}
 }

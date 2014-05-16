@@ -10,26 +10,26 @@ using System.Windows.Forms;
 
 namespace SettlersOfCatan
 {
-    public partial class AcceptTradeForm : Form
-    {
-        TradeForm TradeForm;
+	public partial class AcceptTradeForm : Form
+	{
+		private TradeForm TradeForm;
 
-        public AcceptTradeForm(TradeForm tradeForm)
-        {
-            this.TradeForm = tradeForm;
-            InitializeComponent();
-        }
+		public AcceptTradeForm(TradeForm tradeForm)
+		{
+			this.TradeForm = tradeForm;
+			InitializeComponent();
+		}
 
-        private void AcceptTradeButton_Click(object sender, EventArgs e)
-        {
-            this.TradeForm.makeTrade();
-            this.Close();
-        }
+		private void AcceptTradeButton_Click(object sender, EventArgs e)
+		{
+			this.TradeForm.makeTrade();
+			this.Close();
+		}
 
-        private void DeclineTradeButton_Click(object sender, EventArgs e)
-        {
-            this.TradeForm.declineTrade();
-            this.Close();
-        }
-    }
+		private void DeclineTradeButton_Click(object sender, EventArgs e)
+		{
+			this.TradeForm.declineTrade();
+			this.Close();
+		}
+	}
 }

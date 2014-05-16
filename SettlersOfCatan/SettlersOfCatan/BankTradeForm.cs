@@ -10,13 +10,13 @@ using System.Windows.Forms;
 
 namespace SettlersOfCatan
 {
-	public partial class YearOfPlentyForm : Form
+	public partial class BankTradeForm : Form
 	{
 		private World world;
 		private GameScreen gameScreen;
 		private Player current;
 
-		public YearOfPlentyForm(World world, GameScreen gs)
+		public BankTradeForm(World world, GameScreen gs)
 		{
 			InitializeComponent();
 			this.world = world;
@@ -24,11 +24,11 @@ namespace SettlersOfCatan
 			this.current = this.world.currentPlayer;
 		}
 
-		private void YearOfPlentyButton_Click(object sender, EventArgs e)
+		private void SubmitBankTradeButton_Click(object sender, EventArgs e)
 		{
-			string resource1 = this.YearOfPlentyComboBox1.SelectedItem.ToString();
-			string resource2 = this.YearOfPlentyComboBox2.SelectedItem.ToString();
-			this.current.playDevCard("yearOfPlenty", resource1, resource2);
+			string trade = this.ResourceTradeBankComboBox.SelectedItem.ToString();
+			string gain = this.ResourceGainBankComboBox.SelectedItem.ToString();
+			this.current.tradeWithBank(trade, gain);
 			this.gameScreen.updateResourceLabels();
 			this.gameScreen.updateDevelopmentCards();
 			this.Dispose();

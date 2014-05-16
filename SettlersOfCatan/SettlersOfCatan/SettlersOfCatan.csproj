@@ -51,6 +51,12 @@
       <DependentUpon>AcceptTradeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Bank.cs" />
+    <Compile Include="BankTradeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BankTradeForm.Designer.cs">
+      <DependentUpon>BankTradeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CompleteMap.cs" />
     <Compile Include="Computer.cs" />
     <Compile Include="Connection.cs" />
@@ -90,6 +96,13 @@
     </Compile>
     <Compile Include="RoadBuilderForm.Designer.cs">
       <DependentUpon>RoadBuilderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Robber.cs" />
+    <Compile Include="RobberForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RobberForm.Designer.cs">
+      <DependentUpon>RobberForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TradeForm.cs">
       <SubType>Form</SubType>
@@ -144,6 +157,10 @@
     </Compile>
     <EmbeddedResource Include="AcceptTradeForm.resx">
       <DependentUpon>AcceptTradeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BankTradeForm.resx">
+      <DependentUpon>BankTradeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FirstFewTurnsForm.resx">
       <DependentUpon>FirstFewTurnsForm.cs</DependentUpon>
@@ -178,6 +195,9 @@
     </Compile>
     <EmbeddedResource Include="RoadBuilderForm.resx">
       <DependentUpon>RoadBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RobberForm.resx">
+      <DependentUpon>RobberForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RulesForm.resx">
       <DependentUpon>RulesForm.cs</DependentUpon>

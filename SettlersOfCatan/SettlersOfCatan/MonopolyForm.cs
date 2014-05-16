@@ -10,27 +10,27 @@ using System.Windows.Forms;
 
 namespace SettlersOfCatan
 {
-    public partial class MonopolyForm : Form
-    {
-        World world;
-        GameScreen gameScreen;
-        Player current;
+	public partial class MonopolyForm : Form
+	{
+		private World world;
+		private GameScreen gameScreen;
+		private Player current;
 
-        public MonopolyForm(World world, GameScreen gs)
-        {
-            InitializeComponent();
-            this.world = world;
-            this.gameScreen = gs;
-            this.current = this.world.currentPlayer;
-        }
+		public MonopolyForm(World world, GameScreen gs)
+		{
+			InitializeComponent();
+			this.world = world;
+			this.gameScreen = gs;
+			this.current = this.world.currentPlayer;
+		}
 
-        private void MonopolyButton_Click(object sender, EventArgs e)
-        {
-            string resource1 = this.MonopolyComboBox.SelectedItem.ToString();
-            this.current.playDevCard("monopoly", resource1, null);
-            this.gameScreen.updateResourceLabels();
-            this.gameScreen.updateDevelopmentCards();
-            this.Dispose();
-        }
-    }
+		private void MonopolyButton_Click(object sender, EventArgs e)
+		{
+			string resource1 = this.MonopolyComboBox.SelectedItem.ToString();
+			this.current.playDevCard("monopoly", resource1, null);
+			this.gameScreen.updateResourceLabels();
+			this.gameScreen.updateDevelopmentCards();
+			this.Dispose();
+		}
+	}
 }

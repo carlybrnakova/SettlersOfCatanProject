@@ -265,7 +265,8 @@ namespace SettlersOfCatan
             return map[p1.X, p1.Y].hasABuilding() && map[p1.X, p1.Y].color != player.getColor();
         
         }
-        /*
+        
+		/*
         public void setupRoadConnections()
         {
             int col;
@@ -288,49 +289,40 @@ namespace SettlersOfCatan
 
         }
         */
-        public Intersection getIntAtIndex(int x, int y)
-        {
-            Intersection i = map[x, y];
-            return i;
-        }
 
-        public Intersection getIntAtIndex(Point p)
-        {
-            Intersection i = map[p.X, p.Y];
-            return i;
-        }
+		public Intersection getIntAtIndex(int x, int y)
+		{
+			Intersection i = map[x, y];
+			return i;
+		}
 
-        /*
-        public Road getRoadAtIndex(Point p)
-        {
-            Road r = roadMap[p.X, p.Y];
-            return r;
-        }
-        */
+		public Intersection getIntAtIndex(Point p)
+		{
+			Intersection i = map[p.X, p.Y];
+			return i;
+		}
 
+		public void buildSettlement(int x, int y)
+		{
+			map[x, y].build(Global_Variables.GAME_PIECE.SETTLEMENT);
+		}
 
-        public void buildSettlement(int x, int y)
-        {
-            map[x, y].build(Global_Variables.GAME_PIECE.SETTLEMENT);
-        }
+		public void buildSettlement(Point p)
+		{
+			map[p.X, p.Y].build(Global_Variables.GAME_PIECE.SETTLEMENT);
+		}
 
-        public void buildSettlement(Point p)
-        {
-            map[p.X, p.Y].build(Global_Variables.GAME_PIECE.SETTLEMENT);
-        }
-
-        public bool buildCity(Point p)
-        {
-            if (!map[p.X, p.Y].hasABuilding())
-            {
-                return false;
-            }
-            else
-            {
-                map[p.X, p.Y].build(Global_Variables.GAME_PIECE.CITY);
-                return true;
-            }
-        }
-
-    }
+		public bool buildCity(Point p)
+		{
+			if (!map[p.X, p.Y].hasABuilding())
+			{
+				return false;
+			}
+			else
+			{
+				map[p.X, p.Y].build(Global_Variables.GAME_PIECE.CITY);
+				return true;
+			}
+		}
+	}
 }

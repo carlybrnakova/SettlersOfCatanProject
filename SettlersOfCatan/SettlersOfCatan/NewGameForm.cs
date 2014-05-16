@@ -10,22 +10,21 @@ using System.Windows.Forms;
 
 namespace SettlersOfCatan
 {
-    public partial class NewGameForm : Form
-    {
-        public NewGameForm()
-        {
-            InitializeComponent();
-        }
+	public partial class NewGameForm : Form
+	{
+		public NewGameForm()
+		{
+			InitializeComponent();
+		}
 
-        private void label1_Click(object sender, EventArgs e)
-        {
+		private void label1_Click(object sender, EventArgs e)
+		{
+		}
 
-        }
-
-        private void StartButton_Click(object sender, EventArgs e)
-        {
-            Form gameScreen = new GameScreen();
-            gameScreen.Show();
-        }
-    }
+		private void StartButton_Click(object sender, EventArgs e)
+		{
+			Form gameScreen = new GameScreen();
+			gameScreen.Show();
+		}
+	}
 }

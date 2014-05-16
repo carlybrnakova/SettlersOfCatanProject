@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace SettlersOfCatan
 {
-    public partial class RoadBuilderForm : Form
-    {
-        public RoadBuilderForm()
-        {
-            InitializeComponent();
-        }
+	public partial class RoadBuilderForm : Form
+	{
+		public RoadBuilderForm()
+		{
+			InitializeComponent();
+		}
 
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-    }
+		private void CloseButton_Click(object sender, EventArgs e)
+		{
+			this.Close();
+		}
+	}
 }
