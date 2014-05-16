@@ -29,6 +29,8 @@ namespace SettlersOfCatan
         private World world;
         public bool hasLongestRoad;
         public bool hasLargestArmy;
+        public List<List<Connection>> roads;
+        public int longestRoadIndex;
 
         public Player()
         {
@@ -44,6 +46,7 @@ namespace SettlersOfCatan
             this.world = new World();
             this.hasLongestRoad = false;
             this.hasLargestArmy = false;
+            this.longestRoadIndex = 0;
         }
 
         public Player(String playerName, Color playerColor, World world1)
@@ -62,6 +65,7 @@ namespace SettlersOfCatan
             this.world = world1;
             this.hasLongestRoad = false;
             this.hasLargestArmy = false;
+            this.longestRoadIndex = 0;
         }
 
         public String getName()
@@ -730,6 +734,24 @@ namespace SettlersOfCatan
                             throw new ArgumentException("You don't have any Year of Plenty cards to play");
                         }
                     }
+            }
+        }
+
+        public void addConnection(Connection spot)
+        {
+            bool wasAdded = false;
+            foreach(List<Connection> intList in roads)
+            {
+                Connection lastItem = intList[intList.Count()];
+                if (lastItem.connectedTo.getConnections()[0] == spot || lastItem.connectedTo.getConnections()[1] == spot || lastItem.connectedTo.getConnections()[2] == spot)
+                {
+                    intList.Add(spot);
+                    wasAdded = true;
+                }
+            }
+            if (!wasAdded)
+            {
+                roads.Add(new List<Connection> { spot });
             }
         }
     }

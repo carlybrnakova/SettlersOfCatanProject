@@ -129,5 +129,9 @@ namespace SettlersOfCatan
             return this.hasAPort;
         }
 
+        public List<Connection> getConnections()
+        {
+            return this.connections;
+        }
     }
 }
