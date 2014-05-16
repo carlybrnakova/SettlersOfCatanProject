@@ -429,19 +429,20 @@ namespace SettlersOfCatan
             if (buttonColor != Color.White && buttonColor != Color.Black)
             {
                 theButton.BackColor = buttonColor;
-                this.world.currentPlayer.incrementPoints(1);
+                this.world.currentPlayer.incrementSettlements();
             }
             else if (buttonColor == Color.Black)
             {
                 theButton.Text = "*";
                 theButton.ForeColor = Color.White;
-                this.world.currentPlayer.incrementPoints(2);
+                this.world.currentPlayer.incrementCities();
             }
 
             this.updateResourceLabels();
             this.updatePlayerPoints();
         }
 
+        // TODO implement longest road
         private void roadButton_Click(object sender, EventArgs e)
         {
             RoadButton theButton = (RoadButton)sender;
@@ -452,7 +453,6 @@ namespace SettlersOfCatan
                 theButton.BackColor = buttonColor;
                 theButton.Enabled = false;
             }
-
             this.updateResourceLabels();
         }
 
@@ -535,7 +535,7 @@ namespace SettlersOfCatan
             this.updateDevelopmentCards();
         }
 
-        private void updateDevelopmentCards()
+        public void updateDevelopmentCards()
         {
             if (this.world.currentPlayer.playerHand.devCardsContains("knight"))
                 this.KnightsDevCardLabel.Show();
@@ -578,8 +578,8 @@ namespace SettlersOfCatan
 
         private void MonopolyDevCardLabel_Click(object sender, EventArgs e)
         {
-            this.world.currentPlayer.playDevCard("monopoly", null, null);
-            this.updateDevelopmentCards();
+            MonopolyForm myForm = new MonopolyForm(this.world, this);
+            myForm.Show();
         }
 
         private void RoadBuilderDevCardLabel_Click(object sender, EventArgs e)
@@ -592,13 +592,23 @@ namespace SettlersOfCatan
 
         private void YearOfPlentyDevCardLabel_Click(object sender, EventArgs e)
         {
-            this.world.currentPlayer.playDevCard("yearOfPlenty", null, null);
-            this.updateDevelopmentCards();
+            YearOfPlentyForm myForm = new YearOfPlentyForm(this.world, this);
+            myForm.Show();
         }
 
         private void updatePlayerPoints()
         {
             this.PointsAmountLabel.Text = this.world.currentPlayer.getPoints().ToString();
+            checkWinner();
+        }
+
+        private void checkWinner()
+        {
+            if (this.world.checkWinner())
+            {
+                WinForm myForm = new WinForm();
+                myForm.Show();
+            }
         }
     }
 }
