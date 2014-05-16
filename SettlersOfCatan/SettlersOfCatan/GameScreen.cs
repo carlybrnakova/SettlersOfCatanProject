@@ -258,6 +258,7 @@ namespace SettlersOfCatan
             int y = 0;
             int y_diff = 600;
 
+            /*
             // Set up top and bottom (short hexes)
             for (int i = 0; i < 4; i++)
             {
@@ -266,6 +267,14 @@ namespace SettlersOfCatan
                 pb.Size = new Size(150, 75);
                 pb.Location = new Point(x, y);
                 waterHexes[waterCount] = pb;
+
+                // Add port for first box
+                Label portLabel1 = new Label();
+                portLabel1.ForeColor = Color.White;
+                portLabel1.Text = "v   Anything   v";
+                portLabel1.Location = new Point(80, 40);
+                pb.Controls.Add(portLabel1);
+
                 waterCount++;
                 boardPanel.Controls.Add(pb);
                
@@ -278,6 +287,54 @@ namespace SettlersOfCatan
                 boardPanel.Controls.Add(pb2);
                 x += x_diff;
             }
+             * */
+            // Set up top
+            PictureBox PB = new PictureBox();
+            PB.BackColor = Color.Blue;
+            PB.Size = new Size(600, 75);
+            PB.Location = new Point(225, 0);
+            waterHexes[waterCount] = PB;
+
+            // Add ports for top
+            Label portLabel1 = new Label();
+            portLabel1.ForeColor = Color.White;
+            portLabel1.Text = "v   Anything 3:1   v";
+            portLabel1.Location = new Point(70, 40);
+            PB.Controls.Add(portLabel1);
+
+            // Add second port for top
+            Label portLabel2 = new Label();
+            portLabel2.ForeColor = Color.White;
+            portLabel2.Text = "v   Wool 2:1   v";
+            portLabel2.Location = new Point(300, 40);
+            PB.Controls.Add(portLabel2);
+
+            waterCount++;
+            boardPanel.Controls.Add(PB);
+
+            // Set up bottom
+            PictureBox PB2 = new PictureBox();
+            PB2.BackColor = Color.Blue;
+            PB2.Size = new Size(600, 75);
+            PB2.Location = new Point(225, 825);
+            waterHexes[waterCount] = PB;
+
+            // Add ports for bottom
+            Label portLabel3 = new Label();
+            portLabel3.ForeColor = Color.White;
+            portLabel3.Text = "^   Anything 3:1   ^";
+            portLabel3.Location = new Point(70, 25);
+            PB2.Controls.Add(portLabel3);
+
+            // Add second port for bottom
+            Label portLabel4 = new Label();
+            portLabel4.ForeColor = Color.White;
+            portLabel4.Text = "^   Lumber 2:1   ^";
+            portLabel4.Location = new Point(295, 25);
+            PB2.Controls.Add(portLabel4);
+
+            waterCount++;
+            boardPanel.Controls.Add(PB2);
 
             // Set up the water hexes on the left
             x = 150;
@@ -290,6 +347,17 @@ namespace SettlersOfCatan
                 pb.BackColor = Color.Blue;
                 pb.Size = new Size(150, 150);
                 pb.Location = new Point(x, y);
+                // Add port if relevant
+                if (waterCount == 4)
+                {
+                    Label portLabel5 = new Label();
+                    portLabel5.Size = new Size(150, 150);
+                    portLabel5.ForeColor = Color.White;
+                    portLabel5.Text = "    -->\n\n\n\nOre 2:1 \n\n\n\n\n    -->";
+                    portLabel5.Location = new Point(100, 10);
+                    pb.Controls.Add(portLabel5);
+                }
+
                 waterHexes[waterCount] = pb;
                 waterCount++;
                 boardPanel.Controls.Add(pb);
@@ -300,6 +368,16 @@ namespace SettlersOfCatan
                 pb2.BackColor = Color.Blue;
                 pb2.Size = new Size(150, 150);
                 pb2.Location = new Point(x, y + y_diff);
+                // Add port if relevant
+                if (waterCount == 5)
+                {
+                    Label portLabel5 = new Label();
+                    portLabel5.Size = new Size(150, 150);
+                    portLabel5.ForeColor = Color.White;
+                    portLabel5.Text = "      -->\n\n\n\nGrain 2:1\n\n\n\n\n      -->";
+                    portLabel5.Location = new Point(90, 10);
+                    pb2.Controls.Add(portLabel5);
+                }
                 waterHexes[waterCount] = pb2;
                 waterCount++;
                 boardPanel.Controls.Add(pb2);
@@ -320,6 +398,25 @@ namespace SettlersOfCatan
                 pb.BackColor = Color.Blue;
                 pb.Size = new Size(150, 150);
                 pb.Location = new Point(x, y);
+                // Add port if relevant
+                if (waterCount == 7)
+                {
+                    Label portLabel5 = new Label();
+                    portLabel5.Size = new Size(150, 150);
+                    portLabel5.ForeColor = Color.White;
+                    portLabel5.Text = "v  Anything 3:1  v";
+                    portLabel5.Location = new Point(10, 110);
+                    pb.Controls.Add(portLabel5);
+                }
+                else if (waterCount == 11)
+                {
+                    Label portLabel5 = new Label();
+                    portLabel5.Size = new Size(150, 150);
+                    portLabel5.ForeColor = Color.White;
+                    portLabel5.Text = "    <--\n\n\n\n Anything 3:1\n\n\n\n\n    <--";
+                    portLabel5.Location = new Point(10, 10);
+                    pb.Controls.Add(portLabel5);
+                }
                 waterHexes[waterCount] = pb;
                 waterCount++;
                 boardPanel.Controls.Add(pb);
@@ -330,6 +427,16 @@ namespace SettlersOfCatan
                 pb2.BackColor = Color.Blue;
                 pb2.Size = new Size(150, 150);
                 pb2.Location = new Point(x, y + y_diff);
+                // Add port if relevant
+                if (waterCount == 8)
+                {
+                    Label portLabel5 = new Label();
+                    portLabel5.Size = new Size(150, 150);
+                    portLabel5.ForeColor = Color.White;
+                    portLabel5.Text = "^  Brick 2:1  ^";
+                    portLabel5.Location = new Point(10, 20);
+                    pb2.Controls.Add(portLabel5);
+                }
                 waterHexes[waterCount] = pb2;
                 waterCount++;
                 boardPanel.Controls.Add(pb2);

@@ -16,10 +16,24 @@ namespace SettlersOfCatan
         private Global_Variables.GAME_PIECE currentPiece = Global_Variables.GAME_PIECE.NONE;
         public System.Drawing.Color color;
         private Player owner;
+        private bool hasAPort;
+        private Port port;
 
         public Intersection(Point p)
         {
             coord = p;
+            port = null;
+            for (int i = 0; i < connections.Capacity; i++)
+            {
+                connections.Add(new Connection(null));
+            }
+            owner = null;
+        }
+
+        public Intersection(Point p, Port thePort)
+        {
+            coord = p;
+            port = thePort;
             for (int i = 0; i < connections.Capacity; i++)
             {
                 connections.Add(new Connection(null));
@@ -108,6 +122,11 @@ namespace SettlersOfCatan
         public Global_Variables.GAME_PIECE getPieceType()
         {
             return this.currentPiece;
+        }
+
+        public bool hasPort()
+        {
+            return this.hasAPort;
         }
 
     }
