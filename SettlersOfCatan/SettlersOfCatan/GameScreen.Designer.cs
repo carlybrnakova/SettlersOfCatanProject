@@ -324,7 +324,7 @@
 			this.ItemToBuildComboBox.Size = new System.Drawing.Size(129, 21);
 			this.ItemToBuildComboBox.TabIndex = 5;
 			this.ItemToBuildComboBox.Text = "Build...";
-			this.ItemToBuildComboBox.SelectedIndexChanged += new System.EventHandler(this.ItemToBuildComboBox_SelectedIndexChanged);
+			//this.ItemToBuildComboBox.SelectedIndexChanged += new System.EventHandler(this.ItemToBuildComboBox_SelectedIndexChanged);
 			// 
 			// ProposeTradeButton
 			// 

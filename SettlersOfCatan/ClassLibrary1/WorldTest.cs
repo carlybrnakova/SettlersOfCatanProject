@@ -327,5 +327,93 @@ namespace ClassLibrary1
             }
             Assert.AreEqual(rounds, w.getNumberOfRoundsCompleted());
         }
+
+        [Test()]
+        public void TestThatHorizontalRoadIsBuiltIfPlayerHasSettlement()
+        {
+            World world = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, world);
+            world.addPlayer(player1);
+            world.setCurrentPlayer(player1.getName());
+
+            // Give player 5 resources of each except ore
+            player1.getHand().modifyBrick(5);
+            player1.getHand().modifyGrain(5);
+            player1.getHand().modifyLumber(5);
+            player1.getHand().modifyWool(5);
+            world.tryToBuildAtIntersection(new Point(0, 2));
+            Assert.AreEqual(Color.HotPink, world.roadButtonClicked(new Point(0, 0)));
+        }
+
+        [Test()]
+        public void TestThatVerticalRoadIsBuiltIfPlayerHasSettlement()
+        {
+            World world = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, world);
+            world.addPlayer(player1);
+            world.setCurrentPlayer(player1.getName());
+
+            // Give player 5 resources of each except ore
+            player1.getHand().modifyBrick(5);
+            player1.getHand().modifyGrain(5);
+            player1.getHand().modifyLumber(5);
+            player1.getHand().modifyWool(5);
+            world.tryToBuildAtIntersection(new Point(0, 2));
+            Assert.AreEqual(Color.HotPink, world.roadButtonClicked(new Point(1, 0)));
+        }
+
+        [Test()]
+        public void TestThatBuildingRoadReturnsWhiteIfPlayeDoesNotHaveSettlement()
+        {
+            World world = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, world);
+            world.addPlayer(player1);
+            world.setCurrentPlayer(player1.getName());
+
+            // Give player 5 resources of each except ore
+            player1.getHand().modifyBrick(5);
+            player1.getHand().modifyGrain(5);
+            player1.getHand().modifyLumber(5);
+            player1.getHand().modifyWool(5);
+            world.tryToBuildAtIntersection(new Point(0, 2));
+            Assert.AreEqual(Color.White, world.roadButtonClicked(new Point(5, 1)));
+        }
+
+
+        [Test()]
+        public void TestThatBuildingRoadReturnsWhiteIfIndexIsOutOfRange()
+        {
+            World world = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, world);
+            world.addPlayer(player1);
+            world.setCurrentPlayer(player1.getName());
+
+            // Give player 5 resources of each except ore
+            player1.getHand().modifyBrick(5);
+            player1.getHand().modifyGrain(5);
+            player1.getHand().modifyLumber(5);
+            player1.getHand().modifyWool(5);
+            world.tryToBuildAtIntersection(new Point(0, 2));
+            Assert.AreEqual(Color.White, world.roadButtonClicked(new Point(52, 1)));
+        }
+
+        [Test()]
+        public void TestThatResourceGenerationWorks()
+        {
+            World world = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, world);
+            world.addPlayer(player1);
+            world.setCurrentPlayer(player1.getName());
+
+            // Give player 5 resources of each except ore
+            player1.getHand().modifyBrick(5);
+            player1.getHand().modifyGrain(5);
+            player1.getHand().modifyLumber(5);
+            player1.getHand().modifyWool(5);
+            world.tryToBuildAtIntersection(new Point(0, 2));
+            world.generateMyResources(1, false);
+
+
+            }
     }
 }

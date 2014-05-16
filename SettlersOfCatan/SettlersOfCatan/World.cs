@@ -221,6 +221,10 @@ namespace SettlersOfCatan
 						this.catanMap.getIslandMap().getIntAtIndex(coords).color = this.currentPlayer.getColor();
 						catanMap.getIslandMap().getIntAtIndex(coords).setPlayer(currentPlayer);
 						this.catanMap.getIslandMap().buildSettlement(coords);
+                        if (this.catanMap.getIslandMap().getIntAtIndex(coords).hasPort())
+                        {
+                            currentPlayer.addPort(this.catanMap.getIslandMap().getIntAtIndex(coords).getPort());
+                        }
 						currentPlayer.buildSettlement();
 						return currentPlayer.getColor();
 					}
@@ -304,7 +308,7 @@ namespace SettlersOfCatan
 				}
 				catch (NullReferenceException)
 				{
-					theColor = Color.Black;
+					theColor = Color.White;
 				}
 			}
 			else

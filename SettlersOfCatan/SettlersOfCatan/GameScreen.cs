@@ -606,6 +606,7 @@ namespace SettlersOfCatan
 			button.coordinates = new Point(x, y);
 		}
 
+        /*
         private void ItemToBuildComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox myComboBox = (ComboBox)sender;
@@ -623,7 +624,9 @@ namespace SettlersOfCatan
                 // enable all relevant current settlement buttons to be changed into cities
             }
         }
+         * */
 
+        /*
         private void showOnlyOpenRoadButtons()
         {
             // Disable all city/settlement buttons
@@ -633,6 +636,7 @@ namespace SettlersOfCatan
             // Show and enable all unused road buttons
 
         }
+         * */
 
 
         private void intersectionButton_Click(object sender, EventArgs e)
