@@ -36,7 +36,40 @@ namespace SettlersOfCatan
             {
                 for (int c = 0; c < 11; c++)
                 {
-                    map[r, c] = new Intersection(new Point(r, c));
+                    // 3:1 ports
+                    if ((r == 0 && (c == 2 || c == 3)) ||
+                        (r == 1 && (c == 8 || c == 9)) ||
+                        ((r == 2 || r == 3) && c == 10) ||
+                        (r == 5 && (c == 2 || c == 3)))
+                    {
+                        map[r, c] = new Intersection(new Point(r, c), new Port("Anything", 3));
+                    }
+                    // Resource ports
+                    else if (r == 0 && (c == 5 || c == 6))
+                    {
+                        map[r, c] = new Intersection(new Point(r, c), new Port("Wool", 2));
+                    }
+                    else if ((r == 1 || r == 2) && c == 1)
+                    {
+                        map[r, c] = new Intersection(new Point(r, c), new Port("Ore", 2));
+                    }
+                    else if ((r == 3 || r == 4) && c == 1)
+                    {
+                        map[r, c] = new Intersection(new Point(r, c), new Port("Grain", 2));
+                    }
+                    else if (r == 4 && (c == 8 || c == 9))
+                    {
+                        map[r, c] = new Intersection(new Point(r, c), new Port("Brick", 2));
+                    }
+                    else if (r == 5 && (c == 5 || c == 6))
+                    {
+                        map[r, c] = new Intersection(new Point(r, c), new Port("Lumber", 2));
+                    }
+                    // An intersection that doesn't have any ports
+                    else
+                    {
+                        map[r, c] = new Intersection(new Point(r, c));
+                    }
                 }
             }
         }
