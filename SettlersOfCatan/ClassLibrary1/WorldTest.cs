@@ -327,5 +327,38 @@ namespace ClassLibrary1
             }
             Assert.AreEqual(rounds, w.getNumberOfRoundsCompleted());
         }
+
+        [Test()]
+        public void TestTryToBuildAtIntersectionWithoutResources()
+        {
+            World w = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+            w.addPlayer(player1);
+            w.setCurrentPlayer(player1.getName());
+            Color c = w.tryToBuildAtIntersection(new Point(3,3));
+            Assert.AreEqual(Color.White, c);
+            player1.getHand().modifyBrick(1);
+            player1.getHand().modifyGrain(1);
+            player1.getHand().modifyLumber(1);
+            player1.getHand().modifyWool(1);
+            Color d = w.tryToBuildAtIntersection(new Point(2, 3));
+            Assert.AreEqual(Color.White, d);
+        }
+
+        [Test()]
+        public void TestGenerateResourcesWithRequiredNumberOfRounds()
+        {
+            World w = new World(3, 0);
+            int rounds = 0;
+            for (int i = 0; i < 9; i++)
+            {
+                w.endTurn();
+                if (i % 3 == 0)
+                {
+                    rounds++;
+                }
+            }
+            Assert.AreEqual(rounds, w.getNumberOfRoundsCompleted());
+        }
     }
 }

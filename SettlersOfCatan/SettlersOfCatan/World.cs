@@ -94,20 +94,47 @@ namespace SettlersOfCatan
 		}
 
 		public void endTurn()
-		{
-			setLongestRoad();
-			setLargestArmy();
-			if (currentPlayerNumber < this.players.Count() - 1)
-			{
-				currentPlayerNumber++;
-			}
-			else
-			{
-				currentPlayerNumber = 0;
-				numOfCompletedRounds++;
-			}
-			currentPlayer = this.players[currentPlayerNumber];
-		}
+        {
+            setLongestRoad();
+            setLargestArmy();
+            if (numOfCompletedRounds == 0)
+            {
+                if (currentPlayerNumber < this.players.Count() - 1)
+                {
+                    currentPlayerNumber++;
+                }
+                else
+                {
+                    currentPlayerNumber = 2;
+                    numOfCompletedRounds++;
+                }
+            }
+            else if (numOfCompletedRounds == 1)
+            {
+                if (currentPlayerNumber > 0)
+                {
+                    currentPlayerNumber--;
+                }
+                else
+                {
+                    currentPlayerNumber = 0;
+                    numOfCompletedRounds++;
+                }
+            }
+            else
+            {
+                if (currentPlayerNumber < this.players.Count() - 1)
+                {
+                    currentPlayerNumber++;
+                }
+                else
+                {
+                    currentPlayerNumber = 0;
+                    numOfCompletedRounds++;
+                }
+            }
+            currentPlayer = this.players[currentPlayerNumber];
+        }
 
 		public int getNumberOfRoundsCompleted()
 		{
