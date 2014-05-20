@@ -16,54 +16,33 @@ namespace SettlersOfCatan
 		private readonly int MAX_SETTLEMENTS = 5;
 		private readonly int MAX_ROADS = 15;
 
-		private int points;
-		private int citiesPlayed;
-		private int settlementsPlayed;
-		private int roadsPlayed;
+		private int points = 0;
+		private int citiesPlayed = 0;
+		private int settlementsPlayed = 0;
+		private int roadsPlayed = 0;
 		//only public for testing
-		public Hand playerHand;
-		private Player playerToTradeWith;
-		private int[] toTrade;
-		private int[] toReceive;
+		public Hand playerHand = new Hand();
+		private Player playerToTradeWith = null;
+		private int[] toTrade = new int[5] {0, 0, 0, 0, 0};
+		private int[] toReceive = new int[5] {0, 0, 0, 0, 0};
 		private String name;
 		private Color color;
-		private bool hasWon;
+		private bool hasWon = false;
 		private World world;
-		public bool hasLongestRoad;
-		public bool hasLargestArmy;
+		public bool hasLongestRoad = false;
+		public bool hasLargestArmy = false;
+		private List<Point> settlementLocations = new List<Point>();
 
 		public Player()
 		{
-			this.points = 0;
-			this.citiesPlayed = 0;
-			this.settlementsPlayed = 0;
-			this.roadsPlayed = 0;
-			this.playerHand = new Hand();
-			this.toTrade = new int[5] {0, 0, 0, 0, 0};
-			this.toReceive = new int[5] {0, 0, 0, 0, 0};
-			this.playerToTradeWith = null;
-			this.hasWon = false;
 			this.world = new World();
-			this.hasLongestRoad = false;
-			this.hasLargestArmy = false;
 		}
 
-		public Player(String playerName, Color playerColor, World world1)
+		public Player(String playerName, Color playerColor, World world1) : this()
 		{
 			this.name = playerName;
 			this.color = playerColor;
-			this.points = 0;
-			this.citiesPlayed = 0;
-			this.settlementsPlayed = 0;
-			this.roadsPlayed = 0;
-			this.playerHand = new Hand();
-			this.toTrade = new int[5] {0, 0, 0, 0, 0};
-			this.toReceive = new int[5] {0, 0, 0, 0, 0};
-			this.playerToTradeWith = null;
-			this.hasWon = false;
 			this.world = world1;
-			this.hasLongestRoad = false;
-			this.hasLargestArmy = false;
 		}
 
 		public String getName()
@@ -90,6 +69,17 @@ namespace SettlersOfCatan
 		{
 			return MAX_ROADS - roadsPlayed;
 		}
+		
+		public bool incrementSettlements()
+		{
+			if (getSettlementsRemaining() > 0)
+			{
+				settlementsPlayed++;
+				return true;
+			}
+			else
+				return false;
+		}
 
 		public bool incrementCities()
 		{
@@ -100,17 +90,6 @@ namespace SettlersOfCatan
 				{
 					settlementsPlayed--;
 				}
-				return true;
-			}
-			else
-				return false;
-		}
-
-		public bool incrementSettlements()
-		{
-			if (getSettlementsRemaining() > 0)
-			{
-				settlementsPlayed++;
 				return true;
 			}
 			else
@@ -214,6 +193,10 @@ namespace SettlersOfCatan
 			return this.hasWon;
 		}
 
+		public bool mustRemoveHalf()
+		{
+			return this.playerHand.getResources() > 7;
+		}
 
 		public void tradeWithBank(String resourceToTradeIn, String resourceToGain)
 		{
@@ -799,18 +782,18 @@ namespace SettlersOfCatan
 			incrementRoads();
 		}
 
-		public void buildCity()
+		public void addSettlement(Point coords)
 		{
-			this.playerHand.modifyGrain(-3);
-			this.playerHand.modifyOre(-2);
-			incrementCities();
-			incrementPoints(1); // One point is already counted for the settlement that was there
+			this.settlementLocations.Add(coords);
+			buildSettlement();
 		}
 
 		public void buildSettlement()
 		{
 			if (this.getHand().hasFreeSettlementPoints())
+			{
 				this.getHand().modifyFreeSettlementPoints(-1);
+			}
 			else
 			{
 				this.playerHand.modifyGrain(-1);
@@ -821,6 +804,19 @@ namespace SettlersOfCatan
 			incrementSettlements();
 			incrementPoints(1);
 		}
+
+		public void buildCity()
+		{
+			this.playerHand.modifyGrain(-3);
+			this.playerHand.modifyOre(-2);
+			incrementCities();
+			incrementPoints(1); // One point is already counted for the settlement that was there
+		}
+
+		public List<Point> getSettlementLocations()
+		{
+			return this.settlementLocations;
+		} 
 
 		public int getRoadsPlayed()
 		{
@@ -945,6 +941,36 @@ namespace SettlersOfCatan
 					}
 				}
 			}
+		}
+
+		public void transferGrain(int amount)
+		{
+			this.playerHand.modifyGrain(-amount);
+			this.world.bank.modifyResource("grain", amount);
+		}
+
+		public void transferOre(int amount)
+		{
+			this.playerHand.modifyOre(-amount);
+			this.world.bank.modifyResource("ore", amount);
+		}
+
+		public void transferWool(int amount)
+		{
+			this.playerHand.modifyWool(-amount);
+			this.world.bank.modifyResource("wool", amount);
+		}
+
+		public void transferLumber(int amount)
+		{
+			this.playerHand.modifyLumber(-amount);
+			this.world.bank.modifyResource("lumber", amount);
+		}
+
+		public void transferBrick(int amount)
+		{
+			this.playerHand.modifyBrick(-amount);
+			this.world.bank.modifyResource("brick", amount);
 		}
 	}
 }

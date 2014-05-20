@@ -24,6 +24,7 @@ namespace SettlersOfCatan
 		private int numOfCompletedRounds;
 		private int turnCounter;
 		private bool placeRobber = false;
+		private Hex robberHex;
 
 		public World()
 		{
@@ -32,6 +33,7 @@ namespace SettlersOfCatan
 
 			// Generate a new map for the board
 			this.catanMap = new CompleteMap();
+			checkRobberHex();
 			this.currentRoll = 0;
 			this.largestArmySize = 0;
 			this.longestRoadSize = 0;
@@ -40,22 +42,11 @@ namespace SettlersOfCatan
 			this.numOfCompletedRounds = 0;
 		}
 
-		public World(int humans, int computers)
+		public World(int humans, int computers) : this()
 		{
-			bank = new Bank();
-			players = new List<Player>();
 			players.Add(new Player("bob", Color.Red, this));
 			players.Add(new Player("joe", Color.Blue, this));
 			players.Add(new Player("Anne", Color.Green, this));
-
-			// Generate a new map for the board
-			this.catanMap = new CompleteMap();
-			this.currentRoll = 0;
-			this.largestArmySize = 0;
-			this.longestRoadSize = 0;
-			this.largestArmyOwnerIndex = -1;
-			this.longestRoadOwnerIndex = -1;
-			this.numOfCompletedRounds = 0;
 
 			/*
             for (int i = 0; i < humans; i++)
@@ -71,6 +62,46 @@ namespace SettlersOfCatan
 			currentPlayer = this.players[0];
 			this.currentPlayer.getHand().modifyFreeRoadPoints(1);
 			this.currentPlayer.getHand().modifyFreeSettlementPoints(1);
+		}
+
+		private void checkRobberHex()
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				for (int j = 1; j < 4; j++)
+				{
+					if (this.catanMap.getHexMap().map[i, j].getHasRobber())
+					{
+						setRobberHex(this.catanMap.getHexMap().map[i, j]);
+					}
+					else
+					{
+						this.catanMap.getHexMap().map[i, j].setHasRobber(false);
+					}
+				}
+			}
+
+			// check outliers: [1][0], [2][0], [3][0], [2][4]
+			for (int i = 1; i < 4; i++)
+			{
+				if (this.catanMap.getHexMap().map[i, 0].getHasRobber())
+				{
+					setRobberHex(this.catanMap.getHexMap().map[i, 0]);
+				}
+				else
+				{
+					this.catanMap.getHexMap().map[i, 0].setHasRobber(false);
+				}
+			}
+
+			if (this.catanMap.getHexMap().map[2, 4].getHasRobber())
+			{
+				setRobberHex(this.catanMap.getHexMap().map[2, 4]);
+			}
+			else
+			{
+				this.catanMap.getHexMap().map[2, 4].setHasRobber(false);
+			}
 		}
 
 		public void addPlayer(Player p)
@@ -96,7 +127,6 @@ namespace SettlersOfCatan
 		public void endTurn()
 		{
 			setLongestRoad();
-			setLargestArmy();
 			if (currentPlayerNumber < this.players.Count() - 1)
 			{
 				currentPlayerNumber++;
@@ -112,6 +142,11 @@ namespace SettlersOfCatan
 		public int getNumberOfRoundsCompleted()
 		{
 			return this.numOfCompletedRounds;
+		}
+
+		public bool isFirstFewTurnsPhase()
+		{
+			return this.numOfCompletedRounds < 2;
 		}
 
 		private void setLongestRoad()
@@ -154,7 +189,7 @@ namespace SettlersOfCatan
 			}
 		}
 
-		private void setLargestArmy()
+		public void setLargestArmy()
 		{
 			int numberOfPlayers = this.players.Count() - 1;
 
@@ -222,7 +257,8 @@ namespace SettlersOfCatan
 						this.catanMap.getIslandMap().getIntAtIndex(coords).color = this.currentPlayer.getColor();
 						catanMap.getIslandMap().getIntAtIndex(coords).setPlayer(currentPlayer);
 						this.catanMap.getIslandMap().buildSettlement(coords);
-						currentPlayer.buildSettlement();
+						currentPlayer.addSettlement(coords);
+						addOwner(coords);
 						return currentPlayer.getColor();
 					}
 					else
@@ -267,6 +303,14 @@ namespace SettlersOfCatan
 
 					return Color.White;
 				}
+			}
+		}
+
+		public void addOwner(Point coords)
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				this.catanMap.getIslandMap().getIntAtIndex(coords).resourceHexes[i].addOwner(currentPlayer);
 			}
 		}
 
@@ -340,7 +384,7 @@ namespace SettlersOfCatan
 		private void generateMyResources(int num, bool isItBeginningOfTheGame)
 		{
 			// For now, give all resources which a settlement/city is on
-			if (this.getNumberOfRoundsCompleted() >= 2)
+			if (!isFirstFewTurnsPhase())
 			{
 				IslandMap theMap = catanMap.getIslandMap();
 				for (int r = 0; r < 6; r++)
@@ -367,7 +411,10 @@ namespace SettlersOfCatan
 				{
 					if (isItBeginningOfTheGame || h.getToken() == currentRoll)
 					{
-						hand.modifyResources(h.getResourceType(), amount);
+						if (h != this.robberHex)
+						{
+							hand.modifyResources(h.getResourceType(), amount);
+						}
 					}
 				}
 				catch (NullReferenceException)
@@ -395,6 +442,16 @@ namespace SettlersOfCatan
 		public void setPlaceRobber(bool condition)
 		{
 			this.placeRobber = condition;
+		}
+
+		public Hex getRobberHex()
+		{
+			return this.robberHex;
+		}
+
+		public void setRobberHex(Hex hex)
+		{
+			this.robberHex = hex;
 		}
 	}
 }

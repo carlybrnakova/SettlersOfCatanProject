@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,7 @@ namespace SettlersOfCatan
 
 		private World world;
 
+		private Hex robberHex = null;
 
 		// Intersection Grid
 		// 7
@@ -517,7 +519,6 @@ namespace SettlersOfCatan
 			{
 				if (diff == true)
 				{
-
 					setPictureBoxColorLocationAndSize(pb, Color.Blue, x, y + y_diff, new Size(150, 150));
 				}
 				else
@@ -643,8 +644,7 @@ namespace SettlersOfCatan
             Color buttonColor = world.tryToBuildAtIntersection(theButton.getCoords());
             if (buttonColor != Color.White && buttonColor != Color.Black)
             {
-                theButton.BackColor = buttonColor;
-                this.world.currentPlayer.incrementSettlements();
+				theButton.BackColor = buttonColor;
             }
             else if (buttonColor == Color.Black)
             {
@@ -689,11 +689,12 @@ namespace SettlersOfCatan
             }
             else{
                 this.world.endTurn();
+				this.world.setLargestArmy();
                 this.updateResourceLabels();
                 this.updateCurrentPlayerNameLabel();
                 this.updateRoundLabel();
                 this.updatePlayerPoints();
-                if (this.world.getNumberOfRoundsCompleted() < 2) 
+                if (this.world.isFirstFewTurnsPhase()) 
                 {
                     this.world.currentPlayer.getHand().modifyFreeRoadPoints(1);
                     this.world.currentPlayer.getHand().modifyFreeSettlementPoints(1);
@@ -701,6 +702,7 @@ namespace SettlersOfCatan
                     myForm.Show();
                 }
             }
+			removeRobberText();
         }
 
         private void updateRoundLabel()
@@ -753,12 +755,61 @@ namespace SettlersOfCatan
             this.RollNumberLabel.Text = roll.ToString();
 	        if (roll == 7)
 	        {
-				removeRobberText();
+				//removeRobberText();
+		        for (int i = this.world.currentPlayerNumber; i < this.world.players.Count; i++)
+		        {
+			        if (this.world.players[i].mustRemoveHalf())
+			        {
+				        RemoveCardsForm removeForm = new RemoveCardsForm(this.world.players[i]);
+						removeForm.Show();
+			        }
+		        }
+				foreach (Player p in this.world.players)
+		        {
+			        if (p.mustRemoveHalf())
+			        {
+				        
+			        }
+		        }
 				this.world.setPlaceRobber(true);
 		        RobberForm myForm = new RobberForm(this.world, this);
 				myForm.Show();
 	        }
         }
+
+		private void checkRemoveHalf()
+		{
+			for (int i = this.world.currentPlayerNumber; i < this.world.players.Count; i++)
+			{
+				if (this.world.players[i].mustRemoveHalf())
+				{
+
+				}
+			}
+
+			for (int i = 0; i < this.world.currentPlayerNumber; i++)
+			{
+				if (this.world.players[i].mustRemoveHalf())
+				{
+
+				}
+				
+			}
+		}
+
+		private List<Player> robPlayers()
+		{
+			List<Player> playersToRob = new List<Player>(3);
+
+			foreach (Player p in this.robberHex.owners)
+			{
+				if (p != this.world.currentPlayer)
+				{
+					playersToRob.Add(p);
+				}
+			}
+			return playersToRob;
+		}
 
         private void BuyDevCardButton_Click(object sender, EventArgs e)
         {
@@ -769,13 +820,15 @@ namespace SettlersOfCatan
 
 		private void removeRobberText()
 		{
+			this.robberHex = this.world.getRobberHex();
+
 			for (int i = 0; i < 5; i++)
 			{
 				for (int j = 1; j < 4; j++)
 				{
-					if (this.hexGrid[i][j].getHasRobber())
+					if (this.hexGrid[i][j].getHex() != this.world.getRobberHex())
 					{
-						this.hexGrid[i][j].paintBlack();
+						this.hexGrid[i][j].setHasRobber(false);
 					}
 				}
 			}
@@ -783,16 +836,20 @@ namespace SettlersOfCatan
 			// check outliers: [1][0], [2][0], [3][0], [2][4]
 			for (int i = 1; i < 4; i++)
 			{
-				if (this.hexGrid[i][0].getHasRobber())
+				if (this.hexGrid[i][0].getHex() != this.world.getRobberHex())
 				{
-					this.hexGrid[i][0].paintBlack();
+					this.hexGrid[i][0].setHasRobber(false);
 				}
 			}
 
 			if (this.hexGrid[2][4].getHasRobber())
 			{
-				this.hexGrid[2][4].paintBlack();
+				if (this.hexGrid[2][4].getHex() != this.world.getRobberHex())
+				{
+					this.hexGrid[2][4].setHasRobber(false);
+				}
 			}
+			this.Refresh();
 		}
 
         public void updateDevelopmentCards()

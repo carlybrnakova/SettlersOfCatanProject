@@ -15,7 +15,7 @@ namespace SettlersOfCatan
         private Point coord;
         private Global_Variables.GAME_PIECE currentPiece = Global_Variables.GAME_PIECE.NONE;
         public System.Drawing.Color color;
-        private Player owner;
+        private Player owner = null;
         //private bool hasAPort;
         private Port port;
 
@@ -27,18 +27,11 @@ namespace SettlersOfCatan
             {
                 connections.Add(new Connection(null));
             }
-            owner = null;
         }
 
-        public Intersection(Point p, Port thePort)
+        public Intersection(Point p, Port thePort) : this(p)
         {
-            coord = p;
             port = thePort;
-            for (int i = 0; i < connections.Capacity; i++)
-            {
-                connections.Add(new Connection(null));
-            }
-            owner = null;
         }
 
 		public void build(Global_Variables.GAME_PIECE piece)
@@ -111,7 +104,6 @@ namespace SettlersOfCatan
 		{
 			owner = p;
 		}
-
 
 		public int getNumOfResourcesToGenerate()
 		{
