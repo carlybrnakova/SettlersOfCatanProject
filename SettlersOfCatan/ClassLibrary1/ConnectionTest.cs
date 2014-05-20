@@ -9,15 +9,15 @@ using System.Drawing;
 
 namespace ClassLibrary1
 {
-    class ConnectionTest
-    {
-        [Test()]
-        public void TestThatRoadColorGetsSet()
-        {
-            Intersection i = new Intersection(new Point(1, 1));
-            Connection c = new Connection(i);
-            c.setRoadColor(Color.HotPink);
-            Assert.AreEqual(Color.HotPink, c.getRoadColor());
-        }
-    }
+	internal class ConnectionTest
+	{
+		[Test()]
+		public void TestThatRoadColorGetsSet()
+		{
+			Intersection i = new Intersection(new Point(1, 1));
+			Connection c = new Connection(i);
+			c.setRoadColor(Color.HotPink);
+			Assert.AreEqual(Color.HotPink, c.getRoadColor());
+		}
+	}
 }
