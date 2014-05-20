@@ -33,6 +33,7 @@ namespace SettlersOfCatan
 		public bool hasLargestArmy;
         public List<List<Connection>> roads;
         public int longestRoadIndex;
+        public bool hasRolled;
 
 		public Player()
 		{
@@ -48,6 +49,7 @@ namespace SettlersOfCatan
 			this.world = new World();
 			this.hasLongestRoad = false;
 			this.hasLargestArmy = false;
+            this.hasRolled = false;
 		}
 
 		public Player(String playerName, Color playerColor, World world1)
@@ -66,6 +68,7 @@ namespace SettlersOfCatan
 			this.world = world1;
 			this.hasLongestRoad = false;
 			this.hasLargestArmy = false;
+            this.hasRolled = false;
 		}
 
 		public String getName()

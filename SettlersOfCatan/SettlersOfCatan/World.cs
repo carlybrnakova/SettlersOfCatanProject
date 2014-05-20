@@ -105,7 +105,7 @@ namespace SettlersOfCatan
                 }
                 else
                 {
-                    currentPlayerNumber = 2;
+                    currentPlayerNumber = this.players.Count() - 1;
                     numOfCompletedRounds++;
                 }
             }
@@ -121,10 +121,11 @@ namespace SettlersOfCatan
                     numOfCompletedRounds++;
                 }
             }
-            else
+            else if (currentPlayer.hasRolled)
             {
                 if (currentPlayerNumber < this.players.Count() - 1)
                 {
+                    currentPlayer.hasRolled = false;
                     currentPlayerNumber++;
                 }
                 else
@@ -133,6 +134,15 @@ namespace SettlersOfCatan
                     numOfCompletedRounds++;
                 }
             }
+            else
+            {
+                // pop up error message if player hasn't rolled yet
+                DialogResult num = MessageBox.Show("you must roll before ending the turn",
+                    "roll the dice",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+            }
+
             currentPlayer = this.players[currentPlayerNumber];
         }
 
@@ -350,11 +360,29 @@ namespace SettlersOfCatan
 
 		public void rollDice()
 		{
-			Random die = new Random();
-			int die1Roll = die.Next(1, 7);
-			int die2Roll = die.Next(1, 7);
-			currentRoll = die1Roll + die2Roll;
-			generateMyResources(currentRoll, false);
+            if (!this.currentPlayer.hasRolled && numOfCompletedRounds >= 2)
+            {
+                    Random die = new Random();
+                    int die1Roll = die.Next(1, 7);
+                    int die2Roll = die.Next(1, 7);
+                    currentRoll = die1Roll + die2Roll;
+                    generateMyResources(currentRoll, false);
+            }
+            else if (this.currentPlayer.hasRolled)
+            {
+                DialogResult num = MessageBox.Show("cannot roll the dice more than once.",
+                        "rolled already",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                DialogResult num = MessageBox.Show("cannot roll the dice in the first 2 rounds",
+                        "too early to roll",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation);
+            }
+            this.currentPlayer.hasRolled = true;
 		}
 
 		public int getRollNumber()
