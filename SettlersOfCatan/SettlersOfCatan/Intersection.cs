@@ -8,38 +8,31 @@ using SettlersOfCatan;
 
 namespace SettlersOfCatan
 {
-    public class Intersection
-    {
-        public List<Connection> connections = new List<Connection>(3);
-        public List<Hex> resourceHexes = new List<Hex>(3);
-        private Point coord;
-        private Global_Variables.GAME_PIECE currentPiece = Global_Variables.GAME_PIECE.NONE;
-        public System.Drawing.Color color;
-        private Player owner;
-        private bool hasAPort;
-        private Port port;
+	public class Intersection
+	{
+		public List<Connection> connections = new List<Connection>(3);
+		public List<Hex> resourceHexes = new List<Hex>(3);
+		private Point coord;
+		private Global_Variables.GAME_PIECE currentPiece = Global_Variables.GAME_PIECE.NONE;
+		public System.Drawing.Color color;
+		private Player owner = null;
+		//private bool hasAPort;
+		private Port port;
 
-        public Intersection(Point p)
-        {
-            coord = p;
-            port = null;
-            for (int i = 0; i < connections.Capacity; i++)
-            {
-                connections.Add(new Connection(null));
-            }
-            owner = null;
-        }
+		public Intersection(Point p)
+		{
+			coord = p;
+			port = null;
+			for (int i = 0; i < connections.Capacity; i++)
+			{
+				connections.Add(new Connection(null));
+			}
+		}
 
-        public Intersection(Point p, Port thePort)
-        {
-            coord = p;
-            port = thePort;
-            for (int i = 0; i < connections.Capacity; i++)
-            {
-                connections.Add(new Connection(null));
-            }
-            owner = null;
-        }
+		public Intersection(Point p, Port thePort) : this(p)
+		{
+			port = thePort;
+		}
 
 		public void build(Global_Variables.GAME_PIECE piece)
 		{
@@ -112,7 +105,6 @@ namespace SettlersOfCatan
 			owner = p;
 		}
 
-
 		public int getNumOfResourcesToGenerate()
 		{
 			if (this.currentPiece == Global_Variables.GAME_PIECE.SETTLEMENT) return 1;
@@ -120,19 +112,19 @@ namespace SettlersOfCatan
 			else return 0;
 		}
 
-        public Global_Variables.GAME_PIECE getPieceType()
-        {
-            return this.currentPiece;
-        }
-
-        public bool hasPort()
-        {
-            return this.hasAPort;
-        }
+		public Global_Variables.GAME_PIECE getPieceType()
+		{
+			return this.currentPiece;
+		}
 
         public List<Connection> getConnections()
         {
             return this.connections;
         }
+
+		public bool hasPort()
+		{
+			return this.port != null;
+		}
     }
 }

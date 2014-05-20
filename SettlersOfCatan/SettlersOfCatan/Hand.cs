@@ -125,11 +125,13 @@ namespace SettlersOfCatan
 		{
 			if (this.ore < amount*-1)
 			{
+				/*
 				DialogResult num = MessageBox.Show("Player cannot have negative ore.",
 					"Insufficient Resources",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
-				//throw new System.ArgumentException("player cannot have negative resources");
+				 */
+				throw new System.ArgumentException("Player cannot have negative ore.");
 			}
 			else
 			{
@@ -141,11 +143,13 @@ namespace SettlersOfCatan
 		{
 			if (this.wool < amount*-1)
 			{
+				/*
 				DialogResult num = MessageBox.Show("Player cannot have negative wool.",
 					"Insufficient Resources",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
-				//throw new System.ArgumentException("player cannot have negative resources");
+				 */
+				throw new System.ArgumentException("Player cannot have negative wool.");
 			}
 			else
 			{
@@ -157,11 +161,13 @@ namespace SettlersOfCatan
 		{
 			if (this.lumber < amount*-1)
 			{
+				/*
 				DialogResult num = MessageBox.Show("Player cannot have negative lumber.",
 					"Insufficient Resources",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
-				//throw new System.ArgumentException("player cannot have negative resources");
+				 */
+				throw new System.ArgumentException("Player cannot have negative lumber.");
 			}
 			else
 			{
@@ -173,11 +179,13 @@ namespace SettlersOfCatan
 		{
 			if (this.grain < amount*-1)
 			{
+				/*
 				DialogResult num = MessageBox.Show("Player cannot have negative grain.",
 					"Insufficient Resources",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
-				//throw new System.ArgumentException("player cannot have negative resources");
+				*/
+				throw new System.ArgumentException("Player cannot have negative grain.");
 			}
 			else
 			{
@@ -189,11 +197,13 @@ namespace SettlersOfCatan
 		{
 			if (this.brick < amount*-1)
 			{
+				/*
 				DialogResult num = MessageBox.Show("Player cannot have negative brick.",
 					"Insufficient Resources",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
-				//throw new System.ArgumentException("player cannot have negative resources");
+				 */
+				throw new System.ArgumentException("Player cannot have negative brick.");
 			}
 			else
 			{
@@ -220,12 +230,15 @@ namespace SettlersOfCatan
 					}
 					else
 					{
+						/*
 						DialogResult num = MessageBox.Show("You don't have any knights to play.",
 							"No Knights to Play",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
+						 */
+
+						throw new ArgumentException("You don't have any to Knights to remove.");
 						break;
-						//throw new ArgumentException("You don't have any to remove");
 					}
 				}
 				case "victoryPoint":
@@ -238,12 +251,15 @@ namespace SettlersOfCatan
 					}
 					else
 					{
+						/*
 						DialogResult num = MessageBox.Show("You don't have any victory point cards to play.",
 							"No Points Gained",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
+						*/
+
+						throw new ArgumentException("You don't have any Victory Point cards to remove.");
 						break;
-						//throw new ArgumentException("You don't have any to remove");
 					}
 				}
 				case "monopoly":
@@ -256,12 +272,15 @@ namespace SettlersOfCatan
 					}
 					else
 					{
+						/*
 						DialogResult num = MessageBox.Show("You don't have any monopoly cards to play.",
 							"No Monopolizing",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
 						break;
-						//throw new ArgumentException("You don't have any to remove");
+						*/
+						throw new ArgumentException("You don't have any Monopoly cards to remove.");
+						break;
 					}
 				}
 				case "roadBuilder":
@@ -274,12 +293,15 @@ namespace SettlersOfCatan
 					}
 					else
 					{
+						/*
 						DialogResult num = MessageBox.Show("You don't have any year of road builder cards to play.",
 							"Construction Halted",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
 						break;
-						//throw new ArgumentException("You don't have any to remove");
+						 */
+						throw new ArgumentException("You don't have any Road Builder cards to remove.");
+						break;
 					}
 				}
 				case "yearOfPlenty":
@@ -292,12 +314,14 @@ namespace SettlersOfCatan
 					}
 					else
 					{
+						/*
 						DialogResult num = MessageBox.Show("You don't have any year of plenty cards to play.",
 							"Year of Scarcity",
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
+						*/
+						throw new ArgumentException("You don't have any Year of Plenty cards to remove.");
 						break;
-						//throw new ArgumentException("You don't have any to remove");
 					}
 				}
 			}

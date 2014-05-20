@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,7 @@ namespace SettlersOfCatan
 
 		private World world;
 
+		private Hex robberHex = null;
 
 		// Intersection Grid
 		// 7
@@ -240,27 +242,26 @@ namespace SettlersOfCatan
                                 h = null;
                             }
                              * */
-                        }
-                        hexGrid[r][c] = h;
+					}
+					hexGrid[r][c] = h;
 
-                        x = (r < 2) ? x - HEX_SIDE_DIMENSION / 2 : x + HEX_SIDE_DIMENSION / 2;
-                        y += HEX_SIDE_DIMENSION;
-                      
-                    }
-                    y = HEX_SIDE_DIMENSION / 2;
-                    x = HEX_SIDE_DIMENSION * (3 + c);
-                }
-        }
+					x = (r < 2) ? x - HEX_SIDE_DIMENSION/2 : x + HEX_SIDE_DIMENSION/2;
+					y += HEX_SIDE_DIMENSION;
+				}
+				y = HEX_SIDE_DIMENSION/2;
+				x = HEX_SIDE_DIMENSION*(3 + c);
+			}
+		}
 
-        private void setupWaterHexes()
-        {
-            int waterCount = 0;
-            int x = 225;
-            int x_diff = 150;
-            int y = 0;
-            int y_diff = 600;
+		private void setupWaterHexes()
+		{
+			int waterCount = 0;
+			int x = 225;
+			int x_diff = 150;
+			int y = 0;
+			int y_diff = 600;
 
-            /*
+			/*
             // Set up top and bottom (short hexes)
             for (int i = 0; i < 4; i++)
             {
@@ -290,196 +291,196 @@ namespace SettlersOfCatan
                 x += x_diff;
             }
              * */
-            
-			// Set up top
-            PictureBox PB = new PictureBox();
-			setPictureBoxColorLocationAndSize(PB, Color.Blue, 225, 0, new Size(600, 75));
-            //PB.BackColor = Color.Blue;
-            //PB.Size = new Size(600, 75);
-            //PB.Location = new Point(225, 0);
-            waterHexes[waterCount] = PB;
 
-            // Add ports for top
-            Label portLabel1 = new Label();
+			// Set up top
+			PictureBox PB = new PictureBox();
+			setPictureBoxColorLocationAndSize(PB, Color.Blue, 225, 0, new Size(600, 75));
+			//PB.BackColor = Color.Blue;
+			//PB.Size = new Size(600, 75);
+			//PB.Location = new Point(225, 0);
+			waterHexes[waterCount] = PB;
+
+			// Add ports for top
+			Label portLabel1 = new Label();
 			string topText = "v   Anything 3:1   v";
 			setLabel(portLabel1, 70, 40, false, topText);
-            //portLabel1.ForeColor = Color.White;
-            //portLabel1.Text = "v   Anything 3:1   v";
-            //portLabel1.Location = new Point(70, 40);
-            PB.Controls.Add(portLabel1);
+			//portLabel1.ForeColor = Color.White;
+			//portLabel1.Text = "v   Anything 3:1   v";
+			//portLabel1.Location = new Point(70, 40);
+			PB.Controls.Add(portLabel1);
 
-            // Add second port for top
-            Label portLabel2 = new Label();
+			// Add second port for top
+			Label portLabel2 = new Label();
 			topText = "v   Wool 2:1   v";
 			setLabel(portLabel2, 300, 40, false, topText);
-            //portLabel2.ForeColor = Color.White;
-            //portLabel2.Text = "v   Wool 2:1   v";
-            //portLabel2.Location = new Point(300, 40);
-            PB.Controls.Add(portLabel2);
+			//portLabel2.ForeColor = Color.White;
+			//portLabel2.Text = "v   Wool 2:1   v";
+			//portLabel2.Location = new Point(300, 40);
+			PB.Controls.Add(portLabel2);
 
-            waterCount++;
-            boardPanel.Controls.Add(PB);
+			waterCount++;
+			boardPanel.Controls.Add(PB);
 
-            // Set up bottom
-            PictureBox PB2 = new PictureBox();
+			// Set up bottom
+			PictureBox PB2 = new PictureBox();
 			setPictureBoxColorLocationAndSize(PB2, Color.Blue, 225, 825, new Size(600, 75));
-            //PB2.BackColor = Color.Blue;
-            //PB2.Size = new Size(600, 75);
-            //PB2.Location = new Point(225, 825);
-            waterHexes[waterCount] = PB;
+			//PB2.BackColor = Color.Blue;
+			//PB2.Size = new Size(600, 75);
+			//PB2.Location = new Point(225, 825);
+			waterHexes[waterCount] = PB;
 
-            // Add ports for bottom
-            Label portLabel3 = new Label();
+			// Add ports for bottom
+			Label portLabel3 = new Label();
 			topText = "^   Anything 3:1   ^";
 			setLabel(portLabel2, 70, 25, false, topText);
-            //portLabel3.ForeColor = Color.White;
-            //portLabel3.Text = "^   Anything 3:1   ^";
-            //portLabel3.Location = new Point(70, 25);
-            PB2.Controls.Add(portLabel3);
+			//portLabel3.ForeColor = Color.White;
+			//portLabel3.Text = "^   Anything 3:1   ^";
+			//portLabel3.Location = new Point(70, 25);
+			PB2.Controls.Add(portLabel3);
 
-            // Add second port for bottom
-            Label portLabel4 = new Label();
+			// Add second port for bottom
+			Label portLabel4 = new Label();
 			topText = "^   Lumber 2:1   ^";
 			setLabel(portLabel2, 295, 25, false, topText);
-            //portLabel4.ForeColor = Color.White;
-            //portLabel4.Text = "^   Lumber 2:1   ^";
-            //portLabel4.Location = new Point(295, 25);
-            PB2.Controls.Add(portLabel4);
+			//portLabel4.ForeColor = Color.White;
+			//portLabel4.Text = "^   Lumber 2:1   ^";
+			//portLabel4.Location = new Point(295, 25);
+			PB2.Controls.Add(portLabel4);
 
-            waterCount++;
-            boardPanel.Controls.Add(PB2);
+			waterCount++;
+			boardPanel.Controls.Add(PB2);
 
-            // Set up the water hexes on the left
-            x = 150;
-            x_diff = 75;
-            y = 75;
-            y_diff = 600;
-            for (int i = 0; i < 3; i++)
-            {
-                PictureBox pb = new PictureBox();
+			// Set up the water hexes on the left
+			x = 150;
+			x_diff = 75;
+			y = 75;
+			y_diff = 600;
+			for (int i = 0; i < 3; i++)
+			{
+				PictureBox pb = new PictureBox();
 				setPictureBoxColorLocationAndSize(pb, Color.Blue, x, y, new Size(150, 150));
-                //pb.BackColor = Color.Blue;
-                //pb.Size = new Size(150, 150);
-                //pb.Location = new Point(x, y);
-                
+				//pb.BackColor = Color.Blue;
+				//pb.Size = new Size(150, 150);
+				//pb.Location = new Point(x, y);
+
 				// Add port if relevant
-                if (waterCount == 4)
-                {
-                    Label portLabel5 = new Label();
+				if (waterCount == 4)
+				{
+					Label portLabel5 = new Label();
 					string text = "    -->\n\n\n\nOre 2:1 \n\n\n\n\n    -->";
 					setLabel(portLabel5, 100, 10, true, text);
-                    //portLabel5.Size = new Size(150, 150);
-                    //portLabel5.ForeColor = Color.White;
-                    //portLabel5.Text = "    -->\n\n\n\nOre 2:1 \n\n\n\n\n    -->";
-                    //portLabel5.Location = new Point(100, 10);
-                    pb.Controls.Add(portLabel5);
-                }
+					//portLabel5.Size = new Size(150, 150);
+					//portLabel5.ForeColor = Color.White;
+					//portLabel5.Text = "    -->\n\n\n\nOre 2:1 \n\n\n\n\n    -->";
+					//portLabel5.Location = new Point(100, 10);
+					pb.Controls.Add(portLabel5);
+				}
 
-                waterHexes[waterCount] = pb;
-                waterCount++;
-                boardPanel.Controls.Add(pb);
+				waterHexes[waterCount] = pb;
+				waterCount++;
+				boardPanel.Controls.Add(pb);
 
-                if (i == 2) break;
+				if (i == 2) break;
 
-                PictureBox pb2 = new PictureBox();
+				PictureBox pb2 = new PictureBox();
 				setPictureBoxColorLocationAndSize(pb2, Color.Blue, x, y + y_diff, new Size(150, 150));
-                
+
 				//pb2.BackColor = Color.Blue;
-                //pb2.Size = new Size(150, 150);
-                //pb2.Location = new Point(x, y + y_diff);
-                
+				//pb2.Size = new Size(150, 150);
+				//pb2.Location = new Point(x, y + y_diff);
+
 				// Add port if relevant
-                if (waterCount == 5)
-                {
-                    Label portLabel5 = new Label();
+				if (waterCount == 5)
+				{
+					Label portLabel5 = new Label();
 					string text = "      -->\n\n\n\nGrain 2:1\n\n\n\n\n      -->";
 					setLabel(portLabel5, 90, 10, true, text);
-                    //portLabel5.Size = new Size(150, 150);
-                    //portLabel5.ForeColor = Color.White;
-                    //portLabel5.Text = "      -->\n\n\n\nGrain 2:1\n\n\n\n\n      -->";
-                    //portLabel5.Location = new Point(90, 10);
-                    pb2.Controls.Add(portLabel5);
-                }
-                waterHexes[waterCount] = pb2;
-                waterCount++;
-                boardPanel.Controls.Add(pb2);
+					//portLabel5.Size = new Size(150, 150);
+					//portLabel5.ForeColor = Color.White;
+					//portLabel5.Text = "      -->\n\n\n\nGrain 2:1\n\n\n\n\n      -->";
+					//portLabel5.Location = new Point(90, 10);
+					pb2.Controls.Add(portLabel5);
+				}
+				waterHexes[waterCount] = pb2;
+				waterCount++;
+				boardPanel.Controls.Add(pb2);
 
-                x -= x_diff;
-                y += 150;
-                y_diff -= 150 * (i+2);
-            }
+				x -= x_diff;
+				y += 150;
+				y_diff -= 150*(i + 2);
+			}
 
-            // Set up the water hexes on the right
-            x = 750;
-            x_diff = 75;
-            y = 75;
-            y_diff = 600;
-            for (int i = 0; i < 3; i++)
-            {
-                PictureBox pb = new PictureBox();
+			// Set up the water hexes on the right
+			x = 750;
+			x_diff = 75;
+			y = 75;
+			y_diff = 600;
+			for (int i = 0; i < 3; i++)
+			{
+				PictureBox pb = new PictureBox();
 				setPictureBoxColorLocationAndSize(pb, Color.Blue, x, y, new Size(150, 150));
-                
+
 				//pb.BackColor = Color.Blue;
-                //pb.Size = new Size(150, 150);
-                //pb.Location = new Point(x, y);
-                
+				//pb.Size = new Size(150, 150);
+				//pb.Location = new Point(x, y);
+
 				// Add port if relevant
-                if (waterCount == 7)
-                {
-                    Label portLabel5 = new Label();
+				if (waterCount == 7)
+				{
+					Label portLabel5 = new Label();
 					string text = "v  Anything 3:1  v";
 					setLabel(portLabel5, 10, 110, true, text);
-                    //portLabel5.Size = new Size(150, 150);
-                    //portLabel5.ForeColor = Color.White;
-                    //portLabel5.Text = "v  Anything 3:1  v";
-                    //portLabel5.Location = new Point(10, 110);
-                    pb.Controls.Add(portLabel5);
-                }
-                else if (waterCount == 11)
-                {
-                    Label portLabel5 = new Label();
+					//portLabel5.Size = new Size(150, 150);
+					//portLabel5.ForeColor = Color.White;
+					//portLabel5.Text = "v  Anything 3:1  v";
+					//portLabel5.Location = new Point(10, 110);
+					pb.Controls.Add(portLabel5);
+				}
+				else if (waterCount == 11)
+				{
+					Label portLabel5 = new Label();
 					string text = "    <--\n\n\n\n Anything 3:1\n\n\n\n\n    <--";
 					setLabel(portLabel5, 10, 10, true, text);
-                    //portLabel5.Size = new Size(150, 150);
-                    //portLabel5.ForeColor = Color.White;
-                    //portLabel5.Text = "    <--\n\n\n\n Anything 3:1\n\n\n\n\n    <--";
-                    //portLabel5.Location = new Point(10, 10);
-                    pb.Controls.Add(portLabel5);
-                }
-                waterHexes[waterCount] = pb;
-                waterCount++;
-                boardPanel.Controls.Add(pb);
+					//portLabel5.Size = new Size(150, 150);
+					//portLabel5.ForeColor = Color.White;
+					//portLabel5.Text = "    <--\n\n\n\n Anything 3:1\n\n\n\n\n    <--";
+					//portLabel5.Location = new Point(10, 10);
+					pb.Controls.Add(portLabel5);
+				}
+				waterHexes[waterCount] = pb;
+				waterCount++;
+				boardPanel.Controls.Add(pb);
 
-                if (i == 2) break;
+				if (i == 2) break;
 
-                PictureBox pb2 = new PictureBox();
+				PictureBox pb2 = new PictureBox();
 				setPictureBoxColorLocationAndSize(pb2, Color.Blue, x, y + y_diff, new Size(150, 150));
-                
+
 				//pb2.BackColor = Color.Blue;
-                //pb2.Size = new Size(150, 150);
-                //pb2.Location = new Point(x, y + y_diff);
-                
+				//pb2.Size = new Size(150, 150);
+				//pb2.Location = new Point(x, y + y_diff);
+
 				// Add port if relevant
-                if (waterCount == 8)
-                {
-                    Label portLabel5 = new Label();
+				if (waterCount == 8)
+				{
+					Label portLabel5 = new Label();
 					string text = "^  Brick 2:1  ^";
 					setLabel(portLabel5, 10, 20, true, text);
-                    //portLabel5.Size = new Size(150, 150);
-                    //portLabel5.ForeColor = Color.White;
-                    //portLabel5.Text = "^  Brick 2:1  ^";
-                    //portLabel5.Location = new Point(10, 20);
-                    pb2.Controls.Add(portLabel5);
-                }
-                waterHexes[waterCount] = pb2;
-                waterCount++;
-                boardPanel.Controls.Add(pb2);
+					//portLabel5.Size = new Size(150, 150);
+					//portLabel5.ForeColor = Color.White;
+					//portLabel5.Text = "^  Brick 2:1  ^";
+					//portLabel5.Location = new Point(10, 20);
+					pb2.Controls.Add(portLabel5);
+				}
+				waterHexes[waterCount] = pb2;
+				waterCount++;
+				boardPanel.Controls.Add(pb2);
 
-                x += x_diff;
-                y += 150;
-                y_diff -= 150 * (i + 2);
-            }
-        }
+				x += x_diff;
+				y += 150;
+				y_diff -= 150*(i + 2);
+			}
+		}
 
 		private void setLabel(Label label, int x, int y, bool setSize, string text)
 		{
@@ -517,7 +518,6 @@ namespace SettlersOfCatan
 			{
 				if (diff == true)
 				{
-
 					setPictureBoxColorLocationAndSize(pb, Color.Blue, x, y + y_diff, new Size(150, 150));
 				}
 				else
@@ -537,26 +537,25 @@ namespace SettlersOfCatan
 		}
 
 		private void initializeBoardPanel()
-        {
-            boardPanel.Location = new Point(0, 0);
-            boardPanel.Size = new Size(1050, 1050);
+		{
+			boardPanel.Location = new Point(0, 0);
+			boardPanel.Size = new Size(1050, 1050);
 
-            setupIntersectionButtons();
+			setupIntersectionButtons();
 
 
-            setupRoadGrid();
-            setupWaterHexes();
-            setupHexGrid();
+			setupRoadGrid();
+			setupWaterHexes();
+			setupHexGrid();
 
-            this.Controls.Add(boardPanel);
-            
-        }
+			this.Controls.Add(boardPanel);
+		}
 
 		private void setupIntersectionButtons()
 		{
 			// Coordinate variables for plotting buttons in correct locations
-			int x = 150 - INTERSECTION_BUTTON_SIZE / 2;
-			int y = 75 - INTERSECTION_BUTTON_SIZE / 2;
+			int x = 150 - INTERSECTION_BUTTON_SIZE/2;
+			int y = 75 - INTERSECTION_BUTTON_SIZE/2;
 
 			for (int r = 0; r < MAX_INTERSECTION_ROWS; r++)
 			{
@@ -581,7 +580,7 @@ namespace SettlersOfCatan
 
 					x += X_INCREMENT;
 				}
-				x = 150 - INTERSECTION_BUTTON_SIZE / 2;
+				x = 150 - INTERSECTION_BUTTON_SIZE/2;
 				y += Y_INCREMENT;
 			}
 		}
@@ -606,165 +605,224 @@ namespace SettlersOfCatan
 			button.coordinates = new Point(x, y);
 		}
 
-        private void ItemToBuildComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ComboBox myComboBox = (ComboBox)sender;
-            if (myComboBox.SelectedIndex == 0)
-            {
-                // Show all available road buttons
-             
-            }
-            else if (myComboBox.SelectedIndex == 1)
-            {
-                // Show all available settlement buttons
-            }
-            else if (myComboBox.SelectedIndex == 2)
-            {
-                // enable all relevant current settlement buttons to be changed into cities
-            }
-        }
 
-        private void showOnlyOpenRoadButtons()
-        {
-            // Disable all city/settlement buttons
+		private void ItemToBuildComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ComboBox myComboBox = (ComboBox) sender;
+			if (myComboBox.SelectedIndex == 0)
+			{
+				// Show all available road buttons
+			}
+			else if (myComboBox.SelectedIndex == 1)
+			{
+				// Show all available settlement buttons
+			}
+			else if (myComboBox.SelectedIndex == 2)
+			{
+				// enable all relevant current settlement buttons to be changed into cities
+			}
+		}
 
-            // Hide all unused city/settlement buttons
+		private void showOnlyOpenRoadButtons()
+		{
+			// Disable all city/settlement buttons
 
-            // Show and enable all unused road buttons
+			// Hide all unused city/settlement buttons
 
-        }
+			// Show and enable all unused road buttons
+		}
 
 
-        private void intersectionButton_Click(object sender, EventArgs e)
-        {
-            IntersectionButton theButton = (IntersectionButton)sender;
+		private void intersectionButton_Click(object sender, EventArgs e)
+		{
+			IntersectionButton theButton = (IntersectionButton) sender;
 
-            Color buttonColor = world.tryToBuildAtIntersection(theButton.getCoords());
-            if (buttonColor != Color.White && buttonColor != Color.Black)
-            {
-                theButton.BackColor = buttonColor;
-                this.world.currentPlayer.incrementSettlements();
-            }
-            else if (buttonColor == Color.Black)
-            {
-                theButton.Text = "*";
-                theButton.ForeColor = Color.White;
-                this.world.currentPlayer.incrementCities();
-            }
+			Color buttonColor = world.tryToBuildAtIntersection(theButton.getCoords());
+			if (buttonColor != Color.White && buttonColor != Color.Black)
+			{
+				theButton.BackColor = buttonColor;
+			}
+			else if (buttonColor == Color.Black)
+			{
+				theButton.Text = "*";
+				theButton.ForeColor = Color.White;
+				this.world.currentPlayer.incrementCities();
+			}
 
-            this.updateResourceLabels();
-            this.updatePlayerPoints();
-        }
+			this.updateResourceLabels();
+			this.updatePlayerPoints();
+		}
 
-        // TODO implement longest road
-        private void roadButton_Click(object sender, EventArgs e)
-        {
-            RoadButton theButton = (RoadButton)sender;
+		// TODO implement longest road
+		private void roadButton_Click(object sender, EventArgs e)
+		{
+			RoadButton theButton = (RoadButton) sender;
 
-            Color buttonColor = world.roadButtonClicked(theButton.getCoords());
-            if (buttonColor != Color.White)
-            {
-                theButton.BackColor = buttonColor;
-                theButton.Enabled = false;
-            }
-            this.updateResourceLabels();
-        }
+			Color buttonColor = world.roadButtonClicked(theButton.getCoords());
+			if (buttonColor != Color.White)
+			{
+				theButton.BackColor = buttonColor;
+				theButton.Enabled = false;
+			}
+			this.updateResourceLabels();
+		}
 
-        public void updateResourceLabels()
-        {
-            WoolAmountLabel.Text = this.world.currentPlayer.getHand().getWool().ToString();
-            BrickAmountLabel.Text = this.world.currentPlayer.getHand().getBrick().ToString();
-            LumberAmountLabel.Text = this.world.currentPlayer.getHand().getLumber().ToString();
-            OreAmountLabel.Text = this.world.currentPlayer.getHand().getOre().ToString();
-            GrainAmountLabel.Text = this.world.currentPlayer.getHand().getGrain().ToString();
-        }
+		public void updateResourceLabels()
+		{
+			WoolAmountLabel.Text = this.world.currentPlayer.getHand().getWool().ToString();
+			BrickAmountLabel.Text = this.world.currentPlayer.getHand().getBrick().ToString();
+			LumberAmountLabel.Text = this.world.currentPlayer.getHand().getLumber().ToString();
+			OreAmountLabel.Text = this.world.currentPlayer.getHand().getOre().ToString();
+			GrainAmountLabel.Text = this.world.currentPlayer.getHand().getGrain().ToString();
+		}
 
-        private void EndTurnButton_Click(object sender, EventArgs e)
-        {
-            if (this.world.currentPlayer.getHand().hasFreeRoadPoints() || this.world.currentPlayer.getHand().hasFreeSettlementPoints())
-            {
-                Form myForm = new PlaceFreeStuffForm();
-                myForm.Show();
-            }
-            else{
-                this.world.endTurn();
-                this.updateResourceLabels();
-                this.updateCurrentPlayerNameLabel();
-                this.updateRoundLabel();
-                this.updatePlayerPoints();
-                if (this.world.getNumberOfRoundsCompleted() < 2) 
-                {
-                    this.world.currentPlayer.getHand().modifyFreeRoadPoints(1);
-                    this.world.currentPlayer.getHand().modifyFreeSettlementPoints(1);
-                    Form myForm = new FirstFewTurnsForm();
-                    myForm.Show();
-                }
-            }
-        }
-
-        private void updateRoundLabel()
-        {
-            RoundsLabel.Text = "Round " + (this.world.getNumberOfRoundsCompleted() + 1);
-        }
-
-        private void updateCurrentPlayerNameLabel()
-        {
-            CurrentPlayerNameLabel.Text = this.world.currentPlayer.getName().ToString();
-            CurrentPlayerNameLabel.ForeColor = this.world.currentPlayer.getColor();
-        }
-
-        private void ProposeTradeButton_Click(object sender, EventArgs e)
-        {
-            Form myForm = new TradeForm(this.world, this);
-            myForm.Show();
-        }
-
-        private void generateResourcesTest_Click(object sender, EventArgs e)
-        {
-            this.world.currentPlayer.playerHand.modifyBrick(1);
-            this.world.currentPlayer.playerHand.modifyGrain(1);
-            this.world.currentPlayer.playerHand.modifyWool(1);
-            this.world.currentPlayer.playerHand.modifyOre(1);
-            this.world.currentPlayer.playerHand.modifyLumber(1);
-            this.world.bank.modifyResource("ore", -1);
-            this.world.bank.modifyResource("wool", -1);
-            this.world.bank.modifyResource("grain", -1);
-            this.world.bank.modifyResource("brick", -1);
-            this.world.bank.modifyResource("lumber", -1);
-            this.updateResourceLabels();
-        }
-
-        private void RollDiceButton_Click(object sender, EventArgs e)
-        {
-            this.world.rollDice();
-            this.updateResourceLabels();
-	        int roll = this.world.getRollNumber();
-            this.RollNumberLabel.Text = roll.ToString();
-	        if (roll == 7)
-	        {
-				removeRobberText();
-				this.world.setPlaceRobber(true);
-		        RobberForm myForm = new RobberForm(this.world, this);
+		private void EndTurnButton_Click(object sender, EventArgs e)
+		{
+			if (this.world.currentPlayer.getHand().hasFreeRoadPoints() ||
+			    this.world.currentPlayer.getHand().hasFreeSettlementPoints())
+			{
+				Form myForm = new PlaceFreeStuffForm();
 				myForm.Show();
-	        }
-        }
+			}
+			else
+			{
+				this.world.endTurn();
+				this.world.setLargestArmy();
+				this.updateResourceLabels();
+				this.updateCurrentPlayerNameLabel();
+				this.updateRoundLabel();
+				this.updatePlayerPoints();
+				if (this.world.isFirstFewTurnsPhase())
+				{
+					this.world.currentPlayer.getHand().modifyFreeRoadPoints(1);
+					this.world.currentPlayer.getHand().modifyFreeSettlementPoints(1);
+					Form myForm = new FirstFewTurnsForm();
+					myForm.Show();
+				}
+			}
+			removeRobberText();
+		}
 
-        private void BuyDevCardButton_Click(object sender, EventArgs e)
-        {
-            this.world.currentPlayer.tradeForDevCard();
-            this.updateResourceLabels();
-            this.updateDevelopmentCards();
-        }
+		private void updateRoundLabel()
+		{
+			RoundsLabel.Text = "Round " + (this.world.getNumberOfRoundsCompleted() + 1);
+		}
+
+		private void updateCurrentPlayerNameLabel()
+		{
+			CurrentPlayerNameLabel.Text = this.world.currentPlayer.getName().ToString();
+			CurrentPlayerNameLabel.ForeColor = this.world.currentPlayer.getColor();
+		}
+
+		private void ProposeTradeButton_Click(object sender, EventArgs e)
+		{
+			Form myForm = new TradeForm(this.world, this);
+			myForm.Show();
+		}
+
+		private void generateResourcesTest_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				this.world.currentPlayer.playerHand.modifyBrick(1);
+				this.world.currentPlayer.playerHand.modifyGrain(1);
+				this.world.currentPlayer.playerHand.modifyWool(1);
+				this.world.currentPlayer.playerHand.modifyOre(1);
+				this.world.currentPlayer.playerHand.modifyLumber(1);
+				this.world.bank.modifyResource("ore", -1);
+				this.world.bank.modifyResource("wool", -1);
+				this.world.bank.modifyResource("grain", -1);
+				this.world.bank.modifyResource("brick", -1);
+				this.world.bank.modifyResource("lumber", -1);
+				this.updateResourceLabels();
+			}
+			catch (ArgumentException ex)
+			{
+				DialogResult num = MessageBox.Show(ex.Message,
+					"Insufficient Resources",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
+			}
+		}
+
+		private void RollDiceButton_Click(object sender, EventArgs e)
+		{
+			this.world.rollDice();
+			this.updateResourceLabels();
+			int roll = this.world.getRollNumber();
+			this.RollNumberLabel.Text = roll.ToString();
+			if (roll == 7)
+			{
+				//removeRobberText();
+				for (int i = this.world.currentPlayerNumber; i < this.world.players.Count; i++)
+				{
+					if (this.world.players[i].mustRemoveHalf())
+					{
+						RemoveCardsForm removeForm = new RemoveCardsForm(this.world.players[i]);
+						removeForm.Show();
+					}
+				}
+				foreach (Player p in this.world.players)
+				{
+					if (p.mustRemoveHalf())
+					{
+					}
+				}
+				this.world.setPlaceRobber(true);
+				RobberForm myForm = new RobberForm(this.world, this);
+				myForm.Show();
+			}
+		}
+
+		private void checkRemoveHalf()
+		{
+			for (int i = this.world.currentPlayerNumber; i < this.world.players.Count; i++)
+			{
+				if (this.world.players[i].mustRemoveHalf())
+				{
+				}
+			}
+
+			for (int i = 0; i < this.world.currentPlayerNumber; i++)
+			{
+				if (this.world.players[i].mustRemoveHalf())
+				{
+				}
+			}
+		}
+
+		private List<Player> robPlayers()
+		{
+			List<Player> playersToRob = new List<Player>(3);
+
+			foreach (Player p in this.robberHex.owners)
+			{
+				if (p != this.world.currentPlayer)
+				{
+					playersToRob.Add(p);
+				}
+			}
+			return playersToRob;
+		}
+
+		private void BuyDevCardButton_Click(object sender, EventArgs e)
+		{
+			this.world.currentPlayer.tradeForDevCard();
+			this.updateResourceLabels();
+			this.updateDevelopmentCards();
+		}
 
 		private void removeRobberText()
 		{
+			this.robberHex = this.world.getRobberHex();
+
 			for (int i = 0; i < 5; i++)
 			{
 				for (int j = 1; j < 4; j++)
 				{
-					if (this.hexGrid[i][j].getHasRobber())
+					if (this.hexGrid[i][j].getHex() != this.world.getRobberHex())
 					{
-						this.hexGrid[i][j].paintBlack();
+						this.hexGrid[i][j].setHasRobber(false);
 					}
 				}
 			}
@@ -772,45 +830,49 @@ namespace SettlersOfCatan
 			// check outliers: [1][0], [2][0], [3][0], [2][4]
 			for (int i = 1; i < 4; i++)
 			{
-				if (this.hexGrid[i][0].getHasRobber())
+				if (this.hexGrid[i][0].getHex() != this.world.getRobberHex())
 				{
-					this.hexGrid[i][0].paintBlack();
+					this.hexGrid[i][0].setHasRobber(false);
 				}
 			}
 
 			if (this.hexGrid[2][4].getHasRobber())
 			{
-				this.hexGrid[2][4].paintBlack();
+				if (this.hexGrid[2][4].getHex() != this.world.getRobberHex())
+				{
+					this.hexGrid[2][4].setHasRobber(false);
+				}
 			}
+			this.Refresh();
 		}
 
-        public void updateDevelopmentCards()
-        {
-            if (this.world.currentPlayer.playerHand.devCardsContains("knight"))
-                this.KnightsDevCardLabel.Show();
-            else
-                this.KnightsDevCardLabel.Hide();
+		public void updateDevelopmentCards()
+		{
+			if (this.world.currentPlayer.playerHand.devCardsContains("knight"))
+				this.KnightsDevCardLabel.Show();
+			else
+				this.KnightsDevCardLabel.Hide();
 
-            if (this.world.currentPlayer.playerHand.devCardsContains("monopoly"))
-                this.MonopolyDevCardLabel.Show();
-            else
-                this.MonopolyDevCardLabel.Hide();
+			if (this.world.currentPlayer.playerHand.devCardsContains("monopoly"))
+				this.MonopolyDevCardLabel.Show();
+			else
+				this.MonopolyDevCardLabel.Hide();
 
-            if (this.world.currentPlayer.playerHand.devCardsContains("victoryPoint"))
-                this.VictoryPointDevCardLabel.Show();
-            else
-                this.VictoryPointDevCardLabel.Hide();
+			if (this.world.currentPlayer.playerHand.devCardsContains("victoryPoint"))
+				this.VictoryPointDevCardLabel.Show();
+			else
+				this.VictoryPointDevCardLabel.Hide();
 
-            if (this.world.currentPlayer.playerHand.devCardsContains("roadBuilder"))
-                this.RoadBuilderDevCardLabel.Show();
-            else
-                this.RoadBuilderDevCardLabel.Hide();
+			if (this.world.currentPlayer.playerHand.devCardsContains("roadBuilder"))
+				this.RoadBuilderDevCardLabel.Show();
+			else
+				this.RoadBuilderDevCardLabel.Hide();
 
-            if (this.world.currentPlayer.playerHand.devCardsContains("yearOfPlenty"))
-                this.YearOfPlentyDevCardLabel.Show();
-            else
-                this.YearOfPlentyDevCardLabel.Hide();
-        }
+			if (this.world.currentPlayer.playerHand.devCardsContains("yearOfPlenty"))
+				this.YearOfPlentyDevCardLabel.Show();
+			else
+				this.YearOfPlentyDevCardLabel.Hide();
+		}
 
 		private void KnightsDevCardLabel_Click(object sender, EventArgs e)
 		{
@@ -822,47 +884,47 @@ namespace SettlersOfCatan
 			this.updateDevelopmentCards();
 		}
 
-        private void VictoryPointDevCardLabel_Click(object sender, EventArgs e)
-        {
-            this.world.currentPlayer.playDevCard("victoryPoint", null, null);
-            this.updatePlayerPoints();
-            this.updateDevelopmentCards();
-        }
+		private void VictoryPointDevCardLabel_Click(object sender, EventArgs e)
+		{
+			this.world.currentPlayer.playDevCard("victoryPoint", null, null);
+			this.updatePlayerPoints();
+			this.updateDevelopmentCards();
+		}
 
-        private void MonopolyDevCardLabel_Click(object sender, EventArgs e)
-        {
-            MonopolyForm myForm = new MonopolyForm(this.world, this);
-            myForm.Show();
-        }
+		private void MonopolyDevCardLabel_Click(object sender, EventArgs e)
+		{
+			MonopolyForm myForm = new MonopolyForm(this.world, this);
+			myForm.Show();
+		}
 
-        private void RoadBuilderDevCardLabel_Click(object sender, EventArgs e)
-        {
-            this.world.currentPlayer.playDevCard("roadBuilder", null, null);
-            Form myForm = new RoadBuilderForm();
-            myForm.Show();
-            this.updateDevelopmentCards();
-        }
+		private void RoadBuilderDevCardLabel_Click(object sender, EventArgs e)
+		{
+			this.world.currentPlayer.playDevCard("roadBuilder", null, null);
+			Form myForm = new RoadBuilderForm();
+			myForm.Show();
+			this.updateDevelopmentCards();
+		}
 
-        private void YearOfPlentyDevCardLabel_Click(object sender, EventArgs e)
-        {
-            YearOfPlentyForm myForm = new YearOfPlentyForm(this.world, this);
-            myForm.Show();
-        }
+		private void YearOfPlentyDevCardLabel_Click(object sender, EventArgs e)
+		{
+			YearOfPlentyForm myForm = new YearOfPlentyForm(this.world, this);
+			myForm.Show();
+		}
 
-        private void updatePlayerPoints()
-        {
-            this.PointsAmountLabel.Text = this.world.currentPlayer.getPoints().ToString();
-            checkWinner();
-        }
+		private void updatePlayerPoints()
+		{
+			this.PointsAmountLabel.Text = this.world.currentPlayer.getPoints().ToString();
+			checkWinner();
+		}
 
-        private void checkWinner()
-        {
-            if (this.world.checkWinner())
-            {
-                WinForm myForm = new WinForm();
-                myForm.Show();
-            }
-        }
+		private void checkWinner()
+		{
+			if (this.world.checkWinner())
+			{
+				WinForm myForm = new WinForm();
+				myForm.Show();
+			}
+		}
 
 		private void BankTradeButton_Click(object sender, EventArgs e)
 		{

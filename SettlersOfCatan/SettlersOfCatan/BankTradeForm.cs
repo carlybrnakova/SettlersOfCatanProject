@@ -26,12 +26,22 @@ namespace SettlersOfCatan
 
 		private void SubmitBankTradeButton_Click(object sender, EventArgs e)
 		{
-			string trade = this.ResourceTradeBankComboBox.SelectedItem.ToString();
-			string gain = this.ResourceGainBankComboBox.SelectedItem.ToString();
-			this.current.tradeWithBank(trade, gain);
-			this.gameScreen.updateResourceLabels();
-			this.gameScreen.updateDevelopmentCards();
-			this.Dispose();
+			try
+			{
+				string trade = this.ResourceTradeBankComboBox.SelectedItem.ToString();
+				string gain = this.ResourceGainBankComboBox.SelectedItem.ToString();
+				this.current.tradeWithBank(trade, gain);
+				this.gameScreen.updateResourceLabels();
+				this.gameScreen.updateDevelopmentCards();
+				this.Dispose();
+			}
+			catch (ArgumentException ex)
+			{
+				DialogResult num = MessageBox.Show(ex.Message,
+					"Insufficient Resources",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
+			}
 		}
 	}
 }
