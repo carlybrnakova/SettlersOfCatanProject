@@ -308,9 +308,18 @@ namespace SettlersOfCatan
 
 		public void addOwner(Point coords)
 		{
-			for (int i = 0; i < 3; i++)
+			Intersection inter = this.catanMap.getIslandMap().getIntAtIndex(coords);
+
+			for (int i = 0; i < inter.resourceHexes.Count; i++)
 			{
-				this.catanMap.getIslandMap().getIntAtIndex(coords).resourceHexes[i].addOwner(currentPlayer);
+				try
+				{
+					inter.resourceHexes[i].addOwner(currentPlayer);
+				}
+				catch (NullReferenceException)
+				{
+					//do nothing
+				}
 			}
 		}
 

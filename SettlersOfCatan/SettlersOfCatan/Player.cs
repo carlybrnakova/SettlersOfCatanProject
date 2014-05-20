@@ -69,7 +69,7 @@ namespace SettlersOfCatan
 		{
 			return MAX_ROADS - roadsPlayed;
 		}
-		
+
 		public bool incrementSettlements()
 		{
 			if (getSettlementsRemaining() > 0)
@@ -816,7 +816,7 @@ namespace SettlersOfCatan
 		public List<Point> getSettlementLocations()
 		{
 			return this.settlementLocations;
-		} 
+		}
 
 		public int getRoadsPlayed()
 		{

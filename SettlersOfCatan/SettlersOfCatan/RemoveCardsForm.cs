@@ -15,6 +15,7 @@ namespace SettlersOfCatan
 		private Player player;
 		private Hand hand;
 		private int numberToRemove;
+		private bool canDispose = true;
 
 		public RemoveCardsForm(Player p)
 		{
@@ -28,7 +29,7 @@ namespace SettlersOfCatan
 		private void updateLabels()
 		{
 			int totalCards = this.hand.getResources();
-			this.numberToRemove = (int)Math.Floor((double)totalCards/2);
+			this.numberToRemove = (int) Math.Floor((double) totalCards/2);
 
 			string numberOfCardsInHandString = totalCards.ToString() + " cards, ";
 			string amountToRemoveString = this.numberToRemove.ToString() + " cards.";
@@ -70,28 +71,28 @@ namespace SettlersOfCatan
 			try
 			{
 				checkAmountIsCorrect();
-				this.Dispose();
+				//this.canDispose = true;
 			}
 			catch (ArgumentException ex)
 			{
+				this.canDispose = false;
 				DialogResult num = MessageBox.Show(ex.Message,
-	"Wrong Number of Cards Removed",
-	MessageBoxButtons.OK,
-	MessageBoxIcon.Exclamation);
+					"Wrong Number of Cards Removed",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
+				//this.canDispose = false;
 			}
-
 		}
 
 		private void checkAmountIsCorrect()
 		{
 			if (checkComboBoxesUsed())
 			{
-
-				int grainToTrade = Convert.ToInt32(this.GrainComboBox.SelectedText);
-				int lumberToTrade = Convert.ToInt32(this.LumberComboBox.SelectedText);
-				int brickToTrade = Convert.ToInt32(this.BrickComboBox.SelectedText);
-				int woolToTrade = Convert.ToInt32(this.WoolComboBox.SelectedText);
-				int oreToTrade = Convert.ToInt32(this.OreComboBox.SelectedText);
+				int grainToTrade = Convert.ToInt32(this.GrainComboBox.SelectedItem);
+				int lumberToTrade = Convert.ToInt32(this.LumberComboBox.SelectedItem);
+				int brickToTrade = Convert.ToInt32(this.BrickComboBox.SelectedItem);
+				int woolToTrade = Convert.ToInt32(this.WoolComboBox.SelectedItem);
+				int oreToTrade = Convert.ToInt32(this.OreComboBox.SelectedItem);
 
 				if (grainToTrade + lumberToTrade + brickToTrade + woolToTrade + oreToTrade != this.numberToRemove)
 				{
@@ -103,15 +104,17 @@ namespace SettlersOfCatan
 			else
 			{
 				DialogResult num = MessageBox.Show("You must choose a number to remove for each resource.",
-"Amount Not Chosen",
-MessageBoxButtons.OK,
-MessageBoxIcon.Exclamation);
+					"Amount Not Chosen",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
 			}
 		}
 
 		private bool checkComboBoxesUsed()
 		{
-			return this.GrainComboBox.SelectedIndex > -1 && this.LumberComboBox.SelectedIndex > -1 && this.BrickComboBox.SelectedIndex > -1 && this.WoolComboBox.SelectedIndex > -1 && this.OreComboBox.SelectedIndex > -1;
+			return this.GrainComboBox.SelectedIndex > -1 && this.LumberComboBox.SelectedIndex > -1 &&
+			       this.BrickComboBox.SelectedIndex > -1 && this.WoolComboBox.SelectedIndex > -1 &&
+			       this.OreComboBox.SelectedIndex > -1;
 		}
 
 		private void tradeWithBank(int grainAmount, int lumberAmount, int brickAmount, int woolAmount, int oreAmount)
@@ -121,6 +124,18 @@ MessageBoxIcon.Exclamation);
 			this.player.transferBrick(brickAmount);
 			this.player.transferWool(woolAmount);
 			this.player.transferOre(oreAmount);
+		}
+
+		private void RemoveCardsForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (this.canDispose)
+			{
+				base.Dispose();
+			}
+			else
+			{
+				e.Cancel = true;
+			}
 		}
 	}
 }

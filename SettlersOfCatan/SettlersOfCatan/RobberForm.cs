@@ -14,8 +14,8 @@ namespace SettlersOfCatan
 	{
 		private World world;
 		private GameScreen gameScreen;
-		
-			public RobberForm(World world, GameScreen gs)
+
+		public RobberForm(World world, GameScreen gs)
 		{
 			InitializeComponent();
 			this.world = world;

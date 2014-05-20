@@ -123,7 +123,7 @@ namespace SettlersOfCatan
 		private Color color;
 		private int token;
 		private bool hasRobber = false;
-		public List<Player> owners = new List<Player>(3); 
+		public List<Player> owners = new List<Player>();
 
 		public Hex(String terrainType, Color c)
 		{

@@ -175,7 +175,7 @@ namespace SettlersOfCatan
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
 						 */
-						
+
 						throw new ArgumentException("There would be an invalid amount of lumber.");
 					}
 					this.lumber = this.lumber + amount;
@@ -207,7 +207,7 @@ namespace SettlersOfCatan
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
 						*/
-						
+
 						throw new ArgumentException("There would be an invalid amount of brick.");
 					}
 					this.brick = brick + amount;
