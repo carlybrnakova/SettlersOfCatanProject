@@ -337,12 +337,44 @@ namespace ClassLibrary1
             w.setCurrentPlayer(player1.getName());
             Color c = w.tryToBuildAtIntersection(new Point(3,3));
             Assert.AreEqual(Color.White, c);
-            player1.getHand().modifyBrick(1);
-            player1.getHand().modifyGrain(1);
-            player1.getHand().modifyLumber(1);
-            player1.getHand().modifyWool(1);
-            Color d = w.tryToBuildAtIntersection(new Point(2, 3));
-            Assert.AreEqual(Color.White, d);
+        }
+
+        [Test()]
+        public void TestTryToBuildAtIntersectionWithoutSurroundingAreaClear()
+        {
+            World w = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+            w.addPlayer(player1);
+            w.setCurrentPlayer(player1.getName());
+
+            w.currentPlayer.playerHand.modifyBrick(1);
+            w.currentPlayer.playerHand.modifyGrain(1);
+            w.currentPlayer.playerHand.modifyWool(1);
+            w.currentPlayer.playerHand.modifyOre(1);
+            w.currentPlayer.playerHand.modifyLumber(1);
+
+            w.tryToBuildAtIntersection(new Point(3, 4));
+            Color c = w.tryToBuildAtIntersection(new Point(3, 3));
+            Assert.AreEqual(Color.White, c);
+        }
+
+        [Test()]
+        public void TestTryToBuildCityAtIntersectionWithoutEnoughResources()
+        {
+            World w = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+            w.addPlayer(player1);
+            w.setCurrentPlayer(player1.getName());
+
+            w.currentPlayer.playerHand.modifyBrick(1);
+            w.currentPlayer.playerHand.modifyGrain(1);
+            w.currentPlayer.playerHand.modifyWool(1);
+            w.currentPlayer.playerHand.modifyOre(1);
+            w.currentPlayer.playerHand.modifyLumber(1);
+
+            w.tryToBuildAtIntersection(new Point(3, 4));
+            Color c = w.tryToBuildAtIntersection(new Point(3, 4));
+            Assert.AreEqual(Color.White, c);
         }
 
         [Test()]
@@ -358,7 +390,31 @@ namespace ClassLibrary1
                     rounds++;
                 }
             }
-            Assert.AreEqual(rounds, w.getNumberOfRoundsCompleted());
+            Assert.AreEqual(rounds - 1, w.getNumberOfRoundsCompleted());
+        }
+
+        [Test()]
+        public void TestCheckWinnerMethod()
+        {
+            World w = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+            Player player2 = new Player("Meeeeee!2", Color.Red, w);
+            w.addPlayer(player1);
+            w.addPlayer(player2);
+            Assert.IsFalse(w.checkWinner());
+            player2.incrementPoints(20);
+            Assert.IsTrue(w.checkWinner());
+        }
+
+
+        //still working on it
+        [Test()]
+        public void TestRoadButtonClicked()
+        {
+            World w = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+            w.addPlayer(player1);
+            w.setCurrentPlayer(player1.getName());
         }
     }
 }
