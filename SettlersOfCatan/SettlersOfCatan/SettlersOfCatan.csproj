@@ -110,6 +110,12 @@
     <Compile Include="RemoveCardsForm.Designer.cs">
       <DependentUpon>RemoveCardsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="StealCardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StealCardForm.Designer.cs">
+      <DependentUpon>StealCardForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TradeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -210,6 +216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RulesForm.resx">
       <DependentUpon>RulesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StealCardForm.resx">
+      <DependentUpon>StealCardForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TradeForm.resx">
       <DependentUpon>TradeForm.cs</DependentUpon>

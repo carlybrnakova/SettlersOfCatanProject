@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
@@ -995,6 +996,53 @@ namespace SettlersOfCatan
 		{
 			this.playerHand.modifyBrick(-amount);
 			this.world.bank.modifyResource("brick", amount);
+		}
+
+		public string rob()
+		{
+			List<string> resources = new List<string>();
+
+			if (this.playerHand.getBrick() > 0)
+			{
+				resources.Add("brick");
+			}
+
+			if (this.playerHand.getGrain() > 0)
+			{
+				resources.Add("grain");
+			}
+			
+			if (this.playerHand.getWool() > 0)
+			{
+				resources.Add("wool");
+			}
+			
+			if (this.playerHand.getOre() > 0)
+			{
+				resources.Add("ore");
+			}
+			
+			if (this.playerHand.getLumber() > 0)
+			{
+				resources.Add("lumber");
+			}
+
+			return pickString(resources);
+		}
+
+		public string pickString(List<string> resources)
+		{
+			if (!resources.Any())
+			{
+				return "none";
+			}
+
+			Random rand = new Random();
+			int index = rand.Next(0, resources.Count);
+			string resource = resources[index];
+
+			this.playerHand.modifyResources(resource, -1);
+			return resource;
 		}
 
 	}

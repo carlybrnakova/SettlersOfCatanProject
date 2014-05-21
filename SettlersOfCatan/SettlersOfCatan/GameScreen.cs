@@ -34,6 +34,8 @@ namespace SettlersOfCatan
 
 		private Hex robberHex = null;
 
+		public int checkRemoveHalfCount = 0;
+
 		// Intersection Grid
 		// 7
 		// 9
@@ -701,6 +703,7 @@ namespace SettlersOfCatan
 				}
 			}
 			removeRobberText();
+			this.Refresh();
 		}
 
 		private void updateRoundLabel()
@@ -748,46 +751,46 @@ namespace SettlersOfCatan
 		private void RollDiceButton_Click(object sender, EventArgs e)
 		{
 			this.world.rollDice();
-			this.updateResourceLabels();
 			int roll = this.world.getRollNumber();
 			this.RollNumberLabel.Text = roll.ToString();
 			if (roll == 7)
 			{
-				//removeRobberText();
-				for (int i = this.world.currentPlayerNumber; i < this.world.players.Count; i++)
-				{
-					if (this.world.players[i].mustRemoveHalf())
-					{
-						RemoveCardsForm removeForm = new RemoveCardsForm(this.world.players[i]);
-						removeForm.Show();
-					}
-				}
-				foreach (Player p in this.world.players)
-				{
-					if (p.mustRemoveHalf())
-					{
-					}
-				}
+				checkRemoveHalf();
+
 				this.world.setPlaceRobber(true);
 				RobberForm myForm = new RobberForm(this.world, this);
 				myForm.Show();
 			}
+			this.updateResourceLabels();
 		}
 
 		private void checkRemoveHalf()
 		{
+			this.checkRemoveHalfCount = 0;
+
 			for (int i = this.world.currentPlayerNumber; i < this.world.players.Count; i++)
 			{
 				if (this.world.players[i].mustRemoveHalf())
 				{
+					RemoveCardsForm removeForm = new RemoveCardsForm(this.world.players[i], this);
+					removeForm.Show();
 				}
+				this.checkRemoveHalfCount++;
 			}
 
 			for (int i = 0; i < this.world.currentPlayerNumber; i++)
 			{
 				if (this.world.players[i].mustRemoveHalf())
 				{
+					RemoveCardsForm removeForm = new RemoveCardsForm(this.world.players[i], this);
+					removeForm.Show();
 				}
+				this.checkRemoveHalfCount++;
+			}
+			
+			if (this.checkRemoveHalfCount != this.world.players.Count)
+			{
+				throw new ArgumentException("Something went wrong...");
 			}
 		}
 
@@ -843,7 +846,7 @@ namespace SettlersOfCatan
 					this.hexGrid[2][4].setHasRobber(false);
 				}
 			}
-			this.Refresh();
+			//this.Refresh();
 		}
 
 		public void updateDevelopmentCards()

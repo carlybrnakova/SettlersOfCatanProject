@@ -90,13 +90,15 @@ namespace SettlersOfCatan
 				this.Paint += paintRobber;
 				this.isFirstClick = false;
 				this.isDoubleClick = true;
+			//	this.hex.setHasRobber(true);
+
 			}
 			else
 			{
 				this.Paint += paintNormal;
 				this.isDoubleClick = false;
 				this.isFirstClick = true;
-				this.hex.setHasRobber(false);
+			//	this.hex.setHasRobber(false);
 			}
 		}
 
@@ -137,7 +139,7 @@ namespace SettlersOfCatan
 			e.Graphics.Clear(this.BackColor);
 			e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Black, new Point(60, 55));
 			this.color = Color.Black;
-			//this.hex.setHasRobber(false);
+			this.hex.setHasRobber(false);
 		}
 
 		public void paintRobber(object sender, PaintEventArgs e)
@@ -157,6 +159,7 @@ namespace SettlersOfCatan
 				e.Graphics.Clear(this.BackColor);
 				e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Red, new Point(60, 55));
 				this.color = Color.Red;
+				this.hex.setHasRobber(true);
 				this.world.setRobberHex(this.hex);
 			}
 		}
