@@ -295,7 +295,6 @@ namespace SettlersOfCatan
 						catanMap.getIslandMap().getIntAtIndex(coords).setPlayer(currentPlayer);
 						this.catanMap.getIslandMap().buildSettlement(coords);
 						currentPlayer.addSettlement(coords);
-						addOwner(coords);
 						return currentPlayer.getColor();
 					}
 					else
@@ -339,23 +338,6 @@ namespace SettlersOfCatan
 						MessageBoxIcon.Exclamation);
 
 					return Color.White;
-				}
-			}
-		}
-
-		public void addOwner(Point coords)
-		{
-			Intersection inter = this.catanMap.getIslandMap().getIntAtIndex(coords);
-
-			for (int i = 0; i < inter.resourceHexes.Count; i++)
-			{
-				try
-				{
-					inter.resourceHexes[i].addOwner(currentPlayer);
-				}
-				catch (NullReferenceException)
-				{
-					//do nothing
 				}
 			}
 		}
@@ -506,6 +488,11 @@ namespace SettlersOfCatan
 		public void setPlaceRobber(bool condition)
 		{
 			this.placeRobber = condition;
+			if (condition == false)
+			{
+				StealCardForm myForm = new StealCardForm(this);
+				myForm.Show();
+			}
 		}
 
 		public Hex getRobberHex()

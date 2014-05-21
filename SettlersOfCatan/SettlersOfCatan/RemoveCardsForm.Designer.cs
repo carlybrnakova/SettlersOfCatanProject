@@ -43,12 +43,13 @@
 			this.RemoveCardsButton = new System.Windows.Forms.Button();
 			this.NumberOfCardsInHandLabel = new System.Windows.Forms.Label();
 			this.AmountToRemoveLabel = new System.Windows.Forms.Label();
+			this.PlayerNameLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// OreLabel
 			// 
 			this.OreLabel.AutoSize = true;
-			this.OreLabel.Location = new System.Drawing.Point(110, 84);
+			this.OreLabel.Location = new System.Drawing.Point(110, 124);
 			this.OreLabel.Name = "OreLabel";
 			this.OreLabel.Size = new System.Drawing.Size(24, 13);
 			this.OreLabel.TabIndex = 0;
@@ -57,7 +58,7 @@
 			// WoolLabel
 			// 
 			this.WoolLabel.AutoSize = true;
-			this.WoolLabel.Location = new System.Drawing.Point(110, 117);
+			this.WoolLabel.Location = new System.Drawing.Point(110, 157);
 			this.WoolLabel.Name = "WoolLabel";
 			this.WoolLabel.Size = new System.Drawing.Size(32, 13);
 			this.WoolLabel.TabIndex = 1;
@@ -66,7 +67,7 @@
 			// LumberLabel
 			// 
 			this.LumberLabel.AutoSize = true;
-			this.LumberLabel.Location = new System.Drawing.Point(110, 150);
+			this.LumberLabel.Location = new System.Drawing.Point(110, 190);
 			this.LumberLabel.Name = "LumberLabel";
 			this.LumberLabel.Size = new System.Drawing.Size(42, 13);
 			this.LumberLabel.TabIndex = 2;
@@ -75,7 +76,7 @@
 			// GrainLabel
 			// 
 			this.GrainLabel.AutoSize = true;
-			this.GrainLabel.Location = new System.Drawing.Point(110, 177);
+			this.GrainLabel.Location = new System.Drawing.Point(110, 217);
 			this.GrainLabel.Name = "GrainLabel";
 			this.GrainLabel.Size = new System.Drawing.Size(32, 13);
 			this.GrainLabel.TabIndex = 3;
@@ -84,7 +85,7 @@
 			// BrickLabel
 			// 
 			this.BrickLabel.AutoSize = true;
-			this.BrickLabel.Location = new System.Drawing.Point(110, 207);
+			this.BrickLabel.Location = new System.Drawing.Point(110, 247);
 			this.BrickLabel.Name = "BrickLabel";
 			this.BrickLabel.Size = new System.Drawing.Size(31, 13);
 			this.BrickLabel.TabIndex = 4;
@@ -94,7 +95,7 @@
 			// 
 			this.InstructionLabel.AutoSize = true;
 			this.InstructionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-			this.InstructionLabel.Location = new System.Drawing.Point(61, 23);
+			this.InstructionLabel.Location = new System.Drawing.Point(61, 53);
 			this.InstructionLabel.Name = "InstructionLabel";
 			this.InstructionLabel.Size = new System.Drawing.Size(235, 18);
 			this.InstructionLabel.TabIndex = 5;
@@ -104,7 +105,7 @@
 			// 
 			this.RemoveInstructionLabel.AutoSize = true;
 			this.RemoveInstructionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-			this.RemoveInstructionLabel.Location = new System.Drawing.Point(110, 50);
+			this.RemoveInstructionLabel.Location = new System.Drawing.Point(110, 80);
 			this.RemoveInstructionLabel.Name = "RemoveInstructionLabel";
 			this.RemoveInstructionLabel.Size = new System.Drawing.Size(127, 18);
 			this.RemoveInstructionLabel.TabIndex = 7;
@@ -113,7 +114,7 @@
 			// WoolComboBox
 			// 
 			this.WoolComboBox.FormattingEnabled = true;
-			this.WoolComboBox.Location = new System.Drawing.Point(194, 114);
+			this.WoolComboBox.Location = new System.Drawing.Point(194, 154);
 			this.WoolComboBox.Name = "WoolComboBox";
 			this.WoolComboBox.Size = new System.Drawing.Size(106, 21);
 			this.WoolComboBox.TabIndex = 8;
@@ -122,7 +123,7 @@
 			// OreComboBox
 			// 
 			this.OreComboBox.FormattingEnabled = true;
-			this.OreComboBox.Location = new System.Drawing.Point(194, 81);
+			this.OreComboBox.Location = new System.Drawing.Point(194, 121);
 			this.OreComboBox.Name = "OreComboBox";
 			this.OreComboBox.Size = new System.Drawing.Size(106, 21);
 			this.OreComboBox.TabIndex = 9;
@@ -131,7 +132,7 @@
 			// BrickComboBox
 			// 
 			this.BrickComboBox.FormattingEnabled = true;
-			this.BrickComboBox.Location = new System.Drawing.Point(194, 204);
+			this.BrickComboBox.Location = new System.Drawing.Point(194, 244);
 			this.BrickComboBox.Name = "BrickComboBox";
 			this.BrickComboBox.Size = new System.Drawing.Size(106, 21);
 			this.BrickComboBox.TabIndex = 10;
@@ -140,7 +141,7 @@
 			// GrainComboBox
 			// 
 			this.GrainComboBox.FormattingEnabled = true;
-			this.GrainComboBox.Location = new System.Drawing.Point(194, 174);
+			this.GrainComboBox.Location = new System.Drawing.Point(194, 214);
 			this.GrainComboBox.Name = "GrainComboBox";
 			this.GrainComboBox.Size = new System.Drawing.Size(106, 21);
 			this.GrainComboBox.TabIndex = 11;
@@ -149,7 +150,7 @@
 			// LumberComboBox
 			// 
 			this.LumberComboBox.FormattingEnabled = true;
-			this.LumberComboBox.Location = new System.Drawing.Point(194, 147);
+			this.LumberComboBox.Location = new System.Drawing.Point(194, 187);
 			this.LumberComboBox.Name = "LumberComboBox";
 			this.LumberComboBox.Size = new System.Drawing.Size(106, 21);
 			this.LumberComboBox.TabIndex = 12;
@@ -157,7 +158,7 @@
 			// 
 			// RemoveCardsButton
 			// 
-			this.RemoveCardsButton.Location = new System.Drawing.Point(167, 250);
+			this.RemoveCardsButton.Location = new System.Drawing.Point(167, 290);
 			this.RemoveCardsButton.Name = "RemoveCardsButton";
 			this.RemoveCardsButton.Size = new System.Drawing.Size(75, 23);
 			this.RemoveCardsButton.TabIndex = 13;
@@ -169,7 +170,7 @@
 			// 
 			this.NumberOfCardsInHandLabel.AutoSize = true;
 			this.NumberOfCardsInHandLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-			this.NumberOfCardsInHandLabel.Location = new System.Drawing.Point(297, 23);
+			this.NumberOfCardsInHandLabel.Location = new System.Drawing.Point(297, 53);
 			this.NumberOfCardsInHandLabel.Name = "NumberOfCardsInHandLabel";
 			this.NumberOfCardsInHandLabel.Size = new System.Drawing.Size(65, 18);
 			this.NumberOfCardsInHandLabel.TabIndex = 14;
@@ -179,17 +180,29 @@
 			// 
 			this.AmountToRemoveLabel.AutoSize = true;
 			this.AmountToRemoveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-			this.AmountToRemoveLabel.Location = new System.Drawing.Point(239, 50);
+			this.AmountToRemoveLabel.Location = new System.Drawing.Point(239, 80);
 			this.AmountToRemoveLabel.Name = "AmountToRemoveLabel";
 			this.AmountToRemoveLabel.Size = new System.Drawing.Size(61, 18);
 			this.AmountToRemoveLabel.TabIndex = 15;
 			this.AmountToRemoveLabel.Text = "4 cards.";
 			// 
+			// PlayerNameLabel
+			// 
+			this.PlayerNameLabel.Dock = System.Windows.Forms.DockStyle.Top;
+			this.PlayerNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+			this.PlayerNameLabel.Location = new System.Drawing.Point(0, 0);
+			this.PlayerNameLabel.Name = "PlayerNameLabel";
+			this.PlayerNameLabel.Size = new System.Drawing.Size(420, 53);
+			this.PlayerNameLabel.TabIndex = 16;
+			this.PlayerNameLabel.Text = "[Player Name]";
+			this.PlayerNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// RemoveCardsForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(413, 296);
+			this.ClientSize = new System.Drawing.Size(420, 336);
+			this.Controls.Add(this.PlayerNameLabel);
 			this.Controls.Add(this.AmountToRemoveLabel);
 			this.Controls.Add(this.NumberOfCardsInHandLabel);
 			this.Controls.Add(this.RemoveCardsButton);
@@ -206,7 +219,7 @@
 			this.Controls.Add(this.WoolLabel);
 			this.Controls.Add(this.OreLabel);
 			this.Name = "RemoveCardsForm";
-			this.Text = "RolledSevenForm";
+			this.Text = "Remove Some Cards";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -229,5 +242,6 @@
 		private System.Windows.Forms.Button RemoveCardsButton;
 		private System.Windows.Forms.Label NumberOfCardsInHandLabel;
 		private System.Windows.Forms.Label AmountToRemoveLabel;
+		private System.Windows.Forms.Label PlayerNameLabel;
 	}
 }

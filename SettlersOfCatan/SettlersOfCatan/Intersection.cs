@@ -103,6 +103,18 @@ namespace SettlersOfCatan
 		public void setPlayer(Player p)
 		{
 			owner = p;
+
+			foreach (Hex h in this.resourceHexes)
+			{
+				try
+				{
+					h.owners.Add(p);
+				}
+				catch (Exception)
+				{
+					// do nothing
+				}
+			}
 		}
 
 		public int getNumOfResourcesToGenerate()
