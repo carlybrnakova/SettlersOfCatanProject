@@ -32,13 +32,13 @@ namespace SettlersOfCatan
 			this.knights = 0;
 		}
 
-		public void incrementAllResources()
+		public void incrementAllResources(int number)
 		{
-			this.ore++;
-			this.wool++;
-			this.lumber++;
-			this.grain++;
-			this.brick++;
+			this.ore += number;
+            this.wool += number;
+            this.lumber += number;
+            this.grain += number;
+            this.brick += number;
 		}
 
 		public int getResources()

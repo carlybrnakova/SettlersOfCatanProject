@@ -231,7 +231,7 @@ namespace ClassLibrary1
         {
             // IslandMap newMap = new IslandMap();
             World w = new World(3, 0);
-            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources(1);
             w.tryToBuildAtIntersection(new Point(0, 2));
 
             bool flag = w.getMap().getIslandMap().roadHasPlayerBuilding(new Point(0, 2), new Point(0, 3), w.currentPlayer);
@@ -243,7 +243,7 @@ namespace ClassLibrary1
         {
             // IslandMap newMap = new IslandMap();
             World w = new World(3, 0);
-            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources(1);
             w.tryToBuildAtIntersection(new Point(0, 3));
 
             bool flag = w.getMap().getIslandMap().roadHasPlayerBuilding(new Point(0, 2), new Point(0, 3), w.currentPlayer);
@@ -254,17 +254,17 @@ namespace ClassLibrary1
         public void TestBuildHorizontalRoad()
         {
             World w = new World(3, 0);
-            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources(1);
             w.tryToBuildAtIntersection(new Point(0, 3));
             bool flag = w.getMap().getIslandMap().buildHorizontalRoad(new Point(0, 0), w.currentPlayer);
             Assert.True(flag);
 
-            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources(1);
             w.tryToBuildAtIntersection(new Point(1, 4));
             flag = w.getMap().getIslandMap().buildHorizontalRoad(new Point(2, 2), w.currentPlayer);
             Assert.True(flag);
 
-            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources(1);
             w.tryToBuildAtIntersection(new Point(3, 5));
             flag = w.getMap().getIslandMap().buildHorizontalRoad(new Point(6, 4), w.currentPlayer);
 
@@ -276,9 +276,9 @@ namespace ClassLibrary1
         public void TestBuildVerticalRoad()
         {
             World w = new World(3, 0);
-            w.currentPlayer.getHand().incrementAllResources();
-            w.currentPlayer.getHand().incrementAllResources();
-            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources(1);
+            w.currentPlayer.getHand().incrementAllResources(1);
+            w.currentPlayer.getHand().incrementAllResources(1);
             w.tryToBuildAtIntersection(new Point(1, 5));
             bool flag = w.getMap().getIslandMap().buildVerticalRoad(new Point(3, 2), w.currentPlayer);
             Assert.True(flag);

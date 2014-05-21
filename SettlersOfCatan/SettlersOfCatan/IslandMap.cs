@@ -16,6 +16,13 @@ namespace SettlersOfCatan
         public const int MAX_ROAD_ROWS = 11;
         public const int MAX_ROAD_COLUMNS = 10;
 
+        /*
+        public bool isEven(int n)
+        {
+            return (n % 2 == 0);
+        }
+         * */
+
     }
 
     public class IslandMap

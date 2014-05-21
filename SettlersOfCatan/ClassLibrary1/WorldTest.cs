@@ -327,5 +327,11 @@ namespace ClassLibrary1
             }
             Assert.AreEqual(rounds, w.getNumberOfRoundsCompleted());
         }
+
+        [Test()]
+        public void TestThatPlayerCanGetAllResources()
+        {
+
+        }
     }
 }

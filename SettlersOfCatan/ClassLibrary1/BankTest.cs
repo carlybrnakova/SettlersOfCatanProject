@@ -52,6 +52,15 @@ namespace ClassLibrary1
         }
 
         [Test()]
+        public void TestDecrementAllResources()
+        {
+            var target = new Bank();
+            Assert.True(target.allResourcesMax());
+            target.decrementAllResources(1);
+            Assert.False(target.allResourcesMax());
+        }
+
+        [Test()]
         public void TestDrawDevCard()
         {
             var target = new Bank();

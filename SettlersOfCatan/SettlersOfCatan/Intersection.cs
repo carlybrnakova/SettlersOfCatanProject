@@ -16,7 +16,7 @@ namespace SettlersOfCatan
         private Global_Variables.GAME_PIECE currentPiece = Global_Variables.GAME_PIECE.NONE;
         public System.Drawing.Color color;
         private Player owner;
-        private bool hasAPort;
+       // private bool hasAPort;
         private Port port;
 
         public Intersection(Point p)
@@ -127,7 +127,7 @@ namespace SettlersOfCatan
 
         public bool hasPort()
         {
-            return this.hasAPort;
+            return (port != null) ? true : false;
         }
 
     }
