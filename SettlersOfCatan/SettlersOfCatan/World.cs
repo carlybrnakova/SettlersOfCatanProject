@@ -420,6 +420,7 @@ namespace SettlersOfCatan
                     int die2Roll = die.Next(1, 7);
                     currentRoll = die1Roll + die2Roll;
                     generateMyResources(currentRoll, false);
+                    this.currentPlayer.hasRolled = true;
             }
             else if (this.currentPlayer.hasRolled)
             {
@@ -435,7 +436,6 @@ namespace SettlersOfCatan
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
             }
-            this.currentPlayer.hasRolled = true;
 		}
 
 		public int getRollNumber()
