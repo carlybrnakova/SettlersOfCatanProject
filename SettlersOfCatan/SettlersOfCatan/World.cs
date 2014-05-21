@@ -14,14 +14,14 @@ namespace SettlersOfCatan
 		public int currentPlayerNumber;
 		public List<Player> players;
 		public Bank bank;
-		private CompleteMap catanMap;
+		public CompleteMap catanMap;
 		private int currentRoll;
 		// these 4 are public for testing
 		public int largestArmySize;
 		public int largestArmyOwnerIndex;
 		public int longestRoadSize;
 		public int longestRoadOwnerIndex;
-		private int numOfCompletedRounds;
+		public int numOfCompletedRounds;
 		private int turnCounter;
 		private bool placeRobber = false;
 		private Hex robberHex;
