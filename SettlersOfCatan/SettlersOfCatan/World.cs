@@ -14,14 +14,14 @@ namespace SettlersOfCatan
 		public int currentPlayerNumber;
 		public List<Player> players;
 		public Bank bank;
-		private CompleteMap catanMap;
+		public CompleteMap catanMap;
 		private int currentRoll;
 		// these 4 are public for testing
 		public int largestArmySize;
 		public int largestArmyOwnerIndex;
 		public int longestRoadSize;
 		public int longestRoadOwnerIndex;
-		private int numOfCompletedRounds;
+		public int numOfCompletedRounds;
 		private int turnCounter;
 		private bool placeRobber = false;
 		private Hex robberHex;
@@ -420,6 +420,7 @@ namespace SettlersOfCatan
                     int die2Roll = die.Next(1, 7);
                     currentRoll = die1Roll + die2Roll;
                     generateMyResources(currentRoll, false);
+                    this.currentPlayer.hasRolled = true;
             }
             else if (this.currentPlayer.hasRolled)
             {
@@ -435,7 +436,6 @@ namespace SettlersOfCatan
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
             }
-            this.currentPlayer.hasRolled = true;
 		}
 
 		public int getRollNumber()

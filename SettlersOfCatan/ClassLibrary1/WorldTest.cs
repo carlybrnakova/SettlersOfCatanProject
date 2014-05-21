@@ -41,25 +41,37 @@ namespace ClassLibrary1
 		{
 			var target = new World(3, 0);
 
-			// first player
+		    //testing first round
 			Assert.AreEqual("bob", target.currentPlayer.getName());
 			target.endTurn();
 			Assert.AreEqual("joe", target.currentPlayer.getName());
 			target.endTurn();
 			Assert.AreEqual("Anne", target.currentPlayer.getName());
 
-			// should set current player back to bob
+			// testing second round
 			target.endTurn();
-			Assert.AreEqual("bob", target.currentPlayer.getName());
-		}
-
-		[Test()]
-		public void TestDiceRolling()
-		{
-			World world = new World();
-			world.rollDice();
-			Assert.GreaterOrEqual(world.getRollNumber(), 2);
-			Assert.LessOrEqual(world.getRollNumber(), 12);
+			Assert.AreEqual("Anne", target.currentPlayer.getName());
+            target.endTurn();
+            Assert.AreEqual("joe", target.currentPlayer.getName());
+            target.endTurn();
+            Assert.AreEqual("bob", target.currentPlayer.getName());
+            target.endTurn();
+            
+            //testing third round
+            //player has not rolled
+            Assert.AreEqual("bob", target.currentPlayer.getName());
+            target.endTurn();
+            Assert.AreEqual("bob", target.currentPlayer.getName());
+            //playerhas rolled
+            target.rollDice();
+            target.endTurn();
+            Assert.AreEqual("joe", target.currentPlayer.getName());
+            target.rollDice();
+            target.endTurn();
+            Assert.AreEqual("Anne", target.currentPlayer.getName());
+            target.rollDice();
+            target.endTurn();
+            Assert.AreEqual("bob", target.currentPlayer.getName());
 		}
 
 		[Test()]
@@ -311,8 +323,6 @@ namespace ClassLibrary1
 
         }
          * */
-
-<<<<<<< HEAD
         [Test()]
         public void TestRounds()
         {
@@ -338,12 +348,36 @@ namespace ClassLibrary1
             w.setCurrentPlayer(player1.getName());
             Color c = w.tryToBuildAtIntersection(new Point(3,3));
             Assert.AreEqual(Color.White, c);
-            player1.getHand().modifyBrick(1);
-            player1.getHand().modifyGrain(1);
-            player1.getHand().modifyLumber(1);
-            player1.getHand().modifyWool(1);
-            Color d = w.tryToBuildAtIntersection(new Point(2, 3));
-            Assert.AreEqual(Color.White, d);
+        }
+
+        [Test()]
+        public void TestTryToBuildAtIntersectionWithoutSurroundingAreaClear()
+        {
+            World w = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+            w.addPlayer(player1);
+            w.setCurrentPlayer(player1.getName());
+
+            w.currentPlayer.getHand().incrementAllResources();
+
+            w.tryToBuildAtIntersection(new Point(3, 4));
+            Color c = w.tryToBuildAtIntersection(new Point(3, 3));
+            Assert.AreEqual(Color.White, c);
+        }
+
+        [Test()]
+        public void TestTryToBuildCityAtIntersectionWithoutEnoughResources()
+        {
+            World w = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+            w.addPlayer(player1);
+            w.setCurrentPlayer(player1.getName());
+
+            w.currentPlayer.getHand().incrementAllResources();
+
+            w.tryToBuildAtIntersection(new Point(3, 4));
+            Color c = w.tryToBuildAtIntersection(new Point(3, 4));
+            Assert.AreEqual(Color.White, c);
         }
 
         [Test()]
@@ -359,25 +393,97 @@ namespace ClassLibrary1
                     rounds++;
                 }
             }
-            Assert.AreEqual(rounds, w.getNumberOfRoundsCompleted());
+            Assert.AreEqual(rounds - 1, w.getNumberOfRoundsCompleted());
         }
+
+        [Test()]
+        public void TestCheckWinnerMethod()
+        {
+            World w = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+            Player player2 = new Player("Meeeeee!2", Color.Red, w);
+            w.addPlayer(player1);
+            w.addPlayer(player2);
+            Assert.IsFalse(w.checkWinner());
+            player2.incrementPoints(20);
+            Assert.IsTrue(w.checkWinner());
+        }
+
+
+        //still working on it
+        [Test()]
+        public void TestRoadButtonClicked()
+        {
+            World w = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+            w.addPlayer(player1);
+            w.setCurrentPlayer(player1.getName());
+            Color C = w.roadButtonClicked(new Point(2, 2));
+            //insufficiant resources
+            Assert.AreEqual(Color.White, C);
+
+            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources();
+
+            //point without adjoining settlement
+            C = w.roadButtonClicked(new Point(3, 2));
+            Assert.AreEqual(Color.White, C);
+            //even point with resources
+            w.tryToBuildAtIntersection(new Point(0, 3));
+            C = w.roadButtonClicked(new Point(0, 0));
+            Assert.AreEqual(Color.HotPink, C);
+            //odd point with resources
+            w.tryToBuildAtIntersection(new Point(1, 5));
+            C = w.roadButtonClicked(new Point(3, 2));
+            Assert.AreEqual(Color.HotPink, C);
+            //point that is not in the grid
+            C = w.roadButtonClicked(new Point(50, 2));
+            Assert.AreEqual(Color.White, C);
+            //point that has not been initialized
+            w.catanMap = null;
+            C = w.roadButtonClicked(new Point(3, 2));
+            Assert.AreEqual(Color.Black, C);
+        }
+
+        [Test()]
+        public void testRollDice()
+        {
+            World w = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+            w.addPlayer(player1);
+            w.setCurrentPlayer(player1.getName());
+            //test without completeing early rounds
+            w.rollDice();
+            Assert.IsFalse(w.currentPlayer.hasRolled);
+            //test extra roll without completeing early rounds
+            w.rollDice();
+            Assert.IsFalse(w.currentPlayer.hasRolled);
+            w.numOfCompletedRounds = 5;
+            //test first roll after early rounds
+            w.rollDice();
+            Assert.IsTrue(w.currentPlayer.hasRolled);
+            //test extra roll after early rounds
+            w.rollDice();
+            Assert.IsTrue(w.currentPlayer.hasRolled);
+        }
+
+        [Test()]
+        public void testGetRollNumber()
+        {
+            World w = new World(3, 0);
+            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+            w.addPlayer(player1);
+            w.setCurrentPlayer(player1.getName());
+            //test getting roll number without rolling
+            Assert.AreEqual(0, w.getRollNumber());
+            w.numOfCompletedRounds = 5;
+            //test getting roll number after rolling
+            w.rollDice();
+            Assert.IsTrue(w.getRollNumber() < 13 && w.getRollNumber() > 1);
+        }
+
     }
-=======
-		[Test()]
-		public void TestRounds()
-		{
-			World w = new World(3, 0);
-			int rounds = 0;
-			for (int i = 0; i < 9; i++)
-			{
-				w.endTurn();
-				if (i%3 == 0)
-				{
-					rounds++;
-				}
-			}
-			Assert.AreEqual(rounds, w.getNumberOfRoundsCompleted());
-		}
-	}
->>>>>>> cheungnj-week10
 }
