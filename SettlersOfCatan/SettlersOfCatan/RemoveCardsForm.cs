@@ -13,13 +13,15 @@ namespace SettlersOfCatan
 	public partial class RemoveCardsForm : Form
 	{
 		private Player player;
+		private GameScreen gameScreen;
 		private Hand hand;
 		private int numberToRemove;
 		private bool canDispose = true;
 
-		public RemoveCardsForm(Player p)
+		public RemoveCardsForm(Player p, GameScreen gs)
 		{
 			this.player = p;
+			this.gameScreen = gs;
 			this.hand = p.getHand();
 			InitializeComponent();
 			updateLabels();
@@ -31,9 +33,11 @@ namespace SettlersOfCatan
 			int totalCards = this.hand.getResources();
 			this.numberToRemove = (int) Math.Floor((double) totalCards/2);
 
+			string name = this.player.getName();
 			string numberOfCardsInHandString = totalCards.ToString() + " cards, ";
 			string amountToRemoveString = this.numberToRemove.ToString() + " cards.";
 
+			this.PlayerNameLabel.Text = name;
 			this.NumberOfCardsInHandLabel.Text = numberOfCardsInHandString;
 			this.AmountToRemoveLabel.Text = amountToRemoveString;
 		}
@@ -130,7 +134,8 @@ namespace SettlersOfCatan
 		{
 			if (this.canDispose)
 			{
-				base.Dispose();
+				this.gameScreen.updateResourceLabels();
+				e.Cancel = false;
 			}
 			else
 			{
