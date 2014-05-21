@@ -330,6 +330,7 @@ namespace ClassLibrary1
             int rounds = 0;
             for (int i = 0; i < 9; i++)
             {
+                w.rollDice();
                 w.endTurn();
                 if (i % 3 == 0)
                 {
