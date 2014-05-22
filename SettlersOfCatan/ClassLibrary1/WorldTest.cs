@@ -359,7 +359,7 @@ namespace ClassLibrary1
             w.addPlayer(player1);
             w.setCurrentPlayer(player1.getName());
 
-            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources(1);
 
             w.tryToBuildAtIntersection(new Point(3, 4));
             Color c = w.tryToBuildAtIntersection(new Point(3, 3));
@@ -374,7 +374,7 @@ namespace ClassLibrary1
             w.addPlayer(player1);
             w.setCurrentPlayer(player1.getName());
 
-            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources(1);
 
             w.tryToBuildAtIntersection(new Point(3, 4));
             Color c = w.tryToBuildAtIntersection(new Point(3, 4));
@@ -423,11 +423,11 @@ namespace ClassLibrary1
             //insufficiant resources
             Assert.AreEqual(Color.White, C);
 
-            w.currentPlayer.getHand().incrementAllResources();
-            w.currentPlayer.getHand().incrementAllResources();
-            w.currentPlayer.getHand().incrementAllResources();
-            w.currentPlayer.getHand().incrementAllResources();
-            w.currentPlayer.getHand().incrementAllResources();
+            w.currentPlayer.getHand().incrementAllResources(1);
+            w.currentPlayer.getHand().incrementAllResources(1);
+            w.currentPlayer.getHand().incrementAllResources(1);
+            w.currentPlayer.getHand().incrementAllResources(1);
+            w.currentPlayer.getHand().incrementAllResources(1);
 
             //point without adjoining settlement
             C = w.roadButtonClicked(new Point(3, 2));

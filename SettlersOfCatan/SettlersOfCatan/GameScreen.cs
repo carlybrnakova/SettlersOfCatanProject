@@ -593,127 +593,40 @@ namespace SettlersOfCatan
 			Form myForm = new TradeForm(this.world, this);
 			myForm.Show();
 		}
-
-		private void generateResourcesTest_Click(object sender, EventArgs e)
-		{
-			try
+        private void generateResourcesTest_Click(object sender, EventArgs e)
+        {
+            try
 			{
-				this.world.currentPlayer.playerHand.modifyBrick(1);
-				this.world.currentPlayer.playerHand.modifyGrain(1);
-				this.world.currentPlayer.playerHand.modifyWool(1);
-				this.world.currentPlayer.playerHand.modifyOre(1);
-				this.world.currentPlayer.playerHand.modifyLumber(1);
-				this.world.bank.modifyResource("ore", -1);
-				this.world.bank.modifyResource("wool", -1);
-				this.world.bank.modifyResource("grain", -1);
-				this.world.bank.modifyResource("brick", -1);
-				this.world.bank.modifyResource("lumber", -1);
-				this.updateResourceLabels();
-			}
-			catch (ArgumentException ex)
+                this.world.givePlayerAllResources(this.world.currentPlayer, 1);
+                this.world.bank.decrementAllResources(1);
+                this.updateResourceLabels();
+            }
+            catch (ArgumentException ex)
 			{
 				DialogResult num = MessageBox.Show(ex.Message,
 					"Insufficient Resources",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
 			}
-		}
-
-		private void RollDiceButton_Click(object sender, EventArgs e)
-		{
-			this.world.rollDice();
-			int roll = this.world.getRollNumber();
-			this.RollNumberLabel.Text = roll.ToString();
-			if (roll == 7)
-			{
-				checkRemoveHalf();
-
-            Color buttonColor = world.roadButtonClicked(theButton.getCoords());
-            if (buttonColor != Color.White)
-            {
-                theButton.BackColor = buttonColor;
-                theButton.Enabled = false;
-            }
-            this.updateResourceLabels();
-			}
-
-        public void updateResourceLabels()
-        {
-            WoolAmountLabel.Text = this.world.currentPlayer.getHand().getWool().ToString();
-            BrickAmountLabel.Text = this.world.currentPlayer.getHand().getBrick().ToString();
-            LumberAmountLabel.Text = this.world.currentPlayer.getHand().getLumber().ToString();
-            OreAmountLabel.Text = this.world.currentPlayer.getHand().getOre().ToString();
-            GrainAmountLabel.Text = this.world.currentPlayer.getHand().getGrain().ToString();
-        }
-
-        private void EndTurnButton_Click(object sender, EventArgs e)
-        {
-            if (this.world.currentPlayer.getHand().hasFreeRoadPoints() || this.world.currentPlayer.getHand().hasFreeSettlementPoints())
-            {
-                Form myForm = new PlaceFreeStuffForm();
-                myForm.Show();
-            }
-            else{
-                this.world.endTurn();
-                this.updateResourceLabels();
-                this.updateCurrentPlayerNameLabel();
-                this.updateRoundLabel();
-                this.updatePlayerPoints();
-                if (this.world.getNumberOfRoundsCompleted() < 2) 
-                {
-                    this.world.currentPlayer.getHand().modifyFreeRoadPoints(1);
-                    this.world.currentPlayer.getHand().modifyFreeSettlementPoints(1);
-                    Form myForm = new FirstFewTurnsForm();
-                    myForm.Show();
-                }
-                else if (this.world.getNumberOfRoundsCompleted() == 2 && this.world.bank.allResourcesMax())
-                {
-                    //this.world.giveAllPlayersTheirStartingResources();
-                    this.world.generateMyResources(1, true);
-                    this.updateResourceLabels();
-                }
-            }
-        }
-
-        private void updateRoundLabel()
-        {
-            RoundsLabel.Text = "Round " + (this.world.getNumberOfRoundsCompleted() + 1);
-        }
-
-        private void updateCurrentPlayerNameLabel()
-        {
-            CurrentPlayerNameLabel.Text = this.world.currentPlayer.getName().ToString();
-            CurrentPlayerNameLabel.ForeColor = this.world.currentPlayer.getColor();
-        }
-
-        private void ProposeTradeButton_Click(object sender, EventArgs e)
-        {
-            Form myForm = new TradeForm(this.world, this);
-            myForm.Show();
-        }
-
-        private void generateResourcesTest_Click(object sender, EventArgs e)
-        {
-            this.world.givePlayerAllResources(this.world.currentPlayer, 1);
-            this.world.bank.decrementAllResources(1);
-            this.updateResourceLabels();
         }
 
         private void RollDiceButton_Click(object sender, EventArgs e)
         {
             this.world.rollDice();
             this.updateResourceLabels();
-	        int roll = this.world.getRollNumber();
+            int roll = this.world.getRollNumber();
             this.RollNumberLabel.Text = roll.ToString();
-	        if (roll == 7)
-	        {
-				removeRobberText();
-				this.world.setPlaceRobber(true);
-				RobberForm myForm = new RobberForm(this.world, this);
-				myForm.Show();
-			}
-			this.updateResourceLabels();
-		}
+            if (roll == 7)
+            {
+                //checkRemoveHalf(); ??????????
+
+                removeRobberText();
+                this.world.setPlaceRobber(true);
+                RobberForm myForm = new RobberForm(this.world, this);
+                myForm.Show();
+            }
+            this.updateResourceLabels();
+        }
 
 		private void checkRemoveHalf()
 		{

@@ -9,7 +9,6 @@ using System.Drawing;
 
 namespace ClassLibrary1
 {
-<<<<<<< HEAD
     public class IntersectionTest
     {
         [Test()]
