@@ -3,3 +3,6 @@ SettlersOfCatan/SettlersOfCatan/bin/Debug/SettlersOfCatan.vshost.exe.manifest
 SettlersOfCatan/SettlersOfCatan.v11.suo
 SettlersOfCatan/*.user
 SettlersOfCatan/*.suo
+*.suo
+SettlersOfCatan/SettlersOfCatan/obj
+SettlersOfCatan/SettlersOfCatan/bin
