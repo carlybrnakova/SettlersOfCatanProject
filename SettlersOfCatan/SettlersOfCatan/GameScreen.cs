@@ -639,16 +639,26 @@ namespace SettlersOfCatan
 		{
 			IntersectionButton theButton = (IntersectionButton) sender;
 
-			Color buttonColor = world.tryToBuildAtIntersection(theButton.getCoords());
-			if (buttonColor != Color.White && buttonColor != Color.Black)
+			try
 			{
-				theButton.BackColor = buttonColor;
+				Color buttonColor = world.tryToBuildAtIntersection(theButton.getCoords());
+				if (buttonColor != Color.White && buttonColor != Color.Black)
+				{
+					theButton.BackColor = buttonColor;
+				}
+				else if (buttonColor == Color.Black)
+				{
+					theButton.Text = "*";
+					theButton.ForeColor = Color.White;
+					this.world.currentPlayer.incrementCities();
+				}
 			}
-			else if (buttonColor == Color.Black)
+			catch (Exception ex)
 			{
-				theButton.Text = "*";
-				theButton.ForeColor = Color.White;
-				this.world.currentPlayer.incrementCities();
+				DialogResult num = MessageBox.Show(ex.Message,
+	"Insufficient Resources",
+	MessageBoxButtons.OK,
+	MessageBoxIcon.Exclamation);
 			}
 
 			this.updateResourceLabels();

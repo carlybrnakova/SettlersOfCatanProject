@@ -814,8 +814,8 @@ namespace SettlersOfCatan
 
 		public void buildCity()
 		{
-			this.playerHand.modifyGrain(-3);
-			this.playerHand.modifyOre(-2);
+			this.playerHand.modifyGrain(-2);
+			this.playerHand.modifyOre(-3);
 			incrementCities();
 			incrementPoints(1); // One point is already counted for the settlement that was there
 		}

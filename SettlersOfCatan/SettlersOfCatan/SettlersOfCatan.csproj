@@ -60,6 +60,11 @@
     <Compile Include="CompleteMap.cs" />
     <Compile Include="Computer.cs" />
     <Compile Include="Connection.cs" />
+    <Compile Include="English.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>English.resx</DependentUpon>
+    </Compile>
     <Compile Include="FirstFewTurnsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +114,11 @@
     </Compile>
     <Compile Include="RemoveCardsForm.Designer.cs">
       <DependentUpon>RemoveCardsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Spanish.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Spanish.resx</DependentUpon>
     </Compile>
     <Compile Include="StealCardForm.cs">
       <SubType>Form</SubType>
@@ -174,6 +184,10 @@
     <EmbeddedResource Include="BankTradeForm.resx">
       <DependentUpon>BankTradeForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="English.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>English.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="FirstFewTurnsForm.resx">
       <DependentUpon>FirstFewTurnsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -216,6 +230,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RulesForm.resx">
       <DependentUpon>RulesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Spanish.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Spanish.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="StealCardForm.resx">
       <DependentUpon>StealCardForm.cs</DependentUpon>
