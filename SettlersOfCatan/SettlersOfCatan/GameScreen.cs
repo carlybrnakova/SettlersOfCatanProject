@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,9 @@ namespace SettlersOfCatan
 
 		private World world;
 
+		private Hex robberHex = null;
+
+		public int checkRemoveHalfCount = 0;
 
 		// Intersection Grid
 		// 7
@@ -269,8 +273,8 @@ namespace SettlersOfCatan
             topText = "v   Wool 2:1   v";
             PB.Controls.Add(createPortLabel(300, 40, false, topText));
 
-            waterCount++;
-            boardPanel.Controls.Add(PB);
+			waterCount++;
+			boardPanel.Controls.Add(PB);
 
             // Set up bottom
             PictureBox PB2 = createWaterHexPictureBox(Color.Blue, 225, 825, new Size(600, 75));
@@ -303,11 +307,11 @@ namespace SettlersOfCatan
                     pb.Controls.Add(createPortLabel(100, 10, true, text));
                 }
 
-                waterHexes[waterCount] = pb;
-                waterCount++;
-                boardPanel.Controls.Add(pb);
+				waterHexes[waterCount] = pb;
+				waterCount++;
+				boardPanel.Controls.Add(pb);
 
-                if (i == 2) break;
+				if (i == 2) break;
 
                 PictureBox pb2 = createWaterHexPictureBox(Color.Blue, x, y + y_diff, new Size(150, 150));
 
@@ -350,7 +354,7 @@ namespace SettlersOfCatan
                 waterCount++;
                 boardPanel.Controls.Add(pb);
 
-                if (i == 2) break;
+				if (i == 2) break;
 
                 PictureBox pb2 = createWaterHexPictureBox(Color.Blue, x, y + y_diff, new Size(150, 150));
 
@@ -364,11 +368,11 @@ namespace SettlersOfCatan
                 waterCount++;
                 boardPanel.Controls.Add(pb2);
 
-                x += x_diff;
-                y += 150;
-                y_diff -= 150 * (i + 2);
-            }
-        }
+				x += x_diff;
+				y += 150;
+				y_diff -= 150*(i + 2);
+			}
+		}
 
         private Label createPortLabel(int xLocation, int yLocation, bool setSize, string text)
         {
@@ -408,7 +412,6 @@ namespace SettlersOfCatan
 			{
 				if (diff == true)
 				{
-
 					setPictureBoxColorLocationAndSize(pb, Color.Blue, x, y + y_diff, new Size(150, 150));
 				}
 				else
@@ -435,25 +438,24 @@ namespace SettlersOfCatan
         }
 
 		private void initializeBoardPanel()
-        {
-            boardPanel.Location = new Point(0, 0);
-            boardPanel.Size = new Size(1050, 1050);
+		{
+			boardPanel.Location = new Point(0, 0);
+			boardPanel.Size = new Size(1050, 1050);
 
-            setupIntersectionButtons();
+			setupIntersectionButtons();
 
             setupRoadGrid();
             setupWaterHexes();
             setupHexGrid();
 
-            this.Controls.Add(boardPanel);
-            
-        }
+			this.Controls.Add(boardPanel);
+		}
 
 		private void setupIntersectionButtons()
 		{
 			// Coordinate variables for plotting buttons in correct locations
-			int x = 150 - INTERSECTION_BUTTON_SIZE / 2;
-			int y = 75 - INTERSECTION_BUTTON_SIZE / 2;
+			int x = 150 - INTERSECTION_BUTTON_SIZE/2;
+			int y = 75 - INTERSECTION_BUTTON_SIZE/2;
 
 			for (int r = 0; r < MAX_INTERSECTION_ROWS; r++)
 			{
@@ -478,7 +480,7 @@ namespace SettlersOfCatan
 
 					x += X_INCREMENT;
 				}
-				x = 150 - INTERSECTION_BUTTON_SIZE / 2;
+				x = 150 - INTERSECTION_BUTTON_SIZE/2;
 				y += Y_INCREMENT;
 			}
 		}
@@ -507,27 +509,124 @@ namespace SettlersOfCatan
         {
             IntersectionButton theButton = (IntersectionButton)sender;
 
-            Color buttonColor = world.tryToBuildAtIntersection(theButton.getCoords());
-            if (buttonColor != Color.White && buttonColor != Color.Black)
-            {
-                theButton.BackColor = buttonColor;
-                this.world.currentPlayer.incrementSettlements();
-            }
-            else if (buttonColor == Color.Black)
-            {
-                theButton.Text = "*";
-                theButton.ForeColor = Color.White;
-                this.world.currentPlayer.incrementCities();
-            }
 
-            this.updateResourceLabels();
-            this.updatePlayerPoints();
-        }
+			Color buttonColor = world.tryToBuildAtIntersection(theButton.getCoords());
+			if (buttonColor != Color.White && buttonColor != Color.Black)
+			{
+				theButton.BackColor = buttonColor;
+			}
+			else if (buttonColor == Color.Black)
+			{
+				theButton.Text = "*";
+				theButton.ForeColor = Color.White;
+				this.world.currentPlayer.incrementCities();
+			}
 
-        // TODO implement longest road
-        private void roadButton_Click(object sender, EventArgs e)
-        {
-            RoadButton theButton = (RoadButton)sender;
+			this.updateResourceLabels();
+			this.updatePlayerPoints();
+		}
+
+		// TODO implement longest road
+		private void roadButton_Click(object sender, EventArgs e)
+		{
+			RoadButton theButton = (RoadButton) sender;
+
+			Color buttonColor = world.roadButtonClicked(theButton.getCoords());
+			if (buttonColor != Color.White)
+			{
+				theButton.BackColor = buttonColor;
+				theButton.Enabled = false;
+			}
+			this.updateResourceLabels();
+		}
+
+		public void updateResourceLabels()
+		{
+			WoolAmountLabel.Text = this.world.currentPlayer.getHand().getWool().ToString();
+			BrickAmountLabel.Text = this.world.currentPlayer.getHand().getBrick().ToString();
+			LumberAmountLabel.Text = this.world.currentPlayer.getHand().getLumber().ToString();
+			OreAmountLabel.Text = this.world.currentPlayer.getHand().getOre().ToString();
+			GrainAmountLabel.Text = this.world.currentPlayer.getHand().getGrain().ToString();
+		}
+
+		private void EndTurnButton_Click(object sender, EventArgs e)
+		{
+			if (this.world.currentPlayer.getHand().hasFreeRoadPoints() ||
+			    this.world.currentPlayer.getHand().hasFreeSettlementPoints())
+			{
+				Form myForm = new PlaceFreeStuffForm();
+				myForm.Show();
+			}
+			else
+			{
+				this.world.endTurn();
+				this.world.setLargestArmy();
+				this.updateResourceLabels();
+				this.updateCurrentPlayerNameLabel();
+				this.updateRoundLabel();
+				this.updatePlayerPoints();
+				if (this.world.isFirstFewTurnsPhase())
+				{
+					this.world.currentPlayer.getHand().modifyFreeRoadPoints(1);
+					this.world.currentPlayer.getHand().modifyFreeSettlementPoints(1);
+					Form myForm = new FirstFewTurnsForm();
+					myForm.Show();
+				}
+			}
+			removeRobberText();
+			this.Refresh();
+		}
+
+		private void updateRoundLabel()
+		{
+			RoundsLabel.Text = "Round " + (this.world.getNumberOfRoundsCompleted() + 1);
+		}
+
+		private void updateCurrentPlayerNameLabel()
+		{
+			CurrentPlayerNameLabel.Text = this.world.currentPlayer.getName().ToString();
+			CurrentPlayerNameLabel.ForeColor = this.world.currentPlayer.getColor();
+		}
+
+		private void ProposeTradeButton_Click(object sender, EventArgs e)
+		{
+			Form myForm = new TradeForm(this.world, this);
+			myForm.Show();
+		}
+
+		private void generateResourcesTest_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				this.world.currentPlayer.playerHand.modifyBrick(1);
+				this.world.currentPlayer.playerHand.modifyGrain(1);
+				this.world.currentPlayer.playerHand.modifyWool(1);
+				this.world.currentPlayer.playerHand.modifyOre(1);
+				this.world.currentPlayer.playerHand.modifyLumber(1);
+				this.world.bank.modifyResource("ore", -1);
+				this.world.bank.modifyResource("wool", -1);
+				this.world.bank.modifyResource("grain", -1);
+				this.world.bank.modifyResource("brick", -1);
+				this.world.bank.modifyResource("lumber", -1);
+				this.updateResourceLabels();
+			}
+			catch (ArgumentException ex)
+			{
+				DialogResult num = MessageBox.Show(ex.Message,
+					"Insufficient Resources",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
+			}
+		}
+
+		private void RollDiceButton_Click(object sender, EventArgs e)
+		{
+			this.world.rollDice();
+			int roll = this.world.getRollNumber();
+			this.RollNumberLabel.Text = roll.ToString();
+			if (roll == 7)
+			{
+				checkRemoveHalf();
 
             Color buttonColor = world.roadButtonClicked(theButton.getCoords());
             if (buttonColor != Color.White)
@@ -536,7 +635,7 @@ namespace SettlersOfCatan
                 theButton.Enabled = false;
             }
             this.updateResourceLabels();
-        }
+			}
 
         public void updateResourceLabels()
         {
@@ -610,27 +709,74 @@ namespace SettlersOfCatan
 	        {
 				removeRobberText();
 				this.world.setPlaceRobber(true);
-		        RobberForm myForm = new RobberForm(this.world, this);
+				RobberForm myForm = new RobberForm(this.world, this);
 				myForm.Show();
-	        }
-        }
+			}
+			this.updateResourceLabels();
+		}
 
-        private void BuyDevCardButton_Click(object sender, EventArgs e)
-        {
-            this.world.currentPlayer.tradeForDevCard();
-            this.updateResourceLabels();
-            this.updateDevelopmentCards();
-        }
+		private void checkRemoveHalf()
+		{
+			this.checkRemoveHalfCount = 0;
+
+			for (int i = this.world.currentPlayerNumber; i < this.world.players.Count; i++)
+			{
+				if (this.world.players[i].mustRemoveHalf())
+				{
+					RemoveCardsForm removeForm = new RemoveCardsForm(this.world.players[i], this);
+					removeForm.Show();
+				}
+				this.checkRemoveHalfCount++;
+			}
+
+			for (int i = 0; i < this.world.currentPlayerNumber; i++)
+			{
+				if (this.world.players[i].mustRemoveHalf())
+				{
+					RemoveCardsForm removeForm = new RemoveCardsForm(this.world.players[i], this);
+					removeForm.Show();
+				}
+				this.checkRemoveHalfCount++;
+			}
+			
+			if (this.checkRemoveHalfCount != this.world.players.Count)
+			{
+				throw new ArgumentException("Something went wrong...");
+			}
+		}
+
+		private List<Player> robPlayers()
+		{
+			List<Player> playersToRob = new List<Player>(3);
+
+			foreach (Player p in this.robberHex.owners)
+			{
+				if (p != this.world.currentPlayer)
+				{
+					playersToRob.Add(p);
+				}
+			}
+			return playersToRob;
+		}
+
+		private void BuyDevCardButton_Click(object sender, EventArgs e)
+		{
+			this.world.currentPlayer.tradeForDevCard();
+			this.updateResourceLabels();
+			this.updateDevelopmentCards();
+		}
 
 		private void removeRobberText()
 		{
+			this.robberHex = this.world.getRobberHex();
+
 			for (int i = 0; i < 5; i++)
 			{
 				for (int j = 1; j < 4; j++)
 				{
-					if (this.hexGrid[i][j].getHasRobber())
+					if (this.hexGrid[i][j].getHex() != this.world.getRobberHex())
 					{
-						this.hexGrid[i][j].paintBlack();
+						this.hexGrid[i][j].setHasRobber(false);
 					}
 				}
 			}
@@ -638,45 +784,49 @@ namespace SettlersOfCatan
 			// check outliers: [1][0], [2][0], [3][0], [2][4]
 			for (int i = 1; i < 4; i++)
 			{
-				if (this.hexGrid[i][0].getHasRobber())
+				if (this.hexGrid[i][0].getHex() != this.world.getRobberHex())
 				{
-					this.hexGrid[i][0].paintBlack();
+					this.hexGrid[i][0].setHasRobber(false);
 				}
 			}
 
 			if (this.hexGrid[2][4].getHasRobber())
 			{
-				this.hexGrid[2][4].paintBlack();
+				if (this.hexGrid[2][4].getHex() != this.world.getRobberHex())
+				{
+					this.hexGrid[2][4].setHasRobber(false);
+				}
 			}
+			//this.Refresh();
 		}
 
-        public void updateDevelopmentCards()
-        {
-            if (this.world.currentPlayer.playerHand.devCardsContains("knight"))
-                this.KnightsDevCardLabel.Show();
-            else
-                this.KnightsDevCardLabel.Hide();
+		public void updateDevelopmentCards()
+		{
+			if (this.world.currentPlayer.playerHand.devCardsContains("knight"))
+				this.KnightsDevCardLabel.Show();
+			else
+				this.KnightsDevCardLabel.Hide();
 
-            if (this.world.currentPlayer.playerHand.devCardsContains("monopoly"))
-                this.MonopolyDevCardLabel.Show();
-            else
-                this.MonopolyDevCardLabel.Hide();
+			if (this.world.currentPlayer.playerHand.devCardsContains("monopoly"))
+				this.MonopolyDevCardLabel.Show();
+			else
+				this.MonopolyDevCardLabel.Hide();
 
-            if (this.world.currentPlayer.playerHand.devCardsContains("victoryPoint"))
-                this.VictoryPointDevCardLabel.Show();
-            else
-                this.VictoryPointDevCardLabel.Hide();
+			if (this.world.currentPlayer.playerHand.devCardsContains("victoryPoint"))
+				this.VictoryPointDevCardLabel.Show();
+			else
+				this.VictoryPointDevCardLabel.Hide();
 
-            if (this.world.currentPlayer.playerHand.devCardsContains("roadBuilder"))
-                this.RoadBuilderDevCardLabel.Show();
-            else
-                this.RoadBuilderDevCardLabel.Hide();
+			if (this.world.currentPlayer.playerHand.devCardsContains("roadBuilder"))
+				this.RoadBuilderDevCardLabel.Show();
+			else
+				this.RoadBuilderDevCardLabel.Hide();
 
-            if (this.world.currentPlayer.playerHand.devCardsContains("yearOfPlenty"))
-                this.YearOfPlentyDevCardLabel.Show();
-            else
-                this.YearOfPlentyDevCardLabel.Hide();
-        }
+			if (this.world.currentPlayer.playerHand.devCardsContains("yearOfPlenty"))
+				this.YearOfPlentyDevCardLabel.Show();
+			else
+				this.YearOfPlentyDevCardLabel.Hide();
+		}
 
 		private void KnightsDevCardLabel_Click(object sender, EventArgs e)
 		{
@@ -688,47 +838,47 @@ namespace SettlersOfCatan
 			this.updateDevelopmentCards();
 		}
 
-        private void VictoryPointDevCardLabel_Click(object sender, EventArgs e)
-        {
-            this.world.currentPlayer.playDevCard("victoryPoint", null, null);
-            this.updatePlayerPoints();
-            this.updateDevelopmentCards();
-        }
+		private void VictoryPointDevCardLabel_Click(object sender, EventArgs e)
+		{
+			this.world.currentPlayer.playDevCard("victoryPoint", null, null);
+			this.updatePlayerPoints();
+			this.updateDevelopmentCards();
+		}
 
-        private void MonopolyDevCardLabel_Click(object sender, EventArgs e)
-        {
-            MonopolyForm myForm = new MonopolyForm(this.world, this);
-            myForm.Show();
-        }
+		private void MonopolyDevCardLabel_Click(object sender, EventArgs e)
+		{
+			MonopolyForm myForm = new MonopolyForm(this.world, this);
+			myForm.Show();
+		}
 
-        private void RoadBuilderDevCardLabel_Click(object sender, EventArgs e)
-        {
-            this.world.currentPlayer.playDevCard("roadBuilder", null, null);
-            Form myForm = new RoadBuilderForm();
-            myForm.Show();
-            this.updateDevelopmentCards();
-        }
+		private void RoadBuilderDevCardLabel_Click(object sender, EventArgs e)
+		{
+			this.world.currentPlayer.playDevCard("roadBuilder", null, null);
+			Form myForm = new RoadBuilderForm();
+			myForm.Show();
+			this.updateDevelopmentCards();
+		}
 
-        private void YearOfPlentyDevCardLabel_Click(object sender, EventArgs e)
-        {
-            YearOfPlentyForm myForm = new YearOfPlentyForm(this.world, this);
-            myForm.Show();
-        }
+		private void YearOfPlentyDevCardLabel_Click(object sender, EventArgs e)
+		{
+			YearOfPlentyForm myForm = new YearOfPlentyForm(this.world, this);
+			myForm.Show();
+		}
 
-        private void updatePlayerPoints()
-        {
-            this.PointsAmountLabel.Text = this.world.currentPlayer.getPoints().ToString();
-            checkWinner();
-        }
+		private void updatePlayerPoints()
+		{
+			this.PointsAmountLabel.Text = this.world.currentPlayer.getPoints().ToString();
+			checkWinner();
+		}
 
-        private void checkWinner()
-        {
-            if (this.world.checkWinner())
-            {
-                WinForm myForm = new WinForm();
-                myForm.Show();
-            }
-        }
+		private void checkWinner()
+		{
+			if (this.world.checkWinner())
+			{
+				WinForm myForm = new WinForm();
+				myForm.Show();
+			}
+		}
 
 		private void BankTradeButton_Click(object sender, EventArgs e)
 		{

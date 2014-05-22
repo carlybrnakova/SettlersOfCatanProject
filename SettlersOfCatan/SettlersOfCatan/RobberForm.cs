@@ -14,8 +14,8 @@ namespace SettlersOfCatan
 	{
 		private World world;
 		private GameScreen gameScreen;
-		
-			public RobberForm(World world, GameScreen gs)
+
+		public RobberForm(World world, GameScreen gs)
 		{
 			InitializeComponent();
 			this.world = world;
@@ -38,6 +38,22 @@ namespace SettlersOfCatan
 			this.gameScreen.hexGrid[2][0].setClickable(true);
 			this.gameScreen.hexGrid[2][4].setClickable(true);
 			this.gameScreen.hexGrid[3][0].setClickable(true);
+		}
+
+		public void makeAllHexesNotHaveRobber()
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				for (int j = 1; j < 4; j++)
+				{
+					this.gameScreen.hexGrid[i][j].setHasRobber(false);
+				}
+			}
+
+			this.gameScreen.hexGrid[1][0].setHasRobber(false);
+			this.gameScreen.hexGrid[2][0].setHasRobber(false);
+			this.gameScreen.hexGrid[2][4].setHasRobber(false);
+			this.gameScreen.hexGrid[3][0].setHasRobber(false);
 		}
 
 		private void RobberFormButton_Click(object sender, EventArgs e)

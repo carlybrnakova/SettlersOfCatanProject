@@ -113,8 +113,18 @@ namespace SettlersOfCatan
 
 		public void makeTrade()
 		{
-			currentPlayer.makeTrade();
-			this.gameScreen.updateResourceLabels();
+			try
+			{
+				currentPlayer.makeTrade();
+				this.gameScreen.updateResourceLabels();
+			}
+			catch (ArgumentException e)
+			{
+				DialogResult num = MessageBox.Show(e.Message,
+					"Insufficient Resources",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
+			}
 		}
 
 		public void declineTrade()

@@ -22,6 +22,8 @@ namespace SettlersOfCatan
 		private bool clickable = false;
 		private int milliseconds = 0;
 		private World world;
+		private Hex hex = null;
+		private Color color = Color.White;
 
 		public ResourceHexPictureBox()
 		{
@@ -29,7 +31,7 @@ namespace SettlersOfCatan
 			this.hasRobber = false;
 			this.BackColor = Color.Gold;
 			this.Size = HEX_SIZE;
-			this.Paint += pictureBox_Paint;
+			this.Paint += paintNormal;
 		}
 
 		public ResourceHexPictureBox(String type) : this()
@@ -51,6 +53,7 @@ namespace SettlersOfCatan
 			this.BackColor = hex.getColor();
 			this.token = hex.getToken();
 			this.world = world;
+			this.hex = hex;
 
 			doubleClickTimer.Interval = 100;
 			checkDesert();
@@ -73,6 +76,11 @@ namespace SettlersOfCatan
 			}
 		}
 
+		public Hex getHex()
+		{
+			return this.hex;
+		}
+
 		public void setHasRobber(bool condition)
 		{
 			this.hasRobber = condition;
@@ -82,20 +90,16 @@ namespace SettlersOfCatan
 				this.Paint += paintRobber;
 				this.isFirstClick = false;
 				this.isDoubleClick = true;
+			//	this.hex.setHasRobber(true);
+
 			}
 			else
 			{
-				this.Paint += pictureBox_Paint;
+				this.Paint += paintNormal;
 				this.isDoubleClick = false;
 				this.isFirstClick = true;
+			//	this.hex.setHasRobber(false);
 			}
-		}
-
-		public void paintBlack()
-		{
-			this.Paint -= paintRobber;
-			this.Paint -= pictureBox_Paint;
-			this.Paint += pictureBox_Paint;
 		}
 
 		public bool getHasRobber()
@@ -120,9 +124,9 @@ namespace SettlersOfCatan
 			}
 		}
 
-		public void pictureBox_Paint(object sender, PaintEventArgs e)
+		public void paintNormal(object sender, PaintEventArgs e)
 		{
-			this.Paint -= paintRobber;
+			//this.Paint -= paintRobber;
 			Font myFont;
 			if (this.token == 6 || this.token == 8)
 			{
@@ -132,24 +136,32 @@ namespace SettlersOfCatan
 			{
 				myFont = new Font("Arial", 15);
 			}
-
+			e.Graphics.Clear(this.BackColor);
 			e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Black, new Point(60, 55));
+			this.color = Color.Black;
+			this.hex.setHasRobber(false);
 		}
 
 		public void paintRobber(object sender, PaintEventArgs e)
 		{
-			this.Paint -= pictureBox_Paint;
+			//this.Paint -= paintNormal;
 			Font myFont;
-			if (this.token == 6 || this.token == 8)
+			if (this.color == Color.Black || this.color == Color.White)
 			{
-				myFont = new Font("Arial", 30);
+				if (this.token == 6 || this.token == 8)
+				{
+					myFont = new Font("Arial", 30);
+				}
+				else
+				{
+					myFont = new Font("Arial", 15);
+				}
+				e.Graphics.Clear(this.BackColor);
+				e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Red, new Point(60, 55));
+				this.color = Color.Red;
+				this.hex.setHasRobber(true);
+				this.world.setRobberHex(this.hex);
 			}
-			else
-			{
-				myFont = new Font("Arial", 15);
-			}
-
-			e.Graphics.DrawString(Convert.ToString(this.token), myFont, Brushes.Red, new Point(60, 55));
 		}
 
 		// Detect a valid single click or double click. 
@@ -169,14 +181,24 @@ namespace SettlersOfCatan
 					// This is the second mouse click. 
 				else
 				{
-					Invalidate();
-					this.setHasRobber(true);
-					this.world.setPlaceRobber(false);
+					if (!this.getHasRobber())
+					{
+						this.setHasRobber(true);
+						this.world.setPlaceRobber(false);
+						Invalidate();
+					}
+					else
+					{
+						DialogResult num = MessageBox.Show("You can't place the Robber on the same hex.",
+							"Must Move the Robber",
+							MessageBoxButtons.OK,
+							MessageBoxIcon.Exclamation);
+					}
 				}
 			}
 		}
 
-		void doubleClickTimer_Tick(object sender, EventArgs e)
+		private void doubleClickTimer_Tick(object sender, EventArgs e)
 		{
 			milliseconds += 100;
 

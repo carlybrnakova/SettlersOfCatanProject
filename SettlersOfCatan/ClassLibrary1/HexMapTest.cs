@@ -6,20 +6,20 @@ using System.Reflection;
 
 namespace ClassLibrary1
 {
-    class HexMapTest
-    {
-        [Test()]
-        public void TestHexMapInitializesProperly()
-        {
-            var target = new HexMap();
-            Assert.NotNull(target);
-        }
+	internal class HexMapTest
+	{
+		[Test()]
+		public void TestHexMapInitializesProperly()
+		{
+			var target = new HexMap();
+			Assert.NotNull(target);
+		}
 
-        [Test()]
-        public void TestHexMapIsCorrectSize()
-        {
-            var target = new HexMap();
-            Assert.AreEqual(25, target.map.Length);
-        }
-    }
+		[Test()]
+		public void TestHexMapIsCorrectSize()
+		{
+			var target = new HexMap();
+			Assert.AreEqual(25, target.map.Length);
+		}
+	}
 }

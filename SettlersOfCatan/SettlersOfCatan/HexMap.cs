@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,6 +71,10 @@ namespace SettlersOfCatan
 							theHex.setToken(tokens.ElementAt(randomTokenIndex));
 							tokens.RemoveAt(randomTokenIndex);
 						}
+						else
+						{
+							theHex.setHasRobber(true);
+						}
 
 						map[r, c] = theHex;
 						hexDeck.RemoveAt(randomHexIndex);
@@ -117,6 +122,8 @@ namespace SettlersOfCatan
 		private String resource;
 		private Color color;
 		private int token;
+		private bool hasRobber = false;
+		public List<Player> owners = new List<Player>();
 
 		public Hex(String terrainType, Color c)
 		{
@@ -142,6 +149,21 @@ namespace SettlersOfCatan
 		public int getToken()
 		{
 			return this.token;
+		}
+
+		public void setHasRobber(bool condition)
+		{
+			this.hasRobber = condition;
+		}
+
+		public bool getHasRobber()
+		{
+			return this.hasRobber;
+		}
+
+		public void addOwner(Player p)
+		{
+			this.owners.Add(p);
 		}
 	}
 
