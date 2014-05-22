@@ -30,6 +30,7 @@ namespace SettlersOfCatan
 		public const int MAX_ROAD_COLUMNS = 10;
 	}
 
+
 	public class IslandMap
 	{
 		public Intersection[,] map = new Intersection[6, 11];

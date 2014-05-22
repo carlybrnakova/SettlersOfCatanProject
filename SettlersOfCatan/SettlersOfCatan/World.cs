@@ -64,6 +64,12 @@ namespace SettlersOfCatan
 			this.currentPlayer.getHand().modifyFreeSettlementPoints(1);
 		}
 
+        public void givePlayerAllResources(Player thePlayer, int numberOfResourcesToGive)
+        {
+            thePlayer.getHand().incrementAllResources(numberOfResourcesToGive);
+            this.bank.decrementAllResources(numberOfResourcesToGive);
+        }
+		
 		private void checkRobberHex()
 		{
 			for (int i = 0; i < 5; i++)
@@ -322,7 +328,16 @@ namespace SettlersOfCatan
 				// Build a city
 			else
 			{
-				if (currentPlayer.getHand().hasCityResources())
+                if (catanMap.getIslandMap().getIntAtIndex(coords).getPlayer().getColor() != currentPlayer.getColor())
+                {
+                    DialogResult num = MessageBox.Show("That settlement does not belong to you.",
+                        "Not Owner",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation);
+
+                    return Color.White;
+                }
+				else if (currentPlayer.getHand().hasCityResources())
 				{
 					// build a city - change button and decrement resources
 					catanMap.getIslandMap().buildCity(coords);
@@ -427,7 +442,7 @@ namespace SettlersOfCatan
 
 		// Goes through the whole array of intersections and awards the respective
 		// resources to each player settlement by settlement
-		private void generateMyResources(int num, bool isItBeginningOfTheGame)
+		public void generateMyResources(int num, bool isItBeginningOfTheGame)
 		{
 			// For now, give all resources which a settlement/city is on
 			if (!isFirstFewTurnsPhase())
@@ -457,10 +472,15 @@ namespace SettlersOfCatan
 				{
 					if (isItBeginningOfTheGame || h.getToken() == currentRoll)
 					{
+
+                        
+
 						if (h != this.robberHex)
 						{
-							hand.modifyResources(h.getResourceType(), amount);
+							this.dealFromBank(h.getResourceType(), amount, hand);
+                        // hand.modifyResources(h.getResourceType(), amount);
 						}
+
 					}
 				}
 				catch (NullReferenceException)
@@ -469,6 +489,22 @@ namespace SettlersOfCatan
 				}
 			}
 		}
+
+        private void dealFromBank(string resource, int amount, Hand hand)
+        {
+            hand.modifyResources(resource, amount);
+            bank.modifyResource(resource, -amount);
+        }
+
+        /*
+        public void giveAllPlayersTheirStartingResources()
+        {
+            foreach (Player p in this.players)
+            {
+
+            }
+        }
+        */
 
 		public Hex getHexAtIndex(int x, int y)
 		{

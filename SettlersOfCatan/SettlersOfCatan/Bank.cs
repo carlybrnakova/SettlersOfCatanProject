@@ -89,6 +89,15 @@ namespace SettlersOfCatan
 			return shuffledCards;
 		}
 
+        public void decrementAllResources(int number)
+        {
+            this.brick -= number;
+            this.wool -= number;
+            this.lumber -= number;
+            this.grain -= number;
+            this.ore -= number;
+        }
+
 		public bool allResourcesMax()
 		{
 			return (this.ore + this.wool + this.lumber + this.grain + this.brick == 95 && this.devCards.Count() == 25);

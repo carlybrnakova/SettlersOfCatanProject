@@ -53,6 +53,7 @@
     <Compile Include="ComputerTest.cs" />
     <Compile Include="HandTest.cs" />
     <Compile Include="PlayerTest.cs" />
+    <Compile Include="PortTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorldTest.cs" />
   </ItemGroup>

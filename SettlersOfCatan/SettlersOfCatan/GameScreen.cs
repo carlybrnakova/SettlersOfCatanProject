@@ -53,10 +53,7 @@ namespace SettlersOfCatan
 
 		/** Utility function to determine if a number is even */
 
-		private bool isEven(int n)
-		{
-			return (n%2 == 0);
-		}
+
 
 		public GameScreen()
 		{
@@ -244,139 +241,71 @@ namespace SettlersOfCatan
                                 h = null;
                             }
                              * */
-					}
-					hexGrid[r][c] = h;
+                        }
+                        hexGrid[r][c] = h;
 
-					x = (r < 2) ? x - HEX_SIDE_DIMENSION/2 : x + HEX_SIDE_DIMENSION/2;
-					y += HEX_SIDE_DIMENSION;
-				}
-				y = HEX_SIDE_DIMENSION/2;
-				x = HEX_SIDE_DIMENSION*(3 + c);
-			}
-		}
+                        x = (r < 2) ? x - HEX_SIDE_DIMENSION / 2 : x + HEX_SIDE_DIMENSION / 2;
+                        y += HEX_SIDE_DIMENSION;
+                      
+                    }
+                    y = HEX_SIDE_DIMENSION / 2;
+                    x = HEX_SIDE_DIMENSION * (3 + c);
+                }
+        }
 
-		private void setupWaterHexes()
-		{
-			int waterCount = 0;
-			int x = 225;
-			int x_diff = 150;
-			int y = 0;
-			int y_diff = 600;
+        private void setupWaterHexes()
+        {
+            int waterCount = 0;
+            int x = 225;
+            int x_diff = 150;
+            int y = 0;
+            int y_diff = 600;
 
-			/*
-            // Set up top and bottom (short hexes)
-            for (int i = 0; i < 4; i++)
-            {
-                PictureBox pb = new PictureBox();
-                pb.BackColor = Color.Blue;
-                pb.Size = new Size(150, 75);
-                pb.Location = new Point(x, y);
-                waterHexes[waterCount] = pb;
+            // Set up top
+            PictureBox PB = createWaterHexPictureBox(Color.Blue, 225, 0, new Size(600, 75));            
+            waterHexes[waterCount] = PB;
 
-                // Add port for first box
-                Label portLabel1 = new Label();
-                portLabel1.ForeColor = Color.White;
-                portLabel1.Text = "v   Anything   v";
-                portLabel1.Location = new Point(80, 40);
-                pb.Controls.Add(portLabel1);
+            // Add ports for top
+            string topText = "v   Anything 3:1   v";
+            PB.Controls.Add(createPortLabel(70, 40, false, topText));
 
-                waterCount++;
-                boardPanel.Controls.Add(pb);
-               
-                PictureBox pb2 = new PictureBox();
-                pb2.BackColor = Color.Blue;
-                pb2.Size = new Size(150, 75);
-                pb2.Location = new Point(x, y + 825);
-                waterHexes[waterCount] = pb2;
-                waterCount++;
-                boardPanel.Controls.Add(pb2);
-                x += x_diff;
-            }
-             * */
-
-			// Set up top
-			PictureBox PB = new PictureBox();
-			setPictureBoxColorLocationAndSize(PB, Color.Blue, 225, 0, new Size(600, 75));
-			//PB.BackColor = Color.Blue;
-			//PB.Size = new Size(600, 75);
-			//PB.Location = new Point(225, 0);
-			waterHexes[waterCount] = PB;
-
-			// Add ports for top
-			Label portLabel1 = new Label();
-			string topText = "v   Anything 3:1   v";
-			setLabel(portLabel1, 70, 40, false, topText);
-			//portLabel1.ForeColor = Color.White;
-			//portLabel1.Text = "v   Anything 3:1   v";
-			//portLabel1.Location = new Point(70, 40);
-			PB.Controls.Add(portLabel1);
-
-			// Add second port for top
-			Label portLabel2 = new Label();
-			topText = "v   Wool 2:1   v";
-			setLabel(portLabel2, 300, 40, false, topText);
-			//portLabel2.ForeColor = Color.White;
-			//portLabel2.Text = "v   Wool 2:1   v";
-			//portLabel2.Location = new Point(300, 40);
-			PB.Controls.Add(portLabel2);
+            // Add second port for top
+            topText = "v   Wool 2:1   v";
+            PB.Controls.Add(createPortLabel(300, 40, false, topText));
 
 			waterCount++;
 			boardPanel.Controls.Add(PB);
 
-			// Set up bottom
-			PictureBox PB2 = new PictureBox();
-			setPictureBoxColorLocationAndSize(PB2, Color.Blue, 225, 825, new Size(600, 75));
-			//PB2.BackColor = Color.Blue;
-			//PB2.Size = new Size(600, 75);
-			//PB2.Location = new Point(225, 825);
-			waterHexes[waterCount] = PB;
+            // Set up bottom
+            PictureBox PB2 = createWaterHexPictureBox(Color.Blue, 225, 825, new Size(600, 75));
+            waterHexes[waterCount] = PB;
 
-			// Add ports for bottom
-			Label portLabel3 = new Label();
-			topText = "^   Anything 3:1   ^";
-			setLabel(portLabel2, 70, 25, false, topText);
-			//portLabel3.ForeColor = Color.White;
-			//portLabel3.Text = "^   Anything 3:1   ^";
-			//portLabel3.Location = new Point(70, 25);
-			PB2.Controls.Add(portLabel3);
+            // Add ports for bottom
+            topText = "^   Anything 3:1   ^";
+            PB2.Controls.Add(createPortLabel(70, 25, false, topText));
 
-			// Add second port for bottom
-			Label portLabel4 = new Label();
-			topText = "^   Lumber 2:1   ^";
-			setLabel(portLabel2, 295, 25, false, topText);
-			//portLabel4.ForeColor = Color.White;
-			//portLabel4.Text = "^   Lumber 2:1   ^";
-			//portLabel4.Location = new Point(295, 25);
-			PB2.Controls.Add(portLabel4);
+            // Add second port for bottom
+            topText = "^   Lumber 2:1   ^";
+            PB2.Controls.Add(createPortLabel(295, 25, false, topText));
 
-			waterCount++;
-			boardPanel.Controls.Add(PB2);
+            waterCount++;
+            boardPanel.Controls.Add(PB2);
 
-			// Set up the water hexes on the left
-			x = 150;
-			x_diff = 75;
-			y = 75;
-			y_diff = 600;
-			for (int i = 0; i < 3; i++)
-			{
-				PictureBox pb = new PictureBox();
-				setPictureBoxColorLocationAndSize(pb, Color.Blue, x, y, new Size(150, 150));
-				//pb.BackColor = Color.Blue;
-				//pb.Size = new Size(150, 150);
-				//pb.Location = new Point(x, y);
+            // Set up the water hexes on the left
+            x = 150;
+            x_diff = 75;
+            y = 75;
+            y_diff = 600;
+            for (int i = 0; i < 3; i++)
+            {
+                PictureBox pb = createWaterHexPictureBox(Color.Blue, x, y, new Size(150, 150));
 
-				// Add port if relevant
-				if (waterCount == 4)
-				{
-					Label portLabel5 = new Label();
-					string text = "    -->\n\n\n\nOre 2:1 \n\n\n\n\n    -->";
-					setLabel(portLabel5, 100, 10, true, text);
-					//portLabel5.Size = new Size(150, 150);
-					//portLabel5.ForeColor = Color.White;
-					//portLabel5.Text = "    -->\n\n\n\nOre 2:1 \n\n\n\n\n    -->";
-					//portLabel5.Location = new Point(100, 10);
-					pb.Controls.Add(portLabel5);
-				}
+                // Add port if relevant
+                if (waterCount == 4)
+                {
+                    string text = "    -->\n\n\n\nOre 2:1 \n\n\n\n\n    -->";
+                    pb.Controls.Add(createPortLabel(100, 10, true, text));
+                }
 
 				waterHexes[waterCount] = pb;
 				waterCount++;
@@ -384,99 +313,60 @@ namespace SettlersOfCatan
 
 				if (i == 2) break;
 
-				PictureBox pb2 = new PictureBox();
-				setPictureBoxColorLocationAndSize(pb2, Color.Blue, x, y + y_diff, new Size(150, 150));
+                PictureBox pb2 = createWaterHexPictureBox(Color.Blue, x, y + y_diff, new Size(150, 150));
 
-				//pb2.BackColor = Color.Blue;
-				//pb2.Size = new Size(150, 150);
-				//pb2.Location = new Point(x, y + y_diff);
+                // Add port if relevant
+                if (waterCount == 5)
+                {
+                    string text = "      -->\n\n\n\nGrain 2:1\n\n\n\n\n      -->";
+                    pb2.Controls.Add(createPortLabel(90, 10, true, text));
+                }
+                waterHexes[waterCount] = pb2;
+                waterCount++;
+                boardPanel.Controls.Add(pb2);
 
-				// Add port if relevant
-				if (waterCount == 5)
-				{
-					Label portLabel5 = new Label();
-					string text = "      -->\n\n\n\nGrain 2:1\n\n\n\n\n      -->";
-					setLabel(portLabel5, 90, 10, true, text);
-					//portLabel5.Size = new Size(150, 150);
-					//portLabel5.ForeColor = Color.White;
-					//portLabel5.Text = "      -->\n\n\n\nGrain 2:1\n\n\n\n\n      -->";
-					//portLabel5.Location = new Point(90, 10);
-					pb2.Controls.Add(portLabel5);
-				}
-				waterHexes[waterCount] = pb2;
-				waterCount++;
-				boardPanel.Controls.Add(pb2);
+                x -= x_diff;
+                y += 150;
+                y_diff -= 150 * (i + 2);
+            }
 
-				x -= x_diff;
-				y += 150;
-				y_diff -= 150*(i + 2);
-			}
+            // Set up the water hexes on the right
+            x = 750;
+            x_diff = 75;
+            y = 75;
+            y_diff = 600;
+            for (int i = 0; i < 3; i++)
+            {
+                PictureBox pb = createWaterHexPictureBox(Color.Blue, x, y, new Size(150, 150));
 
-			// Set up the water hexes on the right
-			x = 750;
-			x_diff = 75;
-			y = 75;
-			y_diff = 600;
-			for (int i = 0; i < 3; i++)
-			{
-				PictureBox pb = new PictureBox();
-				setPictureBoxColorLocationAndSize(pb, Color.Blue, x, y, new Size(150, 150));
-
-				//pb.BackColor = Color.Blue;
-				//pb.Size = new Size(150, 150);
-				//pb.Location = new Point(x, y);
-
-				// Add port if relevant
-				if (waterCount == 7)
-				{
-					Label portLabel5 = new Label();
-					string text = "v  Anything 3:1  v";
-					setLabel(portLabel5, 10, 110, true, text);
-					//portLabel5.Size = new Size(150, 150);
-					//portLabel5.ForeColor = Color.White;
-					//portLabel5.Text = "v  Anything 3:1  v";
-					//portLabel5.Location = new Point(10, 110);
-					pb.Controls.Add(portLabel5);
-				}
-				else if (waterCount == 11)
-				{
-					Label portLabel5 = new Label();
-					string text = "    <--\n\n\n\n Anything 3:1\n\n\n\n\n    <--";
-					setLabel(portLabel5, 10, 10, true, text);
-					//portLabel5.Size = new Size(150, 150);
-					//portLabel5.ForeColor = Color.White;
-					//portLabel5.Text = "    <--\n\n\n\n Anything 3:1\n\n\n\n\n    <--";
-					//portLabel5.Location = new Point(10, 10);
-					pb.Controls.Add(portLabel5);
-				}
-				waterHexes[waterCount] = pb;
-				waterCount++;
-				boardPanel.Controls.Add(pb);
+                // Add port if relevant
+                if (waterCount == 7)
+                {
+                    string text = "v  Anything 3:1  v";
+                    pb.Controls.Add(createPortLabel(10, 110, true, text));
+                }
+                else if (waterCount == 11)
+                {
+                    string text = "    <--\n\n\n\n Anything 3:1\n\n\n\n\n    <--";
+                    pb.Controls.Add(createPortLabel(10, 10, true, text));
+                }
+                waterHexes[waterCount] = pb;
+                waterCount++;
+                boardPanel.Controls.Add(pb);
 
 				if (i == 2) break;
 
-				PictureBox pb2 = new PictureBox();
-				setPictureBoxColorLocationAndSize(pb2, Color.Blue, x, y + y_diff, new Size(150, 150));
+                PictureBox pb2 = createWaterHexPictureBox(Color.Blue, x, y + y_diff, new Size(150, 150));
 
-				//pb2.BackColor = Color.Blue;
-				//pb2.Size = new Size(150, 150);
-				//pb2.Location = new Point(x, y + y_diff);
-
-				// Add port if relevant
-				if (waterCount == 8)
-				{
-					Label portLabel5 = new Label();
-					string text = "^  Brick 2:1  ^";
-					setLabel(portLabel5, 10, 20, true, text);
-					//portLabel5.Size = new Size(150, 150);
-					//portLabel5.ForeColor = Color.White;
-					//portLabel5.Text = "^  Brick 2:1  ^";
-					//portLabel5.Location = new Point(10, 20);
-					pb2.Controls.Add(portLabel5);
-				}
-				waterHexes[waterCount] = pb2;
-				waterCount++;
-				boardPanel.Controls.Add(pb2);
+                // Add port if relevant
+                if (waterCount == 8)
+                {
+                    string text = "^  Brick 2:1  ^";
+                    pb2.Controls.Add(createPortLabel(10, 20, true, text));
+                }
+                waterHexes[waterCount] = pb2;
+                waterCount++;
+                boardPanel.Controls.Add(pb2);
 
 				x += x_diff;
 				y += 150;
@@ -484,17 +374,19 @@ namespace SettlersOfCatan
 			}
 		}
 
-		private void setLabel(Label label, int x, int y, bool setSize, string text)
-		{
-			if (setSize == true)
-			{
-				label.Size = new Size(150, 150);
-			}
+        private Label createPortLabel(int xLocation, int yLocation, bool setSize, string text)
+        {
+            Label portLabel = new Label();
+            if (setSize == true)
+            {
+                portLabel.Size = new Size(150, 150);
+            }
 
-			label.ForeColor = Color.White;
-			label.Text = text;
-			label.Location = new Point(x, y);
-		}
+            portLabel.ForeColor = Color.White;
+            portLabel.Text = text;
+            portLabel.Location = new Point(xLocation, yLocation);
+            return portLabel;
+        }
 
 		private void addPictureBox(int waterCount, int[] coords, bool top, bool diff)
 		{
@@ -531,12 +423,19 @@ namespace SettlersOfCatan
 			boardPanel.Controls.Add(pb);
 		}
 
-		private void setPictureBoxColorLocationAndSize(PictureBox pb, Color color, int x, int y, Size size)
+        private PictureBox createWaterHexPictureBox(Color color, int x, int y, Size size)
 		{
-			pb.BackColor = color;
-			pb.Location = new Point(x, y);
-			pb.Size = size;
+            PictureBox pb = new PictureBox();
+			setPictureBoxColorLocationAndSize(pb, color, x, y, size);
+            return pb;
 		}
+
+        private void setPictureBoxColorLocationAndSize(PictureBox pb, Color color, int x, int y, Size size)
+        {
+            pb.BackColor = color;
+            pb.Location = new Point(x, y);
+            pb.Size = size;
+        }
 
 		private void initializeBoardPanel()
 		{
@@ -545,10 +444,9 @@ namespace SettlersOfCatan
 
 			setupIntersectionButtons();
 
-
-			setupRoadGrid();
-			setupWaterHexes();
-			setupHexGrid();
+            setupRoadGrid();
+            setupWaterHexes();
+            setupHexGrid();
 
 			this.Controls.Add(boardPanel);
 		}
@@ -600,44 +498,17 @@ namespace SettlersOfCatan
 			button.Click += intersectionButton_Click;
 		}
 
-		private void setRoadButtonSizeCoordinatesAndClick(RoadButton button, Size size, int x, int y)
-		{
-			button.Size = size;
-			button.Click += roadButton_Click;
-			button.coordinates = new Point(x, y);
-		}
+        private void setRoadButtonSizeCoordinatesAndClick(RoadButton button, Size size, int x, int y)
+        {
+            button.Size = size;
+            button.Click += roadButton_Click;
+            button.coordinates = new Point(x, y);
+        }
 
+        private void intersectionButton_Click(object sender, EventArgs e)
+        {
+            IntersectionButton theButton = (IntersectionButton)sender;
 
-		private void ItemToBuildComboBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			ComboBox myComboBox = (ComboBox) sender;
-			if (myComboBox.SelectedIndex == 0)
-			{
-				// Show all available road buttons
-			}
-			else if (myComboBox.SelectedIndex == 1)
-			{
-				// Show all available settlement buttons
-			}
-			else if (myComboBox.SelectedIndex == 2)
-			{
-				// enable all relevant current settlement buttons to be changed into cities
-			}
-		}
-
-		private void showOnlyOpenRoadButtons()
-		{
-			// Disable all city/settlement buttons
-
-			// Hide all unused city/settlement buttons
-
-			// Show and enable all unused road buttons
-		}
-
-
-		private void intersectionButton_Click(object sender, EventArgs e)
-		{
-			IntersectionButton theButton = (IntersectionButton) sender;
 
 			try
 			{
@@ -767,6 +638,86 @@ namespace SettlersOfCatan
 			{
 				checkRemoveHalf();
 
+            Color buttonColor = world.roadButtonClicked(theButton.getCoords());
+            if (buttonColor != Color.White)
+            {
+                theButton.BackColor = buttonColor;
+                theButton.Enabled = false;
+            }
+            this.updateResourceLabels();
+			}
+
+        public void updateResourceLabels()
+        {
+            WoolAmountLabel.Text = this.world.currentPlayer.getHand().getWool().ToString();
+            BrickAmountLabel.Text = this.world.currentPlayer.getHand().getBrick().ToString();
+            LumberAmountLabel.Text = this.world.currentPlayer.getHand().getLumber().ToString();
+            OreAmountLabel.Text = this.world.currentPlayer.getHand().getOre().ToString();
+            GrainAmountLabel.Text = this.world.currentPlayer.getHand().getGrain().ToString();
+        }
+
+        private void EndTurnButton_Click(object sender, EventArgs e)
+        {
+            if (this.world.currentPlayer.getHand().hasFreeRoadPoints() || this.world.currentPlayer.getHand().hasFreeSettlementPoints())
+            {
+                Form myForm = new PlaceFreeStuffForm();
+                myForm.Show();
+            }
+            else{
+                this.world.endTurn();
+                this.updateResourceLabels();
+                this.updateCurrentPlayerNameLabel();
+                this.updateRoundLabel();
+                this.updatePlayerPoints();
+                if (this.world.getNumberOfRoundsCompleted() < 2) 
+                {
+                    this.world.currentPlayer.getHand().modifyFreeRoadPoints(1);
+                    this.world.currentPlayer.getHand().modifyFreeSettlementPoints(1);
+                    Form myForm = new FirstFewTurnsForm();
+                    myForm.Show();
+                }
+                else if (this.world.getNumberOfRoundsCompleted() == 2 && this.world.bank.allResourcesMax())
+                {
+                    //this.world.giveAllPlayersTheirStartingResources();
+                    this.world.generateMyResources(1, true);
+                    this.updateResourceLabels();
+                }
+            }
+        }
+
+        private void updateRoundLabel()
+        {
+            RoundsLabel.Text = "Round " + (this.world.getNumberOfRoundsCompleted() + 1);
+        }
+
+        private void updateCurrentPlayerNameLabel()
+        {
+            CurrentPlayerNameLabel.Text = this.world.currentPlayer.getName().ToString();
+            CurrentPlayerNameLabel.ForeColor = this.world.currentPlayer.getColor();
+        }
+
+        private void ProposeTradeButton_Click(object sender, EventArgs e)
+        {
+            Form myForm = new TradeForm(this.world, this);
+            myForm.Show();
+        }
+
+        private void generateResourcesTest_Click(object sender, EventArgs e)
+        {
+            this.world.givePlayerAllResources(this.world.currentPlayer, 1);
+            this.world.bank.decrementAllResources(1);
+            this.updateResourceLabels();
+        }
+
+        private void RollDiceButton_Click(object sender, EventArgs e)
+        {
+            this.world.rollDice();
+            this.updateResourceLabels();
+	        int roll = this.world.getRollNumber();
+            this.RollNumberLabel.Text = roll.ToString();
+	        if (roll == 7)
+	        {
+				removeRobberText();
 				this.world.setPlaceRobber(true);
 				RobberForm myForm = new RobberForm(this.world, this);
 				myForm.Show();

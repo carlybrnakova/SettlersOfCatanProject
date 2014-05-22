@@ -8,6 +8,7 @@ using SettlersOfCatan;
 
 namespace SettlersOfCatan
 {
+
 	public class Intersection
 	{
 		public List<Connection> connections = new List<Connection>(3);
