@@ -55,3 +55,4 @@ C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\Settlers
 C:\Users\hortoncb\Documents\college classes\CSSE\csse376\SettlersOfCatan\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.RemoveCardsForm.resources
 C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.StealCardForm.resources
 C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.English.resources
+C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.Spanish.resources

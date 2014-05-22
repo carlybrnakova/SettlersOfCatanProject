@@ -15,7 +15,7 @@ namespace SettlersOfCatan
 	{
 		public MainMenu()
 		{
-			this.GameLabel.Text = English.NewGame;
+			//this.GameLabel.Text = English.NewGame;
 			InitializeComponent();
 		}
 
