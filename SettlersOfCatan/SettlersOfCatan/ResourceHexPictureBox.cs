@@ -90,15 +90,15 @@ namespace SettlersOfCatan
 				this.Paint += paintRobber;
 				this.isFirstClick = false;
 				this.isDoubleClick = true;
-			//	this.hex.setHasRobber(true);
-
+				this.hex.setHasRobber(true);
+				this.world.setRobberHex(this.hex);
 			}
 			else
 			{
 				this.Paint += paintNormal;
 				this.isDoubleClick = false;
 				this.isFirstClick = true;
-			//	this.hex.setHasRobber(false);
+				this.hex.setHasRobber(false);
 			}
 		}
 

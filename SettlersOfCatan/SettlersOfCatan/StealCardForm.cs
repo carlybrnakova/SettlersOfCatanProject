@@ -26,13 +26,15 @@ namespace SettlersOfCatan
 
 		private void updateLabels()
 		{
-			int owners = world.getRobberHex().owners.Count;
+			int owners = this.robberHex.owners.Count;
 
 			for (int i = 0; i < owners; i++)
 			{
-				if (this.world.getRobberHex().owners[i].getHand().getResources() > 0)
+				if (this.robberHex.owners[i].getHand().getResources() > 0 &&
+				    !this.robberHex.owners[i].getName().Equals(this.world.currentPlayer.getName()) &&
+				    !this.PlayerNameComboBox.Items.Contains(this.world.getRobberHex().owners[i].getName()))
 				{
-					this.PlayerNameComboBox.Items.Insert(i, world.getRobberHex().owners[i].getName());
+					this.PlayerNameComboBox.Items.Add(this.world.getRobberHex().owners[i].getName());
 				}
 			}
 
@@ -59,9 +61,9 @@ namespace SettlersOfCatan
 			else
 			{
 				DialogResult num = MessageBox.Show(rm.GetString(language + "MustChoosePlayer"),
-	rm.GetString(language + "PickSomeone"),
-	MessageBoxButtons.OK,
-	MessageBoxIcon.Exclamation);
+					rm.GetString(language + "PickSomeone"),
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
 			}
 		}
 
@@ -108,6 +110,5 @@ namespace SettlersOfCatan
 				e.Cancel = true;
 			}
 		}
-
 	}
 }

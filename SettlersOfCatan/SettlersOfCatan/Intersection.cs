@@ -8,7 +8,6 @@ using SettlersOfCatan;
 
 namespace SettlersOfCatan
 {
-
 	public class Intersection
 	{
 		public List<Connection> connections = new List<Connection>(3);
@@ -130,14 +129,14 @@ namespace SettlersOfCatan
 			return this.currentPiece;
 		}
 
-        public List<Connection> getConnections()
-        {
-            return this.connections;
-        }
+		public List<Connection> getConnections()
+		{
+			return this.connections;
+		}
 
 		public bool hasPort()
 		{
 			return this.port != null;
 		}
-    }
+	}
 }

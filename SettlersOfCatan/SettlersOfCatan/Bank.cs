@@ -94,14 +94,14 @@ namespace SettlersOfCatan
 			return shuffledCards;
 		}
 
-        public void decrementAllResources(int number)
-        {
-            this.brick -= number;
-            this.wool -= number;
-            this.lumber -= number;
-            this.grain -= number;
-            this.ore -= number;
-        }
+		public void decrementAllResources(int number)
+		{
+			this.brick -= number;
+			this.wool -= number;
+			this.lumber -= number;
+			this.grain -= number;
+			this.ore -= number;
+		}
 
 		public bool allResourcesMax()
 		{

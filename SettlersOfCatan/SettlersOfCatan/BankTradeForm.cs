@@ -28,7 +28,8 @@ namespace SettlersOfCatan
 			this.Text = rm.GetString(language + "TradeWithBank");
 			this.BankTradePromptLabel.Text = rm.GetString(language + "BankPrompt");
 			this.ResourceGainBankComboBox.Text = rm.GetString(language + "ResourceGain");
-			this.ResourceTradeBankComboBox.Text = rm.GetString(language + "ResourceTrade"); ;
+			this.ResourceTradeBankComboBox.Text = rm.GetString(language + "ResourceTrade");
+			;
 			this.ResourceGainBankComboBox.Items[0] = this.ResourceTradeBankComboBox.Items[0] = rm.GetString(language + "Ore");
 			this.ResourceGainBankComboBox.Items[1] = this.ResourceTradeBankComboBox.Items[1] = rm.GetString(language + "Grain");
 			this.ResourceGainBankComboBox.Items[2] = this.ResourceTradeBankComboBox.Items[2] = rm.GetString(language + "Wool");

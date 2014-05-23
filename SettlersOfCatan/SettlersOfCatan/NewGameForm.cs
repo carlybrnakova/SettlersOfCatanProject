@@ -13,6 +13,11 @@ namespace SettlersOfCatan
 		public NewGameForm()
 		{
 			InitializeComponent();
+			localize();
+		}
+
+		private void localize()
+		{
 			this.Text = this.NewGameLabel.Text = rm.GetString(language + "NewGame");
 			this.BackButton.Text = rm.GetString(language + "Back");
 			this.StartButton.Text = rm.GetString(language + "Start");

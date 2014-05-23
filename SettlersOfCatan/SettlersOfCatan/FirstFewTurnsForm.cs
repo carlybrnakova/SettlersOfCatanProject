@@ -13,7 +13,7 @@ namespace SettlersOfCatan
 		public FirstFewTurnsForm()
 		{
 			InitializeComponent();
-			
+
 			this.Text = rm.GetString(language + "FirstFewTitle");
 			this.PlaceRoadsAndSettlementsLabel.Text = rm.GetString(language + "FirstFewPrompt");
 			this.CloseButton.Text = rm.GetString(language + "Close");

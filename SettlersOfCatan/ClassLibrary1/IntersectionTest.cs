@@ -63,6 +63,16 @@ namespace ClassLibrary1
             target = new Intersection(new Point(4, 4), new Port("Ore", 2));
             Assert.True(target.hasPort());
         }
+
+	    [Test()]
+	    public void TestGetConnections()
+	    {
+		    var target = new Intersection(new Point(4, 4));
+		    List<Connection> connections = target.getConnections();
+		    Assert.IsNull(connections[0].getIntersection());
+			Assert.IsNull(connections[1].getIntersection());
+			Assert.IsNull(connections[2].getIntersection());
+	    }
     }
 }
 

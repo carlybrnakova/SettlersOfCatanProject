@@ -69,12 +69,12 @@ namespace SettlersOfCatan
 			this.currentPlayer.getHand().modifyFreeSettlementPoints(1);
 		}
 
-        public void givePlayerAllResources(Player thePlayer, int numberOfResourcesToGive)
-        {
-            thePlayer.getHand().incrementAllResources(numberOfResourcesToGive);
-            this.bank.decrementAllResources(numberOfResourcesToGive);
-        }
-		
+		public void givePlayerAllResources(Player thePlayer, int numberOfResourcesToGive)
+		{
+			thePlayer.getHand().incrementAllResources(numberOfResourcesToGive);
+			this.bank.decrementAllResources(numberOfResourcesToGive);
+		}
+
 		private void checkRobberHex()
 		{
 			for (int i = 0; i < 5; i++)
@@ -136,56 +136,57 @@ namespace SettlersOfCatan
 		}
 
 		public void endTurn()
-        {
-            setLongestRoad();
-            if (numOfCompletedRounds == 0)
-            {
-                if (currentPlayerNumber < this.players.Count() - 1)
-                {
-                    currentPlayerNumber++;
-                }
-                else
-                {
-                    currentPlayerNumber = this.players.Count() - 1;
-                    numOfCompletedRounds++;
-                }
-            }
-            else if (numOfCompletedRounds == 1)
-            {
-                if (currentPlayerNumber > 0)
-                {
-                    currentPlayerNumber--;
-                }
-                else
-                {
-                    currentPlayerNumber = 0;
-                    numOfCompletedRounds++;
-                }
-            }
-            else if (currentPlayer.hasRolled)
-            {
-                if (currentPlayerNumber < this.players.Count() - 1)
-                {
-                    currentPlayer.hasRolled = false;
-                    currentPlayerNumber++;
-                }
-                else
-                {
-                    currentPlayerNumber = 0;
-                    numOfCompletedRounds++;
-                }
-            }
-            else
-            {
-                // pop up error message if player hasn't rolled yet
-                DialogResult num = MessageBox.Show(rm.GetString(language + "RollBeforeEnd"),
-                    rm.GetString(language + "RollTheDice"),
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation);
-            }
+		{
+			setLargestArmy();
+			setLongestRoad();
+			if (numOfCompletedRounds == 0)
+			{
+				if (currentPlayerNumber < this.players.Count() - 1)
+				{
+					currentPlayerNumber++;
+				}
+				else
+				{
+					currentPlayerNumber = this.players.Count() - 1;
+					numOfCompletedRounds++;
+				}
+			}
+			else if (numOfCompletedRounds == 1)
+			{
+				if (currentPlayerNumber > 0)
+				{
+					currentPlayerNumber--;
+				}
+				else
+				{
+					currentPlayerNumber = 0;
+					numOfCompletedRounds++;
+				}
+			}
+			else if (currentPlayer.hasRolled)
+			{
+				if (currentPlayerNumber < this.players.Count() - 1)
+				{
+					currentPlayer.hasRolled = false;
+					currentPlayerNumber++;
+				}
+				else
+				{
+					currentPlayerNumber = 0;
+					numOfCompletedRounds++;
+				}
+			}
+			else
+			{
+				// pop up error message if player hasn't rolled yet
+				DialogResult num = MessageBox.Show(rm.GetString(language + "RollBeforeEnd"),
+					rm.GetString(language + "RollTheDice"),
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
+			}
 
-            currentPlayer = this.players[currentPlayerNumber];
-        }
+			currentPlayer = this.players[currentPlayerNumber];
+		}
 
 		public int getNumberOfRoundsCompleted()
 		{
@@ -333,15 +334,15 @@ namespace SettlersOfCatan
 				// Build a city
 			else
 			{
-                if (catanMap.getIslandMap().getIntAtIndex(coords).getPlayer().getColor() != currentPlayer.getColor())
-                {
-                    DialogResult num = MessageBox.Show(rm.GetString(language + "SettlementNotBelong"),
-                       rm.GetString(language + "NotOwner"),
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Exclamation);
+				if (catanMap.getIslandMap().getIntAtIndex(coords).getPlayer().getColor() != currentPlayer.getColor())
+				{
+					DialogResult num = MessageBox.Show(rm.GetString(language + "SettlementNotBelong"),
+						rm.GetString(language + "NotOwner"),
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Exclamation);
 
-                    return Color.White;
-                }
+					return Color.White;
+				}
 				else if (currentPlayer.getHand().hasCityResources())
 				{
 					// build a city - change button and decrement resources
@@ -415,29 +416,29 @@ namespace SettlersOfCatan
 
 		public void rollDice()
 		{
-            if (!this.currentPlayer.hasRolled && numOfCompletedRounds >= 2)
-            {
-                    Random die = new Random();
-                    int die1Roll = die.Next(1, 7);
-                    int die2Roll = die.Next(1, 7);
-                    currentRoll = die1Roll + die2Roll;
-                    generateMyResources(currentRoll, false);
-                    this.currentPlayer.hasRolled = true;
-            }
-            else if (this.currentPlayer.hasRolled)
-            {
-                DialogResult num = MessageBox.Show(rm.GetString(language + "OnlyOneRoll"),
-						rm.GetString(language + "AlreadyRolled"),
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Exclamation);
-            }
-            else
-            {
-                DialogResult num = MessageBox.Show(rm.GetString(language + "CannotRollFirstFew"),
-                        rm.GetString(language + "TooEarlyToRoll"),
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Exclamation);
-            }
+			if (!this.currentPlayer.hasRolled && numOfCompletedRounds >= 2)
+			{
+				Random die = new Random();
+				int die1Roll = die.Next(1, 7);
+				int die2Roll = die.Next(1, 7);
+				currentRoll = die1Roll + die2Roll;
+				generateMyResources(currentRoll, false);
+				this.currentPlayer.hasRolled = true;
+			}
+			else if (this.currentPlayer.hasRolled)
+			{
+				DialogResult num = MessageBox.Show(rm.GetString(language + "OnlyOneRoll"),
+					rm.GetString(language + "AlreadyRolled"),
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
+			}
+			else
+			{
+				DialogResult num = MessageBox.Show(rm.GetString(language + "CannotRollFirstFew"),
+					rm.GetString(language + "TooEarlyToRoll"),
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
+			}
 		}
 
 		public int getRollNumber()
@@ -477,15 +478,11 @@ namespace SettlersOfCatan
 				{
 					if (isItBeginningOfTheGame || h.getToken() == currentRoll)
 					{
-
-                        
-
 						if (h != this.robberHex)
 						{
 							this.dealFromBank(h.getResourceType(), amount, hand);
-                        // hand.modifyResources(h.getResourceType(), amount);
+							// hand.modifyResources(h.getResourceType(), amount);
 						}
-
 					}
 				}
 				catch (NullReferenceException)
@@ -495,13 +492,13 @@ namespace SettlersOfCatan
 			}
 		}
 
-        private void dealFromBank(string resource, int amount, Hand hand)
-        {
-            hand.modifyResources(resource, amount);
-            bank.modifyResource(resource, -amount);
-        }
+		private void dealFromBank(string resource, int amount, Hand hand)
+		{
+			hand.modifyResources(resource, amount);
+			bank.modifyResource(resource, -amount);
+		}
 
-        /*
+		/*
         public void giveAllPlayersTheirStartingResources()
         {
             foreach (Player p in this.players)

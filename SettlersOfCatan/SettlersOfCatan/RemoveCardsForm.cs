@@ -90,8 +90,11 @@ namespace SettlersOfCatan
 		{
 			try
 			{
-				checkAmountIsCorrect();
-				//this.canDispose = true;
+				if (checkAmountIsCorrect())
+				{
+					this.gameScreen.updateResourceLabels();
+					this.Close();
+				}
 			}
 			catch (ArgumentException ex)
 			{
@@ -104,7 +107,7 @@ namespace SettlersOfCatan
 			}
 		}
 
-		private void checkAmountIsCorrect()
+		private bool checkAmountIsCorrect()
 		{
 			if (checkComboBoxesUsed())
 			{
@@ -120,6 +123,7 @@ namespace SettlersOfCatan
 				}
 
 				tradeWithBank(grainToTrade, lumberToTrade, brickToTrade, woolToTrade, oreToTrade);
+				return true;
 			}
 			else
 			{
@@ -127,6 +131,7 @@ namespace SettlersOfCatan
 					rm.GetString(language + "AmountNotChosen"),
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
+				return false;
 			}
 		}
 

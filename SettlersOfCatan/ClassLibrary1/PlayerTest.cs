@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using SettlersOfCatan;
 using System.Drawing;
@@ -929,13 +930,13 @@ namespace ClassLibrary1
 
 			target.incrementCities();
 			target.generateGrain();
-			target.generateGrain();
+			target.generateOre();
 			target.generateOre();
 
 			target.buildCity();
 
-			Assert.AreEqual(0, target.getHand().getOre());
-			Assert.AreEqual(1, target.getHand().getGrain());
+			Assert.AreEqual(1, target.getHand().getOre());
+			Assert.AreEqual(0, target.getHand().getGrain());
 		}
 
 		[Test()]
@@ -1051,6 +1052,207 @@ namespace ClassLibrary1
 		{
 			var target = new Player();
 			target.playDevCard("roadBuilder", null, null);
+		}
+
+		[Test()]
+		[ExpectedException(typeof (ArgumentException))]
+		public void TestTradeWithBankThrowsOreException()
+		{
+			var target = new Player();
+			target.tradeWithBank("ore", "wool");
+		}
+
+		[Test()]
+		[ExpectedException(typeof(ArgumentException))]
+		public void TestTradeWithBankThrowsWoolException()
+		{
+			var target = new Player();
+			target.tradeWithBank("wool", "lumber");
+		}
+
+		[Test()]
+		[ExpectedException(typeof(ArgumentException))]
+		public void TestTradeWithBankThrowsLumberException()
+		{
+			var target = new Player();
+			target.tradeWithBank("lumber", "grain");
+		}
+
+		[Test()]
+		[ExpectedException(typeof(ArgumentException))]
+		public void TestTradeWithBankThrowsGrainException()
+		{
+			var target = new Player();
+			target.tradeWithBank("grain", "brick");
+		}
+
+		[Test()]
+		[ExpectedException(typeof(ArgumentException))]
+		public void TestTradeWithBankThrowsBrickException()
+		{
+			var target = new Player();
+			target.tradeWithBank("brick", "ore");
+		}
+
+		[Test()]
+		public void TestBuildRoadWithFreeRoadPoints()
+		{
+			var target = new Player();
+			target.playerHand.modifyFreeRoadPoints(1);
+			target.buildRoad();
+		}
+
+		[Test()]
+		public void TestTransferOre()
+		{
+			var target = new Player();
+			target.incrementSettlements();
+			target.generateOre();
+			target.transferOre(1);
+		}
+
+		[Test()]
+		public void TestTransferWool()
+		{
+			var target = new Player();
+			target.incrementSettlements();
+			target.generateWool();
+			target.transferWool(1);
+		}
+
+		[Test()]
+		public void TestTransferGrain()
+		{
+			var target = new Player();
+			target.incrementSettlements();
+			target.generateGrain();
+			target.transferGrain(1);
+		}
+
+		[Test()]
+		public void TestTransferBrick()
+		{
+			var target = new Player();
+			target.incrementSettlements();
+			target.generateBrick();
+			target.transferBrick(1);
+		}
+
+		[Test()]
+		public void TestTransferLumber()
+		{
+			var target = new Player();
+			target.incrementSettlements();
+			target.generateLumber();
+			target.transferLumber(1);
+		}
+
+		[Test()]
+		public void TestPickString()
+		{
+			var target = new Player();
+			target.incrementSettlements();
+			List<string> resources = new List<string>();
+
+			target.generateLumber();
+			resources.Add("lumber");
+			Assert.AreEqual("lumber",  target.pickString(resources));
+			Assert.AreEqual(0, target.playerHand.getLumber());
+			resources.Remove("lumber");
+
+			target.generateBrick();
+			resources.Add("brick");
+			Assert.AreEqual("brick", target.pickString(resources));
+			Assert.AreEqual(0, target.playerHand.getBrick());
+			resources.Remove("brick");
+
+			target.generateGrain();
+			resources.Add("grain");
+			Assert.AreEqual("grain", target.pickString(resources));
+			Assert.AreEqual(0, target.playerHand.getGrain());
+			resources.Remove("grain");
+
+			target.generateWool();
+			resources.Add("wool");
+			Assert.AreEqual("wool", target.pickString(resources));
+			Assert.AreEqual(0, target.playerHand.getWool());
+			resources.Remove("wool");
+
+			target.generateOre();
+			resources.Add("ore");
+			Assert.AreEqual("ore", target.pickString(resources));
+			Assert.AreEqual(0, target.playerHand.getOre());
+			resources.Remove("ore");
+		}
+
+		[Test()]
+		public void TestPickStringWithEmptyList()
+		{
+			var target = new Player();
+			Assert.AreEqual("none", target.pickString(new List<string>()));
+		}
+
+		[Test()]
+		public void TestRob()
+		{
+			var target = new Player();
+			target.incrementSettlements();
+			
+			target.generateLumber();
+			Assert.AreEqual("lumber", target.rob());
+			Assert.AreEqual(0, target.playerHand.getLumber());
+
+			target.generateBrick();
+			Assert.AreEqual("brick", target.rob());
+			Assert.AreEqual(0, target.playerHand.getBrick());
+			
+			target.generateGrain();
+			Assert.AreEqual("grain", target.rob());
+			Assert.AreEqual(0, target.playerHand.getGrain());
+			
+			target.generateWool();
+			Assert.AreEqual("wool", target.rob());
+			Assert.AreEqual(0, target.playerHand.getWool());
+			
+			target.generateOre();
+			Assert.AreEqual("ore", target.rob());
+			Assert.AreEqual(0, target.playerHand.getOre());
+		}
+
+		[Test()]
+		public void TestGetSettlementLocations()
+		{
+			var target = new Player();
+			target.incrementCities();
+			target.generateGrain();
+			target.generateWool();
+			target.generateLumber();
+			target.generateBrick();
+
+			target.addSettlement(new Point(4, 4));
+			List<Point> settlements = target.getSettlementLocations();
+			Assert.AreEqual(new Point(4, 4), settlements[0]);
+		}
+
+		[Test()]
+		public void TestMustRemoveHalfWhenLessThanSeven()
+		{
+			var target = new Player();
+
+			Assert.IsFalse(target.mustRemoveHalf());
+		}
+
+		[Test()]
+		public void TestMustRemoveHalfWhenMoreThanSeven()
+		{
+			var target = new Player();
+			target.incrementCities();
+			target.generateGrain();
+			target.generateWool();
+			target.generateLumber();
+			target.generateBrick();
+
+			Assert.IsTrue(target.mustRemoveHalf());
 		}
 	}
 }

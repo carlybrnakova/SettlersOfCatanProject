@@ -19,7 +19,7 @@ namespace SettlersOfCatan
 			this.world = world;
 			this.gameScreen = gs;
 			localize();
-			
+
 			makeAllHexesClickable();
 		}
 

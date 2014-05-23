@@ -33,7 +33,7 @@ namespace ClassLibrary1
 			var target = new World(2, 2);
 			Assert.True(target.bank.allResourcesMax());
 			Assert.AreEqual(3, target.players.Count);
-			Assert.AreEqual("bob", target.currentPlayer.getName());
+			Assert.AreEqual("Bob", target.currentPlayer.getName());
 		}
 
 		[Test()]
@@ -42,9 +42,9 @@ namespace ClassLibrary1
 			var target = new World(3, 0);
 
 		    //testing first round
-			Assert.AreEqual("bob", target.currentPlayer.getName());
+			Assert.AreEqual("Bob", target.currentPlayer.getName());
 			target.endTurn();
-			Assert.AreEqual("joe", target.currentPlayer.getName());
+			Assert.AreEqual("Joe", target.currentPlayer.getName());
 			target.endTurn();
 			Assert.AreEqual("Anne", target.currentPlayer.getName());
 
@@ -52,26 +52,26 @@ namespace ClassLibrary1
 			target.endTurn();
 			Assert.AreEqual("Anne", target.currentPlayer.getName());
             target.endTurn();
-            Assert.AreEqual("joe", target.currentPlayer.getName());
+            Assert.AreEqual("Joe", target.currentPlayer.getName());
             target.endTurn();
-            Assert.AreEqual("bob", target.currentPlayer.getName());
+            Assert.AreEqual("Bob", target.currentPlayer.getName());
             target.endTurn();
             
             //testing third round
             //player has not rolled
-            Assert.AreEqual("bob", target.currentPlayer.getName());
+            Assert.AreEqual("Bob", target.currentPlayer.getName());
             target.endTurn();
-            Assert.AreEqual("bob", target.currentPlayer.getName());
+            Assert.AreEqual("Bob", target.currentPlayer.getName());
             //playerhas rolled
             target.rollDice();
             target.endTurn();
-            Assert.AreEqual("joe", target.currentPlayer.getName());
+            Assert.AreEqual("Joe", target.currentPlayer.getName());
             target.rollDice();
             target.endTurn();
             Assert.AreEqual("Anne", target.currentPlayer.getName());
             target.rollDice();
             target.endTurn();
-            Assert.AreEqual("bob", target.currentPlayer.getName());
+            Assert.AreEqual("Bob", target.currentPlayer.getName());
 		}
 
 		[Test()]
@@ -487,5 +487,21 @@ namespace ClassLibrary1
         {
 
         }
+
+		[Test()]
+		public void TestGetHexAtIndex()
+		{
+			var target = new World();
+			Assert.AreEqual(target.getMap().getHexMap().map[2, 2], target.getHexAtIndex(2, 2));
+		}
+
+		[Test()]
+		public void TestIncrementTurnCounter()
+		{
+			var target = new World();
+			target.incrementTurnCounter();
+			target.incrementTurnCounter();
+			target
+		}
     }
 }
