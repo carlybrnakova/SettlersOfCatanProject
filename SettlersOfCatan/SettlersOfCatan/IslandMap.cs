@@ -162,8 +162,8 @@ namespace SettlersOfCatan
 
 			if (roadHasBuildingOrConnectingRoad(new Point(intRow, intCol), new Point(intRow, intCol + 1), player))
 			{
-				map[intRow, intCol].connections[2].buildRoad(player.getColor());
-				map[intRow, intCol + 1].connections[0].buildRoad(player.getColor());
+				map[intRow, intCol].connections[2].buildRoad(player.getColor(), coords);
+				map[intRow, intCol + 1].connections[0].buildRoad(player.getColor(), coords);
 				return true;
 			}
 			else return false;
@@ -193,8 +193,8 @@ namespace SettlersOfCatan
 
 			if (roadHasBuildingOrConnectingRoad(new Point(intRow, intCol), new Point(intRow + 1, intCol), player))
 			{
-				map[intRow, intCol].connections[1].buildRoad(player.getColor());
-				map[intRow + 1, intCol].connections[1].buildRoad(player.getColor());
+				map[intRow, intCol].connections[1].buildRoad(player.getColor(), coords);
+				map[intRow + 1, intCol].connections[1].buildRoad(player.getColor(), coords);
 				return true;
 			}
 			else return false;
