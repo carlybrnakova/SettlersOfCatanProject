@@ -326,7 +326,7 @@ namespace SettlersOfCatan
 
                         if (this.catanMap.getIslandMap().getIntAtIndex(coords).hasPort())
                         {
-                            currentPlayer.addPort(this.catanMap.getIslandMap().getIntAtIndex(coords).getPort());
+                           // currentPlayer.addPort(this.catanMap.getIslandMap().getIntAtIndex(coords).getPort());
                         }
 
 						return currentPlayer.getColor();
