@@ -32,7 +32,7 @@ namespace SettlersOfCatan
 		private World world;
 		public bool hasLongestRoad;
 		public bool hasLargestArmy;
-        public List<List<Connection>> roads;
+        public List<List<Connection>> roads = new List<List<Connection>>();
         public int longestRoadIndex;
         public bool hasRolled;
 		private List<Point> settlementLocations = new List<Point>();
@@ -46,6 +46,8 @@ namespace SettlersOfCatan
 
             this.hasRolled = false;
             this.ports = new List<Port>();
+            this.longestRoadIndex = 0;
+            this.roads.Add(new List<Connection>());
 		}
 
 		public Player(String playerName, Color playerColor, World world1) : this()
@@ -57,6 +59,7 @@ namespace SettlersOfCatan
 			this.hasLongestRoad = false;
 			this.hasLargestArmy = false;
             this.ports = new List<Port>();
+            this.longestRoadIndex = 0;
 		}
 
         public void addPort(Port p)
@@ -876,8 +879,8 @@ namespace SettlersOfCatan
 
 		public void buildCity()
 		{
-			this.playerHand.modifyGrain(-3);
-			this.playerHand.modifyOre(-2);
+			this.playerHand.modifyGrain(-2);
+			this.playerHand.modifyOre(-3);
 			incrementCities();
 			incrementPoints(1); // One point is already counted for the settlement that was there
 		}
@@ -1015,19 +1018,67 @@ namespace SettlersOfCatan
         public void addConnection(Connection spot)
         {
             bool wasAdded = false;
+            int roadsIndex = 0;
+            List<List<Connection>> addedRoads = new List<List<Connection>>();
             foreach(List<Connection> intList in roads)
             {
-                Connection lastItem = intList[intList.Count()];
-                if (lastItem.connectedTo.getConnections()[0] == spot || lastItem.connectedTo.getConnections()[1] == spot || lastItem.connectedTo.getConnections()[2] == spot)
+                int intListIndex = 0;
+                foreach (Connection road in intList)
                 {
-                    intList.Add(spot);
-                    wasAdded = true;
+
+                    if ((road.getIntersectionLeftOrTop().getConnections()[0] == spot || road.getIntersectionRightOrBot().getConnections()[0] == spot || 
+                        road.getIntersectionLeftOrTop().getConnections()[1] == spot || road.getIntersectionRightOrBot().getConnections()[1] == spot || 
+                        road.getIntersectionLeftOrTop().getConnections()[2] == spot || road.getIntersectionRightOrBot().getConnections()[2] == spot ||
+                        spot.getIntersectionLeftOrTop().getConnections()[0] == road || spot.getIntersectionRightOrBot().getConnections()[0] == road ||
+                        spot.getIntersectionLeftOrTop().getConnections()[1] == road || spot.getIntersectionRightOrBot().getConnections()[1] == road ||
+                        spot.getIntersectionLeftOrTop().getConnections()[2] == road || spot.getIntersectionRightOrBot().getConnections()[2] == road) & intListIndex == intList.Count - 1)
+                    {
+                        intList.Add(spot);
+                        wasAdded = true;
+                        if (intList.Count() > roads[this.longestRoadIndex].Count())
+                        {
+                            longestRoadIndex = roadsIndex;
+                        }
+                        break;
+                    }
+                    else if ((road.getIntersectionLeftOrTop().getConnections()[0] == spot || road.getIntersectionRightOrBot().getConnections()[0] == spot ||
+                        road.getIntersectionLeftOrTop().getConnections()[1] == spot || road.getIntersectionRightOrBot().getConnections()[1] == spot ||
+                        road.getIntersectionLeftOrTop().getConnections()[2] == spot || road.getIntersectionRightOrBot().getConnections()[2] == spot ||
+                        spot.getIntersectionLeftOrTop().getConnections()[0] == road || spot.getIntersectionRightOrBot().getConnections()[0] == road ||
+                        spot.getIntersectionLeftOrTop().getConnections()[1] == road || spot.getIntersectionRightOrBot().getConnections()[1] == road ||
+                        spot.getIntersectionLeftOrTop().getConnections()[2] == road || spot.getIntersectionRightOrBot().getConnections()[2] == road) & intListIndex != intList.Count - 1)
+                    {
+                        List<Connection> newList = new List<Connection>();
+                        for (int i = 0; i <= intListIndex; i++){
+                            newList.Add(intList[i]);
+                        }
+                        newList.Add(spot);
+                        addedRoads.Add(newList);
+                        wasAdded = true;
+                        if (newList.Count() > roads[this.longestRoadIndex].Count()){
+                            longestRoadIndex = roadsIndex;
+                        }
+                    }
+                    intListIndex++;
+                }
+                roadsIndex++;
+            }
+            if (addedRoads.Count != 0)
+            {
+                foreach (List<Connection> road in addedRoads)
+                {
+                    roads.Add(road);
                 }
             }
             if (!wasAdded)
             {
                 roads.Add(new List<Connection> { spot });
             }
+        }
+
+        public int getLengthOfLongestRoad()
+        {
+            return this.roads[this.longestRoadIndex].Count();
         }
 
 		public void transferGrain(int amount)

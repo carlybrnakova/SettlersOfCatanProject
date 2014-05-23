@@ -510,16 +510,26 @@ namespace SettlersOfCatan
             IntersectionButton theButton = (IntersectionButton)sender;
 
 
-			Color buttonColor = world.tryToBuildAtIntersection(theButton.getCoords());
-			if (buttonColor != Color.White && buttonColor != Color.Black)
+			try
 			{
-				theButton.BackColor = buttonColor;
+				Color buttonColor = world.tryToBuildAtIntersection(theButton.getCoords());
+				if (buttonColor != Color.White && buttonColor != Color.Black)
+				{
+					theButton.BackColor = buttonColor;
+				}
+				else if (buttonColor == Color.Black)
+				{
+					theButton.Text = "*";
+					theButton.ForeColor = Color.White;
+					this.world.currentPlayer.incrementCities();
+				}
 			}
-			else if (buttonColor == Color.Black)
+			catch (Exception ex)
 			{
-				theButton.Text = "*";
-				theButton.ForeColor = Color.White;
-				this.world.currentPlayer.incrementCities();
+				DialogResult num = MessageBox.Show(ex.Message,
+	"Insufficient Resources",
+	MessageBoxButtons.OK,
+	MessageBoxIcon.Exclamation);
 			}
 
 			this.updateResourceLabels();
@@ -548,7 +558,6 @@ namespace SettlersOfCatan
 			OreAmountLabel.Text = this.world.currentPlayer.getHand().getOre().ToString();
 			GrainAmountLabel.Text = this.world.currentPlayer.getHand().getGrain().ToString();
 		}
-
 		private void EndTurnButton_Click(object sender, EventArgs e)
 		{
 			if (this.world.currentPlayer.getHand().hasFreeRoadPoints() ||
@@ -608,25 +617,35 @@ namespace SettlersOfCatan
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
 			}
-        }
+		}
 
         private void RollDiceButton_Click(object sender, EventArgs e)
         {
             this.world.rollDice();
             this.updateResourceLabels();
-            int roll = this.world.getRollNumber();
+	        int roll = this.world.getRollNumber();
             this.RollNumberLabel.Text = roll.ToString();
-            if (roll == 7)
-            {
-                //checkRemoveHalf(); ??????????
+	        if (roll == 7)
+	        {
+				removeRobberText();
 
-                removeRobberText();
-                this.world.setPlaceRobber(true);
-                RobberForm myForm = new RobberForm(this.world, this);
-                myForm.Show();
-            }
-            this.updateResourceLabels();
-        }
+				checkRemoveHalf();
+
+				/*
+				Color buttonColor = world.roadButtonClicked(theButton.getCoords());
+				if (buttonColor != Color.White)
+				{
+					theButton.BackColor = buttonColor;
+					theButton.Enabled = false;
+				}
+				 */
+
+				this.world.setPlaceRobber(true);
+				RobberForm myForm = new RobberForm(this.world, this);
+				myForm.Show();
+			}
+			this.updateResourceLabels();
+		}
 
 		private void checkRemoveHalf()
 		{

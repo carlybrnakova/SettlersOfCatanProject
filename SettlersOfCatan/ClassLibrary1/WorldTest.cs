@@ -423,11 +423,7 @@ namespace ClassLibrary1
             //insufficiant resources
             Assert.AreEqual(Color.White, C);
 
-            w.currentPlayer.getHand().incrementAllResources(1);
-            w.currentPlayer.getHand().incrementAllResources(1);
-            w.currentPlayer.getHand().incrementAllResources(1);
-            w.currentPlayer.getHand().incrementAllResources(1);
-            w.currentPlayer.getHand().incrementAllResources(1);
+            w.currentPlayer.getHand().incrementAllResources(5);
 
             //point without adjoining settlement
             C = w.roadButtonClicked(new Point(3, 2));
