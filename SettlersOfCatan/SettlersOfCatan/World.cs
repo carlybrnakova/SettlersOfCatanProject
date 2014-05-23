@@ -38,7 +38,7 @@ namespace SettlersOfCatan
 			this.largestArmySize = 0;
 			this.longestRoadSize = 0;
 			this.largestArmyOwnerIndex = -1;
-			this.longestRoadOwnerIndex = -1;
+			this.longestRoadOwnerIndex = 0;
 			this.numOfCompletedRounds = 0;
 		}
 
@@ -195,41 +195,23 @@ namespace SettlersOfCatan
 		private void setLongestRoad()
 		{
 			int numberOfPlayers = this.players.Count() - 1;
-
-			// loop through current player and players at higher indices
-			for (int i = this.currentPlayerNumber; i <= numberOfPlayers; i++)
-			{
-				// if no one has the longest road yet
-				if (this.longestRoadSize == 0)
-				{
-					if (this.players[i].getRoadsPlayed() == 5)
-					{
-						this.longestRoadSize = 5;
-						this.longestRoadOwnerIndex = i;
-						this.players[i].hasLongestRoad = true;
-						this.players[i].incrementPoints(2);
-					}
-				}
-					// if someone has the longest road already
-				else
-				{
-					// updates the longest road size
-					this.longestRoadSize = this.players[this.longestRoadOwnerIndex].getRoadsPlayed();
-
-					// see if anyone besides the current longest road owner has a longer road
-					if (this.players[i].getRoadsPlayed() > this.longestRoadSize)
-					{
-						// set previous owner's longest road boolean to false and set new owner's boolean to true
-						// also decrement previous owner's points by 2 and increment new owner's points by 2
-						this.players[this.longestRoadOwnerIndex].hasLongestRoad = false;
-						this.players[this.longestRoadOwnerIndex].incrementPoints(-2);
-						this.longestRoadSize = this.players[i].getRoadsPlayed();
-						this.longestRoadOwnerIndex = i;
-						this.players[i].hasLongestRoad = true;
-						this.players[i].incrementPoints(2);
-					}
-				}
-			}
+            if (this.longestRoadSize > 4)
+            {
+                this.players[this.longestRoadOwnerIndex].incrementPoints(-2);
+            }
+            //loop throught the players and set the longest road
+			foreach(Player player in this.players){
+                int roadLength = player.getLengthOfLongestRoad();
+                if (roadLength > this.longestRoadSize)
+                {
+                    this.longestRoadSize = roadLength;
+                    this.longestRoadOwnerIndex = this.players.IndexOf(player);
+                }
+            }
+            if (this.longestRoadSize > 4)
+            {
+                this.players[this.longestRoadOwnerIndex].incrementPoints(2);
+            }
 		}
 
 		public void setLargestArmy()

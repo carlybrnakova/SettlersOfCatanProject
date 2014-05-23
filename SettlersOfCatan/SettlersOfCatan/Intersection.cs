@@ -26,7 +26,7 @@ namespace SettlersOfCatan
 			port = null;
 			for (int i = 0; i < connections.Capacity; i++)
 			{
-				connections.Add(new Connection(null));
+				connections.Add(new Connection(null, null));
 			}
 		}
 
@@ -51,8 +51,8 @@ namespace SettlersOfCatan
 			bool available = true;
 			for (int i = 0; i < connections.Count; i++)
 			{
-				if (connections[i].getIntersection() != null)
-					available = available && !(connections[i].getIntersection().hasABuilding());
+				if (connections[i].getIntersectionLeftOrTop() != null && connections[i].getIntersectionRightOrBot() != null)
+					available = available && !(connections[i].getIntersectionLeftOrTop().hasABuilding()) && !(connections[i].getIntersectionRightOrBot().hasABuilding());
 			}
 			return available;
 		}

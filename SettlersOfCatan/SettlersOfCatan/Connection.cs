@@ -10,20 +10,27 @@ namespace SettlersOfCatan
 {
 	public class Connection
 	{
-		public Intersection connectedTo;
+		public Intersection connectedToLeftOrTop;
+        public Intersection connectedToRightOrBot;
 		private Color roadColor;
 		private bool built;
 
-		public Connection(Intersection i)
+		public Connection(Intersection rightOrBot, Intersection leftOrTop)
 		{
-			connectedTo = i;
+            connectedToRightOrBot = rightOrBot;
+			connectedToLeftOrTop = leftOrTop;
 			built = false;
 			roadColor = Color.White;
 		}
 
-		public Intersection getIntersection()
+		public Intersection getIntersectionLeftOrTop()
 		{
-			return connectedTo;
+			return connectedToLeftOrTop;
+		}
+
+        public Intersection getIntersectionRightOrBot()
+		{
+			return connectedToRightOrBot;
 		}
 
 		public void setRoadColor(Color c)
