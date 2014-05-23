@@ -9,10 +9,6 @@ using System.Drawing;
 
 namespace ClassLibrary1
 {
-<<<<<<< HEAD
-
-	=======
-	>>>>>>> 9b97a93fcb783d81aa42cd82ae0c6dab60c971a9
 
 public class IntersectionTest
 {
@@ -65,16 +61,6 @@ public class IntersectionTest
 
 		target = new Intersection(new Point(4, 4), new Port("Ore", 2));
 		Assert.True(target.hasPort());
-	}
-
-	[Test()]
-	public void TestGetConnections()
-	{
-		var target = new Intersection(new Point(4, 4));
-		List<Connection> connections = target.getConnections();
-		Assert.IsNull(connections[0].getIntersection());
-		Assert.IsNull(connections[1].getIntersection());
-		Assert.IsNull(connections[2].getIntersection());
 	}
 }
 
