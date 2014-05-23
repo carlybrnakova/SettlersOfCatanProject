@@ -103,37 +103,42 @@ namespace SettlersOfCatan
 						// Does not have a left connection (connection1)
 						if (((r == 0 || r == 5) && (c == 2)) || ((r == 1 || r == 4) && (c == 1)) || ((r == 2 || r == 3) && (c == 0)))
 						{
-							map[r, c].connections[0] = new Connection(null);
-							map[r, c].connections[2] = new Connection(map[r, c + 1]);
+							map[r, c].connections[0] = new Connection(null, null);
+							map[r, c].connections[2] = new Connection(map[r, c + 1], map[r, c]);
 							//map[r, c].connections.RemoveAt(0);
 						}
 							// Does not have a right connection (connection3)
 						else if (((r == 0 || r == 5) && (c == 8)) || ((r == 1 || r == 4) && (c == 9)) || ((r == 2 || r == 3) && (c == 10)))
 						{
-							map[r, c].connections[0] = new Connection(map[r, c - 1]);
+							map[r, c].connections[0] = new Connection(map[r, c], map[r, c - 1]);
 							//map[r, c].connections.RemoveAt(2);
-							map[r, c].connections[2] = new Connection(null);
+							map[r, c].connections[2] = new Connection(null, null);
 						}
 						else
 						{
 							// Left (connection1) and right (connection3) connections
-							map[r, c].connections[0] = new Connection(map[r, c - 1]);
-							map[r, c].connections[2] = new Connection(map[r, c + 1]);
+							map[r, c].connections[0] = new Connection(map[r, c], map[r, c - 1]);
+							map[r, c].connections[2] = new Connection(map[r, c + 1], map[r, c]);
 						}
 
-						int mapRow;
 						if ((r == 0 || r == 5) && c%2 == 1)
 						{
-							map[r, c].connections[1] = new Connection(null);
+							map[r, c].connections[1] = new Connection(null, null);
 							//map[r, c].connections.RemoveAt(1);
 						}
 						else
 						{
 							// Determine if top or bottom connection (connection2)
-							if ((r + c)%2 == 0) mapRow = r + 1; // Connect downward 
-							else mapRow = r - 1; // Connect upward
-
-							map[r, c].connections[1] = new Connection(map[mapRow, c]);
+							if ((r + c)%2 == 0)
+							{
+								// Connect downward 
+								map[r, c].connections[1] = new Connection(map[r + 1, c], map[r, c]);
+							}
+							else
+							{
+								// Connect upward
+								map[r, c].connections[1] = new Connection(map[r, c], map[r - 1, c]);
+							}
 						}
 					}
 				}
@@ -166,6 +171,8 @@ namespace SettlersOfCatan
 			{
 				map[intRow, intCol].connections[2].buildRoad(player.getColor());
 				map[intRow, intCol + 1].connections[0].buildRoad(player.getColor());
+				player.addConnection(map[intRow, intCol].connections[2]);
+
 				return true;
 			}
 			else return false;
@@ -197,6 +204,8 @@ namespace SettlersOfCatan
 			{
 				map[intRow, intCol].connections[1].buildRoad(player.getColor());
 				map[intRow + 1, intCol].connections[1].buildRoad(player.getColor());
+				player.addConnection(map[intRow, intCol].connections[1]);
+
 				return true;
 			}
 			else return false;

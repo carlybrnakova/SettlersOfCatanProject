@@ -197,6 +197,7 @@ namespace SettlersOfCatan
 					RoadButton b = new RoadButton(r, col);
 					setLocationAndColorButton(b, Color.White, x, y);
 					setRoadButtonSizeCoordinatesAndClick(b, HORIZONTAL_ROAD_SIZE, r, col);
+					roadGrid[r, col] = b;
 					boardPanel.Controls.Add(b);
 
 					x += x_diff;
@@ -226,6 +227,7 @@ namespace SettlersOfCatan
 					RoadButton b = new RoadButton(r, col);
 					setLocationAndColorButton(b, Color.White, x, y);
 					setRoadButtonSizeCoordinatesAndClick(b, VERTICAL_ROAD_SIZE, r, col);
+					roadGrid[r, col] = b;
 					boardPanel.Controls.Add(b);
 
 					x += x_diff;
@@ -532,11 +534,9 @@ namespace SettlersOfCatan
 			button.coordinates = new Point(x, y);
 		}
 
-		private void intersectionButton_Click(object sender, EventArgs e)
+		private void callIntButtonClick(object sender, EventArgs e, String controlString)
 		{
 			IntersectionButton theButton = (IntersectionButton) sender;
-
-
 			try
 			{
 				Color buttonColor = world.tryToBuildAtIntersection(theButton.getCoords());
@@ -563,18 +563,39 @@ namespace SettlersOfCatan
 			this.updatePlayerPoints();
 		}
 
-		// TODO implement longest road
-		private void roadButton_Click(object sender, EventArgs e)
+		private void intersectionButton_Click(object sender, EventArgs e)
 		{
-			RoadButton theButton = (RoadButton) sender;
+			callIntButtonClick(sender, e, "none");
+		}
 
-			Color buttonColor = world.roadButtonClicked(theButton.getCoords());
+
+		private void callRoadButton_Click(object sender, EventArgs e, Point coords)
+		{
+			Color buttonColor = new Color();
+			RoadButton theButton;
+			if (coords.Equals(new Point(-1, -1)))
+			{
+				theButton = (RoadButton) sender;
+				buttonColor = world.roadButtonClicked(theButton.getCoords());
+			}
+			else
+			{
+				theButton = (RoadButton) this.roadGrid[coords.X, coords.Y];
+				buttonColor = world.roadButtonClicked(coords);
+			}
 			if (buttonColor != Color.White)
 			{
 				theButton.BackColor = buttonColor;
 				theButton.Enabled = false;
 			}
 			this.updateResourceLabels();
+			this.world.setLongestRoad();
+			this.updatePlayerPoints();
+		}
+
+		private void roadButton_Click(object sender, EventArgs e)
+		{
+			callRoadButton_Click(sender, e, new Point(-1, -1));
 		}
 
 		public void updateResourceLabels()
@@ -586,26 +607,30 @@ namespace SettlersOfCatan
 			GrainAmountLabel.Text = this.world.currentPlayer.getHand().getGrain().ToString();
 		}
 
-		private void generateResourcesTest_Click(object sender, EventArgs e)
+		private IntersectionButton getIntButtonAt(Point p)
 		{
-			try
-			{
-				this.world.givePlayerAllResources(this.world.currentPlayer, 1);
-				this.world.bank.decrementAllResources(1);
-				this.updateResourceLabels();
-			}
-			catch (ArgumentException ex)
-			{
-				DialogResult num = MessageBox.Show(ex.Message,
-					rm.GetString(language + "InsufficientResources"),
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Exclamation);
-			}
-		}
+			IntersectionButton theButton = null;
+			List<IntersectionButton>[] intArray = this.intersectionGrid.ToArray();
 
+			foreach (List<IntersectionButton> array in intArray)
+			{
+				foreach (IntersectionButton b in array)
+				{
+					if (b != null && b.getCoords().Equals(p))
+					{
+						theButton = b;
+						goto EndLoop;
+					}
+				}
+			}
+			EndLoop:
+			return theButton;
+		}
 
 		private void EndTurnButton_Click(object sender, EventArgs e)
 		{
+			bool showForm = true;
+			// Place stuff if you haven't yet
 			if (this.world.currentPlayer.getHand().hasFreeRoadPoints() ||
 			    this.world.currentPlayer.getHand().hasFreeSettlementPoints())
 			{
@@ -615,31 +640,67 @@ namespace SettlersOfCatan
 			else
 			{
 				this.world.endTurn();
-				this.updateResourceLabels();
-				this.updateCurrentPlayerNameLabel();
-				this.updateRoundLabel();
-				this.updatePlayerPoints();
 				if (this.world.isFirstFewTurnsPhase())
 				{
 					this.world.currentPlayer.getHand().modifyFreeRoadPoints(1);
 					this.world.currentPlayer.getHand().modifyFreeSettlementPoints(1);
+
+					if (this.world.currentPlayer is AI_Player)
+					{
+						String result = ((AI_Player) this.world.currentPlayer).takeYourTurn(this.world.numOfCompletedRounds);
+						if (result == "settlement")
+						{
+							Point coords = ((AI_Player) this.world.currentPlayer).getIntersectionCoordsToBuild();
+							IntersectionButton i = this.getIntButtonAt(coords);
+							this.callIntButtonClick(i, null, result);
+							if (this.world.isFirstFewTurnsPhase())
+							{
+								int y = i.getCoords().Y;
+								if (y == 0 || y == 5) y -= 2;
+								else if (y == 1 || y == 4) y -= 1;
+
+								Point roadCoords = new Point(i.getCoords().X*2, y);
+								//Button b = this.getARoadButtonAt(coords);
+								callRoadButton_Click(sender, null, roadCoords);
+							}
+						}
+						showForm = false;
+					}
+					else
+					{
+						showForm = true;
+					}
+				}
+
+
+				if (showForm)
+				{
 					Form myForm = new FirstFewTurnsForm();
 					myForm.Show();
 				}
-				else if (this.world.getNumberOfRoundsCompleted() == 2 && this.world.bank.allResourcesMax())
-				{
-					//this.world.giveAllPlayersTheirStartingResources();
-					this.world.generateMyResources(1, true);
-					this.updateResourceLabels();
-				}
 			}
+			this.updateResourceLabels();
+			this.updateCurrentPlayerNameLabel();
+			this.updateRoundLabel();
+			this.updatePlayerPoints();
 			removeRobberText();
 			this.Refresh();
+			if (!showForm)
+			{
+				EndTurnButton_Click(sender, e);
+			}
 		}
+
 
 		private void updateRoundLabel()
 		{
 			RoundsLabel.Text = rm.GetString(language + "Rounds") + " " + (this.world.getNumberOfRoundsCompleted() + 1);
+		}
+
+		private Button getARoadButtonAt(Point coords)
+		{
+			Point roadCoords = this.world.catanMap.getIslandMap().getIntAtIndex(coords).connections[1].getCoords();
+			return this.roadGrid[roadCoords.X, roadCoords.Y];
 		}
 
 		private void updateCurrentPlayerNameLabel()
@@ -680,7 +741,23 @@ namespace SettlersOfCatan
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
 			}
-			this.updateResourceLabels();
+		}
+
+		private void generateResourcesTest_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				this.world.givePlayerAllResources(this.world.currentPlayer, 1);
+				this.world.bank.decrementAllResources(1);
+				this.updateResourceLabels();
+			}
+			catch (ArgumentException ex)
+			{
+				DialogResult num = MessageBox.Show(ex.Message,
+					"Insufficient Resources",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
+			}
 		}
 
 		private void checkRemoveHalf()
@@ -819,7 +896,6 @@ namespace SettlersOfCatan
 			}
 			catch (ArgumentException ex)
 			{
-
 			}
 		}
 
@@ -833,33 +909,32 @@ namespace SettlersOfCatan
 			}
 			catch (ArgumentException ex)
 			{
-
 			}
 		}
 
 		private void MonopolyDevCardLabel_Click(object sender, EventArgs e)
 		{
-			try {
-			MonopolyForm myForm = new MonopolyForm(this.world, this);
-			myForm.Show();
-						}
+			try
+			{
+				MonopolyForm myForm = new MonopolyForm(this.world, this);
+				myForm.Show();
+			}
 			catch (ArgumentException ex)
 			{
-
 			}
 		}
 
 		private void RoadBuilderDevCardLabel_Click(object sender, EventArgs e)
 		{
-			try {
-			this.world.currentPlayer.playDevCard("roadBuilder", null, null);
-			Form myForm = new RoadBuilderForm();
-			myForm.Show();
-			this.updateDevelopmentCards();
-				}
+			try
+			{
+				this.world.currentPlayer.playDevCard("roadBuilder", null, null);
+				Form myForm = new RoadBuilderForm();
+				myForm.Show();
+				this.updateDevelopmentCards();
+			}
 			catch (ArgumentException ex)
 			{
-
 			}
 		}
 
@@ -867,12 +942,11 @@ namespace SettlersOfCatan
 		{
 			try
 			{
-			YearOfPlentyForm myForm = new YearOfPlentyForm(this.world, this);
-			myForm.Show();
+				YearOfPlentyForm myForm = new YearOfPlentyForm(this.world, this);
+				myForm.Show();
 			}
 			catch (ArgumentException ex)
 			{
-
 			}
 		}
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using SettlersOfCatan;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace ClassLibrary1
 {
@@ -1063,7 +1064,7 @@ namespace ClassLibrary1
 		}
 
 		[Test()]
-		[ExpectedException(typeof(ArgumentException))]
+		[ExpectedException(typeof (ArgumentException))]
 		public void TestTradeWithBankThrowsWoolException()
 		{
 			var target = new Player();
@@ -1071,7 +1072,7 @@ namespace ClassLibrary1
 		}
 
 		[Test()]
-		[ExpectedException(typeof(ArgumentException))]
+		[ExpectedException(typeof (ArgumentException))]
 		public void TestTradeWithBankThrowsLumberException()
 		{
 			var target = new Player();
@@ -1079,7 +1080,7 @@ namespace ClassLibrary1
 		}
 
 		[Test()]
-		[ExpectedException(typeof(ArgumentException))]
+		[ExpectedException(typeof (ArgumentException))]
 		public void TestTradeWithBankThrowsGrainException()
 		{
 			var target = new Player();
@@ -1087,7 +1088,7 @@ namespace ClassLibrary1
 		}
 
 		[Test()]
-		[ExpectedException(typeof(ArgumentException))]
+		[ExpectedException(typeof (ArgumentException))]
 		public void TestTradeWithBankThrowsBrickException()
 		{
 			var target = new Player();
@@ -1156,7 +1157,7 @@ namespace ClassLibrary1
 
 			target.generateLumber();
 			resources.Add("lumber");
-			Assert.AreEqual("lumber",  target.pickString(resources));
+			Assert.AreEqual("lumber", target.pickString(resources));
 			Assert.AreEqual(0, target.playerHand.getLumber());
 			resources.Remove("lumber");
 
@@ -1197,7 +1198,7 @@ namespace ClassLibrary1
 		{
 			var target = new Player();
 			target.incrementSettlements();
-			
+
 			target.generateLumber();
 			Assert.AreEqual("lumber", target.rob());
 			Assert.AreEqual(0, target.playerHand.getLumber());
@@ -1205,15 +1206,15 @@ namespace ClassLibrary1
 			target.generateBrick();
 			Assert.AreEqual("brick", target.rob());
 			Assert.AreEqual(0, target.playerHand.getBrick());
-			
+
 			target.generateGrain();
 			Assert.AreEqual("grain", target.rob());
 			Assert.AreEqual(0, target.playerHand.getGrain());
-			
+
 			target.generateWool();
 			Assert.AreEqual("wool", target.rob());
 			Assert.AreEqual(0, target.playerHand.getWool());
-			
+
 			target.generateOre();
 			Assert.AreEqual("ore", target.rob());
 			Assert.AreEqual(0, target.playerHand.getOre());

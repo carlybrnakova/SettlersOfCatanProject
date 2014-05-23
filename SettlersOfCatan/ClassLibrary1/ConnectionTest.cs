@@ -15,7 +15,8 @@ namespace ClassLibrary1
 		public void TestThatRoadColorGetsSet()
 		{
 			Intersection i = new Intersection(new Point(1, 1));
-			Connection c = new Connection(i);
+			Intersection i2 = new Intersection(new Point(1, 2));
+			Connection c = new Connection(i, i2);
 			c.setRoadColor(Color.HotPink);
 			Assert.AreEqual(Color.HotPink, c.getRoadColor());
 		}

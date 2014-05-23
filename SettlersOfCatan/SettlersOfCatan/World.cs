@@ -43,7 +43,7 @@ namespace SettlersOfCatan
 			this.largestArmySize = 0;
 			this.longestRoadSize = 0;
 			this.largestArmyOwnerIndex = -1;
-			this.longestRoadOwnerIndex = -1;
+			this.longestRoadOwnerIndex = 0;
 			this.numOfCompletedRounds = 0;
 		}
 
@@ -51,7 +51,7 @@ namespace SettlersOfCatan
 		{
 			players.Add(new Player("Bob", Color.Red, this));
 			players.Add(new Player("Joe", Color.Blue, this));
-			players.Add(new Player("Anne", Color.Green, this));
+			players.Add(new AI_Player("Computer", Color.Orange, this));
 
 			/*
             for (int i = 0; i < humans; i++)
@@ -137,55 +137,79 @@ namespace SettlersOfCatan
 
 		public void endTurn()
 		{
-			setLargestArmy();
-			setLongestRoad();
-			if (numOfCompletedRounds == 0)
 			{
-				if (currentPlayerNumber < this.players.Count() - 1)
+				//bool isHuman = true;
+				setLargestArmy();
+				if (numOfCompletedRounds == 0)
 				{
-					currentPlayerNumber++;
+					if (currentPlayerNumber < this.players.Count() - 1)
+					{
+						currentPlayerNumber++;
+					}
+					else
+					{
+						currentPlayerNumber = this.players.Count() - 1;
+						numOfCompletedRounds++;
+					}
 				}
-				else
+				else if (numOfCompletedRounds == 1)
 				{
-					currentPlayerNumber = this.players.Count() - 1;
-					numOfCompletedRounds++;
+					if (currentPlayerNumber > 0)
+					{
+						currentPlayerNumber--;
+					}
+					else
+					{
+						currentPlayerNumber = 0;
+						numOfCompletedRounds++;
+					}
 				}
-			}
-			else if (numOfCompletedRounds == 1)
-			{
-				if (currentPlayerNumber > 0)
-				{
-					currentPlayerNumber--;
-				}
-				else
-				{
-					currentPlayerNumber = 0;
-					numOfCompletedRounds++;
-				}
-			}
-			else if (currentPlayer.hasRolled)
-			{
-				if (currentPlayerNumber < this.players.Count() - 1)
+				else if (currentPlayer.hasRolled)
 				{
 					currentPlayer.hasRolled = false;
-					currentPlayerNumber++;
+					if (currentPlayerNumber < this.players.Count() - 1)
+					{
+						currentPlayerNumber++;
+					}
+					else
+					{
+						currentPlayerNumber = 0;
+						numOfCompletedRounds++;
+					}
 				}
 				else
 				{
-					currentPlayerNumber = 0;
-					numOfCompletedRounds++;
+					// pop up error message if player hasn't rolled yet
+					DialogResult num = MessageBox.Show(rm.GetString(language + "RollBeforeEnd"),
+						rm.GetString(language + "RollTheDice"),
+						MessageBoxButtons.OK,
+						MessageBoxIcon.Exclamation);
 				}
-			}
-			else
-			{
-				// pop up error message if player hasn't rolled yet
-				DialogResult num = MessageBox.Show(rm.GetString(language + "RollBeforeEnd"),
-					rm.GetString(language + "RollTheDice"),
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Exclamation);
+
+				if (numOfCompletedRounds == 2 && this.bank.allResourcesMax())
+				{
+					generateMyResources(1, true);
+				}
 			}
 
 			currentPlayer = this.players[currentPlayerNumber];
+			/*
+            if (this.isFirstFewTurnsPhase())
+            {
+                this.currentPlayer.getHand().modifyFreeRoadPoints(1);
+                this.currentPlayer.getHand().modifyFreeSettlementPoints(1);
+
+                if (this.currentPlayer is AI_Player)
+                {
+                    ((AI_Player)this.currentPlayer).takeYourTurn(this.numOfCompletedRounds);
+                    isHuman = false;
+                }
+                else
+                {
+                    isHuman = true;
+                }
+            } */
+			//return isHuman;
 		}
 
 		public int getNumberOfRoundsCompleted()
@@ -198,43 +222,26 @@ namespace SettlersOfCatan
 			return this.numOfCompletedRounds < 2;
 		}
 
-		private void setLongestRoad()
+		public void setLongestRoad()
 		{
 			int numberOfPlayers = this.players.Count() - 1;
-
-			// loop through current player and players at higher indices
-			for (int i = this.currentPlayerNumber; i <= numberOfPlayers; i++)
+			if (this.longestRoadSize > 4)
 			{
-				// if no one has the longest road yet
-				if (this.longestRoadSize == 0)
+				this.players[this.longestRoadOwnerIndex].incrementPoints(-2);
+			}
+			//loop throught the players and set the longest road
+			foreach (Player player in this.players)
+			{
+				int roadLength = player.getLengthOfLongestRoad();
+				if (roadLength > this.longestRoadSize)
 				{
-					if (this.players[i].getRoadsPlayed() == 5)
-					{
-						this.longestRoadSize = 5;
-						this.longestRoadOwnerIndex = i;
-						this.players[i].hasLongestRoad = true;
-						this.players[i].incrementPoints(2);
-					}
+					this.longestRoadSize = roadLength;
+					this.longestRoadOwnerIndex = this.players.IndexOf(player);
 				}
-					// if someone has the longest road already
-				else
-				{
-					// updates the longest road size
-					this.longestRoadSize = this.players[this.longestRoadOwnerIndex].getRoadsPlayed();
-
-					// see if anyone besides the current longest road owner has a longer road
-					if (this.players[i].getRoadsPlayed() > this.longestRoadSize)
-					{
-						// set previous owner's longest road boolean to false and set new owner's boolean to true
-						// also decrement previous owner's points by 2 and increment new owner's points by 2
-						this.players[this.longestRoadOwnerIndex].hasLongestRoad = false;
-						this.players[this.longestRoadOwnerIndex].incrementPoints(-2);
-						this.longestRoadSize = this.players[i].getRoadsPlayed();
-						this.longestRoadOwnerIndex = i;
-						this.players[i].hasLongestRoad = true;
-						this.players[i].incrementPoints(2);
-					}
-				}
+			}
+			if (this.longestRoadSize > 4)
+			{
+				this.players[this.longestRoadOwnerIndex].incrementPoints(2);
 			}
 		}
 
@@ -290,6 +297,19 @@ namespace SettlersOfCatan
 			return false;
 		}
 
+		public bool aiCheckIfCanBuildHere(Point coords)
+		{
+			if (!catanMap.getIslandMap().getIntAtIndex(coords).hasABuilding())
+			{
+				if (catanMap.getIslandMap()
+					.getIntAtIndex(coords)
+					.canBuildAtIntersection(this.currentPlayer, this.numOfCompletedRounds))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 
 		public Color tryToBuildAtIntersection(Point coords)
 		{
@@ -307,6 +327,12 @@ namespace SettlersOfCatan
 						catanMap.getIslandMap().getIntAtIndex(coords).setPlayer(currentPlayer);
 						this.catanMap.getIslandMap().buildSettlement(coords);
 						currentPlayer.addSettlement(coords);
+
+						if (this.catanMap.getIslandMap().getIntAtIndex(coords).hasPort())
+						{
+							// currentPlayer.addPort(this.catanMap.getIslandMap().getIntAtIndex(coords).getPort());
+						}
+
 						return currentPlayer.getColor();
 					}
 					else
@@ -398,7 +424,7 @@ namespace SettlersOfCatan
 				}
 				catch (NullReferenceException)
 				{
-					theColor = Color.Black;
+					theColor = Color.White;
 				}
 			}
 			else
@@ -451,20 +477,20 @@ namespace SettlersOfCatan
 		public void generateMyResources(int num, bool isItBeginningOfTheGame)
 		{
 			// For now, give all resources which a settlement/city is on
-			if (!isFirstFewTurnsPhase())
+			//if (!isFirstFewTurnsPhase())
+			//{
+			IslandMap theMap = catanMap.getIslandMap();
+			for (int r = 0; r < 6; r++)
 			{
-				IslandMap theMap = catanMap.getIslandMap();
-				for (int r = 0; r < 6; r++)
+				for (int c = 0; c < 11; c++)
 				{
-					for (int c = 0; c < 11; c++)
+					if (theMap.getIntAtIndex(r, c) != null && theMap.getIntAtIndex(r, c).hasABuilding())
 					{
-						if (theMap.getIntAtIndex(r, c) != null && theMap.getIntAtIndex(r, c).hasABuilding())
-						{
-							giveAllResourcesForThisIntersection(theMap.getIntAtIndex(r, c), isItBeginningOfTheGame);
-						}
+						giveAllResourcesForThisIntersection(theMap.getIntAtIndex(r, c), isItBeginningOfTheGame);
 					}
 				}
 			}
+			//}
 		}
 
 		private void giveAllResourcesForThisIntersection(Intersection intersection, bool isItBeginningOfTheGame)
