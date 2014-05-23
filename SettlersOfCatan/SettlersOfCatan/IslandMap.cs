@@ -28,6 +28,8 @@ namespace SettlersOfCatan
 
 		public const int MAX_ROAD_ROWS = 11;
 		public const int MAX_ROAD_COLUMNS = 10;
+
+		public static string language = "English";
 	}
 
 
@@ -127,16 +129,16 @@ namespace SettlersOfCatan
 						else
 						{
 							// Determine if top or bottom connection (connection2)
-                            if ((r + c) % 2 == 0)
-                            {
-                                // Connect downward 
-                                map[r, c].connections[1] = new Connection(map[r + 1, c], map[r, c]);
-                            }
-                            else
-                            {
-                                // Connect upward
-                                map[r, c].connections[1] = new Connection(map[r, c], map[r-1, c]);
-                            }
+							if ((r + c)%2 == 0)
+							{
+								// Connect downward 
+								map[r, c].connections[1] = new Connection(map[r + 1, c], map[r, c]);
+							}
+							else
+							{
+								// Connect upward
+								map[r, c].connections[1] = new Connection(map[r, c], map[r - 1, c]);
+							}
 						}
 					}
 				}
@@ -169,7 +171,7 @@ namespace SettlersOfCatan
 			{
 				map[intRow, intCol].connections[2].buildRoad(player.getColor());
 				map[intRow, intCol + 1].connections[0].buildRoad(player.getColor());
-                player.addConnection(map[intRow, intCol].connections[2]);
+				player.addConnection(map[intRow, intCol].connections[2]);
 
 				return true;
 			}
@@ -202,7 +204,7 @@ namespace SettlersOfCatan
 			{
 				map[intRow, intCol].connections[1].buildRoad(player.getColor());
 				map[intRow + 1, intCol].connections[1].buildRoad(player.getColor());
-                player.addConnection(map[intRow, intCol].connections[1]);
+				player.addConnection(map[intRow, intCol].connections[1]);
 
 				return true;
 			}

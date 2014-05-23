@@ -85,6 +85,7 @@
 			this.Controls.Add(this.ReminderLabelRobberForm);
 			this.Controls.Add(this.RobberFormDoubleClickLabel);
 			this.Name = "RobberForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Instructions";
 			this.ResumeLayout(false);
 			this.PerformLayout();

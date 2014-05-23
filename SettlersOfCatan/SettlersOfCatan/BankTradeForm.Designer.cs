@@ -46,7 +46,7 @@
             "lumber"});
 			this.ResourceTradeBankComboBox.Location = new System.Drawing.Point(12, 113);
 			this.ResourceTradeBankComboBox.Name = "ResourceTradeBankComboBox";
-			this.ResourceTradeBankComboBox.Size = new System.Drawing.Size(121, 21);
+			this.ResourceTradeBankComboBox.Size = new System.Drawing.Size(136, 21);
 			this.ResourceTradeBankComboBox.TabIndex = 0;
 			this.ResourceTradeBankComboBox.Text = "Resource to Trade";
 			// 
@@ -60,21 +60,22 @@
             "wool",
             "brick",
             "lumber"});
-			this.ResourceGainBankComboBox.Location = new System.Drawing.Point(213, 113);
+			this.ResourceGainBankComboBox.Location = new System.Drawing.Point(199, 113);
 			this.ResourceGainBankComboBox.Name = "ResourceGainBankComboBox";
-			this.ResourceGainBankComboBox.Size = new System.Drawing.Size(121, 21);
+			this.ResourceGainBankComboBox.Size = new System.Drawing.Size(135, 21);
 			this.ResourceGainBankComboBox.TabIndex = 1;
 			this.ResourceGainBankComboBox.Text = "Resource to Gain";
 			// 
 			// BankTradePromptLabel
 			// 
-			this.BankTradePromptLabel.AutoSize = true;
+			this.BankTradePromptLabel.Dock = System.Windows.Forms.DockStyle.Top;
 			this.BankTradePromptLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-			this.BankTradePromptLabel.Location = new System.Drawing.Point(91, 37);
+			this.BankTradePromptLabel.Location = new System.Drawing.Point(0, 0);
 			this.BankTradePromptLabel.Name = "BankTradePromptLabel";
-			this.BankTradePromptLabel.Size = new System.Drawing.Size(169, 18);
+			this.BankTradePromptLabel.Size = new System.Drawing.Size(346, 90);
 			this.BankTradePromptLabel.TabIndex = 4;
 			this.BankTradePromptLabel.Text = "Choose your resources:";
+			this.BankTradePromptLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// SubmitBankTradeButton
 			// 
@@ -97,9 +98,9 @@
 			this.Controls.Add(this.ResourceGainBankComboBox);
 			this.Controls.Add(this.ResourceTradeBankComboBox);
 			this.Name = "BankTradeForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Bank Trade";
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 

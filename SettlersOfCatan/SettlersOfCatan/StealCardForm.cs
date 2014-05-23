@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Resources;
 using System.Windows.Forms;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public partial class StealCardForm : Form
 	{
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		private World world;
-		//private GameScreen gameScreen;
 		private Hex robberHex;
 		private object playerToStealFrom;
 
@@ -22,25 +19,33 @@ namespace SettlersOfCatan
 		public StealCardForm(World world)
 		{
 			this.world = world;
-			//this.gameScreen = gs;
 			this.robberHex = world.getRobberHex();
 			InitializeComponent();
-			updateComboBox();
+			updateLabels();
 		}
 
-		private void updateComboBox()
+		private void updateLabels()
 		{
-			int owners = world.getRobberHex().owners.Count;
+			int owners = this.robberHex.owners.Count;
 
 			for (int i = 0; i < owners; i++)
 			{
-				this.PlayerNameComboBox.Items.Insert(i, world.getRobberHex().owners[i].getName());
+				if (this.robberHex.owners[i].getHand().getResources() > 0 &&
+				    !this.robberHex.owners[i].getName().Equals(this.world.currentPlayer.getName()) &&
+				    !this.PlayerNameComboBox.Items.Contains(this.world.getRobberHex().owners[i].getName()))
+				{
+					this.PlayerNameComboBox.Items.Add(this.world.getRobberHex().owners[i].getName());
+				}
 			}
 
 			if (this.PlayerNameComboBox.Items.Count == 0)
 			{
-				this.PlayerNameComboBox.Items.Insert(0, "No one");
+				this.PlayerNameComboBox.Items.Insert(0, rm.GetString(language + "Nobody"));
 			}
+
+			this.Text = rm.GetString(language + "StealCardTitle");
+			this.PlayerNameComboBox.Text = rm.GetString(language + "StealCardCombo");
+			this.StealCardButton.Text = rm.GetString(language + "Steal");
 		}
 
 		private void StealCardButton_Click(object sender, EventArgs e)
@@ -55,10 +60,10 @@ namespace SettlersOfCatan
 			}
 			else
 			{
-				DialogResult num = MessageBox.Show("You must choose one of the choices to steal from.",
-	"Stealee Not Chosen",
-	MessageBoxButtons.OK,
-	MessageBoxIcon.Exclamation);
+				DialogResult num = MessageBox.Show(rm.GetString(language + "MustChoosePlayer"),
+					rm.GetString(language + "PickSomeone"),
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
 			}
 		}
 
@@ -67,7 +72,7 @@ namespace SettlersOfCatan
 			string playerName = (string) this.playerToStealFrom;
 			int owners = this.robberHex.owners.Count;
 
-			if (playerName.Equals("No one"))
+			if (playerName.Equals(rm.GetString(language + "Nobody")))
 			{
 				this.canDispose = true;
 				return true;
@@ -105,6 +110,5 @@ namespace SettlersOfCatan
 				e.Cancel = true;
 			}
 		}
-
 	}
 }

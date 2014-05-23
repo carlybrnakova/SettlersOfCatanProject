@@ -83,6 +83,7 @@
 			this.Controls.Add(this.NewGameButton);
 			this.Controls.Add(this.GameLabel);
 			this.Name = "MainMenu";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Settlers of Catan - Main Menu";
 			this.ResumeLayout(false);
 			this.PerformLayout();

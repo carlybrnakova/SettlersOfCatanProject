@@ -11,14 +11,14 @@ namespace SettlersOfCatan
 	public class Connection
 	{
 		public Intersection connectedToLeftOrTop;
-        public Intersection connectedToRightOrBot;
+		public Intersection connectedToRightOrBot;
 		private Color roadColor;
 		private bool built;
-        private Point coords;
+		private Point coords;
 
 		public Connection(Intersection rightOrBot, Intersection leftOrTop)
 		{
-            connectedToRightOrBot = rightOrBot;
+			connectedToRightOrBot = rightOrBot;
 			connectedToLeftOrTop = leftOrTop;
 			built = false;
 			roadColor = Color.White;
@@ -29,7 +29,7 @@ namespace SettlersOfCatan
 			return connectedToLeftOrTop;
 		}
 
-        public Intersection getIntersectionRightOrBot()
+		public Intersection getIntersectionRightOrBot()
 		{
 			return connectedToRightOrBot;
 		}
@@ -48,7 +48,7 @@ namespace SettlersOfCatan
 		{
 			this.built = true;
 			this.roadColor = c;
-            //this.coords = loc;
+			//this.coords = loc;
 		}
 
 		public bool isBuilt()
@@ -56,9 +56,9 @@ namespace SettlersOfCatan
 			return built;
 		}
 
-        public Point getCoords()
-        {
-            return this.coords;
-        }
+		public Point getCoords()
+		{
+			return this.coords;
+		}
 	}
 }

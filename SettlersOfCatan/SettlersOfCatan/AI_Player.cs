@@ -8,22 +8,23 @@ using System.Drawing;
 
 namespace SettlersOfCatan
 {
-    public class AI_Player : Player
-    {
-        private String name;
-        private Color color;
-        //private bool hasWon = false;
-        private World world;
-        public Hand playerHand = new Hand();
-        private Point intersectionCoordsToBuild;
+	public class AI_Player : Player
+	{
+		private String name;
+		private Color color;
+		//private bool hasWon = false;
+		private World world;
+		public Hand playerHand = new Hand();
+		private Point intersectionCoordsToBuild;
 
-        public AI_Player(String playerName, Color playerColor, World world1) : base(playerName, playerColor, world1)
-        {
+		public AI_Player(String playerName, Color playerColor, World world1) : base(playerName, playerColor, world1)
+		{
 			this.name = playerName;
 			this.color = playerColor;
 			this.world = world1;
-        }
-        /*
+		}
+
+		/*
         new public String getName()
         {
             //return base.getName();
@@ -116,5 +117,5 @@ namespace SettlersOfCatan
             return this.intersectionCoordsToBuild;
         }
 
-    }
+	}
 }

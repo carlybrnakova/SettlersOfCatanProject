@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -68,9 +69,10 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -85,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -109,9 +112,651 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EnglishAcceptFormTitle" xml:space="preserve">
+    <value>Accept or Decline</value>
+  </data>
+  <data name="EnglishAcceptTradeButton" xml:space="preserve">
+    <value>Accept Trade</value>
+  </data>
+  <data name="EnglishAcceptTradePrompt" xml:space="preserve">
+    <value>Accept the Trade?</value>
+  </data>
+  <data name="EnglishAlreadyRolled" xml:space="preserve">
+    <value>Already Rolled</value>
+  </data>
+  <data name="EnglishAmountNotChosen" xml:space="preserve">
+    <value>Amount Not Chosen</value>
+  </data>
+  <data name="EnglishAnything" xml:space="preserve">
+    <value>Anything</value>
+  </data>
+  <data name="EnglishBack" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="EnglishBankPrompt" xml:space="preserve">
+    <value>Choose your resources:</value>
+  </data>
+  <data name="EnglishBrick" xml:space="preserve">
+    <value>Brick</value>
+  </data>
+  <data name="EnglishBrickException" xml:space="preserve">
+    <value>You don't have enough brick.</value>
+  </data>
+  <data name="EnglishBuyDevCard" xml:space="preserve">
+    <value>Buy Development Card</value>
+  </data>
+  <data name="EnglishCannotBuildThere" xml:space="preserve">
+    <value>You cannot build there.</value>
+  </data>
+  <data name="EnglishCannotRollFirstFew" xml:space="preserve">
+    <value>Cannot roll in the first 2 rounds.</value>
+  </data>
+  <data name="EnglishCards" xml:space="preserve">
+    <value>cards</value>
+  </data>
+  <data name="EnglishChooseEachResource" xml:space="preserve">
+    <value>You must choose a number to remove for each resource.</value>
+  </data>
+  <data name="EnglishClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="EnglishCongratulations" xml:space="preserve">
+    <value>Congratulations!</value>
+  </data>
+  <data name="EnglishCurrentRoll" xml:space="preserve">
+    <value>Current Roll</value>
+  </data>
+  <data name="EnglishDeclineTradeButton" xml:space="preserve">
+    <value>Decline Trade</value>
+  </data>
+  <data name="EnglishDevCards" xml:space="preserve">
+    <value>Development Cards</value>
+  </data>
+  <data name="EnglishDoubleClick" xml:space="preserve">
+    <value>Double-click a hex to place the robber.</value>
+  </data>
+  <data name="EnglishEndTurn" xml:space="preserve">
+    <value>End Turn</value>
+  </data>
+  <data name="EnglishFirstFewPrompt" xml:space="preserve">
+    <value>Place a Road and a Settlement now.</value>
+  </data>
+  <data name="EnglishFirstFewTitle" xml:space="preserve">
+    <value>Setup Phase</value>
+  </data>
+  <data name="EnglishGenerateTest" xml:space="preserve">
+    <value>Generate Resources (TEST)</value>
+  </data>
+  <data name="EnglishGrain" xml:space="preserve">
+    <value>Grain</value>
+  </data>
+  <data name="EnglishGrainException" xml:space="preserve">
+    <value>You don't have enough grain.</value>
+  </data>
+  <data name="EnglishInstructionLabel" xml:space="preserve">
+    <value>Since a 7 was rolled and you have </value>
+  </data>
+  <data name="EnglishInstructions" xml:space="preserve">
+    <value>Instructions</value>
+  </data>
+  <data name="EnglishInsufficientResources" xml:space="preserve">
+    <value>Insufficient Resources</value>
+  </data>
+  <data name="EnglishInsufficientRoom" xml:space="preserve">
+    <value>Insufficient Room to Build</value>
+  </data>
+  <data name="EnglishInvalidBrick" xml:space="preserve">
+    <value>There would be an invalid amount of brick.</value>
+  </data>
+  <data name="EnglishInvalidDevCards" xml:space="preserve">
+    <value>There would be an invalid number of development cards.</value>
+  </data>
+  <data name="EnglishInvalidGrain" xml:space="preserve">
+    <value>There would be an invalid amount of grain.</value>
+  </data>
+  <data name="EnglishInvalidLumber" xml:space="preserve">
+    <value>There would be an invalid amount of lumber.</value>
+  </data>
+  <data name="EnglishInvalidOre" xml:space="preserve">
+    <value>There would be an invalid amount of ore.</value>
+  </data>
+  <data name="EnglishInvalidWool" xml:space="preserve">
+    <value>There would be an invalid amount of wool.</value>
+  </data>
+  <data name="EnglishKnightException" xml:space="preserve">
+    <value>You don't have any Knights to play.</value>
+  </data>
+  <data name="EnglishKnights" xml:space="preserve">
+    <value>Knights</value>
+  </data>
+  <data name="EnglishLumber" xml:space="preserve">
+    <value>Lumber</value>
+  </data>
+  <data name="EnglishLumberException" xml:space="preserve">
+    <value>You don't have enough lumber.</value>
+  </data>
+  <data name="EnglishMainMenuTitlebar" xml:space="preserve">
+    <value>Settlers of Catan - Main Menu</value>
+  </data>
+  <data name="EnglishMakeTradeException" xml:space="preserve">
+    <value>Player's cards are such that trade cannot be performed.</value>
+  </data>
+  <data name="EnglishMaterials" xml:space="preserve">
+    <value>Materials</value>
+  </data>
+  <data name="EnglishMonopoly" xml:space="preserve">
+    <value>Monopoly</value>
+  </data>
+  <data name="EnglishMonopolyException" xml:space="preserve">
+    <value>You don't have any Monopoly cards to play.</value>
+  </data>
+  <data name="EnglishMonopolyLabel" xml:space="preserve">
+    <value>Pick the resource you wish to monopolize</value>
+  </data>
+  <data name="EnglishMustChoosePlayer" xml:space="preserve">
+    <value>You must choose one of the choices to steal from.</value>
+  </data>
+  <data name="EnglishNeedCityResources" xml:space="preserve">
+    <value>You do not have enough resources to build a city.</value>
+  </data>
+  <data name="EnglishNeedRoadResources" xml:space="preserve">
+    <value>You do not have enough resources to build a road.</value>
+  </data>
+  <data name="EnglishNeedSettlementResources" xml:space="preserve">
+    <value>You do not have enough resources to build a settlement.</value>
+  </data>
+  <data name="EnglishNegativeBrick" xml:space="preserve">
+    <value>Player cannot have negative brick.</value>
+  </data>
+  <data name="EnglishNegativeGrain" xml:space="preserve">
+    <value>Player cannot have negative grain.</value>
+  </data>
+  <data name="EnglishNegativeLumber" xml:space="preserve">
+    <value>Player cannot have negative lumber.</value>
+  </data>
+  <data name="EnglishNegativeOre" xml:space="preserve">
+    <value>Player cannot have negative ore.</value>
+  </data>
+  <data name="EnglishNegativeWool" xml:space="preserve">
+    <value>Player cannot have negative wool.</value>
+  </data>
+  <data name="EnglishNewGame" xml:space="preserve">
+    <value>New Game</value>
+  </data>
+  <data name="EnglishNobody" xml:space="preserve">
+    <value>Nobody</value>
+  </data>
+  <data name="EnglishNotOwner" xml:space="preserve">
+    <value>Not Owner</value>
+  </data>
+  <data name="EnglishNumComps" xml:space="preserve">
+    <value>Number of Computers</value>
+  </data>
+  <data name="EnglishNumPlayers" xml:space="preserve">
+    <value>Number of Players</value>
+  </data>
+  <data name="EnglishOnlyOneRoll" xml:space="preserve">
+    <value>Cannot roll more than once per turn.</value>
+  </data>
+  <data name="EnglishOre" xml:space="preserve">
+    <value>Ore</value>
+  </data>
+  <data name="EnglishOreException" xml:space="preserve">
+    <value>You don't have enough ore.</value>
+  </data>
+  <data name="EnglishPickSomeone" xml:space="preserve">
+    <value>Pick Someone</value>
+  </data>
+  <data name="EnglishPickTwoResources" xml:space="preserve">
+    <value>Pick your two resources</value>
+  </data>
+  <data name="EnglishPlaceRoads" xml:space="preserve">
+    <value>Place two roads now.</value>
+  </data>
+  <data name="EnglishPlayers" xml:space="preserve">
+    <value>Players</value>
+  </data>
+  <data name="EnglishPoints" xml:space="preserve">
+    <value>Points:</value>
+  </data>
+  <data name="EnglishProposeTrade" xml:space="preserve">
+    <value>Propose Trade</value>
+  </data>
+  <data name="EnglishRemove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="EnglishRemoveAmount" xml:space="preserve">
+    <value>Remove Amount</value>
+  </data>
+  <data name="EnglishRemoveCardsTitle" xml:space="preserve">
+    <value>Remove Your Cards</value>
+  </data>
+  <data name="EnglishRemoveInstructionLabel" xml:space="preserve">
+    <value>you must remove </value>
+  </data>
+  <data name="EnglishResource" xml:space="preserve">
+    <value>Resource</value>
+  </data>
+  <data name="EnglishResourceGain" xml:space="preserve">
+    <value>Resource to Gain</value>
+  </data>
+  <data name="EnglishResourceTrade" xml:space="preserve">
+    <value>Resource to Trade</value>
+  </data>
+  <data name="EnglishRoadBuilder" xml:space="preserve">
+    <value>Road Builder</value>
+  </data>
+  <data name="EnglishRoadBuilderException" xml:space="preserve">
+    <value>You don't have any Road Builder cards to play.</value>
+  </data>
+  <data name="EnglishRobberNote" xml:space="preserve">
+    <value>The board will repaint once you end your turn.</value>
+  </data>
+  <data name="EnglishRobberReminder" xml:space="preserve">
+    <value>It can't be placed on the hex that it was just on.</value>
+  </data>
+  <data name="EnglishRoll" xml:space="preserve">
+    <value>ROLL!</value>
+  </data>
+  <data name="EnglishRollBeforeEnd" xml:space="preserve">
+    <value>You must roll before ending your turn.</value>
+  </data>
+  <data name="EnglishRollTheDice" xml:space="preserve">
+    <value>Roll the Dice</value>
+  </data>
+  <data name="EnglishRounds" xml:space="preserve">
+    <value>Rounds</value>
+  </data>
+  <data name="EnglishRules" xml:space="preserve">
+    <value>Rules</value>
+  </data>
+  <data name="EnglishSettlementNotBelong" xml:space="preserve">
+    <value>That settlement does not belong to you.</value>
+  </data>
+  <data name="EnglishSomethingWrong" xml:space="preserve">
+    <value>Something went wrong...</value>
+  </data>
+  <data name="EnglishStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="EnglishSteal" xml:space="preserve">
+    <value>Steal</value>
+  </data>
+  <data name="EnglishStealCardCombo" xml:space="preserve">
+    <value>Pick who to steal from</value>
+  </data>
+  <data name="EnglishStealCardTitle" xml:space="preserve">
+    <value>Take a Card</value>
+  </data>
+  <data name="EnglishSubmit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="EnglishTitle" xml:space="preserve">
+    <value>Settlers Of Catan</value>
+  </data>
+  <data name="EnglishTooEarlyToRoll" xml:space="preserve">
+    <value>Too Early to Roll</value>
+  </data>
+  <data name="EnglishTradeWithBank" xml:space="preserve">
+    <value>Trade with Bank</value>
+  </data>
+  <data name="EnglishUnplacedStuffPrompt" xml:space="preserve">
+    <value>Place the rest of your free roads/settlements before ending turn.</value>
+  </data>
+  <data name="EnglishUnplacedStuffTitle" xml:space="preserve">
+    <value>Unplaced Roads/Settlements</value>
+  </data>
+  <data name="EnglishVictoryPoint" xml:space="preserve">
+    <value>Victory Point</value>
+  </data>
+  <data name="EnglishVictoryPointException" xml:space="preserve">
+    <value>You don't have any Victory Point cards to play.</value>
+  </data>
+  <data name="EnglishWinner" xml:space="preserve">
+    <value>WINNER!</value>
+  </data>
+  <data name="EnglishWool" xml:space="preserve">
+    <value>Wool</value>
+  </data>
+  <data name="EnglishWoolException" xml:space="preserve">
+    <value>You don't have enough wool.</value>
+  </data>
+  <data name="EnglishWrongNumberOfCards" xml:space="preserve">
+    <value>Wrong Number of Cards Removed</value>
+  </data>
+  <data name="EnglishWrongTradeIn" xml:space="preserve">
+    <value>Make sure your trade-in amounts add up to </value>
+  </data>
+  <data name="EnglishYearOfPlenty" xml:space="preserve">
+    <value>Year of Plenty</value>
+  </data>
+  <data name="EnglishYearOfPlentyException" xml:space="preserve">
+    <value>You don't have any Year of Plenty cards to play.</value>
+  </data>
+  <data name="SpanishAcceptFormTitle" xml:space="preserve">
+    <value>Aceptar o Rechazar</value>
+  </data>
+  <data name="SpanishAcceptTradeButton" xml:space="preserve">
+    <value>Accept Trade</value>
+  </data>
+  <data name="SpanishAcceptTradePrompt" xml:space="preserve">
+    <value>Acepte el Comercio?</value>
+  </data>
+  <data name="SpanishAlreadyRolled" xml:space="preserve">
+    <value>Ya Laminado</value>
+  </data>
+  <data name="SpanishAmountNotChosen" xml:space="preserve">
+    <value>Monto No Elegido</value>
+  </data>
+  <data name="SpanishAnything" xml:space="preserve">
+    <value>Algo</value>
+  </data>
+  <data name="SpanishBack" xml:space="preserve">
+    <value>Retorno</value>
+  </data>
+  <data name="SpanishBankPrompt" xml:space="preserve">
+    <value>Elegir los Recursos:</value>
+  </data>
+  <data name="SpanishBrick" xml:space="preserve">
+    <value>Ladrillo</value>
+  </data>
+  <data name="SpanishBrickException" xml:space="preserve">
+    <value>Usted no tiene suficiente ladrillo.</value>
+  </data>
+  <data name="SpanishBuyDevCard" xml:space="preserve">
+    <value>Comprar Tarjeta de Desarrollo</value>
+  </data>
+  <data name="SpanishCannotBuildThere" xml:space="preserve">
+    <value>No se puede construir allí.</value>
+  </data>
+  <data name="SpanishCannotRollFirstFew" xml:space="preserve">
+    <value>No se puede rodar en las 2 primeras rondas.</value>
+  </data>
+  <data name="SpanishCards" xml:space="preserve">
+    <value>tarjetas</value>
+  </data>
+  <data name="SpanishChooseEachResource" xml:space="preserve">
+    <value>Usted debe elegir un número de quitar para cada recurso.</value>
+  </data>
+  <data name="SpanishClose" xml:space="preserve">
+    <value>Cerca</value>
+  </data>
+  <data name="SpanishCongratulations" xml:space="preserve">
+    <value>Felicitaciones!</value>
+  </data>
+  <data name="SpanishCurrentRoll" xml:space="preserve">
+    <value>Rollo Actual</value>
+  </data>
+  <data name="SpanishDeclineTradeButton" xml:space="preserve">
+    <value>Rechazar Comercio</value>
+  </data>
+  <data name="SpanishDevCards" xml:space="preserve">
+    <value>Tarjetas de Desarrollo</value>
+  </data>
+  <data name="SpanishDoubleClick" xml:space="preserve">
+    <value>Haga doble clic en un hexágono para colocar el ladrón.</value>
+  </data>
+  <data name="SpanishEndTurn" xml:space="preserve">
+    <value>Giro Final</value>
+  </data>
+  <data name="SpanishFirstFewPrompt" xml:space="preserve">
+    <value>Coloque una Carretera y una Solución ahora</value>
+  </data>
+  <data name="SpanishFirstFewTitle" xml:space="preserve">
+    <value>Fase de Configuración</value>
+  </data>
+  <data name="SpanishGenerateTest" xml:space="preserve">
+    <value>Generar Recursos (PRUEBA)</value>
+  </data>
+  <data name="SpanishGrain" xml:space="preserve">
+    <value>Grano</value>
+  </data>
+  <data name="SpanishGrainException" xml:space="preserve">
+    <value>Usted no tiene suficiente grano.</value>
+  </data>
+  <data name="SpanishInstructionLabel" xml:space="preserve">
+    <value>Puesto que un 7 fue enrollada y tiene </value>
+  </data>
+  <data name="SpanishInstructions" xml:space="preserve">
+    <value>Instrucciones</value>
+  </data>
+  <data name="SpanishInsufficientResources" xml:space="preserve">
+    <value>Insuficiencia de Recursos</value>
+  </data>
+  <data name="SpanishInsufficientRoom" xml:space="preserve">
+    <value>Espacio Suficiente para Construir</value>
+  </data>
+  <data name="SpanishInvalidBrick" xml:space="preserve">
+    <value>No habría una cantidad no válida de ladrillo.</value>
+  </data>
+  <data name="SpanishInvalidDevCards" xml:space="preserve">
+    <value>Habría un número no válido de tarjetas de desarrollo.</value>
+  </data>
+  <data name="SpanishInvalidGrain" xml:space="preserve">
+    <value>No habría una cantidad no válida de grano.</value>
+  </data>
+  <data name="SpanishInvalidLumber" xml:space="preserve">
+    <value>No habría una cantidad no válida de la madera de construcción.</value>
+  </data>
+  <data name="SpanishInvalidOre" xml:space="preserve">
+    <value>No habría una cantidad no válida de mineral.</value>
+  </data>
+  <data name="SpanishInvalidWool" xml:space="preserve">
+    <value>No habría una cantidad no válida de lana.</value>
+  </data>
+  <data name="SpanishKnightException" xml:space="preserve">
+    <value>Usted no tiene ninguna carta Caballero para jugar.</value>
+  </data>
+  <data name="SpanishKnights" xml:space="preserve">
+    <value>Caballeros</value>
+  </data>
+  <data name="SpanishLumber" xml:space="preserve">
+    <value>Maderas</value>
+  </data>
+  <data name="SpanishLumberException" xml:space="preserve">
+    <value>Usted no tiene suficiente madera.</value>
+  </data>
+  <data name="SpanishMainMenuTitlebar" xml:space="preserve">
+    <value>Colonos de Catan - Menú Principal</value>
+  </data>
+  <data name="SpanishMakeTradeException" xml:space="preserve">
+    <value>Tarjetas de jugador son tales que el comercio no se puede realizar.</value>
+  </data>
+  <data name="SpanishMaterials" xml:space="preserve">
+    <value>Materiales</value>
+  </data>
+  <data name="SpanishMonopoly" xml:space="preserve">
+    <value>Monopolio</value>
+  </data>
+  <data name="SpanishMonopolyException" xml:space="preserve">
+    <value>Usted no tiene ninguna tarjeta de Monopoly para jugar.</value>
+  </data>
+  <data name="SpanishMonopolyLabel" xml:space="preserve">
+    <value>Elija el recurso que desea monopolizar</value>
+  </data>
+  <data name="SpanishMustChoosePlayer" xml:space="preserve">
+    <value>Usted debe elegir una de las opciones, que robasen.</value>
+  </data>
+  <data name="SpanishNeedCityResources" xml:space="preserve">
+    <value>Usted no tiene suficientes recursos para construir una ciudad.</value>
+  </data>
+  <data name="SpanishNeedRoadResources" xml:space="preserve">
+    <value>Usted no tiene suficientes recursos para construir una carretera.</value>
+  </data>
+  <data name="SpanishNeedSettlementResources" xml:space="preserve">
+    <value>Usted no tiene suficientes recursos para construir un asentamiento.</value>
+  </data>
+  <data name="SpanishNegativeBrick" xml:space="preserve">
+    <value>El jugador no puede tener ladrillo negativo.</value>
+  </data>
+  <data name="SpanishNegativeGrain" xml:space="preserve">
+    <value>El jugador no puede tener grano negativo.</value>
+  </data>
+  <data name="SpanishNegativeLumber" xml:space="preserve">
+    <value>El jugador no puede tener la madera negativo.</value>
+  </data>
+  <data name="SpanishNegativeOre" xml:space="preserve">
+    <value>El jugador no puede tener el mineral negativo.</value>
+  </data>
+  <data name="SpanishNegativeWool" xml:space="preserve">
+    <value>El jugador no puede tener lana negativo.</value>
+  </data>
+  <data name="SpanishNewGame" xml:space="preserve">
+    <value>Nuevo Juego</value>
+  </data>
+  <data name="SpanishNobody" xml:space="preserve">
+    <value>Nadie</value>
+  </data>
+  <data name="SpanishNotOwner" xml:space="preserve">
+    <value>No Propietario</value>
+  </data>
+  <data name="SpanishNumComps" xml:space="preserve">
+    <value>Número de Equipos</value>
+  </data>
+  <data name="SpanishNumPlayers" xml:space="preserve">
+    <value>Número de Jugadores</value>
+  </data>
+  <data name="SpanishOnlyOneRoll" xml:space="preserve">
+    <value>No se puede rodar más de una vez por turno.</value>
+  </data>
+  <data name="SpanishOre" xml:space="preserve">
+    <value>Mineral</value>
+  </data>
+  <data name="SpanishOreException" xml:space="preserve">
+    <value>Usted no tiene suficiente mineral.</value>
+  </data>
+  <data name="SpanishPickSomeone" xml:space="preserve">
+    <value>Recoger a Alguien</value>
+  </data>
+  <data name="SpanishPickTwoResources" xml:space="preserve">
+    <value>Escoger sus dos recursos</value>
+  </data>
+  <data name="SpanishPlaceRoads" xml:space="preserve">
+    <value>Colocar dos caminos ahora.</value>
+  </data>
+  <data name="SpanishPlayers" xml:space="preserve">
+    <value>Jugadores</value>
+  </data>
+  <data name="SpanishPoints" xml:space="preserve">
+    <value>Puntos:</value>
+  </data>
+  <data name="SpanishProposeTrade" xml:space="preserve">
+    <value>Proponer el Comercio</value>
+  </data>
+  <data name="SpanishRemove" xml:space="preserve">
+    <value>Retirar</value>
+  </data>
+  <data name="SpanishRemoveAmount" xml:space="preserve">
+    <value>Retire Monto</value>
+  </data>
+  <data name="SpanishRemoveCardsTitle" xml:space="preserve">
+    <value>Retire Sus Tarjetas</value>
+  </data>
+  <data name="SpanishRemoveInstructionLabel" xml:space="preserve">
+    <value>debe quitar </value>
+  </data>
+  <data name="SpanishResource" xml:space="preserve">
+    <value>Recurso</value>
+  </data>
+  <data name="SpanishResourceGain" xml:space="preserve">
+    <value>Recursos para Ganar</value>
+  </data>
+  <data name="SpanishResourceTrade" xml:space="preserve">
+    <value>Recursos para Comercio</value>
+  </data>
+  <data name="SpanishRoadBuilder" xml:space="preserve">
+    <value>Constructor de Carreteras</value>
+  </data>
+  <data name="SpanishRoadBuilderException" xml:space="preserve">
+    <value>Usted no tiene ninguna tarjeta Constructor de Carreteras para jugar.</value>
+  </data>
+  <data name="SpanishRobberNote" xml:space="preserve">
+    <value>La junta se volverá a dibujar una vez que termina su turno.</value>
+  </data>
+  <data name="SpanishRobberReminder" xml:space="preserve">
+    <value>No se puede colocar en el hexágono que era sólo en.</value>
+  </data>
+  <data name="SpanishRoll" xml:space="preserve">
+    <value>ROLLO!</value>
+  </data>
+  <data name="SpanishRollBeforeEnd" xml:space="preserve">
+    <value>Debe rodar antes de terminar su turno.</value>
+  </data>
+  <data name="SpanishRollTheDice" xml:space="preserve">
+    <value>Tirar los Dados</value>
+  </data>
+  <data name="SpanishRounds" xml:space="preserve">
+    <value>Rondas</value>
+  </data>
+  <data name="SpanishRules" xml:space="preserve">
+    <value>Reglas</value>
+  </data>
+  <data name="SpanishSettlementNotBelong" xml:space="preserve">
+    <value>Ese acuerdo no pertenece a usted.</value>
+  </data>
+  <data name="SpanishSomethingWrong" xml:space="preserve">
+    <value>Algo salió mal ...</value>
+  </data>
+  <data name="SpanishStart" xml:space="preserve">
+    <value>Comenzar</value>
+  </data>
+  <data name="SpanishSteal" xml:space="preserve">
+    <value>Robar</value>
+  </data>
+  <data name="SpanishStealCardCombo" xml:space="preserve">
+    <value>Elija a quién robar a</value>
+  </data>
+  <data name="SpanishStealCardTitle" xml:space="preserve">
+    <value>Tome una Tarjeta</value>
+  </data>
+  <data name="SpanishSubmit" xml:space="preserve">
+    <value>Presentar</value>
+  </data>
+  <data name="SpanishTitle" xml:space="preserve">
+    <value>Colonos de Catan</value>
+  </data>
+  <data name="SpanishTooEarlyToRoll" xml:space="preserve">
+    <value>Demasiado Temprano para Rollo</value>
+  </data>
+  <data name="SpanishTradeWithBank" xml:space="preserve">
+    <value>Comercio con el Banco</value>
+  </data>
+  <data name="SpanishUnplacedStuffPrompt" xml:space="preserve">
+    <value>Coloque el resto de sus caminos libres / asentamientos antes de terminar su vez.</value>
+  </data>
+  <data name="SpanishUnplacedStuffTitle" xml:space="preserve">
+    <value>Caminos no Posicionados / Asentamientos</value>
+  </data>
+  <data name="SpanishVictoryPoint" xml:space="preserve">
+    <value>Punto de Victoria</value>
+  </data>
+  <data name="SpanishVictoryPointException" xml:space="preserve">
+    <value>Usted no tiene ninguna carta de Puntos de Victoria para jugar.</value>
+  </data>
+  <data name="SpanishWinner" xml:space="preserve">
+    <value>GANADOR!</value>
+  </data>
+  <data name="SpanishWool" xml:space="preserve">
+    <value>Lana</value>
+  </data>
+  <data name="SpanishWoolException" xml:space="preserve">
+    <value>Usted no tiene suficiente lana.</value>
+  </data>
+  <data name="SpanishWrongNumberOfCards" xml:space="preserve">
+    <value>Número Incorrecto de Cartas Eliminadas</value>
+  </data>
+  <data name="SpanishWrongTradeIn" xml:space="preserve">
+    <value>Asegúrese de que sus cantidades con el comercio en suman </value>
+  </data>
+  <data name="SpanishYearOfPlenty" xml:space="preserve">
+    <value>Año de la Abundancia</value>
+  </data>
+  <data name="SpanishYearOfPlentyException" xml:space="preserve">
+    <value>Usted no tiene ningún Año de Abundancia cartas para jugar.</value>
+  </data>
 </root>

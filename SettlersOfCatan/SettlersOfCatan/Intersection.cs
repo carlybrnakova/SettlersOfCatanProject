@@ -51,7 +51,8 @@ namespace SettlersOfCatan
 			for (int i = 0; i < connections.Count; i++)
 			{
 				if (connections[i].getIntersectionLeftOrTop() != null && connections[i].getIntersectionRightOrBot() != null)
-					available = available && !(connections[i].getIntersectionLeftOrTop().hasABuilding()) && !(connections[i].getIntersectionRightOrBot().hasABuilding());
+					available = available && !(connections[i].getIntersectionLeftOrTop().hasABuilding()) &&
+					            !(connections[i].getIntersectionRightOrBot().hasABuilding());
 			}
 			return available;
 		}
@@ -129,15 +130,15 @@ namespace SettlersOfCatan
 			return this.currentPiece;
 		}
 
-        public List<Connection> getConnections()
-        {
-            return this.connections;
-        }
+		public List<Connection> getConnections()
+		{
+			return this.connections;
+		}
 
-        public Port getPort()
-        {
-            return this.port;
-        }
+		public Port getPort()
+		{
+			return this.port;
+		}
 
 		public bool hasPort()
 		{
@@ -175,3 +176,4 @@ namespace SettlersOfCatan
         }
     }
 }
+

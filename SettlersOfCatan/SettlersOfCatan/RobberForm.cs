@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Resources;
 using System.Windows.Forms;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public partial class RobberForm : Form
 	{
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		private World world;
 		private GameScreen gameScreen;
 
@@ -20,8 +18,18 @@ namespace SettlersOfCatan
 			InitializeComponent();
 			this.world = world;
 			this.gameScreen = gs;
+			localize();
 
 			makeAllHexesClickable();
+		}
+
+		private void localize()
+		{
+			this.Text = rm.GetString(language + "Instructions");
+			this.RobberFormDoubleClickLabel.Text = rm.GetString(language + "DoubleClick");
+			this.ReminderLabelRobberForm.Text = rm.GetString(language + "RobberReminder");
+			this.RobberFormNoteLabel.Text = rm.GetString(language + "RobberNote");
+			this.RobberFormButton.Text = rm.GetString(language + "Close");
 		}
 
 		public void makeAllHexesClickable()

@@ -59,5 +59,14 @@ namespace ClassLibrary1
 			target.setToken(5);
 			Assert.AreEqual(5, target.getToken());
 		}
+
+		[Test()]
+		public void TestAddOwner()
+		{
+			var target = new Hex("grain", GRAIN_COLOR);
+			target.addOwner(new Player("Joe", Color.Black, new World()));
+			Assert.IsTrue(target.owners[0].getName().Equals("Joe"));
+			Assert.IsTrue(target.owners[0].getColor().Equals(Color.Black));
+		}
 	}
 }

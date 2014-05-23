@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Resources;
 using System.Windows.Forms;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public partial class TradeForm : Form
 	{
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		private World world;
 		private GameScreen gameScreen;
 		private Player currentPlayer;
@@ -61,6 +60,8 @@ namespace SettlersOfCatan
 			InitializeComponent();
 			NextPlayer1Label.Text = this.nextPlayer1.getName();
 			NextPlayer2Label.Text = this.nextPlayer2.getName();
+			localize();
+			updateCurrentPlayerNameLabel();
 		}
 
 		private void updateCurrentPlayerNameLabel()
@@ -111,6 +112,18 @@ namespace SettlersOfCatan
 			}
 		}
 
+		private void localize()
+		{
+			this.Text = this.ProposeTheTradeButton.Text = rm.GetString(language + "ProposeTrade");
+			this.PlayersCategoryLabel.Text = rm.GetString(language + "Players");
+			this.ResourcesCategoryLabel.Text = rm.GetString(language + "Materials");
+			this.OreCategoryLabel.Text = rm.GetString(language + "Ore");
+			this.WoolCategoryLabel.Text = rm.GetString(language + "Wool");
+			this.BrickCategoryLabel.Text = rm.GetString(language + "Brick");
+			this.LumberCategoryLabel.Text = rm.GetString(language + "Lumber");
+			this.GrainCategoryLabel.Text = rm.GetString(language + "Grain");
+		}
+
 		public void makeTrade()
 		{
 			try
@@ -121,7 +134,7 @@ namespace SettlersOfCatan
 			catch (ArgumentException e)
 			{
 				DialogResult num = MessageBox.Show(e.Message,
-					"Insufficient Resources",
+					rm.GetString(language + "InsufficientResources"),
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
 			}

@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public class Bank
 	{
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		private int ore;
 		private int wool;
 		private int lumber;
@@ -89,14 +94,14 @@ namespace SettlersOfCatan
 			return shuffledCards;
 		}
 
-        public void decrementAllResources(int number)
-        {
-            this.brick -= number;
-            this.wool -= number;
-            this.lumber -= number;
-            this.grain -= number;
-            this.ore -= number;
-        }
+		public void decrementAllResources(int number)
+		{
+			this.brick -= number;
+			this.wool -= number;
+			this.lumber -= number;
+			this.grain -= number;
+			this.ore -= number;
+		}
 
 		public bool allResourcesMax()
 		{
@@ -140,84 +145,54 @@ namespace SettlersOfCatan
 
 		public void modifyResource(String resource, int amount)
 		{
-			switch (resource)
+			switch (resource.ToLower())
 			{
 				case "ore":
+				case "mineral":
 				{
 					if (this.ore + amount < 0 || this.ore + amount > 19)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There would be an invalid number of ore.",
-							"Invalid Number of Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
-
-						throw new ArgumentException("There would be an invalid amount of ore.");
+						throw new ArgumentException(rm.GetString(language + "InvalidOre"));
 					}
 					this.ore = this.ore + amount;
 					break;
 				}
 				case "wool":
+				case "lana":
 				{
 					if (this.wool + amount < 0 || this.wool + amount > 19)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There would be an invalid number of wool.",
-							"Invalid Number of Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
-
-						throw new ArgumentException("There would be an invalid amount of wool.");
+						throw new ArgumentException(rm.GetString(language + "InvalidWool"));
 					}
 					this.wool = this.wool + amount;
 					break;
 				}
 				case "lumber":
+				case "maderas":
 				{
 					if (this.lumber + amount < 0 || this.lumber + amount > 19)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There would be an invalid number of lumber.",
-							"Invalid Number of Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
-
-						throw new ArgumentException("There would be an invalid amount of lumber.");
+						throw new ArgumentException(rm.GetString(language + "InvalidLumber"));
 					}
 					this.lumber = this.lumber + amount;
 					break;
 				}
 				case "grain":
+				case "grano":
 				{
 					if (this.grain + amount < 0 || this.grain + amount > 19)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There would be an invalid number of grain.",
-							"Invalid Number of Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
-
-						throw new ArgumentException("There would be an invalid amount of grain.");
+						throw new ArgumentException(rm.GetString(language + "InvalidGrain"));
 					}
 					this.grain = this.grain + amount;
 					break;
 				}
 				case "brick":
+				case "ladrillo":
 				{
 					if (this.brick + amount < 0 || this.brick + amount > 19)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There would be an invalid number of brick.",
-							"Invalid Number of Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						*/
-
-						throw new ArgumentException("There would be an invalid amount of brick.");
+						throw new ArgumentException(rm.GetString(language + "InvalidBrick"));
 					}
 					this.brick = brick + amount;
 					break;
@@ -229,13 +204,7 @@ namespace SettlersOfCatan
 		{
 			if (this.devCards.Count() <= 0)
 			{
-				/*
-				DialogResult num = MessageBox.Show("There would be an invalid number of development cards.",
-					"Invalid Number of Resources",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Exclamation);
-				 */
-				throw new ArgumentException("There would be an invalid number of development cards.");
+				throw new ArgumentException(rm.GetString(language + "InvalidDevCards"));
 			}
 
 			List<DevelopmentCard> cards = new List<DevelopmentCard>();

@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Resources;
 using System.Windows.Forms;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public partial class WinForm : Form
 	{
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		public WinForm()
 		{
 			InitializeComponent();
+
+			this.Text = rm.GetString(language + "Congratulations");
+			this.WinnerLabel.Text = rm.GetString(language + "Winner");
 		}
 	}
 }

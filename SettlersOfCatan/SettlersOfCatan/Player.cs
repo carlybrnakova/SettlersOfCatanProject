@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
-using System.Reflection;
-using System.Windows.Forms;
+using System.Resources;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public class Player
 	{
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		private readonly int MAX_CITIES = 4;
 		private readonly int MAX_SETTLEMENTS = 5;
 		private readonly int MAX_ROADS = 15;
@@ -32,21 +31,21 @@ namespace SettlersOfCatan
 		private World world;
 		public bool hasLongestRoad;
 		public bool hasLargestArmy;
-        public List<List<Connection>> roads = new List<List<Connection>>();
-        public int longestRoadIndex;
-        public bool hasRolled;
+		public List<List<Connection>> roads = new List<List<Connection>>();
+		public int longestRoadIndex;
+		public bool hasRolled;
 		private List<Point> settlementLocations = new List<Point>();
-        private List<Port> ports;
+		private List<Port> ports;
 
 		public Player()
 		{
 			this.world = new World();
 			this.hasLongestRoad = false;
 			this.hasLargestArmy = false;
-            this.hasRolled = false;
-            this.ports = new List<Port>();
-            this.longestRoadIndex = 0;
-            this.roads.Add(new List<Connection>());
+			this.hasRolled = false;
+			this.ports = new List<Port>();
+			this.longestRoadIndex = 0;
+			this.roads.Add(new List<Connection>());
 		}
 
 		public Player(String playerName, Color playerColor, World world1) : this()
@@ -54,8 +53,8 @@ namespace SettlersOfCatan
 			this.name = playerName;
 			this.color = playerColor;
 			this.world = world1;
-            this.longestRoadIndex = 0;
-            this.ports = new List<Port>();
+			this.longestRoadIndex = 0;
+			this.ports = new List<Port>();
 		}
 
 		public String getName()
@@ -63,10 +62,10 @@ namespace SettlersOfCatan
 			return this.name;
 		}
 
-        public void addPort(Port p)
-        {
-            this.ports.Add(p);
-        }
+		public void addPort(Port p)
+		{
+			this.ports.Add(p);
+		}
 
 		public Color getColor()
 		{
@@ -168,14 +167,7 @@ namespace SettlersOfCatan
 			}
 			else
 			{
-				/*
-				DialogResult num = MessageBox.Show("You do not have enough resources to make that trade.",
-					"Insufficient Resources",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Exclamation);
-				 */
-
-				throw new ArgumentException("Player's cards are such that trade cannot be performed");
+				throw new ArgumentException(rm.GetString(language + "MakeTradeException"));
 			}
 		}
 
@@ -216,227 +208,166 @@ namespace SettlersOfCatan
 			return this.playerHand.getResources() > 7;
 		}
 
-        public void tradeWithBank(String resourceToTradeIn, String resourceToGain)
-        {
-            int amountToTradeIn = 4;
-            if (this.hasAResourcePort())
-            {
-                List<String> allResources = listAllResourcePortsForThisPlayer();
-                if (allResources.Contains(resourceToTradeIn))
-                {
-                    amountToTradeIn = 2;
-                }
-            }
-            if (this.hasAFreePort() && amountToTradeIn == 4)
-            {
-                amountToTradeIn = 3;
-            }
-            if (resourceToTradeIn.ToLower().Equals("ore"))
-            {
-                if (getHand().getOre() >= amountToTradeIn)
-                {
-                    try
-                    {
-                        this.world.bank.modifyResource(resourceToGain, -1);
-                        this.world.bank.modifyResource("ore", amountToTradeIn);
-                        this.playerHand.modifyOre(-amountToTradeIn);
-                        modifyResourceInHand(resourceToGain);
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        /*
-                        DialogResult num = MessageBox.Show("There isn't enough ore to make that trade.",
-                            "Insufficient Resources",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Exclamation);
-                         */
-
-                        //return Color.White;
-                        throw;
-                    }
-                }
-                else
-                {
-                    /*
-                    DialogResult num = MessageBox.Show("You don't have enough ore to make that trade.",
-                            "Insufficient Resources",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Exclamation);
-                     * */
-                    throw new ArgumentOutOfRangeException("You don't have enough ore.");
-                }
-            }
-            else if (resourceToTradeIn.ToLower().Equals("wool"))
-            {
-                if (getHand().getWool() >= amountToTradeIn)
-                {
-                    try
-                    {
-                        this.world.bank.modifyResource(resourceToGain, -1);
-                        this.world.bank.modifyResource("wool", amountToTradeIn);
-                        this.playerHand.modifyWool(-amountToTradeIn);
-                        modifyResourceInHand(resourceToGain);
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        /*
-                        DialogResult num = MessageBox.Show("There isn't enough wool to make that trade.",
-                            "Insufficient Resources",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Exclamation);
-                         */
-                        throw;
-                    }
-                }
-                else
-                {
-                    /*
-                    DialogResult num = MessageBox.Show("You don't have enough wool to make that trade.",
-                            "Insufficient Resources",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Exclamation);
-                     */
-                    throw new ArgumentOutOfRangeException("You don't have enough wool.");
-                }
-            }
-            else if (resourceToTradeIn.ToLower().Equals("lumber"))
-            {
-                if (getHand().getLumber() >= amountToTradeIn)
-                {
-                    try
-                    {
-                        this.world.bank.modifyResource(resourceToGain, -1);
-                        this.world.bank.modifyResource("lumber", amountToTradeIn);
-                        this.playerHand.modifyLumber(-amountToTradeIn);
-                        modifyResourceInHand(resourceToGain);
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        /*
-                        DialogResult num = MessageBox.Show("There isn't enough lumber to make that trade.",
-                            "Insufficient Resources",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Exclamation);
-                         * */
-                        throw;
-                    }
-                }
-                else
-                {
-                    /*
-                    DialogResult num = MessageBox.Show("You don't have enough lumber to make that trade.",
-                            "Insufficient Resources",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Exclamation);
-                     */
-                    throw new ArgumentOutOfRangeException("You don't have enough lumber.");
-                }
-            }
-            else if (resourceToTradeIn.ToLower().Equals("grain"))
-            {
-                if (getHand().getGrain() >= amountToTradeIn)
-                {
-                    try
-                    {
-                        this.world.bank.modifyResource(resourceToGain, -1);
-                        this.world.bank.modifyResource("grain", amountToTradeIn);
-                        this.playerHand.modifyGrain(-amountToTradeIn);
-                        modifyResourceInHand(resourceToGain);
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        /*
-                        DialogResult num = MessageBox.Show("There isn't enough grain to make that trade.",
-                            "Insufficient Resources",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Exclamation);
-                         */
-                        throw;
-                    }
-                }
-                else
-                {
-                    /*
-                    DialogResult num = MessageBox.Show("You don't have enough grain to make that trade.",
-                        "Insufficient Resources",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Exclamation);
-                     */
-                    throw new ArgumentOutOfRangeException("You don't have enough grain.");
-                }
-            }
-            else if (resourceToTradeIn.ToLower().Equals("brick"))
-            {
-                if (getHand().getBrick() >= amountToTradeIn)
-                {
-                    try
-                    {
-                        this.world.bank.modifyResource(resourceToGain, -1);
-                        this.world.bank.modifyResource("brick", amountToTradeIn);
-                        this.playerHand.modifyBrick(-amountToTradeIn);
-                        modifyResourceInHand(resourceToGain);
-                    }
-                    catch (ArgumentOutOfRangeException)
-                    {
-                        /*
-                        DialogResult num = MessageBox.Show("There isn't enough brick to make that trade.",
-                            "Insufficient Resources",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Exclamation);
-                         */
-                        throw;
-                    }
-                }
-                else
-                {
-                    /*
-                    DialogResult num = MessageBox.Show("You don't have enough brick to make that trade.",
-                        "Insufficient Resources",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Exclamation);
-                     */
-                    throw new ArgumentOutOfRangeException("You don't have enough brick.");
-                }
-            }
-        }
+		public void tradeWithBank(String resourceToTradeIn, String resourceToGain)
+		{
+			int amountToTradeIn = 4;
+			if (this.hasAResourcePort())
+			{
+				List<String> allResources = listAllResourcePortsForThisPlayer();
+				if (allResources.Contains(resourceToTradeIn))
+				{
+					amountToTradeIn = 2;
+				}
+			}
+			if (this.hasAFreePort() && amountToTradeIn == 4)
+			{
+				amountToTradeIn = 3;
+			}
+			if (resourceToTradeIn.ToLower().Equals("ore") || resourceToTradeIn.ToLower().Equals("mineral"))
+			{
+				if (getHand().getOre() >= amountToTradeIn)
+				{
+					try
+					{
+						this.world.bank.modifyResource(resourceToGain, -1);
+						this.world.bank.modifyResource("ore", amountToTradeIn);
+						this.playerHand.modifyOre(-amountToTradeIn);
+						modifyResourceInHand(resourceToGain);
+					}
+					catch (ArgumentOutOfRangeException)
+					{
+						//return Color.White;
+						throw;
+					}
+				}
+				else
+				{
+					throw new ArgumentException(rm.GetString(language + "OreException"));
+				}
+			}
+			else if (resourceToTradeIn.ToLower().Equals("wool") || resourceToTradeIn.ToLower().Equals("lana"))
+			{
+				if (getHand().getWool() >= amountToTradeIn)
+				{
+					try
+					{
+						this.world.bank.modifyResource(resourceToGain, -1);
+						this.world.bank.modifyResource("wool", amountToTradeIn);
+						this.playerHand.modifyWool(-amountToTradeIn);
+						modifyResourceInHand(resourceToGain);
+					}
+					catch (ArgumentOutOfRangeException)
+					{
+						throw;
+					}
+				}
+				else
+				{
+					throw new ArgumentException(rm.GetString(language + "WoolException"));
+				}
+			}
+			else if (resourceToTradeIn.ToLower().Equals("lumber") || resourceToTradeIn.ToLower().Equals("maderas"))
+			{
+				if (getHand().getLumber() >= amountToTradeIn)
+				{
+					try
+					{
+						this.world.bank.modifyResource(resourceToGain, -1);
+						this.world.bank.modifyResource("lumber", amountToTradeIn);
+						this.playerHand.modifyLumber(-amountToTradeIn);
+						modifyResourceInHand(resourceToGain);
+					}
+					catch (ArgumentOutOfRangeException)
+					{
+						throw;
+					}
+				}
+				else
+				{
+					throw new ArgumentException(rm.GetString(language + "LumberException"));
+				}
+			}
+			else if (resourceToTradeIn.ToLower().Equals("grain") || resourceToTradeIn.ToLower().Equals("grano"))
+			{
+				if (getHand().getGrain() >= amountToTradeIn)
+				{
+					try
+					{
+						this.world.bank.modifyResource(resourceToGain, -1);
+						this.world.bank.modifyResource("grain", amountToTradeIn);
+						this.playerHand.modifyGrain(-amountToTradeIn);
+						modifyResourceInHand(resourceToGain);
+					}
+					catch (ArgumentOutOfRangeException)
+					{
+						throw;
+					}
+				}
+				else
+				{
+					throw new ArgumentException(rm.GetString(language + "GrainException"));
+				}
+			}
+			else if (resourceToTradeIn.ToLower().Equals("brick") || resourceToTradeIn.ToLower().Equals("ladrillo"))
+			{
+				if (getHand().getBrick() >= amountToTradeIn)
+				{
+					try
+					{
+						this.world.bank.modifyResource(resourceToGain, -1);
+						this.world.bank.modifyResource("brick", amountToTradeIn);
+						this.playerHand.modifyBrick(-amountToTradeIn);
+						modifyResourceInHand(resourceToGain);
+					}
+					catch (ArgumentOutOfRangeException)
+					{
+						throw;
+					}
+				}
+				else
+				{
+					throw new ArgumentException(rm.GetString(language + "BrickException"));
+				}
+			}
+		}
 
 
-        public bool hasAResourcePort()
-        {
-            for (int i = 0; i < this.ports.Count; i++)
-            {
-                if (this.ports[i].getResourceType() != "Anything")
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+		public bool hasAResourcePort()
+		{
+			for (int i = 0; i < this.ports.Count; i++)
+			{
+				if (this.ports[i].getResourceType() != "Anything")
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 
-        public bool hasAFreePort()
-        {
-            for (int i = 0; i < this.ports.Count; i++)
-            {
-                if (this.ports[i].getResourceType() == "Anything")
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+		public bool hasAFreePort()
+		{
+			for (int i = 0; i < this.ports.Count; i++)
+			{
+				if (this.ports[i].getResourceType() == "Anything")
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 
-        public List<String> listAllResourcePortsForThisPlayer()
-        {
-            List<String> theResources = new List<String>(5);
-            for (int i = 0; i < this.ports.Count; i++)
-            {
-                if (this.ports[i].getResourceType() != "Anything")
-                {
-                    theResources.Add(this.ports[i].getResourceType().ToLower());
-                }
-            }
-            return theResources;
-        }
+		public List<String> listAllResourcePortsForThisPlayer()
+		{
+			List<String> theResources = new List<String>(5);
+			for (int i = 0; i < this.ports.Count; i++)
+			{
+				if (this.ports[i].getResourceType() != "Anything")
+				{
+					theResources.Add(this.ports[i].getResourceType().ToLower());
+				}
+			}
+			return theResources;
+		}
 
 		// Need to know if port trades 2 or 3 resources in for something 
 		// but for now, I'm assuming 3 resources
@@ -453,14 +384,8 @@ namespace SettlersOfCatan
 						this.playerHand.modifyOre(-3);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough ore to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
 						throw;
 					}
 				}
@@ -476,14 +401,8 @@ namespace SettlersOfCatan
 						this.playerHand.modifyWool(-3);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough wool to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
 						throw;
 					}
 				}
@@ -499,14 +418,8 @@ namespace SettlersOfCatan
 						this.playerHand.modifyLumber(-3);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough lumber to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						*/
 						throw;
 					}
 				}
@@ -522,14 +435,8 @@ namespace SettlersOfCatan
 						this.playerHand.modifyGrain(-3);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough grain to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
 						throw;
 					}
 				}
@@ -545,14 +452,8 @@ namespace SettlersOfCatan
 						this.playerHand.modifyBrick(-3);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough brick to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						*/
 						throw;
 					}
 				}
@@ -574,14 +475,8 @@ namespace SettlersOfCatan
 					this.playerHand.modifyGrain(-1);
 					this.playerHand.addDevCard(cards);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There aren't any more development cards.",
-						"Can't Get Development Cards",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					 */
 					throw;
 				}
 			}
@@ -592,26 +487,31 @@ namespace SettlersOfCatan
 			switch (resource)
 			{
 				case "ore":
+				case "mineral":
 				{
 					this.playerHand.modifyOre(1);
 					break;
 				}
 				case "wool":
+				case "lana":
 				{
 					this.playerHand.modifyWool(1);
 					break;
 				}
 				case "lumber":
+				case "maderas":
 				{
 					this.playerHand.modifyLumber(1);
 					break;
 				}
 				case "grain":
+				case "grano":
 				{
 					this.playerHand.modifyGrain(1);
 					break;
 				}
 				case "brick":
+				case "ladrillo":
 				{
 					this.playerHand.modifyBrick(1);
 					break;
@@ -628,14 +528,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("ore", -2);
 					this.playerHand.modifyOre(2);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough ore to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -647,14 +541,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("ore", -1);
 					this.playerHand.modifyOre(1);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough ore to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -669,14 +557,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("wool", -2);
 					this.playerHand.modifyWool(2);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough wool to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -688,14 +570,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("wool", -1);
 					this.playerHand.modifyWool(1);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough wool to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -710,14 +586,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("lumber", -2);
 					this.playerHand.modifyLumber(2);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough lumber to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -729,14 +599,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("lumber", -1);
 					this.playerHand.modifyLumber(1);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough lumber to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -751,14 +615,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("grain", -2);
 					this.playerHand.modifyGrain(2);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough grain to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -770,14 +628,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("grain", -1);
 					this.playerHand.modifyGrain(1);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough grain to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -792,14 +644,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("brick", -2);
 					this.playerHand.modifyBrick(2);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough brick to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -811,14 +657,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("brick", -1);
 					this.playerHand.modifyBrick(1);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough brick to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -906,13 +746,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any knights to play.",
-							"No Knights to Play",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						*/
-						throw new ArgumentException("You don't have any Knights to play.");
+						throw new ArgumentException(rm.GetString(language + "KnightException"));
 						break;
 					}
 				}
@@ -926,13 +760,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any victory point cards to play.",
-							"No Points Gained",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						*/
-						throw new ArgumentException("You don't have any Victory Point cards to play.");
+						throw new ArgumentException(rm.GetString(language + "VictoryPointException"));
 						break;
 					}
 				}
@@ -946,13 +774,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any year of road builder cards to play.",
-							"Construction Halted",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
-						throw new ArgumentException("You don't have any Road Builder cards to play.");
+						throw new ArgumentException(rm.GetString(language + "RoadBuilderException"));
 					}
 				}
 				case "monopoly":
@@ -976,13 +798,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any monopoly cards to play.",
-							"No Monopolizing",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
-						throw new ArgumentException("You don't have any Monopoly cards to play.");
+						throw new ArgumentException(rm.GetString(language + "MonopolyException"));
 						break;
 					}
 				}
@@ -999,77 +815,76 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any year of plenty cards to play.",
-							"Year of Scarcity",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
-						throw new ArgumentException("You don't have any Year of Plenty cards to play");
+						throw new ArgumentException(rm.GetString(language + "YearOfPlentyException"));
 						break;
 					}
 				}
 			}
 		}
 
-        public void addConnection(Connection spot)
-        {
-            bool wasAdded = false;
-            int roadsIndex = 0;
-            List<List<Connection>> addedRoads = new List<List<Connection>>();
-            foreach(List<Connection> intList in roads)
-            {
-                int intListIndex = 0;
-                foreach (Connection road in intList)
-                {
+		public void addConnection(Connection spot)
+		{
+			bool wasAdded = false;
+			int roadsIndex = 0;
+			List<List<Connection>> addedRoads = new List<List<Connection>>();
+			foreach (List<Connection> intList in roads)
+			{
+				int intListIndex = 0;
+				foreach (Connection road in intList)
+				{
+					if (road.getIntersectionLeftOrTop().Equals(spot.getIntersectionLeftOrTop()) ||
+					    road.getIntersectionLeftOrTop().Equals(spot.getIntersectionRightOrBot()) ||
+					    road.getIntersectionRightOrBot().Equals(spot.getIntersectionRightOrBot()) ||
+					    (road.getIntersectionRightOrBot().Equals(spot.getIntersectionLeftOrTop())) & intListIndex == intList.Count - 1)
+					{
+						intList.Add(spot);
+						wasAdded = true;
+						if (intList.Count() > roads[this.longestRoadIndex].Count())
+						{
+							longestRoadIndex = roadsIndex;
+						}
+						break;
+					}
+					else if (road.getIntersectionLeftOrTop().Equals(spot.getIntersectionLeftOrTop()) ||
+					         road.getIntersectionLeftOrTop().Equals(spot.getIntersectionRightOrBot()) ||
+					         road.getIntersectionRightOrBot().Equals(spot.getIntersectionRightOrBot()) ||
+					         (road.getIntersectionRightOrBot().Equals(spot.getIntersectionLeftOrTop())) & intListIndex != intList.Count - 1)
+					{
+						List<Connection> newList = new List<Connection>();
+						for (int i = 0; i <= intListIndex; i++)
+						{
+							newList.Add(intList[i]);
+						}
+						newList.Add(spot);
+						addedRoads.Add(newList);
+						wasAdded = true;
+						if (newList.Count() > roads[this.longestRoadIndex].Count())
+						{
+							longestRoadIndex = roadsIndex;
+						}
+						break;
+					}
+					intListIndex++;
+				}
+				roadsIndex++;
+			}
+			if (addedRoads.Count != 0)
+			{
+				foreach (List<Connection> road in addedRoads)
+				{
+					roads.Add(road);
+				}
+			}
+			if (!wasAdded)
+			{
+				roads.Add(new List<Connection> {spot});
+			}
+		}
 
-                    if (road.getIntersectionLeftOrTop().Equals(spot.getIntersectionLeftOrTop()) || road.getIntersectionLeftOrTop().Equals(spot.getIntersectionRightOrBot()) ||
-                        road.getIntersectionRightOrBot().Equals(spot.getIntersectionRightOrBot()) || (road.getIntersectionRightOrBot().Equals(spot.getIntersectionLeftOrTop())) & intListIndex == intList.Count - 1)
-                    {
-                        intList.Add(spot);
-                        wasAdded = true;
-                        if (intList.Count() > roads[this.longestRoadIndex].Count())
-                        {
-                            longestRoadIndex = roadsIndex;
-                        }
-                        break;
-                    }
-                    else if (road.getIntersectionLeftOrTop().Equals(spot.getIntersectionLeftOrTop()) || road.getIntersectionLeftOrTop().Equals(spot.getIntersectionRightOrBot()) ||
-                        road.getIntersectionRightOrBot().Equals(spot.getIntersectionRightOrBot()) || (road.getIntersectionRightOrBot().Equals(spot.getIntersectionLeftOrTop())) & intListIndex != intList.Count - 1)
-                    {
-                        List<Connection> newList = new List<Connection>();
-                        for (int i = 0; i <= intListIndex; i++){
-                            newList.Add(intList[i]);
-                        }
-                        newList.Add(spot);
-                        addedRoads.Add(newList);
-                        wasAdded = true;
-                        if (newList.Count() > roads[this.longestRoadIndex].Count()){
-                            longestRoadIndex = roadsIndex;
-                        }
-                        break;
-                    }
-                    intListIndex++;
-                }
-                roadsIndex++;
-            }
-            if (addedRoads.Count != 0)
-            {
-                foreach (List<Connection> road in addedRoads)
-                {
-                    roads.Add(road);
-                }
-            }
-            if (!wasAdded)
-            {
-                roads.Add(new List<Connection> { spot });
-            }
-        }
-
-        public int getLengthOfLongestRoad()
-        {
-            return this.roads[this.longestRoadIndex].Count();
-        }
+		public int getLengthOfLongestRoad()
+		{
+			return this.roads[this.longestRoadIndex].Count();
+		}
 
 		public void transferGrain(int amount)
 		{
@@ -1114,17 +929,17 @@ namespace SettlersOfCatan
 			{
 				resources.Add("grain");
 			}
-			
+
 			if (this.playerHand.getWool() > 0)
 			{
 				resources.Add("wool");
 			}
-			
+
 			if (this.playerHand.getOre() > 0)
 			{
 				resources.Add("ore");
 			}
-			
+
 			if (this.playerHand.getLumber() > 0)
 			{
 				resources.Add("lumber");
@@ -1147,6 +962,5 @@ namespace SettlersOfCatan
 			this.playerHand.modifyResources(resource, -1);
 			return resource;
 		}
-
 	}
 }

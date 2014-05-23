@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Resources;
 using System.Windows.Forms;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public partial class RemoveCardsForm : Form
 	{
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		private Player player;
 		private GameScreen gameScreen;
 		private Hand hand;
@@ -34,12 +32,30 @@ namespace SettlersOfCatan
 			this.numberToRemove = (int) Math.Floor((double) totalCards/2);
 
 			string name = this.player.getName();
-			string numberOfCardsInHandString = totalCards.ToString() + " cards, ";
-			string amountToRemoveString = this.numberToRemove.ToString() + " cards.";
+			string numberOfCardsInHandString = totalCards.ToString() + " " + rm.GetString(language + "Cards") + ", ";
+			string amountToRemoveString = this.numberToRemove.ToString() + " " + rm.GetString(language + "Cards") + ".";
 
 			this.PlayerNameLabel.Text = name;
 			this.NumberOfCardsInHandLabel.Text = numberOfCardsInHandString;
 			this.AmountToRemoveLabel.Text = amountToRemoveString;
+			localize();
+		}
+
+		private void localize()
+		{
+			this.Text = rm.GetString(language + "RemoveCardsTitle");
+			this.InstructionLabel.Text = rm.GetString(language + "InstructionLabel");
+			this.RemoveInstructionLabel.Text = rm.GetString(language + "RemoveInstructionLabel");
+			this.OreLabel.Text = rm.GetString(language + "Ore");
+			this.WoolLabel.Text = rm.GetString(language + "Wool");
+			this.GrainLabel.Text = rm.GetString(language + "Grain");
+			this.BrickLabel.Text = rm.GetString(language + "Brick");
+			this.LumberLabel.Text = rm.GetString(language + "Lumber");
+			this.RemoveCardsButton.Text = rm.GetString(language + "Remove");
+			this.OreComboBox.Text =
+				this.WoolComboBox.Text =
+					this.LumberComboBox.Text =
+						this.GrainComboBox.Text = this.BrickComboBox.Text = rm.GetString(language + "RemoveAmount");
 		}
 
 		private void updateComboBoxes()
@@ -74,21 +90,24 @@ namespace SettlersOfCatan
 		{
 			try
 			{
-				checkAmountIsCorrect();
-				//this.canDispose = true;
+				if (checkAmountIsCorrect())
+				{
+					this.gameScreen.updateResourceLabels();
+					this.Close();
+				}
 			}
 			catch (ArgumentException ex)
 			{
 				this.canDispose = false;
 				DialogResult num = MessageBox.Show(ex.Message,
-					"Wrong Number of Cards Removed",
+					rm.GetString(language + "WrongNumberOfCards"),
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
 				//this.canDispose = false;
 			}
 		}
 
-		private void checkAmountIsCorrect()
+		private bool checkAmountIsCorrect()
 		{
 			if (checkComboBoxesUsed())
 			{
@@ -100,17 +119,19 @@ namespace SettlersOfCatan
 
 				if (grainToTrade + lumberToTrade + brickToTrade + woolToTrade + oreToTrade != this.numberToRemove)
 				{
-					throw new ArgumentException("Make sure your trade in amounts add up to " + this.numberToRemove.ToString());
+					throw new ArgumentException(rm.GetString(language + "WrongTradeIn") + this.numberToRemove.ToString() + "!");
 				}
 
 				tradeWithBank(grainToTrade, lumberToTrade, brickToTrade, woolToTrade, oreToTrade);
+				return true;
 			}
 			else
 			{
-				DialogResult num = MessageBox.Show("You must choose a number to remove for each resource.",
-					"Amount Not Chosen",
+				DialogResult num = MessageBox.Show(rm.GetString(language + "ChooseEachResource"),
+					rm.GetString(language + "AmountNotChosen"),
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
+				return false;
 			}
 		}
 

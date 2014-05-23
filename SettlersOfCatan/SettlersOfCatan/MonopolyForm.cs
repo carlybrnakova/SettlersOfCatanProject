@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Resources;
 using System.Windows.Forms;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public partial class MonopolyForm : Form
 	{
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		private World world;
 		private GameScreen gameScreen;
 		private Player current;
@@ -22,6 +20,22 @@ namespace SettlersOfCatan
 			this.world = world;
 			this.gameScreen = gs;
 			this.current = this.world.currentPlayer;
+
+			localize();
+		}
+
+		private void localize()
+		{
+			this.Text = rm.GetString(language + "Monopoly");
+			this.MonopolyLabel.Text = rm.GetString(language + "MonopolyLabel");
+			this.MonopolyButton.Text = rm.GetString(language + "Submit");
+
+			this.MonopolyComboBox.Text = rm.GetString(language + "Resource");
+			this.MonopolyComboBox.Items[0] = rm.GetString(language + "Ore");
+			this.MonopolyComboBox.Items[1] = rm.GetString(language + "Wool");
+			this.MonopolyComboBox.Items[2] = rm.GetString(language + "Lumber");
+			this.MonopolyComboBox.Items[3] = rm.GetString(language + "Grain");
+			this.MonopolyComboBox.Items[4] = rm.GetString(language + "Brick");
 		}
 
 		private void MonopolyButton_Click(object sender, EventArgs e)

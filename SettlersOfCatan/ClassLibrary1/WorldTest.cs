@@ -33,7 +33,7 @@ namespace ClassLibrary1
 			var target = new World(2, 2);
 			Assert.True(target.bank.allResourcesMax());
 			Assert.AreEqual(3, target.players.Count);
-			Assert.AreEqual("bob", target.currentPlayer.getName());
+			Assert.AreEqual("Bob", target.currentPlayer.getName());
 		}
 
 		[Test()]
@@ -41,37 +41,37 @@ namespace ClassLibrary1
 		{
 			var target = new World(3, 0);
 
-		    //testing first round
-			Assert.AreEqual("bob", target.currentPlayer.getName());
+			//testing first round
+			Assert.AreEqual("Bob", target.currentPlayer.getName());
 			target.endTurn();
-			Assert.AreEqual("joe", target.currentPlayer.getName());
+			Assert.AreEqual("Joe", target.currentPlayer.getName());
 			target.endTurn();
 			Assert.AreEqual("Anne", target.currentPlayer.getName());
 
 			// testing second round
 			target.endTurn();
 			Assert.AreEqual("Anne", target.currentPlayer.getName());
-            target.endTurn();
-            Assert.AreEqual("joe", target.currentPlayer.getName());
-            target.endTurn();
-            Assert.AreEqual("bob", target.currentPlayer.getName());
-            target.endTurn();
-            
-            //testing third round
-            //player has not rolled
-            Assert.AreEqual("bob", target.currentPlayer.getName());
-            target.endTurn();
-            Assert.AreEqual("bob", target.currentPlayer.getName());
-            //playerhas rolled
-            target.rollDice();
-            target.endTurn();
-            Assert.AreEqual("joe", target.currentPlayer.getName());
-            target.rollDice();
-            target.endTurn();
-            Assert.AreEqual("Anne", target.currentPlayer.getName());
-            target.rollDice();
-            target.endTurn();
-            Assert.AreEqual("bob", target.currentPlayer.getName());
+			target.endTurn();
+			Assert.AreEqual("Joe", target.currentPlayer.getName());
+			target.endTurn();
+			Assert.AreEqual("Bob", target.currentPlayer.getName());
+			target.endTurn();
+
+			//testing third round
+			//player has not rolled
+			Assert.AreEqual("Bob", target.currentPlayer.getName());
+			target.endTurn();
+			Assert.AreEqual("Bob", target.currentPlayer.getName());
+			//playerhas rolled
+			target.rollDice();
+			target.endTurn();
+			Assert.AreEqual("Joe", target.currentPlayer.getName());
+			target.rollDice();
+			target.endTurn();
+			Assert.AreEqual("Anne", target.currentPlayer.getName());
+			target.rollDice();
+			target.endTurn();
+			Assert.AreEqual("Bob", target.currentPlayer.getName());
 		}
 
 		[Test()]
@@ -323,240 +323,253 @@ namespace ClassLibrary1
 
         }
          * */
-        [Test()]
-        public void TestRounds()
-        {
-            World w = new World(3, 0);
-            int rounds = 0;
-            for (int i = 0; i < 9; i++)
-            {
-                w.rollDice();
-                w.endTurn();
-                if (i % 3 == 0)
-                {
-                    rounds++;
-                }
-            }
-            Assert.AreEqual(rounds, w.getNumberOfRoundsCompleted());
-        }
 
-        [Test()]
-        public void TestTryToBuildAtIntersectionWithoutResources()
-        {
-            World w = new World(3, 0);
-            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
-            w.addPlayer(player1);
-            w.setCurrentPlayer(player1.getName());
-            Color c = w.tryToBuildAtIntersection(new Point(3,3));
-            Assert.AreEqual(Color.White, c);
-        }
+		[Test()]
+		public void TestRounds()
+		{
+			World w = new World(3, 0);
+			int rounds = 0;
+			for (int i = 0; i < 9; i++)
+			{
+				w.rollDice();
+				w.endTurn();
+				if (i%3 == 0)
+				{
+					rounds++;
+				}
+			}
+			Assert.AreEqual(rounds, w.getNumberOfRoundsCompleted());
+		}
 
-        [Test()]
-        public void TestTryToBuildAtIntersectionWithoutSurroundingAreaClear()
-        {
-            World w = new World(3, 0);
-            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
-            w.addPlayer(player1);
-            w.setCurrentPlayer(player1.getName());
+		[Test()]
+		public void TestTryToBuildAtIntersectionWithoutResources()
+		{
+			World w = new World(3, 0);
+			Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+			w.addPlayer(player1);
+			w.setCurrentPlayer(player1.getName());
+			Color c = w.tryToBuildAtIntersection(new Point(3, 3));
+			Assert.AreEqual(Color.White, c);
+		}
 
-            w.currentPlayer.getHand().incrementAllResources(1);
+		[Test()]
+		public void TestTryToBuildAtIntersectionWithoutSurroundingAreaClear()
+		{
+			World w = new World(3, 0);
+			Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+			w.addPlayer(player1);
+			w.setCurrentPlayer(player1.getName());
 
-            w.tryToBuildAtIntersection(new Point(3, 4));
-            Color c = w.tryToBuildAtIntersection(new Point(3, 3));
-            Assert.AreEqual(Color.White, c);
-        }
+			w.currentPlayer.getHand().incrementAllResources(1);
 
-        [Test()]
-        public void TestTryToBuildCityAtIntersectionWithoutEnoughResources()
-        {
-            World w = new World(3, 0);
-            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
-            w.addPlayer(player1);
-            w.setCurrentPlayer(player1.getName());
+			w.tryToBuildAtIntersection(new Point(3, 4));
+			Color c = w.tryToBuildAtIntersection(new Point(3, 3));
+			Assert.AreEqual(Color.White, c);
+		}
 
-            w.currentPlayer.getHand().incrementAllResources(1);
+		[Test()]
+		public void TestTryToBuildCityAtIntersectionWithoutEnoughResources()
+		{
+			World w = new World(3, 0);
+			Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+			w.addPlayer(player1);
+			w.setCurrentPlayer(player1.getName());
 
-            w.tryToBuildAtIntersection(new Point(3, 4));
-            Color c = w.tryToBuildAtIntersection(new Point(3, 4));
-            Assert.AreEqual(Color.White, c);
-        }
+			w.currentPlayer.getHand().incrementAllResources(1);
 
-        [Test()]
-        public void TestGenerateResourcesWithRequiredNumberOfRounds()
-        {
-            World w = new World(3, 0);
-            int rounds = 0;
-            for (int i = 0; i < 9; i++)
-            {
-                w.endTurn();
-                if (i % 3 == 0)
-                {
-                    rounds++;
-                }
-            }
-            Assert.AreEqual(rounds - 1, w.getNumberOfRoundsCompleted());
-        }
+			w.tryToBuildAtIntersection(new Point(3, 4));
+			Color c = w.tryToBuildAtIntersection(new Point(3, 4));
+			Assert.AreEqual(Color.White, c);
+		}
 
-        [Test()]
-        public void TestCheckWinnerMethod()
-        {
-            World w = new World(3, 0);
-            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
-            Player player2 = new Player("Meeeeee!2", Color.Red, w);
-            w.addPlayer(player1);
-            w.addPlayer(player2);
-            Assert.IsFalse(w.checkWinner());
-            player2.incrementPoints(20);
-            Assert.IsTrue(w.checkWinner());
-        }
+		[Test()]
+		public void TestGenerateResourcesWithRequiredNumberOfRounds()
+		{
+			World w = new World(3, 0);
+			int rounds = 0;
+			for (int i = 0; i < 9; i++)
+			{
+				w.endTurn();
+				if (i%3 == 0)
+				{
+					rounds++;
+				}
+			}
+			Assert.AreEqual(rounds - 1, w.getNumberOfRoundsCompleted());
+		}
 
-
-        //still working on it
-        [Test()]
-        public void TestRoadButtonClicked()
-        {
-            World w = new World(3, 0);
-            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
-            w.addPlayer(player1);
-            w.setCurrentPlayer(player1.getName());
-            Color C = w.roadButtonClicked(new Point(2, 2));
-            //insufficiant resources
-            Assert.AreEqual(Color.White, C);
-
-            w.currentPlayer.getHand().incrementAllResources(5);
-
-            //point without adjoining settlement
-            C = w.roadButtonClicked(new Point(3, 2));
-            Assert.AreEqual(Color.White, C);
-            //even point with resources
-            w.tryToBuildAtIntersection(new Point(0, 3));
-            C = w.roadButtonClicked(new Point(0, 0));
-            Assert.AreEqual(Color.HotPink, C);
-            //odd point with resources
-            w.tryToBuildAtIntersection(new Point(1, 5));
-            C = w.roadButtonClicked(new Point(3, 2));
-            Assert.AreEqual(Color.HotPink, C);
-            //point that is not in the grid
-            C = w.roadButtonClicked(new Point(50, 2));
-            Assert.AreEqual(Color.White, C);
-            //point that has not been initialized
-            w.catanMap = null;
-            C = w.roadButtonClicked(new Point(3, 2));
-            Assert.AreEqual(Color.Black, C);
-        }
-
-        [Test()]
-        public void testRollDice()
-        {
-            World w = new World(3, 0);
-            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
-            w.addPlayer(player1);
-            w.setCurrentPlayer(player1.getName());
-            //test without completeing early rounds
-            w.rollDice();
-            Assert.IsFalse(w.currentPlayer.hasRolled);
-            //test extra roll without completeing early rounds
-            w.rollDice();
-            Assert.IsFalse(w.currentPlayer.hasRolled);
-            w.numOfCompletedRounds = 5;
-            //test first roll after early rounds
-            w.rollDice();
-            Assert.IsTrue(w.currentPlayer.hasRolled);
-            //test extra roll after early rounds
-            w.rollDice();
-            Assert.IsTrue(w.currentPlayer.hasRolled);
-        }
-
-        [Test()]
-        public void testGetRollNumber()
-        {
-            World w = new World(3, 0);
-            Player player1 = new Player("Meeeeee!", Color.HotPink, w);
-            w.addPlayer(player1);
-            w.setCurrentPlayer(player1.getName());
-            //test getting roll number without rolling
-            Assert.AreEqual(0, w.getRollNumber());
-            w.numOfCompletedRounds = 5;
-            //test getting roll number after rolling
-            w.rollDice();
-            Assert.IsTrue(w.getRollNumber() < 13 && w.getRollNumber() > 1);
-        }
-
-        [Test()]
-        public void TestThatPlayerCanGetAllResources()
-        {
-
-        }
-
-        [Test()]
-        public void TestThatHorizontalRoadIsBuiltIfPlayerHasSettlement()
-        {
-            World world = new World(3, 0);
-            Player player1 = new Player("Meeeeee!", Color.HotPink, world);
-            world.addPlayer(player1);
-            world.setCurrentPlayer(player1.getName());
-
-            // Give player 5 resources of each except ore
-            player1.getHand().modifyBrick(5);
-            player1.getHand().modifyGrain(5);
-            player1.getHand().modifyLumber(5);
-            player1.getHand().modifyWool(5);
-            world.tryToBuildAtIntersection(new Point(0, 2));
-            Assert.AreEqual(Color.HotPink, world.roadButtonClicked(new Point(0, 0)));
-        }
-
-        [Test()]
-        public void TestThatVerticalRoadIsBuiltIfPlayerHasSettlement()
-        {
-            World world = new World(3, 0);
-            Player player1 = new Player("Meeeeee!", Color.HotPink, world);
-            world.addPlayer(player1);
-            world.setCurrentPlayer(player1.getName());
-
-            // Give player 5 resources of each except ore
-            player1.getHand().modifyBrick(5);
-            player1.getHand().modifyGrain(5);
-            player1.getHand().modifyLumber(5);
-            player1.getHand().modifyWool(5);
-            world.tryToBuildAtIntersection(new Point(0, 2));
-            Assert.AreEqual(Color.HotPink, world.roadButtonClicked(new Point(1, 0)));
-        }
-
-        [Test()]
-        public void TestThatBuildingRoadReturnsWhiteIfPlayeDoesNotHaveSettlement()
-        {
-            World world = new World(3, 0);
-            Player player1 = new Player("Meeeeee!", Color.HotPink, world);
-            world.addPlayer(player1);
-            world.setCurrentPlayer(player1.getName());
-
-            // Give player 5 resources of each except ore
-            player1.getHand().modifyBrick(5);
-            player1.getHand().modifyGrain(5);
-            player1.getHand().modifyLumber(5);
-            player1.getHand().modifyWool(5);
-            world.tryToBuildAtIntersection(new Point(0, 2));
-            Assert.AreEqual(Color.White, world.roadButtonClicked(new Point(5, 1)));
-        }
+		[Test()]
+		public void TestCheckWinnerMethod()
+		{
+			World w = new World(3, 0);
+			Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+			Player player2 = new Player("Meeeeee!2", Color.Red, w);
+			w.addPlayer(player1);
+			w.addPlayer(player2);
+			Assert.IsFalse(w.checkWinner());
+			player2.incrementPoints(20);
+			Assert.IsTrue(w.checkWinner());
+		}
 
 
-        [Test()]
-        public void TestThatBuildingRoadReturnsWhiteIfIndexIsOutOfRange()
-        {
-            World world = new World(3, 0);
-            Player player1 = new Player("Meeeeee!", Color.HotPink, world);
-            world.addPlayer(player1);
-            world.setCurrentPlayer(player1.getName());
+		//still working on it
+		[Test()]
+		public void TestRoadButtonClicked()
+		{
+			World w = new World(3, 0);
+			Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+			w.addPlayer(player1);
+			w.setCurrentPlayer(player1.getName());
+			Color C = w.roadButtonClicked(new Point(2, 2));
+			//insufficiant resources
+			Assert.AreEqual(Color.White, C);
 
-            // Give player 5 resources of each except ore
-            player1.getHand().modifyBrick(5);
-            player1.getHand().modifyGrain(5);
-            player1.getHand().modifyLumber(5);
-            player1.getHand().modifyWool(5);
-            world.tryToBuildAtIntersection(new Point(0, 2));
-            Assert.AreEqual(Color.White, world.roadButtonClicked(new Point(52, 1)));
-        }
+			w.currentPlayer.getHand().incrementAllResources(5);
+
+			//point without adjoining settlement
+			C = w.roadButtonClicked(new Point(3, 2));
+			Assert.AreEqual(Color.White, C);
+			//even point with resources
+			w.tryToBuildAtIntersection(new Point(0, 3));
+			C = w.roadButtonClicked(new Point(0, 0));
+			Assert.AreEqual(Color.HotPink, C);
+			//odd point with resources
+			w.tryToBuildAtIntersection(new Point(1, 5));
+			C = w.roadButtonClicked(new Point(3, 2));
+			Assert.AreEqual(Color.HotPink, C);
+			//point that is not in the grid
+			C = w.roadButtonClicked(new Point(50, 2));
+			Assert.AreEqual(Color.White, C);
+			//point that has not been initialized
+			w.catanMap = null;
+			C = w.roadButtonClicked(new Point(3, 2));
+			Assert.AreEqual(Color.Black, C);
+		}
+
+		[Test()]
+		public void testRollDice()
+		{
+			World w = new World(3, 0);
+			Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+			w.addPlayer(player1);
+			w.setCurrentPlayer(player1.getName());
+			//test without completeing early rounds
+			w.rollDice();
+			Assert.IsFalse(w.currentPlayer.hasRolled);
+			//test extra roll without completeing early rounds
+			w.rollDice();
+			Assert.IsFalse(w.currentPlayer.hasRolled);
+			w.numOfCompletedRounds = 5;
+			//test first roll after early rounds
+			w.rollDice();
+			Assert.IsTrue(w.currentPlayer.hasRolled);
+			//test extra roll after early rounds
+			w.rollDice();
+			Assert.IsTrue(w.currentPlayer.hasRolled);
+		}
+
+		[Test()]
+		public void testGetRollNumber()
+		{
+			World w = new World(3, 0);
+			Player player1 = new Player("Meeeeee!", Color.HotPink, w);
+			w.addPlayer(player1);
+			w.setCurrentPlayer(player1.getName());
+			//test getting roll number without rolling
+			Assert.AreEqual(0, w.getRollNumber());
+			w.numOfCompletedRounds = 5;
+			//test getting roll number after rolling
+			w.rollDice();
+			Assert.IsTrue(w.getRollNumber() < 13 && w.getRollNumber() > 1);
+		}
+
+		[Test()]
+		public void TestThatPlayerCanGetAllResources()
+		{
+		}
+
+		[Test()]
+		public void TestGetHexAtIndex()
+		{
+			var target = new World();
+			Assert.AreEqual(target.getMap().getHexMap().map[2, 2], target.getHexAtIndex(2, 2));
+		}
+
+		[Test()]
+		public void TestIncrementTurnCounter()
+		{
+			var target = new World();
+			target.incrementTurnCounter();
+			target.incrementTurnCounter();
+		}
+
+		[Test()]
+		public void TestThatHorizontalRoadIsBuiltIfPlayerHasSettlement()
+		{
+			World world = new World(3, 0);
+			Player player1 = new Player("Meeeeee!", Color.HotPink, world);
+			world.addPlayer(player1);
+			world.setCurrentPlayer(player1.getName());
+
+			// Give player 5 resources of each except ore
+			player1.getHand().modifyBrick(5);
+			player1.getHand().modifyGrain(5);
+			player1.getHand().modifyLumber(5);
+			player1.getHand().modifyWool(5);
+			world.tryToBuildAtIntersection(new Point(0, 2));
+			Assert.AreEqual(Color.HotPink, world.roadButtonClicked(new Point(0, 0)));
+		}
+
+		[Test()]
+		public void TestThatVerticalRoadIsBuiltIfPlayerHasSettlement()
+		{
+			World world = new World(3, 0);
+			Player player1 = new Player("Meeeeee!", Color.HotPink, world);
+			world.addPlayer(player1);
+			world.setCurrentPlayer(player1.getName());
+
+			// Give player 5 resources of each except ore
+			player1.getHand().modifyBrick(5);
+			player1.getHand().modifyGrain(5);
+			player1.getHand().modifyLumber(5);
+			player1.getHand().modifyWool(5);
+			world.tryToBuildAtIntersection(new Point(0, 2));
+			Assert.AreEqual(Color.HotPink, world.roadButtonClicked(new Point(1, 0)));
+		}
+
+		[Test()]
+		public void TestThatBuildingRoadReturnsWhiteIfPlayeDoesNotHaveSettlement()
+		{
+			World world = new World(3, 0);
+			Player player1 = new Player("Meeeeee!", Color.HotPink, world);
+			world.addPlayer(player1);
+			world.setCurrentPlayer(player1.getName());
+
+			// Give player 5 resources of each except ore
+			player1.getHand().modifyBrick(5);
+			player1.getHand().modifyGrain(5);
+			player1.getHand().modifyLumber(5);
+			player1.getHand().modifyWool(5);
+			world.tryToBuildAtIntersection(new Point(0, 2));
+			Assert.AreEqual(Color.White, world.roadButtonClicked(new Point(5, 1)));
+		}
 
 
-    }
+		[Test()]
+		public void TestThatBuildingRoadReturnsWhiteIfIndexIsOutOfRange()
+		{
+			World world = new World(3, 0);
+			Player player1 = new Player("Meeeeee!", Color.HotPink, world);
+			world.addPlayer(player1);
+			world.setCurrentPlayer(player1.getName());
+
+			// Give player 5 resources of each except ore
+			player1.getHand().modifyBrick(5);
+			player1.getHand().modifyGrain(5);
+			player1.getHand().modifyLumber(5);
+			player1.getHand().modifyWool(5);
+			world.tryToBuildAtIntersection(new Point(0, 2));
+			Assert.AreEqual(Color.White, world.roadButtonClicked(new Point(52, 1)));
+		}
+	}
 }

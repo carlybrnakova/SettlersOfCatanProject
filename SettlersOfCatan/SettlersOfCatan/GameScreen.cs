@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+using System.Resources;
 using System.Windows.Forms;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public partial class GameScreen : Form
 	{
 		//private const int NUM_OF_INTERSECTION_BUTTONS = 54;
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		private const int INTERSECTION_BUTTON_SIZE = 30;
 		private const int MAX_INTERSECTION_COLUMNS = 11;
 		private const int MAX_INTERSECTION_ROWS = 6;
@@ -54,7 +52,6 @@ namespace SettlersOfCatan
 		/** Utility function to determine if a number is even */
 
 
-
 		public GameScreen()
 		{
 			InitializeComponent();
@@ -65,9 +62,40 @@ namespace SettlersOfCatan
 
 			initializeBoardPanel();
 			//this.world = new World(3,0);
+			localize();
 			this.updateResourceLabels();
 			this.updateCurrentPlayerNameLabel();
 			this.updateRoundLabel();
+		}
+
+		private void localize()
+		{
+			this.Text = rm.GetString(language + "Title");
+
+			this.MaterialsLabel.Text = rm.GetString(language + "Materials");
+			this.OreLabel.Text = rm.GetString(language + "Ore") + ":";
+			this.LumberLabel.Text = rm.GetString(language + "Lumber") + ":";
+			this.GrainLabel.Text = rm.GetString(language + "Grain") + ":";
+			this.BrickLabel.Text = rm.GetString(language + "Brick") + ":";
+			this.WoolLabel.Text = rm.GetString(language + "Wool") + ":";
+
+			this.DevCardsLabel.Text = rm.GetString(language + "DevCards");
+			this.RoadBuilderDevCardLabel.Text = rm.GetString(language + "RoadBuilder");
+			this.YearOfPlentyDevCardLabel.Text = rm.GetString(language + "YearOfPlenty");
+			this.MonopolyDevCardLabel.Text = rm.GetString(language + "Monopoly");
+			this.VictoryPointDevCardLabel.Text = rm.GetString(language + "VictoryPoint");
+			this.KnightsDevCardLabel.Text = rm.GetString(language + "Knights");
+
+			this.EndTurnButton.Text = rm.GetString(language + "EndTurn");
+			this.PointsLabel.Text = rm.GetString(language + "Points");
+			this.RoundsLabel.Text = rm.GetString(language + "Rounds");
+			this.RollDiceButton.Text = rm.GetString(language + "Roll");
+			this.CurrentRollLabel.Text = rm.GetString(language + "CurrentRoll");
+
+			this.BuyDevCardButton.Text = rm.GetString(language + "BuyDevCard");
+			this.ProposeTradeButton.Text = rm.GetString(language + "ProposeTrade");
+			this.BankTradeButton.Text = rm.GetString(language + "TradeWithBank");
+			this.generateResourcesTest.Text = rm.GetString(language + "GenerateTest");
 		}
 
 		/** initializeAll()
@@ -169,7 +197,7 @@ namespace SettlersOfCatan
 					RoadButton b = new RoadButton(r, col);
 					setLocationAndColorButton(b, Color.White, x, y);
 					setRoadButtonSizeCoordinatesAndClick(b, HORIZONTAL_ROAD_SIZE, r, col);
-                    roadGrid[r, col] = b;
+					roadGrid[r, col] = b;
 					boardPanel.Controls.Add(b);
 
 					x += x_diff;
@@ -199,7 +227,7 @@ namespace SettlersOfCatan
 					RoadButton b = new RoadButton(r, col);
 					setLocationAndColorButton(b, Color.White, x, y);
 					setRoadButtonSizeCoordinatesAndClick(b, VERTICAL_ROAD_SIZE, r, col);
-                    roadGrid[r, col] = b;
+					roadGrid[r, col] = b;
 					boardPanel.Controls.Add(b);
 
 					x += x_diff;
@@ -243,71 +271,70 @@ namespace SettlersOfCatan
                                 h = null;
                             }
                              * */
-                        }
-                        hexGrid[r][c] = h;
+					}
+					hexGrid[r][c] = h;
 
-                        x = (r < 2) ? x - HEX_SIDE_DIMENSION / 2 : x + HEX_SIDE_DIMENSION / 2;
-                        y += HEX_SIDE_DIMENSION;
-                      
-                    }
-                    y = HEX_SIDE_DIMENSION / 2;
-                    x = HEX_SIDE_DIMENSION * (3 + c);
-                }
-        }
+					x = (r < 2) ? x - HEX_SIDE_DIMENSION/2 : x + HEX_SIDE_DIMENSION/2;
+					y += HEX_SIDE_DIMENSION;
+				}
+				y = HEX_SIDE_DIMENSION/2;
+				x = HEX_SIDE_DIMENSION*(3 + c);
+			}
+		}
 
-        private void setupWaterHexes()
-        {
-            int waterCount = 0;
-            int x = 225;
-            int x_diff = 150;
-            int y = 0;
-            int y_diff = 600;
+		private void setupWaterHexes()
+		{
+			int waterCount = 0;
+			int x = 225;
+			int x_diff = 150;
+			int y = 0;
+			int y_diff = 600;
 
-            // Set up top
-            PictureBox PB = createWaterHexPictureBox(Color.Blue, 225, 0, new Size(600, 75));            
-            waterHexes[waterCount] = PB;
+			// Set up top
+			PictureBox PB = createWaterHexPictureBox(Color.Blue, 225, 0, new Size(600, 75));
+			waterHexes[waterCount] = PB;
 
-            // Add ports for top
-            string topText = "v   Anything 3:1   v";
-            PB.Controls.Add(createPortLabel(70, 40, false, topText));
+			// Add ports for top
+			string topText = "v   " + rm.GetString(language + "Anything") + " 3:1   v";
+			PB.Controls.Add(createPortLabel(70, 40, false, topText));
 
-            // Add second port for top
-            topText = "v   Wool 2:1   v";
-            PB.Controls.Add(createPortLabel(300, 40, false, topText));
+			// Add second port for top
+			topText = "v   " + rm.GetString(language + "Wool") + " 2:1   v";
+			PB.Controls.Add(createPortLabel(300, 40, false, topText));
 
 			waterCount++;
 			boardPanel.Controls.Add(PB);
 
-            // Set up bottom
-            PictureBox PB2 = createWaterHexPictureBox(Color.Blue, 225, 825, new Size(600, 75));
-            waterHexes[waterCount] = PB;
+			// Set up bottom
+			PictureBox PB2 = createWaterHexPictureBox(Color.Blue, 225, 825, new Size(600, 75));
+			waterHexes[waterCount] = PB;
 
-            // Add ports for bottom
-            topText = "^   Anything 3:1   ^";
-            PB2.Controls.Add(createPortLabel(70, 25, false, topText));
+			// Add ports for bottom
+			topText = "^   " + rm.GetString(language + "Anything") + " 3:1   ^";
+			PB2.Controls.Add(createPortLabel(70, 25, false, topText));
 
-            // Add second port for bottom
-            topText = "^   Lumber 2:1   ^";
-            PB2.Controls.Add(createPortLabel(295, 25, false, topText));
+			// Add second port for bottom
+			topText = "^   " + rm.GetString(language + "Lumber") + " 2:1   ^";
+			PB2.Controls.Add(createPortLabel(295, 25, false, topText));
 
-            waterCount++;
-            boardPanel.Controls.Add(PB2);
+			waterCount++;
+			boardPanel.Controls.Add(PB2);
 
-            // Set up the water hexes on the left
-            x = 150;
-            x_diff = 75;
-            y = 75;
-            y_diff = 600;
-            for (int i = 0; i < 3; i++)
-            {
-                PictureBox pb = createWaterHexPictureBox(Color.Blue, x, y, new Size(150, 150));
+			// Set up the water hexes on the left
+			x = 150;
+			x_diff = 75;
+			y = 75;
+			y_diff = 600;
+			for (int i = 0; i < 3; i++)
+			{
+				PictureBox pb = createWaterHexPictureBox(Color.Blue, x, y, new Size(150, 150));
 
-                // Add port if relevant
-                if (waterCount == 4)
-                {
-                    string text = "    -->\n\n\n\nOre 2:1 \n\n\n\n\n    -->";
-                    pb.Controls.Add(createPortLabel(100, 10, true, text));
-                }
+				// Add port if relevant
+				if (waterCount == 4)
+				{
+					string text = "        -->\n\n\n\n" + rm.GetString(language + "Ore") + " 2:1 \n\n\n\n\n        -->";
+					pb.Controls.Add(createPortLabel(80, 10, true, text));
+				}
 
 				waterHexes[waterCount] = pb;
 				waterCount++;
@@ -315,60 +342,60 @@ namespace SettlersOfCatan
 
 				if (i == 2) break;
 
-                PictureBox pb2 = createWaterHexPictureBox(Color.Blue, x, y + y_diff, new Size(150, 150));
+				PictureBox pb2 = createWaterHexPictureBox(Color.Blue, x, y + y_diff, new Size(150, 150));
 
-                // Add port if relevant
-                if (waterCount == 5)
-                {
-                    string text = "      -->\n\n\n\nGrain 2:1\n\n\n\n\n      -->";
-                    pb2.Controls.Add(createPortLabel(90, 10, true, text));
-                }
-                waterHexes[waterCount] = pb2;
-                waterCount++;
-                boardPanel.Controls.Add(pb2);
+				// Add port if relevant
+				if (waterCount == 5)
+				{
+					string text = "      -->\n\n\n\n" + rm.GetString(language + "Grain") + " 2:1\n\n\n\n\n      -->";
+					pb2.Controls.Add(createPortLabel(90, 10, true, text));
+				}
+				waterHexes[waterCount] = pb2;
+				waterCount++;
+				boardPanel.Controls.Add(pb2);
 
-                x -= x_diff;
-                y += 150;
-                y_diff -= 150 * (i + 2);
-            }
+				x -= x_diff;
+				y += 150;
+				y_diff -= 150*(i + 2);
+			}
 
-            // Set up the water hexes on the right
-            x = 750;
-            x_diff = 75;
-            y = 75;
-            y_diff = 600;
-            for (int i = 0; i < 3; i++)
-            {
-                PictureBox pb = createWaterHexPictureBox(Color.Blue, x, y, new Size(150, 150));
+			// Set up the water hexes on the right
+			x = 750;
+			x_diff = 75;
+			y = 75;
+			y_diff = 600;
+			for (int i = 0; i < 3; i++)
+			{
+				PictureBox pb = createWaterHexPictureBox(Color.Blue, x, y, new Size(150, 150));
 
-                // Add port if relevant
-                if (waterCount == 7)
-                {
-                    string text = "v  Anything 3:1  v";
-                    pb.Controls.Add(createPortLabel(10, 110, true, text));
-                }
-                else if (waterCount == 11)
-                {
-                    string text = "    <--\n\n\n\n Anything 3:1\n\n\n\n\n    <--";
-                    pb.Controls.Add(createPortLabel(10, 10, true, text));
-                }
-                waterHexes[waterCount] = pb;
-                waterCount++;
-                boardPanel.Controls.Add(pb);
+				// Add port if relevant
+				if (waterCount == 7)
+				{
+					string text = "v  " + rm.GetString(language + "Anything") + " 3:1  v";
+					pb.Controls.Add(createPortLabel(10, 110, true, text));
+				}
+				else if (waterCount == 11)
+				{
+					string text = "    <--\n\n\n\n " + rm.GetString(language + "Anything") + " 3:1\n\n\n\n\n    <--";
+					pb.Controls.Add(createPortLabel(10, 10, true, text));
+				}
+				waterHexes[waterCount] = pb;
+				waterCount++;
+				boardPanel.Controls.Add(pb);
 
 				if (i == 2) break;
 
-                PictureBox pb2 = createWaterHexPictureBox(Color.Blue, x, y + y_diff, new Size(150, 150));
+				PictureBox pb2 = createWaterHexPictureBox(Color.Blue, x, y + y_diff, new Size(150, 150));
 
-                // Add port if relevant
-                if (waterCount == 8)
-                {
-                    string text = "^  Brick 2:1  ^";
-                    pb2.Controls.Add(createPortLabel(10, 20, true, text));
-                }
-                waterHexes[waterCount] = pb2;
-                waterCount++;
-                boardPanel.Controls.Add(pb2);
+				// Add port if relevant
+				if (waterCount == 8)
+				{
+					string text = "^  " + rm.GetString(language + "Brick") + " 2:1  ^";
+					pb2.Controls.Add(createPortLabel(10, 20, true, text));
+				}
+				waterHexes[waterCount] = pb2;
+				waterCount++;
+				boardPanel.Controls.Add(pb2);
 
 				x += x_diff;
 				y += 150;
@@ -376,19 +403,19 @@ namespace SettlersOfCatan
 			}
 		}
 
-        private Label createPortLabel(int xLocation, int yLocation, bool setSize, string text)
-        {
-            Label portLabel = new Label();
-            if (setSize == true)
-            {
-                portLabel.Size = new Size(150, 150);
-            }
+		private Label createPortLabel(int xLocation, int yLocation, bool setSize, string text)
+		{
+			Label portLabel = new Label();
+			if (setSize == true)
+			{
+				portLabel.Size = new Size(150, 150);
+			}
 
-            portLabel.ForeColor = Color.White;
-            portLabel.Text = text;
-            portLabel.Location = new Point(xLocation, yLocation);
-            return portLabel;
-        }
+			portLabel.ForeColor = Color.White;
+			portLabel.Text = text;
+			portLabel.Location = new Point(xLocation, yLocation);
+			return portLabel;
+		}
 
 		private void addPictureBox(int waterCount, int[] coords, bool top, bool diff)
 		{
@@ -425,19 +452,19 @@ namespace SettlersOfCatan
 			boardPanel.Controls.Add(pb);
 		}
 
-        private PictureBox createWaterHexPictureBox(Color color, int x, int y, Size size)
+		private PictureBox createWaterHexPictureBox(Color color, int x, int y, Size size)
 		{
-            PictureBox pb = new PictureBox();
+			PictureBox pb = new PictureBox();
 			setPictureBoxColorLocationAndSize(pb, color, x, y, size);
-            return pb;
+			return pb;
 		}
 
-        private void setPictureBoxColorLocationAndSize(PictureBox pb, Color color, int x, int y, Size size)
-        {
-            pb.BackColor = color;
-            pb.Location = new Point(x, y);
-            pb.Size = size;
-        }
+		private void setPictureBoxColorLocationAndSize(PictureBox pb, Color color, int x, int y, Size size)
+		{
+			pb.BackColor = color;
+			pb.Location = new Point(x, y);
+			pb.Size = size;
+		}
 
 		private void initializeBoardPanel()
 		{
@@ -446,9 +473,9 @@ namespace SettlersOfCatan
 
 			setupIntersectionButtons();
 
-            setupRoadGrid();
-            setupWaterHexes();
-            setupHexGrid();
+			setupRoadGrid();
+			setupWaterHexes();
+			setupHexGrid();
 
 			this.Controls.Add(boardPanel);
 		}
@@ -557,9 +584,10 @@ namespace SettlersOfCatan
             this.Refresh();
         }
 
+
 		private void roadButton_Click(object sender, EventArgs e)
 		{
-            callRoadButton_Click(sender, e, new Point(-1, -1));
+			callRoadButton_Click(sender, e, new Point(-1, -1));
 		}
 
 		public void updateResourceLabels()
@@ -571,30 +599,30 @@ namespace SettlersOfCatan
 			GrainAmountLabel.Text = this.world.currentPlayer.getHand().getGrain().ToString();
 		}
 
-        private IntersectionButton getIntButtonAt(Point p)
-        {
-            IntersectionButton theButton = null;
-            List<IntersectionButton>[] intArray = this.intersectionGrid.ToArray();
-            
-            foreach (List<IntersectionButton> array in intArray)
-            {
-                foreach(IntersectionButton b in array)
-                {
-                    if (b != null && b.getCoords().Equals(p))
-                    {
-                        theButton = b;
-                        goto EndLoop;
-                    }
-                }
-            }
-        EndLoop:
-            return theButton;
-        }
+		private IntersectionButton getIntButtonAt(Point p)
+		{
+			IntersectionButton theButton = null;
+			List<IntersectionButton>[] intArray = this.intersectionGrid.ToArray();
+
+			foreach (List<IntersectionButton> array in intArray)
+			{
+				foreach (IntersectionButton b in array)
+				{
+					if (b != null && b.getCoords().Equals(p))
+					{
+						theButton = b;
+						goto EndLoop;
+					}
+				}
+			}
+			EndLoop:
+			return theButton;
+		}
 
 		private void EndTurnButton_Click(object sender, EventArgs e)
 		{
-            bool showForm = true;
-            // Place stuff if you haven't yet
+			bool showForm = true;
+			// Place stuff if you haven't yet
 			if (this.world.currentPlayer.getHand().hasFreeRoadPoints() ||
 			    this.world.currentPlayer.getHand().hasFreeSettlementPoints())
 			{
@@ -652,7 +680,7 @@ namespace SettlersOfCatan
                         String result = ((AI_Player)this.world.currentPlayer).takeYourTurn(this.world.numOfCompletedRounds);
                         if (result == "road")
                         {
-                            Intersection intersection = this.world.catanMap.getIslandMap().getIntAtIndex(this.world.currentPlayer.getSettlementLocations().ElementAt(0));
+                            Intersection intersection = this.world.catanMap.getIslandMap().getIntAtIndex(this.world.currentPlayer.getSettlementLocations()[0]);
                             while (this.world.catanMap.getIslandMap().getIntAtIndex(intersection.getCoords()).getConnections()[2].getRoadColor() == ((Player)this.world.currentPlayer).getColor())
                             {
                                 intersection = this.world.catanMap.getIslandMap().getIntAtIndex(intersection.getCoords()).getConnections()[2].getIntersectionRightOrBot();
@@ -666,6 +694,11 @@ namespace SettlersOfCatan
                             callRoadButton_Click(sender, null, roadCoords);
                         }
                     }
+                    if (!showForm)
+			        {
+				    EndTurnButton_Click(sender, e);
+			        }
+
                 }
 
 
@@ -675,23 +708,22 @@ namespace SettlersOfCatan
             this.updateCurrentPlayerNameLabel();
             this.updateRoundLabel();
             this.updatePlayerPoints();
+
 			removeRobberText();
 			this.Refresh();
-            if (!showForm)
-            {
-                EndTurnButton_Click(sender, e);
-            }
+
 		}
 
-        private Button getARoadButtonAt(Point coords)
-        {
-            Point roadCoords = this.world.catanMap.getIslandMap().getIntAtIndex(coords).connections[1].getCoords();
-            return this.roadGrid[roadCoords.X, roadCoords.Y];
-        }
 
 		private void updateRoundLabel()
 		{
-			RoundsLabel.Text = "Round " + (this.world.getNumberOfRoundsCompleted() + 1);
+			RoundsLabel.Text = rm.GetString(language + "Rounds") + " " + (this.world.getNumberOfRoundsCompleted() + 1);
+		}
+
+		private Button getARoadButtonAt(Point coords)
+		{
+			Point roadCoords = this.world.catanMap.getIslandMap().getIntAtIndex(coords).connections[1].getCoords();
+			return this.roadGrid[roadCoords.X, roadCoords.Y];
 		}
 
 		private void updateCurrentPlayerNameLabel()
@@ -705,45 +737,50 @@ namespace SettlersOfCatan
 			Form myForm = new TradeForm(this.world, this);
 			myForm.Show();
 		}
-        private void generateResourcesTest_Click(object sender, EventArgs e)
-        {
-            try
+
+		private void RollDiceButton_Click(object sender, EventArgs e)
+		{
+			try
 			{
-                this.world.givePlayerAllResources(this.world.currentPlayer, 1);
-                this.world.bank.decrementAllResources(1);
-                this.updateResourceLabels();
-            }
-            catch (ArgumentException ex)
+				this.world.rollDice();
+				this.updateResourceLabels();
+				int roll = this.world.getRollNumber();
+				this.RollNumberLabel.Text = roll.ToString();
+				if (roll == 7)
+				{
+					removeRobberText();
+
+					checkRemoveHalf();
+
+					this.world.setPlaceRobber(true);
+					RobberForm myForm = new RobberForm(this.world, this);
+					myForm.Show();
+				}
+			}
+			catch (ArgumentException ex)
+			{
+				DialogResult num = MessageBox.Show(ex.Message,
+					rm.GetString(language + "InsufficientResources"),
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
+			}
+		}
+
+		private void generateResourcesTest_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				this.world.givePlayerAllResources(this.world.currentPlayer, 1);
+				this.world.bank.decrementAllResources(1);
+				this.updateResourceLabels();
+			}
+			catch (ArgumentException ex)
 			{
 				DialogResult num = MessageBox.Show(ex.Message,
 					"Insufficient Resources",
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
 			}
-		}
-
-        private void RollDiceButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                this.world.rollDice();
-                this.updateResourceLabels();
-                int roll = this.world.getRollNumber();
-                this.RollNumberLabel.Text = roll.ToString();
-                if (roll == 7)
-                {
-                    removeRobberText();
-                    checkRemoveHalf();
-                    this.world.setPlaceRobber(true);
-                    RobberForm myForm = new RobberForm(this.world, this);
-                    myForm.Show();
-                }
-            }
-            catch (ArgumentException ex)
-            {
-                //do nothing
-            }
-			this.updateResourceLabels();
 		}
 
 		private void checkRemoveHalf()
@@ -769,10 +806,10 @@ namespace SettlersOfCatan
 				}
 				this.checkRemoveHalfCount++;
 			}
-			
+
 			if (this.checkRemoveHalfCount != this.world.players.Count)
 			{
-				throw new ArgumentException("Something went wrong...");
+				throw new ArgumentException(rm.GetString(language + "SomethingWrong"));
 			}
 		}
 
@@ -792,9 +829,19 @@ namespace SettlersOfCatan
 
 		private void BuyDevCardButton_Click(object sender, EventArgs e)
 		{
-			this.world.currentPlayer.tradeForDevCard();
-			this.updateResourceLabels();
-			this.updateDevelopmentCards();
+			try
+			{
+				this.world.currentPlayer.tradeForDevCard();
+				this.updateResourceLabels();
+				this.updateDevelopmentCards();
+			}
+			catch (ArgumentException ex)
+			{
+				DialogResult num = MessageBox.Show(ex.Message,
+					rm.GetString(language + "InsufficientResources"),
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation);
+			}
 		}
 
 		private void removeRobberText()
@@ -861,39 +908,69 @@ namespace SettlersOfCatan
 
 		private void KnightsDevCardLabel_Click(object sender, EventArgs e)
 		{
-			this.world.currentPlayer.playDevCard("knight", null, null);
-			removeRobberText();
-			this.world.setPlaceRobber(true);
-			RobberForm myForm = new RobberForm(this.world, this);
-			myForm.Show();
-			this.updateDevelopmentCards();
+			try
+			{
+				this.world.currentPlayer.playDevCard("knight", null, null);
+				removeRobberText();
+				this.world.setPlaceRobber(true);
+				RobberForm myForm = new RobberForm(this.world, this);
+				myForm.Show();
+				this.updateDevelopmentCards();
+			}
+			catch (ArgumentException ex)
+			{
+			}
 		}
 
 		private void VictoryPointDevCardLabel_Click(object sender, EventArgs e)
 		{
-			this.world.currentPlayer.playDevCard("victoryPoint", null, null);
-			this.updatePlayerPoints();
-			this.updateDevelopmentCards();
+			try
+			{
+				this.world.currentPlayer.playDevCard("victoryPoint", null, null);
+				this.updatePlayerPoints();
+				this.updateDevelopmentCards();
+			}
+			catch (ArgumentException ex)
+			{
+			}
 		}
 
 		private void MonopolyDevCardLabel_Click(object sender, EventArgs e)
 		{
-			MonopolyForm myForm = new MonopolyForm(this.world, this);
-			myForm.Show();
+			try
+			{
+				MonopolyForm myForm = new MonopolyForm(this.world, this);
+				myForm.Show();
+			}
+			catch (ArgumentException ex)
+			{
+			}
 		}
 
 		private void RoadBuilderDevCardLabel_Click(object sender, EventArgs e)
 		{
-			this.world.currentPlayer.playDevCard("roadBuilder", null, null);
-			Form myForm = new RoadBuilderForm();
-			myForm.Show();
-			this.updateDevelopmentCards();
+			try
+			{
+				this.world.currentPlayer.playDevCard("roadBuilder", null, null);
+				Form myForm = new RoadBuilderForm();
+				myForm.Show();
+				this.updateDevelopmentCards();
+			}
+			catch (ArgumentException ex)
+			{
+			}
 		}
 
 		private void YearOfPlentyDevCardLabel_Click(object sender, EventArgs e)
 		{
-			YearOfPlentyForm myForm = new YearOfPlentyForm(this.world, this);
-			myForm.Show();
+			try
+			{
+				YearOfPlentyForm myForm = new YearOfPlentyForm(this.world, this);
+				myForm.Show();
+			}
+			catch (ArgumentException ex)
+			{
+			}
 		}
 
 		private void updatePlayerPoints()
