@@ -1158,5 +1158,11 @@ namespace SettlersOfCatan
 			return resource;
 		}
 
+        public String takeYourTurn(int i)
+        {
+            // Do nothing; this is for AI_Player
+            return "DID_NOTHING";
+        }
+
 	}
 }

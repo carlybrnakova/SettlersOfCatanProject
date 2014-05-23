@@ -170,6 +170,7 @@ namespace SettlersOfCatan
 				map[intRow, intCol].connections[2].buildRoad(player.getColor());
 				map[intRow, intCol + 1].connections[0].buildRoad(player.getColor());
                 player.addConnection(map[intRow, intCol].connections[2]);
+
 				return true;
 			}
 			else return false;
@@ -202,6 +203,7 @@ namespace SettlersOfCatan
 				map[intRow, intCol].connections[1].buildRoad(player.getColor());
 				map[intRow + 1, intCol].connections[1].buildRoad(player.getColor());
                 player.addConnection(map[intRow, intCol].connections[1]);
+
 				return true;
 			}
 			else return false;

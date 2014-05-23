@@ -50,6 +50,7 @@
     <Compile Include="AcceptTradeForm.Designer.cs">
       <DependentUpon>AcceptTradeForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AI_Player.cs" />
     <Compile Include="Bank.cs" />
     <Compile Include="BankTradeForm.cs">
       <SubType>Form</SubType>

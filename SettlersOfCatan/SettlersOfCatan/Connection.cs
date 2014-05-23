@@ -14,6 +14,7 @@ namespace SettlersOfCatan
         public Intersection connectedToRightOrBot;
 		private Color roadColor;
 		private bool built;
+        private Point coords;
 
 		public Connection(Intersection rightOrBot, Intersection leftOrTop)
 		{
@@ -43,15 +44,21 @@ namespace SettlersOfCatan
 			return roadColor;
 		}
 
-		public void buildRoad(Color c)
+		public void buildRoad(Color c) //, Point loc)
 		{
 			this.built = true;
 			this.roadColor = c;
+            //this.coords = loc;
 		}
 
 		public bool isBuilt()
 		{
 			return built;
 		}
+
+        public Point getCoords()
+        {
+            return this.coords;
+        }
 	}
 }

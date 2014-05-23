@@ -143,5 +143,30 @@ namespace SettlersOfCatan
 		{
 			return this.port != null;
 		}
+
+        // This method is to check if the AI can build a road.
+        public bool hasOpenRoad()
+        {
+            foreach (Connection c in this.connections)
+            {
+                if (c.getRoadColor() == Color.White)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Point getAnOpenRoad()
+        {
+            foreach (Connection c in this.connections)
+            {
+                if (c.getRoadColor() == Color.White)
+                {
+                    return c.getCoords();
+                }
+            }
+            return new Point(-1, -1);
+        }
     }
 }
