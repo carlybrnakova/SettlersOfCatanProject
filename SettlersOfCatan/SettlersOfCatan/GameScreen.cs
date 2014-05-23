@@ -169,6 +169,7 @@ namespace SettlersOfCatan
 					RoadButton b = new RoadButton(r, col);
 					setLocationAndColorButton(b, Color.White, x, y);
 					setRoadButtonSizeCoordinatesAndClick(b, HORIZONTAL_ROAD_SIZE, r, col);
+                    roadGrid[r, col] = b;
 					boardPanel.Controls.Add(b);
 
 					x += x_diff;
@@ -198,6 +199,7 @@ namespace SettlersOfCatan
 					RoadButton b = new RoadButton(r, col);
 					setLocationAndColorButton(b, Color.White, x, y);
 					setRoadButtonSizeCoordinatesAndClick(b, VERTICAL_ROAD_SIZE, r, col);
+                    roadGrid[r, col] = b;
 					boardPanel.Controls.Add(b);
 
 					x += x_diff;
@@ -530,11 +532,20 @@ namespace SettlersOfCatan
             callIntButtonClick(sender, e, "none");
 		}
 
-        private void callRoadButton_Click(object sender, EventArgs e)
+        private void callRoadButton_Click(object sender, EventArgs e, Point coords)
         {
-            RoadButton theButton = (RoadButton)sender;
-
-            Color buttonColor = world.roadButtonClicked(theButton.getCoords());
+            Color buttonColor = new Color();
+            RoadButton theButton;
+            if (coords.Equals(new Point(-1, -1)))
+            {
+                theButton = (RoadButton)sender;
+                buttonColor = world.roadButtonClicked(theButton.getCoords());
+            }
+            else
+            {
+                theButton = (RoadButton)this.roadGrid[coords.X, coords.Y];
+                buttonColor = world.roadButtonClicked(coords);
+            }
             if (buttonColor != Color.White)
             {
                 theButton.BackColor = buttonColor;
@@ -545,7 +556,7 @@ namespace SettlersOfCatan
 
 		private void roadButton_Click(object sender, EventArgs e)
 		{
-            callRoadButton_Click(sender, e);
+            callRoadButton_Click(sender, e, new Point(-1, -1));
 		}
 
 		public void updateResourceLabels()
@@ -601,11 +612,17 @@ namespace SettlersOfCatan
                         if (result == "settlement")
                         {
                             Point coords = ((AI_Player)this.world.currentPlayer).getIntersectionCoordsToBuild();
-                            this.callIntButtonClick(this.getIntButtonAt(coords), null, result);
+                            IntersectionButton i = this.getIntButtonAt(coords);
+                            this.callIntButtonClick(i, null, result);
                             if (this.world.isFirstFewTurnsPhase())
                             {
+                                int y = i.getCoords().Y;
+                                if (y == 0 || y == 5) y -= 2;
+                                else if (y == 1 || y == 4) y -= 1;
                                 
-                                callRoadButton_Click(this.getARoadButtonAt(coords), null);
+                                Point roadCoords = new Point(i.getCoords().X * 2, y);
+                                //Button b = this.getARoadButtonAt(coords);
+                                callRoadButton_Click(sender, null, roadCoords);
                             }
                         }
                         showForm = false;
