@@ -61,6 +61,7 @@
 			this.Controls.Add(this.PlaceRoadsAndSettlementsLabel);
 			this.Controls.Add(this.CloseButton);
 			this.Name = "FirstFewTurnsForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Setup Phase";
 			this.ResumeLayout(false);
 

@@ -238,7 +238,7 @@ namespace SettlersOfCatan
 						this.playerHand.modifyOre(-amountToTradeIn);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
 						//return Color.White;
 						throw;
@@ -260,7 +260,7 @@ namespace SettlersOfCatan
 						this.playerHand.modifyWool(-amountToTradeIn);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
 						throw;
 					}
@@ -281,7 +281,7 @@ namespace SettlersOfCatan
 						this.playerHand.modifyLumber(-amountToTradeIn);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
 						throw;
 					}
@@ -302,7 +302,7 @@ namespace SettlersOfCatan
 						this.playerHand.modifyGrain(-amountToTradeIn);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
 						throw;
 					}
@@ -323,7 +323,7 @@ namespace SettlersOfCatan
 						this.playerHand.modifyBrick(-amountToTradeIn);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
 						throw;
 					}

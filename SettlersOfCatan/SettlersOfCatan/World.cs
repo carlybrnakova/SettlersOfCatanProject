@@ -231,7 +231,7 @@ namespace SettlersOfCatan
 			{
 				this.players[this.longestRoadOwnerIndex].incrementPoints(-2);
 			}
-			//loop throught the players and set the longest road
+			//loop through the players and set the longest road
 			foreach (Player player in this.players)
 			{
 				int roadLength = player.getLengthOfLongestRoad();

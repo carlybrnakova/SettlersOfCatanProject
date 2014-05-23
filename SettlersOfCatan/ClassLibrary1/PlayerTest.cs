@@ -1255,5 +1255,230 @@ namespace ClassLibrary1
 
 			Assert.IsTrue(target.mustRemoveHalf());
 		}
+
+		[Test()]
+		public void TestGetLengthOfLongestRoad()
+		{
+			var target = new Player();
+			Assert.AreEqual(0, target.getLengthOfLongestRoad());
+		}
+
+		[Test()]
+		public void TestAddPort()
+		{
+			var target = new Player();
+			target.addPort(new Port("Anything", 3));
+			Assert.IsTrue(target.hasAFreePort());
+		}
+
+		[Test()]
+		public void TestHasFreePort()
+		{
+			var target = new Player();
+			Assert.IsFalse(target.hasAFreePort());
+			target.addPort(new Port("Grain", 2));
+			target.addPort(new Port("Anything", 3));
+			Assert.IsTrue(target.hasAFreePort());
+		}
+
+		[Test()]
+		public void TestHasResourcePort()
+		{
+			var target = new Player();
+			Assert.IsFalse(target.hasAResourcePort());
+			target.addPort(new Port("Anything", 3));
+			Assert.IsFalse(target.hasAResourcePort());
+
+			target.addPort(new Port("Wool", 2));
+			target.addPort(new Port("Lumber", 2));
+			Assert.IsTrue(target.hasAResourcePort());
+		}
+
+		[Test()]
+		public void TestListAllResourcePorts()
+		{
+			var target = new Player();
+			Assert.IsEmpty(target.listAllResourcePortsForThisPlayer());
+			target.addPort(new Port("Anything", 3));
+			Assert.IsEmpty(target.listAllResourcePortsForThisPlayer());
+
+			target.addPort(new Port("Ore", 2));
+			Assert.AreEqual(1, target.listAllResourcePortsForThisPlayer().Count);
+		}
+
+		[Test()]
+		public void TestTradeWithBankWithOrePort()
+		{
+			var target = new Player();
+			target.incrementCities();
+			target.generateWool();
+			target.generateOre();
+			target.addPort(new Port("Ore", 2));
+			target.tradeWithBank("ore", "wool");
+			Assert.AreEqual(3, target.playerHand.getWool());
+			Assert.AreEqual(0, target.playerHand.getOre());
+		}
+
+		[Test()]
+		public void TestTradeWithBankWithWoolPort()
+		{
+			var target = new Player();
+			target.incrementCities();
+			target.generateGrain();
+			target.generateWool();
+			target.addPort(new Port("Wool", 2));
+			target.tradeWithBank("wool", "grain");
+			Assert.AreEqual(3, target.playerHand.getGrain());
+			Assert.AreEqual(0, target.playerHand.getWool());
+		}
+
+		[Test()]
+		public void TestTradeWithBankWithGrainPort()
+		{
+			var target = new Player();
+			target.incrementCities();
+			target.generateBrick();
+			target.generateGrain();
+			target.addPort(new Port("Grain", 2));
+			target.tradeWithBank("grain", "brick");
+			Assert.AreEqual(3, target.playerHand.getBrick());
+			Assert.AreEqual(0, target.playerHand.getGrain());
+		}
+
+		[Test()]
+		public void TestTradeWithBankWithBrickPort()
+		{
+			var target = new Player();
+			target.incrementCities();
+			target.generateLumber();
+			target.generateBrick();
+			target.addPort(new Port("Brick", 2));
+			target.tradeWithBank("brick", "lumber");
+			Assert.AreEqual(3, target.playerHand.getLumber());
+			Assert.AreEqual(0, target.playerHand.getBrick());
+		}
+
+		[Test()]
+		public void TestTradeWithBankWithLumberPort()
+		{
+			var target = new Player();
+			target.incrementCities();
+			target.generateOre();
+			target.generateLumber();
+			target.addPort(new Port("Lumber", 2));
+			target.tradeWithBank("lumber", "ore");
+			Assert.AreEqual(3, target.playerHand.getOre());
+			Assert.AreEqual(0, target.playerHand.getLumber());
+		}
+
+		[Test()]
+		public void TestTradeOreWithBankWithAnythingPort()
+		{
+			var target = new Player();
+			target.incrementCities();
+			target.incrementSettlements();
+			target.generateOre();
+			target.addPort(new Port("Anything", 3));
+			target.tradeWithBank("ore", "wool");
+			Assert.AreEqual(1, target.playerHand.getWool());
+			Assert.AreEqual(0, target.playerHand.getOre());
+		}
+
+		[Test()]
+		public void TestTradeWoolWithBankWithAnythingPort()
+		{
+			var target = new Player();
+			target.incrementCities();
+			target.incrementSettlements();
+			target.generateWool();
+			target.addPort(new Port("Anything", 3));
+			target.tradeWithBank("wool", "grain");
+			Assert.AreEqual(1, target.playerHand.getGrain());
+			Assert.AreEqual(0, target.playerHand.getWool());
+		}
+
+		[Test()]
+		public void TestTradeGrainWithBankWithAnythingPort()
+		{
+			var target = new Player();
+			target.incrementCities();
+			target.incrementSettlements();
+			target.generateGrain();
+			target.addPort(new Port("Anything", 3));
+			target.tradeWithBank("grain", "brick");
+			Assert.AreEqual(1, target.playerHand.getBrick());
+			Assert.AreEqual(0, target.playerHand.getGrain());
+		}
+
+		[Test()]
+		public void TestTradeBrickWithBankWithAnythingPort()
+		{
+			var target = new Player();
+			target.incrementCities();
+			target.incrementSettlements();
+			target.generateBrick();
+			target.addPort(new Port("Anything", 3));
+			target.tradeWithBank("brick", "lumber");
+			Assert.AreEqual(1, target.playerHand.getLumber());
+			Assert.AreEqual(0, target.playerHand.getBrick());
+		}
+
+		[Test()]
+		public void TestTradeLumberWithBankWithAnythingPort()
+		{
+			var target = new Player();
+			target.incrementCities();
+			target.incrementSettlements();
+			target.generateLumber();
+			target.addPort(new Port("Anything", 3));
+			target.tradeWithBank("lumber", "ore");
+			Assert.AreEqual(1, target.playerHand.getOre());
+			Assert.AreEqual(0, target.playerHand.getLumber());
+		}
+
+		[Test()]
+		[ExpectedException(typeof (ArgumentException))]
+		public void TestTradeOreWithBankThrows()
+		{
+			var target = new Player();
+			target.playerHand.incrementAllResources(4);
+			target.tradeWithBank("ore", "wool");
+		}
+
+		[Test()]
+		[ExpectedException(typeof(ArgumentException))]
+		public void TestTradeWoolWithBankThrows()
+		{
+			var target = new Player();
+			target.playerHand.incrementAllResources(4);
+			target.tradeWithBank("wool", "grain");
+		}
+
+		[Test()]
+		[ExpectedException(typeof(ArgumentException))]
+		public void TestTradeGrainWithBankThrows()
+		{
+			var target = new Player();
+			target.playerHand.incrementAllResources(4);
+			target.tradeWithBank("grain", "brick");
+		}
+
+		[Test()]
+		[ExpectedException(typeof(ArgumentException))]
+		public void TestTradeBrickWithBankThrows()
+		{
+			var target = new Player();
+			target.playerHand.incrementAllResources(4);
+			target.tradeWithBank("brick", "lumber");
+		}
+
+		[Test()]
+		[ExpectedException(typeof(ArgumentException))]
+		public void TestTradeLumberWithBankThrows()
+		{
+			var target = new Player();
+			target.playerHand.incrementAllResources(4);
+			target.tradeWithBank("lumber", "ore");
+		}
 	}
 }
