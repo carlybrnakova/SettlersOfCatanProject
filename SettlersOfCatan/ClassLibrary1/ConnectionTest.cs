@@ -20,5 +20,12 @@ namespace ClassLibrary1
 			c.setRoadColor(Color.HotPink);
 			Assert.AreEqual(Color.HotPink, c.getRoadColor());
 		}
+
+		[Test()]
+		public void TestGetCoordinates()
+		{
+			var target = new Connection(new Intersection(new Point(2, 2)), new Intersection(new Point(2, 3)));
+			Assert.AreNotEqual((new Point(2, 2)), target.getCoords());
+		}
 	}
 }

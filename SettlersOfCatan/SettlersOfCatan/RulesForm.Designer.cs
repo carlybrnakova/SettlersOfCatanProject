@@ -61,6 +61,7 @@
 			this.Controls.Add(this.RulesBackButton);
 			this.Controls.Add(this.RulesLabel);
 			this.Name = "RulesForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Rules";
 			this.ResumeLayout(false);
 			this.PerformLayout();

@@ -301,5 +301,17 @@ namespace ClassLibrary1
 			flag = w.getMap().getIslandMap().buildHorizontalRoad(new Point(4, 3), w.currentPlayer);
 			Assert.True(flag);
 		}
+
+		[Test()]
+		[ExpectedException(typeof (NullReferenceException))]
+		public void TestBuildVerticalRoadThrowsOnBadXValues()
+		{
+			World w = new World(3, 0);
+			w.currentPlayer.getHand().incrementAllResources(1);
+			w.currentPlayer.getHand().incrementAllResources(1);
+			w.currentPlayer.getHand().incrementAllResources(1);
+
+			w.getMap().getIslandMap().buildVerticalRoad(new Point(2, 3), w.currentPlayer);
+		}
 	}
 }
