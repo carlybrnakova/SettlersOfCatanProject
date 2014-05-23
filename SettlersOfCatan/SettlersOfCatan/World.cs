@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public class World
 	{
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		public Player currentPlayer;
 		public int currentPlayerNumber;
 		public List<Player> players;
@@ -44,8 +49,8 @@ namespace SettlersOfCatan
 
 		public World(int humans, int computers) : this()
 		{
-			players.Add(new Player("bob", Color.Red, this));
-			players.Add(new Player("joe", Color.Blue, this));
+			players.Add(new Player("Bob", Color.Red, this));
+			players.Add(new Player("Joe", Color.Blue, this));
 			players.Add(new Player("Anne", Color.Green, this));
 
 			/*
@@ -173,8 +178,8 @@ namespace SettlersOfCatan
             else
             {
                 // pop up error message if player hasn't rolled yet
-                DialogResult num = MessageBox.Show("you must roll before ending the turn",
-                    "roll the dice",
+                DialogResult num = MessageBox.Show(rm.GetString(language + "RollBeforeEnd"),
+                    rm.GetString(language + "RollTheDice"),
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Exclamation);
             }
@@ -307,8 +312,8 @@ namespace SettlersOfCatan
 					{
 						// pop up error message that player does not have necessary resources
 
-						DialogResult num = MessageBox.Show("You do not have enough resources to build a settlement.",
-							"Insufficient Resources",
+						DialogResult num = MessageBox.Show(rm.GetString(language + "NeedSettlementResources"),
+							rm.GetString(language + "InsufficientResources"),
 							MessageBoxButtons.OK,
 							MessageBoxIcon.Exclamation);
 
@@ -318,8 +323,8 @@ namespace SettlersOfCatan
 				else
 				{
 					// pop up error message that the surrounding area is not clear
-					DialogResult num = MessageBox.Show("You cannot build there.",
-						"Insufficient Room to Build",
+					DialogResult num = MessageBox.Show(rm.GetString(language + "CannotBuildThere"),
+						rm.GetString(language + "InsufficientRoom"),
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
 					return Color.White;
@@ -330,8 +335,8 @@ namespace SettlersOfCatan
 			{
                 if (catanMap.getIslandMap().getIntAtIndex(coords).getPlayer().getColor() != currentPlayer.getColor())
                 {
-                    DialogResult num = MessageBox.Show("That settlement does not belong to you.",
-                        "Not Owner",
+                    DialogResult num = MessageBox.Show(rm.GetString(language + "SettlementNotBelong"),
+                       rm.GetString(language + "NotOwner"),
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
 
@@ -347,8 +352,8 @@ namespace SettlersOfCatan
 				}
 				else
 				{
-					DialogResult num = MessageBox.Show("You do not have enough resources to build a city.",
-						"Insufficient Resources",
+					DialogResult num = MessageBox.Show(rm.GetString(language + "NeedCityResources"),
+						rm.GetString(language + "InsufficientResources"),
 						MessageBoxButtons.OK,
 						MessageBoxIcon.Exclamation);
 
@@ -397,8 +402,8 @@ namespace SettlersOfCatan
 			}
 			else
 			{
-				DialogResult num = MessageBox.Show("You do not have enough resources to build a road.",
-					"Insufficient Resources",
+				DialogResult num = MessageBox.Show(rm.GetString(language + "NeedRoadResources"),
+					rm.GetString(language + "InsufficientResources"),
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
 
@@ -421,15 +426,15 @@ namespace SettlersOfCatan
             }
             else if (this.currentPlayer.hasRolled)
             {
-                DialogResult num = MessageBox.Show("cannot roll the dice more than once.",
-                        "rolled already",
+                DialogResult num = MessageBox.Show(rm.GetString(language + "OnlyOneRoll"),
+						rm.GetString(language + "AlreadyRolled"),
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
             }
             else
             {
-                DialogResult num = MessageBox.Show("cannot roll the dice in the first 2 rounds",
-                        "too early to roll",
+                DialogResult num = MessageBox.Show(rm.GetString(language + "CannotRollFirstFew"),
+                        rm.GetString(language + "TooEarlyToRoll"),
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
             }

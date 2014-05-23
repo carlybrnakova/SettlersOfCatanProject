@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Drawing;
+using System.Resources;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public class Hand
 	{
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		private int ore;
 		private int wool;
 		private int lumber;
@@ -83,17 +84,22 @@ namespace SettlersOfCatan
 
 		public int getResource(String resourceType)
 		{
-			switch (resourceType)
+			switch (resourceType.ToLower())
 			{
 				case "ore":
+				case "mineral":
 					return getOre();
 				case "wool":
+				case "lana":
 					return getWool();
 				case "lumber":
+				case "maderas":
 					return getLumber();
 				case "grain":
+				case "grano":
 					return getGrain();
 				case "brick":
+				case "ladrillo":
 					return getBrick();
 			}
 			throw new ArgumentException();
@@ -101,21 +107,26 @@ namespace SettlersOfCatan
 
 		public void modifyResources(String resourceType, int amount)
 		{
-			switch (resourceType)
+			switch (resourceType.ToLower())
 			{
 				case "ore":
+				case "mineral":
 					modifyOre(amount);
 					break;
 				case "wool":
+				case "lana":
 					modifyWool(amount);
 					break;
 				case "lumber":
+				case "maderas":
 					modifyLumber(amount);
 					break;
 				case "grain":
+				case "grano":
 					modifyGrain(amount);
 					break;
 				case "brick":
+				case "ladrillo":
 					modifyBrick(amount);
 					break;
 			}
@@ -125,13 +136,7 @@ namespace SettlersOfCatan
 		{
 			if (this.ore < amount*-1)
 			{
-				/*
-				DialogResult num = MessageBox.Show("Player cannot have negative ore.",
-					"Insufficient Resources",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Exclamation);
-				 */
-				throw new System.ArgumentException("Player cannot have negative ore.");
+				throw new System.ArgumentException(rm.GetString(language + "NegativeOre"));
 			}
 			else
 			{
@@ -143,13 +148,7 @@ namespace SettlersOfCatan
 		{
 			if (this.wool < amount*-1)
 			{
-				/*
-				DialogResult num = MessageBox.Show("Player cannot have negative wool.",
-					"Insufficient Resources",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Exclamation);
-				 */
-				throw new System.ArgumentException("Player cannot have negative wool.");
+				throw new System.ArgumentException(rm.GetString(language + "NegativeWool"));
 			}
 			else
 			{
@@ -161,13 +160,7 @@ namespace SettlersOfCatan
 		{
 			if (this.lumber < amount*-1)
 			{
-				/*
-				DialogResult num = MessageBox.Show("Player cannot have negative lumber.",
-					"Insufficient Resources",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Exclamation);
-				 */
-				throw new System.ArgumentException("Player cannot have negative lumber.");
+				throw new System.ArgumentException(rm.GetString(language + "NegativeLumber"));
 			}
 			else
 			{
@@ -179,13 +172,7 @@ namespace SettlersOfCatan
 		{
 			if (this.grain < amount*-1)
 			{
-				/*
-				DialogResult num = MessageBox.Show("Player cannot have negative grain.",
-					"Insufficient Resources",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Exclamation);
-				*/
-				throw new System.ArgumentException("Player cannot have negative grain.");
+				throw new System.ArgumentException(rm.GetString(language + "NegativeGrain"));
 			}
 			else
 			{
@@ -197,13 +184,7 @@ namespace SettlersOfCatan
 		{
 			if (this.brick < amount*-1)
 			{
-				/*
-				DialogResult num = MessageBox.Show("Player cannot have negative brick.",
-					"Insufficient Resources",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Exclamation);
-				 */
-				throw new System.ArgumentException("Player cannot have negative brick.");
+				throw new System.ArgumentException(rm.GetString(language + "NegativeBrick"));
 			}
 			else
 			{
@@ -230,14 +211,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any knights to play.",
-							"No Knights to Play",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
-
-						throw new ArgumentException("You don't have any to Knights to remove.");
+						throw new ArgumentException(rm.GetString(language + "KnightException"));
 						break;
 					}
 				}
@@ -251,14 +225,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any victory point cards to play.",
-							"No Points Gained",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						*/
-
-						throw new ArgumentException("You don't have any Victory Point cards to remove.");
+						throw new ArgumentException(rm.GetString(language + "VictoryPointException"));
 						break;
 					}
 				}
@@ -272,14 +239,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any monopoly cards to play.",
-							"No Monopolizing",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						break;
-						*/
-						throw new ArgumentException("You don't have any Monopoly cards to remove.");
+						throw new ArgumentException(rm.GetString(language + "MonopolyException"));
 						break;
 					}
 				}
@@ -293,14 +253,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any year of road builder cards to play.",
-							"Construction Halted",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						break;
-						 */
-						throw new ArgumentException("You don't have any Road Builder cards to remove.");
+						throw new ArgumentException(rm.GetString(language + "RoadBuilderException"));
 						break;
 					}
 				}
@@ -314,13 +267,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any year of plenty cards to play.",
-							"Year of Scarcity",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						*/
-						throw new ArgumentException("You don't have any Year of Plenty cards to remove.");
+						throw new ArgumentException(rm.GetString(language + "YearOfPlentyException"));
 						break;
 					}
 				}

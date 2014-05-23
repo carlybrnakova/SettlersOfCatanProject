@@ -1,33 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Reflection;
+using System.Resources;
 using System.Windows.Forms;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public partial class MainMenu : Form
 	{
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		public MainMenu()
 		{
-			//this.GameLabel.Text = English.NewGame;
+			//this.GameLabel.Text = Resources.ResourceManager.GetString("enNewGame");
 			InitializeComponent();
+			this.Text = rm.GetString(language + "MainMenuTitlebar");
+			this.GameLabel.Text = rm.GetString(language + "Title");
+			this.NewGameButton.Text = rm.GetString(language + "NewGame");
+			this.RulesButton.Text = rm.GetString(language + "Rules");
 		}
 
 		private void NewGameButton_Click(object sender, EventArgs e)
 		{
-			Form myForm = new NewGameForm();
+			this.Hide();
+			var myForm = new NewGameForm();
+			myForm.Closed += (send, args) => this.Close();
 			myForm.Show();
 		}
 
 		private void RulesButton_Click(object sender, EventArgs e)
 		{
-			Form myForm = new RulesForm();
+			this.Hide();
+			var myForm = new RulesForm();
+			myForm.Closed += (send, args) => this.Close();
 			myForm.Show();
 		}
 	}

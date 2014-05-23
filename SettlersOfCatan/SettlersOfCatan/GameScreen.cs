@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+using System.Resources;
 using System.Windows.Forms;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public partial class GameScreen : Form
 	{
 		//private const int NUM_OF_INTERSECTION_BUTTONS = 54;
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		private const int INTERSECTION_BUTTON_SIZE = 30;
 		private const int MAX_INTERSECTION_COLUMNS = 11;
 		private const int MAX_INTERSECTION_ROWS = 6;
@@ -65,9 +63,40 @@ namespace SettlersOfCatan
 
 			initializeBoardPanel();
 			//this.world = new World(3,0);
+			localize();
 			this.updateResourceLabels();
 			this.updateCurrentPlayerNameLabel();
 			this.updateRoundLabel();
+		}
+
+		private void localize()
+		{
+			this.Text = rm.GetString(language + "Title");
+
+			this.MaterialsLabel.Text = rm.GetString(language + "Materials");
+			this.OreLabel.Text = rm.GetString(language + "Ore") + ":";
+			this.LumberLabel.Text = rm.GetString(language + "Lumber") + ":";
+			this.GrainLabel.Text = rm.GetString(language + "Grain") + ":";
+			this.BrickLabel.Text = rm.GetString(language + "Brick") + ":";
+			this.WoolLabel.Text = rm.GetString(language + "Wool") + ":";
+
+			this.DevCardsLabel.Text = rm.GetString(language + "DevCards");
+			this.RoadBuilderDevCardLabel.Text = rm.GetString(language + "RoadBuilder");
+			this.YearOfPlentyDevCardLabel.Text = rm.GetString(language + "YearOfPlenty");
+			this.MonopolyDevCardLabel.Text = rm.GetString(language + "Monopoly");
+			this.VictoryPointDevCardLabel.Text = rm.GetString(language + "VictoryPoint");
+			this.KnightsDevCardLabel.Text = rm.GetString(language + "Knights");
+
+			this.EndTurnButton.Text = rm.GetString(language + "EndTurn");
+			this.PointsLabel.Text = rm.GetString(language + "Points");
+			this.RoundsLabel.Text = rm.GetString(language + "Rounds");
+			this.RollDiceButton.Text = rm.GetString(language + "Roll");
+			this.CurrentRollLabel.Text = rm.GetString(language + "CurrentRoll");
+
+			this.BuyDevCardButton.Text = rm.GetString(language + "BuyDevCard");
+			this.ProposeTradeButton.Text = rm.GetString(language + "ProposeTrade");
+			this.BankTradeButton.Text = rm.GetString(language + "TradeWithBank");
+			this.generateResourcesTest.Text = rm.GetString(language + "GenerateTest");
 		}
 
 		/** initializeAll()
@@ -266,11 +295,11 @@ namespace SettlersOfCatan
             waterHexes[waterCount] = PB;
 
             // Add ports for top
-            string topText = "v   Anything 3:1   v";
+			string topText = "v   " + rm.GetString(language + "Anything") + " 3:1   v";
             PB.Controls.Add(createPortLabel(70, 40, false, topText));
 
             // Add second port for top
-            topText = "v   Wool 2:1   v";
+			topText = "v   " + rm.GetString(language + "Wool") + " 2:1   v";
             PB.Controls.Add(createPortLabel(300, 40, false, topText));
 
 			waterCount++;
@@ -281,11 +310,11 @@ namespace SettlersOfCatan
             waterHexes[waterCount] = PB;
 
             // Add ports for bottom
-            topText = "^   Anything 3:1   ^";
+			topText = "^   " + rm.GetString(language + "Anything") + " 3:1   ^";
             PB2.Controls.Add(createPortLabel(70, 25, false, topText));
 
             // Add second port for bottom
-            topText = "^   Lumber 2:1   ^";
+			topText = "^   " + rm.GetString(language + "Lumber") + " 2:1   ^";
             PB2.Controls.Add(createPortLabel(295, 25, false, topText));
 
             waterCount++;
@@ -303,8 +332,8 @@ namespace SettlersOfCatan
                 // Add port if relevant
                 if (waterCount == 4)
                 {
-                    string text = "    -->\n\n\n\nOre 2:1 \n\n\n\n\n    -->";
-                    pb.Controls.Add(createPortLabel(100, 10, true, text));
+					string text = "        -->\n\n\n\n" + rm.GetString(language + "Ore") + " 2:1 \n\n\n\n\n        -->";
+                    pb.Controls.Add(createPortLabel(80, 10, true, text));
                 }
 
 				waterHexes[waterCount] = pb;
@@ -318,7 +347,7 @@ namespace SettlersOfCatan
                 // Add port if relevant
                 if (waterCount == 5)
                 {
-                    string text = "      -->\n\n\n\nGrain 2:1\n\n\n\n\n      -->";
+					string text = "      -->\n\n\n\n" + rm.GetString(language + "Grain") + " 2:1\n\n\n\n\n      -->";
                     pb2.Controls.Add(createPortLabel(90, 10, true, text));
                 }
                 waterHexes[waterCount] = pb2;
@@ -342,12 +371,12 @@ namespace SettlersOfCatan
                 // Add port if relevant
                 if (waterCount == 7)
                 {
-                    string text = "v  Anything 3:1  v";
+					string text = "v  " + rm.GetString(language + "Anything") + " 3:1  v";
                     pb.Controls.Add(createPortLabel(10, 110, true, text));
                 }
                 else if (waterCount == 11)
                 {
-                    string text = "    <--\n\n\n\n Anything 3:1\n\n\n\n\n    <--";
+                    string text = "    <--\n\n\n\n " + rm.GetString(language + "Anything") + " 3:1\n\n\n\n\n    <--";
                     pb.Controls.Add(createPortLabel(10, 10, true, text));
                 }
                 waterHexes[waterCount] = pb;
@@ -361,7 +390,7 @@ namespace SettlersOfCatan
                 // Add port if relevant
                 if (waterCount == 8)
                 {
-                    string text = "^  Brick 2:1  ^";
+                    string text = "^  " + rm.GetString(language + "Brick") + " 2:1  ^";
                     pb2.Controls.Add(createPortLabel(10, 20, true, text));
                 }
                 waterHexes[waterCount] = pb2;
@@ -527,7 +556,7 @@ namespace SettlersOfCatan
 			catch (Exception ex)
 			{
 				DialogResult num = MessageBox.Show(ex.Message,
-	"Insufficient Resources",
+	rm.GetString(language + "InsufficientResources"),
 	MessageBoxButtons.OK,
 	MessageBoxIcon.Exclamation);
 			}
@@ -570,7 +599,7 @@ namespace SettlersOfCatan
 			catch (ArgumentException ex)
 			{
 				DialogResult num = MessageBox.Show(ex.Message,
-					"Insufficient Resources",
+					rm.GetString(language + "InsufficientResources"),
 					MessageBoxButtons.OK,
 					MessageBoxIcon.Exclamation);
 			}
@@ -611,7 +640,7 @@ namespace SettlersOfCatan
 
         private void updateRoundLabel()
         {
-            RoundsLabel.Text = "Round " + (this.world.getNumberOfRoundsCompleted() + 1);
+            RoundsLabel.Text = rm.GetString(language + "Rounds") + " " + (this.world.getNumberOfRoundsCompleted() + 1);
         }
 
         private void updateCurrentPlayerNameLabel()
@@ -628,28 +657,38 @@ namespace SettlersOfCatan
 
         private void RollDiceButton_Click(object sender, EventArgs e)
         {
-            this.world.rollDice();
-            this.updateResourceLabels();
-	        int roll = this.world.getRollNumber();
-            this.RollNumberLabel.Text = roll.ToString();
-	        if (roll == 7)
-	        {
-				removeRobberText();
-
-				checkRemoveHalf();
-
-				/*
-				Color buttonColor = world.roadButtonClicked(theButton.getCoords());
-				if (buttonColor != Color.White)
+			try
+			{
+				this.world.rollDice();
+				this.updateResourceLabels();
+				int roll = this.world.getRollNumber();
+				this.RollNumberLabel.Text = roll.ToString();
+				if (roll == 7)
 				{
-					theButton.BackColor = buttonColor;
-					theButton.Enabled = false;
-				}
-				 */
+					removeRobberText();
 
-				this.world.setPlaceRobber(true);
-				RobberForm myForm = new RobberForm(this.world, this);
-				myForm.Show();
+					checkRemoveHalf();
+
+					/*
+					Color buttonColor = world.roadButtonClicked(theButton.getCoords());
+					if (buttonColor != Color.White)
+					{
+						theButton.BackColor = buttonColor;
+						theButton.Enabled = false;
+					}
+					 */
+
+					this.world.setPlaceRobber(true);
+					RobberForm myForm = new RobberForm(this.world, this);
+					myForm.Show();
+				}
+			}
+			catch (ArgumentException ex)
+			{
+				DialogResult num = MessageBox.Show(ex.Message,
+	rm.GetString(language + "InsufficientResources"),
+	MessageBoxButtons.OK,
+	MessageBoxIcon.Exclamation);
 			}
 			this.updateResourceLabels();
 		}
@@ -680,7 +719,7 @@ namespace SettlersOfCatan
 			
 			if (this.checkRemoveHalfCount != this.world.players.Count)
 			{
-				throw new ArgumentException("Something went wrong...");
+				throw new ArgumentException(rm.GetString(language + "SomethingWrong"));
 			}
 		}
 
@@ -700,9 +739,19 @@ namespace SettlersOfCatan
 
 		private void BuyDevCardButton_Click(object sender, EventArgs e)
 		{
-			this.world.currentPlayer.tradeForDevCard();
-			this.updateResourceLabels();
-			this.updateDevelopmentCards();
+			try
+			{
+				this.world.currentPlayer.tradeForDevCard();
+				this.updateResourceLabels();
+				this.updateDevelopmentCards();
+			}
+			catch (ArgumentException ex)
+			{
+				DialogResult num = MessageBox.Show(ex.Message,
+	rm.GetString(language + "InsufficientResources"),
+	MessageBoxButtons.OK,
+	MessageBoxIcon.Exclamation);
+			}
 		}
 
 		private void removeRobberText()

@@ -219,6 +219,7 @@
 			this.Controls.Add(this.WoolLabel);
 			this.Controls.Add(this.OreLabel);
 			this.Name = "RemoveCardsForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Remove Some Cards";
 			this.ResumeLayout(false);
 			this.PerformLayout();

@@ -35,9 +35,9 @@
 			// PlayerNameComboBox
 			// 
 			this.PlayerNameComboBox.FormattingEnabled = true;
-			this.PlayerNameComboBox.Location = new System.Drawing.Point(78, 38);
+			this.PlayerNameComboBox.Location = new System.Drawing.Point(55, 38);
 			this.PlayerNameComboBox.Name = "PlayerNameComboBox";
-			this.PlayerNameComboBox.Size = new System.Drawing.Size(128, 21);
+			this.PlayerNameComboBox.Size = new System.Drawing.Size(184, 21);
 			this.PlayerNameComboBox.TabIndex = 0;
 			this.PlayerNameComboBox.Text = "Pick who to steal from";
 			// 
@@ -59,6 +59,7 @@
 			this.Controls.Add(this.StealCardButton);
 			this.Controls.Add(this.PlayerNameComboBox);
 			this.Name = "StealCardForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Take a Card";
 			this.ResumeLayout(false);
 

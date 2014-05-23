@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
-using System.Reflection;
-using System.Windows.Forms;
+using System.Resources;
+using SettlersOfCatan.Properties;
 
 namespace SettlersOfCatan
 {
 	public class Player
 	{
+		private ResourceManager rm = Resources.ResourceManager;
+		private string language = Global_Variables.language;
+
 		private readonly int MAX_CITIES = 4;
 		private readonly int MAX_SETTLEMENTS = 5;
 		private readonly int MAX_ROADS = 15;
@@ -157,14 +156,7 @@ namespace SettlersOfCatan
 			}
 			else
 			{
-				/*
-				DialogResult num = MessageBox.Show("You do not have enough resources to make that trade.",
-					"Insufficient Resources",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Exclamation);
-				 */
-
-				throw new ArgumentException("Player's cards are such that trade cannot be performed");
+				throw new ArgumentException(rm.GetString(language + "MakeTradeException"));
 			}
 		}
 
@@ -207,7 +199,7 @@ namespace SettlersOfCatan
 
 		public void tradeWithBank(String resourceToTradeIn, String resourceToGain)
 		{
-			if (resourceToTradeIn.ToLower().Equals("ore"))
+			if (resourceToTradeIn.ToLower().Equals("ore") || resourceToTradeIn.ToLower().Equals("mineral"))
 			{
 				if (getHand().getOre() >= 4)
 				{
@@ -218,31 +210,17 @@ namespace SettlersOfCatan
 						this.playerHand.modifyOre(-4);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough ore to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
-
-						//return Color.White;
 						throw;
 					}
 				}
 				else
 				{
-					/*
-					DialogResult num = MessageBox.Show("You don't have enough ore to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-					 * */
-					throw new ArgumentOutOfRangeException("You don't have enough ore.");
+					throw new ArgumentException(rm.GetString(language + "OreException"));
 				}
 			}
-			else if (resourceToTradeIn.ToLower().Equals("wool"))
+			else if (resourceToTradeIn.ToLower().Equals("wool") || resourceToTradeIn.ToLower().Equals("lana"))
 			{
 				if (getHand().getWool() >= 4)
 				{
@@ -253,29 +231,17 @@ namespace SettlersOfCatan
 						this.playerHand.modifyWool(-4);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough wool to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
 						throw;
 					}
 				}
 				else
 				{
-					/*
-					DialogResult num = MessageBox.Show("You don't have enough wool to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-					 */
-					throw new ArgumentOutOfRangeException("You don't have enough wool.");
+					throw new ArgumentException(rm.GetString(language + "WoolException"));
 				}
 			}
-			else if (resourceToTradeIn.ToLower().Equals("lumber"))
+			else if (resourceToTradeIn.ToLower().Equals("lumber") || resourceToTradeIn.ToLower().Equals("maderas"))
 			{
 				if (getHand().getLumber() >= 4)
 				{
@@ -286,29 +252,17 @@ namespace SettlersOfCatan
 						this.playerHand.modifyLumber(-4);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough lumber to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 * */
 						throw;
 					}
 				}
 				else
 				{
-					/*
-					DialogResult num = MessageBox.Show("You don't have enough lumber to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-					 */
-					throw new ArgumentOutOfRangeException("You don't have enough lumber.");
+					throw new ArgumentException(rm.GetString(language + "LumberException"));
 				}
 			}
-			else if (resourceToTradeIn.ToLower().Equals("grain"))
+			else if (resourceToTradeIn.ToLower().Equals("grain") || resourceToTradeIn.ToLower().Equals("grano"))
 			{
 				if (getHand().getGrain() >= 4)
 				{
@@ -319,29 +273,17 @@ namespace SettlersOfCatan
 						this.playerHand.modifyGrain(-4);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough grain to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
 						throw;
 					}
 				}
 				else
 				{
-					/*
-					DialogResult num = MessageBox.Show("You don't have enough grain to make that trade.",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					 */
-					throw new ArgumentOutOfRangeException("You don't have enough grain.");
+					throw new ArgumentException(rm.GetString(language + "GrainException"));
 				}
 			}
-			else if (resourceToTradeIn.ToLower().Equals("brick"))
+			else if (resourceToTradeIn.ToLower().Equals("brick") || resourceToTradeIn.ToLower().Equals("ladrillo"))
 			{
 				if (getHand().getBrick() >= 4)
 				{
@@ -352,26 +294,14 @@ namespace SettlersOfCatan
 						this.playerHand.modifyBrick(-4);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough brick to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
 						throw;
 					}
 				}
 				else
 				{
-					/*
-					DialogResult num = MessageBox.Show("You don't have enough brick to make that trade.",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					 */
-					throw new ArgumentOutOfRangeException("You don't have enough brick.");
+					throw new ArgumentException(rm.GetString(language + "BrickException"));
 				}
 			}
 		}
@@ -391,14 +321,8 @@ namespace SettlersOfCatan
 						this.playerHand.modifyOre(-3);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough ore to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
 						throw;
 					}
 				}
@@ -414,14 +338,8 @@ namespace SettlersOfCatan
 						this.playerHand.modifyWool(-3);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough wool to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
 						throw;
 					}
 				}
@@ -437,14 +355,8 @@ namespace SettlersOfCatan
 						this.playerHand.modifyLumber(-3);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough lumber to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						*/
 						throw;
 					}
 				}
@@ -460,14 +372,8 @@ namespace SettlersOfCatan
 						this.playerHand.modifyGrain(-3);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough grain to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
 						throw;
 					}
 				}
@@ -483,14 +389,8 @@ namespace SettlersOfCatan
 						this.playerHand.modifyBrick(-3);
 						modifyResourceInHand(resourceToGain);
 					}
-					catch (ArgumentOutOfRangeException)
+					catch (ArgumentException)
 					{
-						/*
-						DialogResult num = MessageBox.Show("There isn't enough brick to make that trade.",
-							"Insufficient Resources",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						*/
 						throw;
 					}
 				}
@@ -512,14 +412,8 @@ namespace SettlersOfCatan
 					this.playerHand.modifyGrain(-1);
 					this.playerHand.addDevCard(cards);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There aren't any more development cards.",
-						"Can't Get Development Cards",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					 */
 					throw;
 				}
 			}
@@ -530,26 +424,31 @@ namespace SettlersOfCatan
 			switch (resource)
 			{
 				case "ore":
+				case "mineral":
 				{
 					this.playerHand.modifyOre(1);
 					break;
 				}
 				case "wool":
+				case "lana":
 				{
 					this.playerHand.modifyWool(1);
 					break;
 				}
 				case "lumber":
+				case "maderas":
 				{
 					this.playerHand.modifyLumber(1);
 					break;
 				}
 				case "grain":
+				case "grano":
 				{
 					this.playerHand.modifyGrain(1);
 					break;
 				}
 				case "brick":
+				case "ladrillo":
 				{
 					this.playerHand.modifyBrick(1);
 					break;
@@ -566,14 +465,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("ore", -2);
 					this.playerHand.modifyOre(2);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough ore to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -585,14 +478,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("ore", -1);
 					this.playerHand.modifyOre(1);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough ore to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -607,14 +494,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("wool", -2);
 					this.playerHand.modifyWool(2);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough wool to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -626,14 +507,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("wool", -1);
 					this.playerHand.modifyWool(1);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough wool to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -648,14 +523,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("lumber", -2);
 					this.playerHand.modifyLumber(2);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough lumber to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -667,14 +536,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("lumber", -1);
 					this.playerHand.modifyLumber(1);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough lumber to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -689,14 +552,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("grain", -2);
 					this.playerHand.modifyGrain(2);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough grain to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -708,14 +565,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("grain", -1);
 					this.playerHand.modifyGrain(1);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough grain to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -730,14 +581,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("brick", -2);
 					this.playerHand.modifyBrick(2);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough brick to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -749,14 +594,8 @@ namespace SettlersOfCatan
 					this.world.bank.modifyResource("brick", -1);
 					this.playerHand.modifyBrick(1);
 				}
-				catch (ArgumentOutOfRangeException)
+				catch (ArgumentException)
 				{
-					/*
-					DialogResult num = MessageBox.Show("There isn't enough brick to generate more",
-						"Insufficient Resources",
-						MessageBoxButtons.OK,
-						MessageBoxIcon.Exclamation);
-					*/
 					throw;
 				}
 			}
@@ -844,13 +683,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any knights to play.",
-							"No Knights to Play",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						*/
-						throw new ArgumentException("You don't have any Knights to play.");
+						throw new ArgumentException(rm.GetString(language + "KnightException"));
 						break;
 					}
 				}
@@ -864,13 +697,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any victory point cards to play.",
-							"No Points Gained",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						*/
-						throw new ArgumentException("You don't have any Victory Point cards to play.");
+						throw new ArgumentException(rm.GetString(language + "VictoryPointException"));
 						break;
 					}
 				}
@@ -884,13 +711,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any year of road builder cards to play.",
-							"Construction Halted",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
-						throw new ArgumentException("You don't have any Road Builder cards to play.");
+						throw new ArgumentException(rm.GetString(language + "RoadBuilderException"));
 					}
 				}
 				case "monopoly":
@@ -914,13 +735,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any monopoly cards to play.",
-							"No Monopolizing",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
-						throw new ArgumentException("You don't have any Monopoly cards to play.");
+						throw new ArgumentException(rm.GetString(language + "MonopolyException"));
 						break;
 					}
 				}
@@ -937,13 +752,7 @@ namespace SettlersOfCatan
 					}
 					else
 					{
-						/*
-						DialogResult num = MessageBox.Show("You don't have any year of plenty cards to play.",
-							"Year of Scarcity",
-							MessageBoxButtons.OK,
-							MessageBoxIcon.Exclamation);
-						 */
-						throw new ArgumentException("You don't have any Year of Plenty cards to play");
+						throw new ArgumentException(rm.GetString(language + "YearOfPlentyException"));
 						break;
 					}
 				}

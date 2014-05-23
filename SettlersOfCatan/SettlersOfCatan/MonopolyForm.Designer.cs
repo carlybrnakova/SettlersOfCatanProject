@@ -79,6 +79,7 @@
 			this.Controls.Add(this.MonopolyComboBox);
 			this.Controls.Add(this.MonopolyLabel);
 			this.Name = "MonopolyForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Monopoly";
 			this.ResumeLayout(false);
 			this.PerformLayout();

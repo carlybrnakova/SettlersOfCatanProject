@@ -28,6 +28,8 @@ namespace SettlersOfCatan
 
 		public const int MAX_ROAD_ROWS = 11;
 		public const int MAX_ROAD_COLUMNS = 10;
+
+		public static string language = "English";
 	}
 
 
