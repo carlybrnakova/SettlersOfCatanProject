@@ -54,3 +54,5 @@ C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\Settlers
 C:\Users\hortoncb\Documents\college classes\CSSE\csse376\SettlersOfCatan\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.RemoveCardsForm.resources
 C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.StealCardForm.resources
 C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.ChooseLanguageForm.resources
+C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\ClassLibrary1\obj\Debug\SettlersOfCatan.exe
+C:\Users\cheungnj\Desktop\[SCHOOL]\[CSSE 376]\[PROJECT]\SettlersOfCatan\SettlersOfCatan\ClassLibrary1\obj\Debug\SettlersOfCatan.pdb
