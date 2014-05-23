@@ -168,5 +168,10 @@ namespace SettlersOfCatan
             }
             return new Point(-1, -1);
         }
+
+        public Point getCoords()
+        {
+            return this.coord;
+        }
     }
 }

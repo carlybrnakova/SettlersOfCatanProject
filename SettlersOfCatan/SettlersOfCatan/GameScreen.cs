@@ -554,6 +554,7 @@ namespace SettlersOfCatan
             this.updateResourceLabels();
             this.world.setLongestRoad();
             this.updatePlayerPoints();
+            this.Refresh();
         }
 
 		private void roadButton_Click(object sender, EventArgs e)
@@ -621,7 +622,7 @@ namespace SettlersOfCatan
                                 int y = i.getCoords().Y;
                                 if (y == 0 || y == 5) y -= 2;
                                 else if (y == 1 || y == 4) y -= 1;
-                                
+
                                 Point roadCoords = new Point(i.getCoords().X * 2, y);
                                 //Button b = this.getARoadButtonAt(coords);
                                 callRoadButton_Click(sender, null, roadCoords);
@@ -633,14 +634,41 @@ namespace SettlersOfCatan
                     {
                         showForm = true;
                     }
-                }
 
-
-                    if(showForm)
+                    if (showForm)
                     {
                         Form myForm = new FirstFewTurnsForm();
                         myForm.Show();
                     }
+                }
+                else
+                {
+
+
+                    // Normal routine: check if AI player
+                    if (this.world.currentPlayer is AI_Player)
+                    {
+                        showForm = false;
+                        String result = ((AI_Player)this.world.currentPlayer).takeYourTurn(this.world.numOfCompletedRounds);
+                        if (result == "road")
+                        {
+                            Intersection intersection = this.world.catanMap.getIslandMap().getIntAtIndex(this.world.currentPlayer.getSettlementLocations().ElementAt(0));
+                            while (this.world.catanMap.getIslandMap().getIntAtIndex(intersection.getCoords()).getConnections()[2].getRoadColor() == ((Player)this.world.currentPlayer).getColor())
+                            {
+                                intersection = this.world.catanMap.getIslandMap().getIntAtIndex(intersection.getCoords()).getConnections()[2].getIntersectionRightOrBot();
+                            }
+                            int y = intersection.getCoords().Y;
+                            if (y == 0 || y == 5) y -= 2;
+                            else if (y == 1 || y == 4) y -= 1;
+
+                            Point roadCoords = new Point(intersection.getCoords().X * 2, y);
+                            //Button b = this.getARoadButtonAt(coords);
+                            callRoadButton_Click(sender, null, roadCoords);
+                        }
+                    }
+                }
+
+
 				
 			}
             this.updateResourceLabels();

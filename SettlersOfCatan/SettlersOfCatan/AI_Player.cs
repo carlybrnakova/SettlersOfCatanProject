@@ -63,18 +63,28 @@ namespace SettlersOfCatan
             }
             else
             {
-                //  int diceRollNum;
+                int diceRollNum;
                 // 1. Roll the dice
                 this.world.rollDice();
-                //  diceRollNum = this.world.getRollNumber();
+                diceRollNum = this.world.getRollNumber();
+                if (diceRollNum == 7)
+                {
+
+                }
+                //this.world.generateMyResources(diceRollNum, false);
                 // 1a. Rolled a 7?
                 // 1a-i. Get rid of half of your cards?
                 // 1a-ii. Move the robber
                 // 1a-iii. Steal a card
                 // 1b. Not a 7?  Resources generated automatically
                 // 2. Build road if player has sufficient resources
-                if (this.playerHand.hasRoadResources())
+                if (((Player)this).playerHand.hasSettlementResources())
                 {
+                    result = "settlement";
+                }
+                else if (((Player)this).playerHand.hasRoadResources())
+                {
+                    /*
                     List<Point> locs = this.getSettlementLocations();
                     foreach (Point p in locs)
                     {
@@ -84,8 +94,17 @@ namespace SettlersOfCatan
                             this.world.roadButtonClicked(i.getAnOpenRoad());
                             break;
                         }
-                    }
+                    }*/
+                    result = "road";
 
+                }
+                else if (((Player)this).playerHand.hasCityResources())
+                {
+                    result = "city";
+                }
+                else if (((Player)this).playerHand.hasDevCardResources())
+                {
+                    result = "devcard";
                 }
             }
             //this.world.endTurn();   
