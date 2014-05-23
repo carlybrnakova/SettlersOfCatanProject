@@ -524,7 +524,7 @@ namespace SettlersOfCatan
 
 			this.updateResourceLabels();
 			this.updatePlayerPoints();
-		}
+        }
 
 		// TODO implement longest road
 		private void roadButton_Click(object sender, EventArgs e)

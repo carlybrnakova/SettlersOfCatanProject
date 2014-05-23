@@ -36,13 +36,16 @@ namespace SettlersOfCatan
         public int longestRoadIndex;
         public bool hasRolled;
 		private List<Point> settlementLocations = new List<Point>();
+        private List<Port> ports;
 
 		public Player()
 		{
 			this.world = new World();
 			this.hasLongestRoad = false;
 			this.hasLargestArmy = false;
+
             this.hasRolled = false;
+            this.ports = new List<Port>();
 		}
 
 		public Player(String playerName, Color playerColor, World world1) : this()
@@ -50,7 +53,16 @@ namespace SettlersOfCatan
 			this.name = playerName;
 			this.color = playerColor;
 			this.world = world1;
+
+			this.hasLongestRoad = false;
+			this.hasLargestArmy = false;
+            this.ports = new List<Port>();
 		}
+
+        public void addPort(Port p)
+        {
+            this.ports.Add(p);
+        }
 
 		public String getName()
 		{
@@ -205,17 +217,67 @@ namespace SettlersOfCatan
 			return this.playerHand.getResources() > 7;
 		}
 
-		public void tradeWithBank(String resourceToTradeIn, String resourceToGain)
+        public bool hasAResourcePort()
+        {
+            for (int i = 0; i < this.ports.Count; i++)
+            {
+                if (this.ports[i].getResourceType() != "Anything")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool hasAFreePort()
+        {
+            for (int i = 0; i < this.ports.Count; i++)
+            {
+                if (this.ports[i].getResourceType() == "Anything")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<String> listAllResourcePortsForThisPlayer()
+        {
+            List<String> theResources = new List<String>(5);
+            for (int i = 0; i < this.ports.Count; i++)
+            {
+                if (this.ports[i].getResourceType() != "Anything")
+                {
+                    theResources.Add(this.ports[i].getResourceType().ToLower());
+                }
+            }
+            return theResources;
+        }
+
+        public void tradeWithBank(String resourceToTradeIn, String resourceToGain)
 		{
+            int amountToTradeIn = 4;
+            if (this.hasAResourcePort())
+            {
+                List<String> allResources = listAllResourcePortsForThisPlayer();
+                if (allResources.Contains(resourceToTradeIn))
+                {
+                    amountToTradeIn = 2;
+                }
+            }
+            if (this.hasAFreePort() && amountToTradeIn == 4)
+            {
+                amountToTradeIn = 3;
+            }
 			if (resourceToTradeIn.ToLower().Equals("ore"))
 			{
-				if (getHand().getOre() >= 4)
+                if (getHand().getOre() >= amountToTradeIn)
 				{
 					try
 					{
 						this.world.bank.modifyResource(resourceToGain, -1);
-						this.world.bank.modifyResource("ore", 4);
-						this.playerHand.modifyOre(-4);
+                        this.world.bank.modifyResource("ore", amountToTradeIn);
+                        this.playerHand.modifyOre(-amountToTradeIn);
 						modifyResourceInHand(resourceToGain);
 					}
 					catch (ArgumentOutOfRangeException)
@@ -244,13 +306,13 @@ namespace SettlersOfCatan
 			}
 			else if (resourceToTradeIn.ToLower().Equals("wool"))
 			{
-				if (getHand().getWool() >= 4)
+                if (getHand().getWool() >= amountToTradeIn)
 				{
 					try
 					{
 						this.world.bank.modifyResource(resourceToGain, -1);
-						this.world.bank.modifyResource("wool", 4);
-						this.playerHand.modifyWool(-4);
+                        this.world.bank.modifyResource("wool", amountToTradeIn);
+                        this.playerHand.modifyWool(-amountToTradeIn);
 						modifyResourceInHand(resourceToGain);
 					}
 					catch (ArgumentOutOfRangeException)
@@ -277,13 +339,13 @@ namespace SettlersOfCatan
 			}
 			else if (resourceToTradeIn.ToLower().Equals("lumber"))
 			{
-				if (getHand().getLumber() >= 4)
+                if (getHand().getLumber() >= amountToTradeIn)
 				{
 					try
 					{
 						this.world.bank.modifyResource(resourceToGain, -1);
-						this.world.bank.modifyResource("lumber", 4);
-						this.playerHand.modifyLumber(-4);
+                        this.world.bank.modifyResource("lumber", amountToTradeIn);
+                        this.playerHand.modifyLumber(-amountToTradeIn);
 						modifyResourceInHand(resourceToGain);
 					}
 					catch (ArgumentOutOfRangeException)
@@ -310,13 +372,13 @@ namespace SettlersOfCatan
 			}
 			else if (resourceToTradeIn.ToLower().Equals("grain"))
 			{
-				if (getHand().getGrain() >= 4)
+                if (getHand().getGrain() >= amountToTradeIn)
 				{
 					try
 					{
 						this.world.bank.modifyResource(resourceToGain, -1);
-						this.world.bank.modifyResource("grain", 4);
-						this.playerHand.modifyGrain(-4);
+                        this.world.bank.modifyResource("grain", amountToTradeIn);
+                        this.playerHand.modifyGrain(-amountToTradeIn);
 						modifyResourceInHand(resourceToGain);
 					}
 					catch (ArgumentOutOfRangeException)
@@ -343,13 +405,13 @@ namespace SettlersOfCatan
 			}
 			else if (resourceToTradeIn.ToLower().Equals("brick"))
 			{
-				if (getHand().getBrick() >= 4)
+                if (getHand().getBrick() >= amountToTradeIn)
 				{
 					try
 					{
 						this.world.bank.modifyResource(resourceToGain, -1);
-						this.world.bank.modifyResource("brick", 4);
-						this.playerHand.modifyBrick(-4);
+                        this.world.bank.modifyResource("brick", amountToTradeIn);
+                        this.playerHand.modifyBrick(-amountToTradeIn);
 						modifyResourceInHand(resourceToGain);
 					}
 					catch (ArgumentOutOfRangeException)
