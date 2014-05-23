@@ -43,10 +43,10 @@ namespace SettlersOfCatan
                 points.Add(new Point(3, 3));
                 points.Add(new Point(1, 2));
                 points.Add(new Point(3, 2));
-                points.Add(new Point(0, 2));
-                points.Add(new Point(3, 1));
-                points.Add(new Point(0, 3));
-                points.Add(new Point(4, 2));
+                points.Add(new Point(1, 5));
+                points.Add(new Point(3, 4));
+                points.Add(new Point(2, 7));
+                points.Add(new Point(4, 5));
                 points.Add(new Point(4, 3));
                 //  Pick a few arbitrary spots to try placing a settlement
                 foreach (Point p in points)

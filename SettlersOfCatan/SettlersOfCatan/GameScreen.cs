@@ -530,18 +530,22 @@ namespace SettlersOfCatan
             callIntButtonClick(sender, e, "none");
 		}
 
-		// TODO implement longest road
+        private void callRoadButton_Click(object sender, EventArgs e)
+        {
+            RoadButton theButton = (RoadButton)sender;
+
+            Color buttonColor = world.roadButtonClicked(theButton.getCoords());
+            if (buttonColor != Color.White)
+            {
+                theButton.BackColor = buttonColor;
+                theButton.Enabled = false;
+            }
+            this.updateResourceLabels();
+        }
+
 		private void roadButton_Click(object sender, EventArgs e)
 		{
-			RoadButton theButton = (RoadButton) sender;
-
-			Color buttonColor = world.roadButtonClicked(theButton.getCoords());
-			if (buttonColor != Color.White)
-			{
-				theButton.BackColor = buttonColor;
-				theButton.Enabled = false;
-			}
-			this.updateResourceLabels();
+            callRoadButton_Click(sender, e);
 		}
 
 		public void updateResourceLabels()
@@ -598,6 +602,11 @@ namespace SettlersOfCatan
                         {
                             Point coords = ((AI_Player)this.world.currentPlayer).getIntersectionCoordsToBuild();
                             this.callIntButtonClick(this.getIntButtonAt(coords), null, result);
+                            if (this.world.isFirstFewTurnsPhase())
+                            {
+                                
+                                callRoadButton_Click(this.getARoadButtonAt(coords), null);
+                            }
                         }
                         showForm = false;
                     }
@@ -626,6 +635,12 @@ namespace SettlersOfCatan
                 EndTurnButton_Click(sender, e);
             }
 		}
+
+        private Button getARoadButtonAt(Point coords)
+        {
+            Point roadCoords = this.world.catanMap.getIslandMap().getIntAtIndex(coords).connections[1].getCoords();
+            return this.roadGrid[roadCoords.X, roadCoords.Y];
+        }
 
 		private void updateRoundLabel()
 		{
