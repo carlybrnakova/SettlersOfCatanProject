@@ -417,7 +417,6 @@
             this.PlayerInfoPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion

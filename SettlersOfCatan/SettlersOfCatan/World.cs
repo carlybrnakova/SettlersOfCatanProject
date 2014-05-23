@@ -46,7 +46,8 @@ namespace SettlersOfCatan
 		{
 			players.Add(new Player("bob", Color.Red, this));
 			players.Add(new Player("joe", Color.Blue, this));
-			players.Add(new Player("Anne", Color.Green, this));
+			//players.Add(new Player("Anne", Color.Green, this));
+            players.Add(new AI_Player("Computer", Color.Orange, this));
 
 			/*
             for (int i = 0; i < humans; i++)
@@ -132,6 +133,8 @@ namespace SettlersOfCatan
 
 		public void endTurn()
         {
+            //bool isHuman = true;
+            setLargestArmy();
             if (numOfCompletedRounds == 0)
             {
                 if (currentPlayerNumber < this.players.Count() - 1)
@@ -158,9 +161,10 @@ namespace SettlersOfCatan
             }
             else if (currentPlayer.hasRolled)
             {
+                currentPlayer.hasRolled = false;
                 if (currentPlayerNumber < this.players.Count() - 1)
                 {
-                    currentPlayer.hasRolled = false;
+
                     currentPlayerNumber++;
                 }
                 else
@@ -178,7 +182,32 @@ namespace SettlersOfCatan
                     MessageBoxIcon.Exclamation);
             }
 
+
+
+            if (numOfCompletedRounds == 2 && this.bank.allResourcesMax())
+            {
+                generateMyResources(1, true);
+                
+            }
+
             currentPlayer = this.players[currentPlayerNumber];
+            /*
+            if (this.isFirstFewTurnsPhase())
+            {
+                this.currentPlayer.getHand().modifyFreeRoadPoints(1);
+                this.currentPlayer.getHand().modifyFreeSettlementPoints(1);
+
+                if (this.currentPlayer is AI_Player)
+                {
+                    ((AI_Player)this.currentPlayer).takeYourTurn(this.numOfCompletedRounds);
+                    isHuman = false;
+                }
+                else
+                {
+                    isHuman = true;
+                }
+            } */
+            //return isHuman;
         }
 
 		public int getNumberOfRoundsCompleted()
@@ -265,7 +294,19 @@ namespace SettlersOfCatan
 			return false;
 		}
 
-
+        public bool aiCheckIfCanBuildHere(Point coords)
+        {
+            if (!catanMap.getIslandMap().getIntAtIndex(coords).hasABuilding())
+            {
+                if (catanMap.getIslandMap()
+                    .getIntAtIndex(coords)
+                    .canBuildAtIntersection(this.currentPlayer, this.numOfCompletedRounds))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 		public Color tryToBuildAtIntersection(Point coords)
 		{
 			// Build a settlement
@@ -282,6 +323,12 @@ namespace SettlersOfCatan
 						catanMap.getIslandMap().getIntAtIndex(coords).setPlayer(currentPlayer);
 						this.catanMap.getIslandMap().buildSettlement(coords);
 						currentPlayer.addSettlement(coords);
+
+                        if (this.catanMap.getIslandMap().getIntAtIndex(coords).hasPort())
+                        {
+                            currentPlayer.addPort(this.catanMap.getIslandMap().getIntAtIndex(coords).getPort());
+                        }
+
 						return currentPlayer.getColor();
 					}
 					else
@@ -373,7 +420,7 @@ namespace SettlersOfCatan
 				}
 				catch (NullReferenceException)
 				{
-					theColor = Color.Black;
+					theColor = Color.White;
 				}
 			}
 			else
@@ -426,8 +473,8 @@ namespace SettlersOfCatan
 		public void generateMyResources(int num, bool isItBeginningOfTheGame)
 		{
 			// For now, give all resources which a settlement/city is on
-			if (!isFirstFewTurnsPhase())
-			{
+			//if (!isFirstFewTurnsPhase())
+			//{
 				IslandMap theMap = catanMap.getIslandMap();
 				for (int r = 0; r < 6; r++)
 				{
@@ -439,7 +486,7 @@ namespace SettlersOfCatan
 						}
 					}
 				}
-			}
+			//}
 		}
 
 		private void giveAllResourcesForThisIntersection(Intersection intersection, bool isItBeginningOfTheGame)

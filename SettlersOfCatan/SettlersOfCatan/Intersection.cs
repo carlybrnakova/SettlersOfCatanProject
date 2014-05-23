@@ -8,7 +8,6 @@ using SettlersOfCatan;
 
 namespace SettlersOfCatan
 {
-
 	public class Intersection
 	{
 		public List<Connection> connections = new List<Connection>(3);
@@ -135,14 +134,39 @@ namespace SettlersOfCatan
             return this.connections;
         }
 
+        public Port getPort()
+        {
+            return this.port;
+        }
+
 		public bool hasPort()
 		{
 			return this.port != null;
 		}
 
-        internal bool equals(Func<Intersection> func)
+        // This method is to check if the AI can build a road.
+        public bool hasOpenRoad()
         {
-            throw new NotImplementedException();
+            foreach (Connection c in this.connections)
+            {
+                if (c.getRoadColor() == Color.White)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Point getAnOpenRoad()
+        {
+            foreach (Connection c in this.connections)
+            {
+                if (c.getRoadColor() == Color.White)
+                {
+                    return c.getCoords();
+                }
+            }
+            return new Point(-1, -1);
         }
     }
 }

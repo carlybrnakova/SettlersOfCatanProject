@@ -1007,26 +1007,6 @@ namespace SettlersOfCatan
             }
         }
 
-        public void checkForBrokenRoads(Intersection newSettle)
-        {
-            List<Connection> roads = newSettle.getConnections();
-            int numWhite = 0;
-            foreach (Connection r in roads)
-            {
-                if (r.getRoadColor() == Color.White)
-                {
-                    numWhite++;
-                }
-            }
-            if (numWhite < 2)
-            {
-                if (roads[0].getRoadColor() == roads[1].getRoadColor() || roads[0].getRoadColor() == roads[2].getRoadColor() || roads[1].getRoadColor() == roads[2].getRoadColor())
-                {
-
-                }
-            }
-        }
-
         public int getLengthOfLongestRoad()
         {
             return this.roads[this.longestRoadIndex].Count();

@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using SettlersOfCatan;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace ClassLibrary1
 {
