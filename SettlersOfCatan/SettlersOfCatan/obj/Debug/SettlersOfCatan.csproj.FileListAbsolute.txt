@@ -49,3 +49,4 @@ C:\Users\hortoncb\Documents\college classes\CSSE\csse376\SettlersOfCatan\Settler
 C:\Users\hortoncb\Documents\college classes\CSSE\csse376\SettlersOfCatan\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.WinForm.resources
 C:\Users\hortoncb\Documents\college classes\CSSE\csse376\SettlersOfCatan\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.YearOfPlentyForm.resources
 C:\Users\hortoncb\Documents\college classes\CSSE\csse376\SettlersOfCatan\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.csproj.GenerateResource.Cache
+C:\Users\heibelcj\Documents\Classes\Spring 2013-14\CSSE376\SettlersOfCatanProject\SettlersOfCatan\SettlersOfCatan\obj\Debug\SettlersOfCatan.csprojResolveAssemblyReference.cache
