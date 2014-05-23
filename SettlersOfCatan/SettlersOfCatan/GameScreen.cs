@@ -547,7 +547,9 @@ namespace SettlersOfCatan
 				theButton.BackColor = buttonColor;
 				theButton.Enabled = false;
 			}
+            this.world.setLongestRoad();
 			this.updateResourceLabels();
+            this.updatePlayerPoints();
 		}
 
 		public void updateResourceLabels()
@@ -628,29 +630,36 @@ namespace SettlersOfCatan
 
         private void RollDiceButton_Click(object sender, EventArgs e)
         {
-            this.world.rollDice();
-            this.updateResourceLabels();
-	        int roll = this.world.getRollNumber();
-            this.RollNumberLabel.Text = roll.ToString();
-	        if (roll == 7)
-	        {
-				removeRobberText();
+            try
+            {
+                this.world.rollDice();
+                this.updateResourceLabels();
+                int roll = this.world.getRollNumber();
+                this.RollNumberLabel.Text = roll.ToString();
+                if (roll == 7)
+                {
+                    removeRobberText();
 
-				checkRemoveHalf();
+                    checkRemoveHalf();
 
-				/*
-				Color buttonColor = world.roadButtonClicked(theButton.getCoords());
-				if (buttonColor != Color.White)
-				{
-					theButton.BackColor = buttonColor;
-					theButton.Enabled = false;
-				}
-				 */
+                    /*
+                    Color buttonColor = world.roadButtonClicked(theButton.getCoords());
+                    if (buttonColor != Color.White)
+                    {
+                        theButton.BackColor = buttonColor;
+                        theButton.Enabled = false;
+                    }
+                     */
 
-				this.world.setPlaceRobber(true);
-				RobberForm myForm = new RobberForm(this.world, this);
-				myForm.Show();
-			}
+                    this.world.setPlaceRobber(true);
+                    RobberForm myForm = new RobberForm(this.world, this);
+                    myForm.Show();
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                //do nothing
+            }
 			this.updateResourceLabels();
 		}
 

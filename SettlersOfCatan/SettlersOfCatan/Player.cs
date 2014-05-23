@@ -964,12 +964,8 @@ namespace SettlersOfCatan
                 foreach (Connection road in intList)
                 {
 
-                    if ((road.getIntersectionLeftOrTop().getConnections()[0] == spot || road.getIntersectionRightOrBot().getConnections()[0] == spot || 
-                        road.getIntersectionLeftOrTop().getConnections()[1] == spot || road.getIntersectionRightOrBot().getConnections()[1] == spot || 
-                        road.getIntersectionLeftOrTop().getConnections()[2] == spot || road.getIntersectionRightOrBot().getConnections()[2] == spot ||
-                        spot.getIntersectionLeftOrTop().getConnections()[0] == road || spot.getIntersectionRightOrBot().getConnections()[0] == road ||
-                        spot.getIntersectionLeftOrTop().getConnections()[1] == road || spot.getIntersectionRightOrBot().getConnections()[1] == road ||
-                        spot.getIntersectionLeftOrTop().getConnections()[2] == road || spot.getIntersectionRightOrBot().getConnections()[2] == road) & intListIndex == intList.Count - 1)
+                    if (road.getIntersectionLeftOrTop().Equals(spot.getIntersectionLeftOrTop()) || road.getIntersectionLeftOrTop().Equals(spot.getIntersectionRightOrBot()) ||
+                        road.getIntersectionRightOrBot().Equals(spot.getIntersectionRightOrBot()) || (road.getIntersectionRightOrBot().Equals(spot.getIntersectionLeftOrTop())) & intListIndex == intList.Count - 1)
                     {
                         intList.Add(spot);
                         wasAdded = true;
@@ -979,12 +975,8 @@ namespace SettlersOfCatan
                         }
                         break;
                     }
-                    else if ((road.getIntersectionLeftOrTop().getConnections()[0] == spot || road.getIntersectionRightOrBot().getConnections()[0] == spot ||
-                        road.getIntersectionLeftOrTop().getConnections()[1] == spot || road.getIntersectionRightOrBot().getConnections()[1] == spot ||
-                        road.getIntersectionLeftOrTop().getConnections()[2] == spot || road.getIntersectionRightOrBot().getConnections()[2] == spot ||
-                        spot.getIntersectionLeftOrTop().getConnections()[0] == road || spot.getIntersectionRightOrBot().getConnections()[0] == road ||
-                        spot.getIntersectionLeftOrTop().getConnections()[1] == road || spot.getIntersectionRightOrBot().getConnections()[1] == road ||
-                        spot.getIntersectionLeftOrTop().getConnections()[2] == road || spot.getIntersectionRightOrBot().getConnections()[2] == road) & intListIndex != intList.Count - 1)
+                    else if (road.getIntersectionLeftOrTop().Equals(spot.getIntersectionLeftOrTop()) || road.getIntersectionLeftOrTop().Equals(spot.getIntersectionRightOrBot()) ||
+                        road.getIntersectionRightOrBot().Equals(spot.getIntersectionRightOrBot()) || (road.getIntersectionRightOrBot().Equals(spot.getIntersectionLeftOrTop())) & intListIndex != intList.Count - 1)
                     {
                         List<Connection> newList = new List<Connection>();
                         for (int i = 0; i <= intListIndex; i++){
@@ -996,6 +988,7 @@ namespace SettlersOfCatan
                         if (newList.Count() > roads[this.longestRoadIndex].Count()){
                             longestRoadIndex = roadsIndex;
                         }
+                        break;
                     }
                     intListIndex++;
                 }
@@ -1011,6 +1004,26 @@ namespace SettlersOfCatan
             if (!wasAdded)
             {
                 roads.Add(new List<Connection> { spot });
+            }
+        }
+
+        public void checkForBrokenRoads(Intersection newSettle)
+        {
+            List<Connection> roads = newSettle.getConnections();
+            int numWhite = 0;
+            foreach (Connection r in roads)
+            {
+                if (r.getRoadColor() == Color.White)
+                {
+                    numWhite++;
+                }
+            }
+            if (numWhite < 2)
+            {
+                if (roads[0].getRoadColor() == roads[1].getRoadColor() || roads[0].getRoadColor() == roads[2].getRoadColor() || roads[1].getRoadColor() == roads[2].getRoadColor())
+                {
+
+                }
             }
         }
 

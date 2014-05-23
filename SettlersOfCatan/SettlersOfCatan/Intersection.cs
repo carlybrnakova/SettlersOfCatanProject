@@ -139,5 +139,10 @@ namespace SettlersOfCatan
 		{
 			return this.port != null;
 		}
+
+        internal bool equals(Func<Intersection> func)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

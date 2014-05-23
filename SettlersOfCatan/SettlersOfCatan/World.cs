@@ -132,7 +132,6 @@ namespace SettlersOfCatan
 
 		public void endTurn()
         {
-            setLongestRoad();
             if (numOfCompletedRounds == 0)
             {
                 if (currentPlayerNumber < this.players.Count() - 1)
@@ -192,7 +191,7 @@ namespace SettlersOfCatan
 			return this.numOfCompletedRounds < 2;
 		}
 
-		private void setLongestRoad()
+		public void setLongestRoad()
 		{
 			int numberOfPlayers = this.players.Count() - 1;
             if (this.longestRoadSize > 4)
