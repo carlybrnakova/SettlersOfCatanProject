@@ -15,7 +15,7 @@ namespace SettlersOfCatan
 		private readonly Size HEX_SIZE = new Size(150, 150);
 		//private static readonly Random r = new Random();
 		private int token;
-		private bool hasRobber;
+		public bool hasRobber;
 		private Timer doubleClickTimer = new Timer();
 		private bool isFirstClick = true;
 		private bool isDoubleClick = false;

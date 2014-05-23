@@ -56,7 +56,7 @@ namespace SettlersOfCatan
 		{
 			InitializeComponent();
 
-			this.world = new World(3, 0);
+			this.world = new World(3, 0, this);
 
 			initializeAll();
 
@@ -700,9 +700,6 @@ namespace SettlersOfCatan
 			        }
 
                 }
-
-
-				
 			}
             this.updateResourceLabels();
             this.updateCurrentPlayerNameLabel();
@@ -844,7 +841,7 @@ namespace SettlersOfCatan
 			}
 		}
 
-		private void removeRobberText()
+		public void removeRobberText()
 		{
 			this.robberHex = this.world.getRobberHex();
 

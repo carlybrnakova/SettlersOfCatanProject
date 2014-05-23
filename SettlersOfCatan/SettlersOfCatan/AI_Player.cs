@@ -70,6 +70,14 @@ namespace SettlersOfCatan
                 diceRollNum = this.world.getRollNumber();
                 if (diceRollNum == 7)
                 {
+                   this.makeAllHexesNotHaveRobber();
+
+
+                    Random die = new Random();
+			    	int die1Roll = die.Next(1, 3);
+				    int die2Roll = die.Next(0, 4);
+                    this.world.gameScreen.hexGrid[die1Roll][die2Roll].setHasRobber(true);
+                    this.world.gameScreen.removeRobberText();
 
                 }
                 //this.world.generateMyResources(diceRollNum, false);
@@ -105,17 +113,55 @@ namespace SettlersOfCatan
                 }
                 else if (((Player)this).playerHand.hasDevCardResources())
                 {
-                    result = "devcard";
+                    this.tradeForDevCard();
                 }
             }
             //this.world.endTurn();   
             return result;
         }
 
-        public Point getIntersectionCoordsToBuild()
+        public void makeAllHexesNotHaveRobber()
         {
-            return this.intersectionCoordsToBuild;
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 1; j < 4; j++)
+                {
+                    this.world.gameScreen.hexGrid[i][j].setHasRobber(false);
+                }
+            }
+
+            this.world.gameScreen.hexGrid[1][0].setHasRobber(false);
+            this.world.gameScreen.hexGrid[2][0].setHasRobber(false);
+            this.world.gameScreen.hexGrid[2][4].setHasRobber(false);
+            this.world.gameScreen.hexGrid[3][0].setHasRobber(false);
         }
 
+        public void manageTrade()
+        {
+            int totalToTrade = 0;
+            int totalToReceive = 0;
+            foreach (int i in this.toTrade)
+            {
+                totalToTrade += i;
+            }
+            foreach (int i in this.toReceive)
+            {
+                totalToReceive += i;
+            }
+            if (totalToReceive >= totalToTrade)
+            {
+                this.makeTrade();
+                this.world.gameScreen.updateResourceLabels();
+            }
+            else
+            {
+                this.declineTrade();
+            }
+        }
+
+		public Point getIntersectionCoordsToBuild()
+		{
+			return this.intersectionCoordsToBuild;
+		}
 	}
 }

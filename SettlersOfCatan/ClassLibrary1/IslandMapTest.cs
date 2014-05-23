@@ -232,7 +232,7 @@ namespace ClassLibrary1
 		public void TestRoadHasPlayerBuildingAtFirstIntersection()
 		{
 			// IslandMap newMap = new IslandMap();
-			World w = new World(3, 0);
+            World w = new World(3, 0, null);
 			w.currentPlayer.getHand().incrementAllResources(1);
 			w.tryToBuildAtIntersection(new Point(0, 2));
 
@@ -244,7 +244,7 @@ namespace ClassLibrary1
 		public void TestRoadHasPlayerBuildingAtSecondIntersection()
 		{
 			// IslandMap newMap = new IslandMap();
-			World w = new World(3, 0);
+            World w = new World(3, 0, null);
 			w.currentPlayer.getHand().incrementAllResources(1);
 			w.tryToBuildAtIntersection(new Point(0, 3));
 
@@ -255,7 +255,7 @@ namespace ClassLibrary1
 		[Test()]
 		public void TestBuildHorizontalRoad()
 		{
-			World w = new World(3, 0);
+            World w = new World(3, 0, null);
 			w.currentPlayer.getHand().incrementAllResources(1);
 			w.tryToBuildAtIntersection(new Point(0, 3));
 			bool flag = w.getMap().getIslandMap().buildHorizontalRoad(new Point(0, 0), w.currentPlayer);
@@ -277,7 +277,7 @@ namespace ClassLibrary1
 		[Test()]
 		public void TestBuildVerticalRoad()
 		{
-			World w = new World(3, 0);
+            World w = new World(3, 0, null);
 			w.currentPlayer.getHand().incrementAllResources(1);
 			w.currentPlayer.getHand().incrementAllResources(1);
 			w.currentPlayer.getHand().incrementAllResources(1);
@@ -300,6 +300,18 @@ namespace ClassLibrary1
 
 			flag = w.getMap().getIslandMap().buildHorizontalRoad(new Point(4, 3), w.currentPlayer);
 			Assert.True(flag);
+		}
+
+		[Test()]
+		[ExpectedException(typeof (NullReferenceException))]
+		public void TestBuildVerticalRoadThrowsOnBadXValues()
+		{
+			World w = new World(3, 0, null);
+			w.currentPlayer.getHand().incrementAllResources(1);
+			w.currentPlayer.getHand().incrementAllResources(1);
+			w.currentPlayer.getHand().incrementAllResources(1);
+
+			w.getMap().getIslandMap().buildVerticalRoad(new Point(2, 3), w.currentPlayer);
 		}
 	}
 }
