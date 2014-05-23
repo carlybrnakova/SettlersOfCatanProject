@@ -30,6 +30,7 @@ namespace SettlersOfCatan
 		private int turnCounter;
 		private bool placeRobber = false;
 		private Hex robberHex;
+        public GameScreen gameScreen;
 
 		public World()
 		{
@@ -47,8 +48,9 @@ namespace SettlersOfCatan
 			this.numOfCompletedRounds = 0;
 		}
 
-		public World(int humans, int computers) : this()
+		public World(int humans, int computers, GameScreen gs) : this()
 		{
+            this.gameScreen = gs;
 			players.Add(new Player("Bob", Color.Red, this));
 			players.Add(new Player("Joe", Color.Blue, this));
 			players.Add(new AI_Player("Computer", Color.Orange, this));
@@ -552,7 +554,7 @@ namespace SettlersOfCatan
 		public void setPlaceRobber(bool condition)
 		{
 			this.placeRobber = condition;
-			if (condition == false)
+			if (condition == false && !(this.currentPlayer is AI_Player))
 			{
 				StealCardForm myForm = new StealCardForm(this);
 				myForm.Show();

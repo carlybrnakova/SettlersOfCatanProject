@@ -35,7 +35,7 @@ public class IntersectionTest
 	[Test()]
 	public void TestThatPlayerCannotBuildSettlementIfThereIsNoRoadLeadingThere()
 	{
-		World world = new World(3, 0);
+        World world = new World(3, 0, null);
 		var player = new Player("annie", Color.Pink, world);
 		Assert.False(world.getMap().getIslandMap().getIntAtIndex(3, 3).canBuildAtIntersection(player, 5));
 	}
@@ -43,7 +43,7 @@ public class IntersectionTest
 	[Test()]
 	public void TestThatIntersectionCanDetemineWhenPlayerHasExistingConnection()
 	{
-		var world = new World(3, 0);
+        var world = new World(3, 0, null);
 		Player player = new Player("sam", Color.Turquoise, world);
 		player.getHand().incrementAllResources(3);
 		world.addPlayer(player);

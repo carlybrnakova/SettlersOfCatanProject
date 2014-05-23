@@ -12,7 +12,7 @@ namespace SettlersOfCatan
 		private string language = Global_Variables.language;
 
 		private World world;
-		private GameScreen gameScreen;
+		public GameScreen gameScreen;
 		private Player currentPlayer;
 		private int currentPlayerNumber;
 		private Player nextPlayer1;
@@ -95,8 +95,11 @@ namespace SettlersOfCatan
 						this.currentPlayerBrick
 					},
 					new int[] {this.player1Ore, this.player1Wool, this.player1Lumber, this.player1Grain, this.player1Brick});
-				AcceptTradeForm acceptTradeForm = new AcceptTradeForm(this);
-				acceptTradeForm.Show();
+                if (!(nextPlayer1 is AI_Player))
+                {
+                    AcceptTradeForm acceptTradeForm = new AcceptTradeForm(this);
+                    acceptTradeForm.Show();
+                }
 			}
 			if (this.nextPlayer2Checked)
 			{
@@ -107,8 +110,11 @@ namespace SettlersOfCatan
 						this.currentPlayerBrick
 					},
 					new int[] {this.player2Ore, this.player2Wool, this.player2Lumber, this.player2Grain, this.player2Brick});
-				AcceptTradeForm acceptTradeForm = new AcceptTradeForm(this);
-				acceptTradeForm.Show();
+                if (!(nextPlayer2 is AI_Player))
+                {
+                    AcceptTradeForm acceptTradeForm = new AcceptTradeForm(this);
+                    acceptTradeForm.Show();
+                }
 			}
 		}
 

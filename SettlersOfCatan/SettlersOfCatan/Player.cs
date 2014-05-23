@@ -23,8 +23,8 @@ namespace SettlersOfCatan
 		//only public for testing
 		public Hand playerHand = new Hand();
 		private Player playerToTradeWith = null;
-		private int[] toTrade = new int[5] {0, 0, 0, 0, 0};
-		private int[] toReceive = new int[5] {0, 0, 0, 0, 0};
+		public int[] toTrade = new int[5] {0, 0, 0, 0, 0};
+		public int[] toReceive = new int[5] {0, 0, 0, 0, 0};
 		private String name;
 		private Color color;
 		private bool hasWon = false;
@@ -132,6 +132,10 @@ namespace SettlersOfCatan
 			player.toReceive = trade;
 			player.toTrade = receive;
 			player.playerToTradeWith = this;
+            if (player is AI_Player)
+            {
+                ((AI_Player) player).manageTrade();
+            }
 		}
 
 		private bool canAcceptTrade()

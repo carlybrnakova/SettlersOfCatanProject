@@ -957,7 +957,7 @@ namespace ClassLibrary1
 		[Test()]
 		public void TestPlayDevCardOfEachType()
 		{
-			var world = new World(3, 0);
+            var world = new World(3, 0, null);
 
 			var target = world.players[0];
 			var target2 = world.players[1];

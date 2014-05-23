@@ -9,12 +9,14 @@ namespace SettlersOfCatan
 	{
 		private ResourceManager rm = Resources.ResourceManager;
 		private string language = Global_Variables.language;
+        private GameScreen gameScreen;
 
 		private TradeForm TradeForm;
 
 		public AcceptTradeForm(TradeForm tradeForm)
 		{
 			this.TradeForm = tradeForm;
+            gameScreen = tradeForm.gameScreen;
 			InitializeComponent();
 			localize();
 		}
@@ -31,6 +33,7 @@ namespace SettlersOfCatan
 		{
 			this.TradeForm.makeTrade();
 			this.Close();
+            this.gameScreen.updateResourceLabels();
 		}
 
 		private void DeclineTradeButton_Click(object sender, EventArgs e)

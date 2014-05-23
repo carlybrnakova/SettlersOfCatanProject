@@ -66,6 +66,17 @@ namespace SettlersOfCatan
 				//  int diceRollNum;
 				// 1. Roll the dice
 				this.world.rollDice();
+                if (this.world.getRollNumber() == 7)
+                {
+                    this.makeAllHexesNotHaveRobber();
+
+
+                    Random die = new Random();
+			    	int die1Roll = die.Next(1, 3);
+				    int die2Roll = die.Next(0, 4);
+                    this.world.gameScreen.hexGrid[die1Roll][die2Roll].setHasRobber(true);
+                    this.world.gameScreen.removeRobberText();
+                }
 				//  diceRollNum = this.world.getRollNumber();
 				// 1a. Rolled a 7?
 				// 1a-i. Get rid of half of your cards?
@@ -86,10 +97,53 @@ namespace SettlersOfCatan
 						}
 					}
 				}
+                else if (this.playerHand.hasDevCardResources())
+                {
+                    this.tradeForDevCard();
+                }
 			}
 			//this.world.endTurn();   
 			return result;
 		}
+
+        public void makeAllHexesNotHaveRobber()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 1; j < 4; j++)
+                {
+                    this.world.gameScreen.hexGrid[i][j].setHasRobber(false);
+                }
+            }
+
+            this.world.gameScreen.hexGrid[1][0].setHasRobber(false);
+            this.world.gameScreen.hexGrid[2][0].setHasRobber(false);
+            this.world.gameScreen.hexGrid[2][4].setHasRobber(false);
+            this.world.gameScreen.hexGrid[3][0].setHasRobber(false);
+        }
+
+        public void manageTrade()
+        {
+            int totalToTrade = 0;
+            int totalToReceive = 0;
+            foreach (int i in this.toTrade)
+            {
+                totalToTrade += i;
+            }
+            foreach (int i in this.toReceive)
+            {
+                totalToReceive += i;
+            }
+            if (totalToReceive >= totalToTrade)
+            {
+                this.makeTrade();
+                this.world.gameScreen.updateResourceLabels();
+            }
+            else
+            {
+                this.declineTrade();
+            }
+        }
 
 		public Point getIntersectionCoordsToBuild()
 		{

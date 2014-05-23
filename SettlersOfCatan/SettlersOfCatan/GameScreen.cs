@@ -56,7 +56,7 @@ namespace SettlersOfCatan
 		{
 			InitializeComponent();
 
-			this.world = new World(3, 0);
+			this.world = new World(3, 0, this);
 
 			initializeAll();
 
@@ -670,13 +670,12 @@ namespace SettlersOfCatan
 					{
 						showForm = true;
 					}
-				}
 
-
-				if (showForm)
-				{
-					Form myForm = new FirstFewTurnsForm();
-					myForm.Show();
+                    if (showForm)
+                    {
+                        Form myForm = new FirstFewTurnsForm();
+                        myForm.Show();
+                    }
 				}
 			}
 			this.updateResourceLabels();
@@ -821,7 +820,7 @@ namespace SettlersOfCatan
 			}
 		}
 
-		private void removeRobberText()
+		public void removeRobberText()
 		{
 			this.robberHex = this.world.getRobberHex();
 
